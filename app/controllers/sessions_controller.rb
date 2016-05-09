@@ -1,5 +1,11 @@
 class SessionsController < ApplicationController
   before_action :set_session, only: [:show, :edit, :update, :destroy]
+  before_filter :get_event
+
+  def get_event
+    @event = Event.find(params[:event_id])
+  end
+
 
   # GET /sessions
   # GET /sessions.json
@@ -24,12 +30,12 @@ class SessionsController < ApplicationController
   # POST /sessions
   # POST /sessions.json
   def create
-    @session = Session.new(session_params)
+    @session = @event.sessions.new(session_params)
 
     respond_to do |format|
       if @session.save
-        format.html { redirect_to @session, notice: 'Session was successfully created.' }
-        format.json { render :show, status: :created, location: @session }
+        format.html { redirect_to [@event,@session], notice: 'Session was successfully created.' }
+        format.json { render :show, status: :created, location: [@event,@session] }
       else
         format.html { render :new }
         format.json { render json: @session.errors, status: :unprocessable_entity }
@@ -42,8 +48,8 @@ class SessionsController < ApplicationController
   def update
     respond_to do |format|
       if @session.update(session_params)
-        format.html { redirect_to @session, notice: 'Session was successfully updated.' }
-        format.json { render :show, status: :ok, location: @session }
+        format.html { redirect_to [@event,@session], notice: 'Session was successfully updated.' }
+        format.json { render :show, status: :ok, location: [@event,@session] }
       else
         format.html { render :edit }
         format.json { render json: @session.errors, status: :unprocessable_entity }

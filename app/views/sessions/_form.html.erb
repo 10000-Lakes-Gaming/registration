@@ -1,4 +1,4 @@
-<%= form_for(@session) do |f| %>
+<%= form_for([@event,@session]) do |f| %>
   <% if @session.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@session.errors.count, "error") %> prohibited this session from being saved:</h2>
@@ -12,8 +12,7 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :event_id %><br>
-    <%= f.text_field :event_id %>
+    Event: <%= @event.name %> (<%= @event.id %>)
   </div>
   <div class="field">
     <%= f.label :name %><br>
@@ -21,11 +20,11 @@
   </div>
   <div class="field">
     <%= f.label :start %><br>
-    <%= f.datetime_select :start %>
+    <%= f.datetime_select :start, :default => { :year => @event.start.year, :month => @event.start.month, :hour => 8, :minute => 00 }%>
   </div>
   <div class="field">
     <%= f.label :end %><br>
-    <%= f.datetime_select :end %>
+    <%= f.datetime_select :end, default: @event.end %>
   </div>
   <div class="actions">
     <%= f.submit %>
