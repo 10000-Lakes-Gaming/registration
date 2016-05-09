@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  season: 1
+  scenario_number: 1
+  name: MyString
+  description: MyString
+  author: MyString
+  paizo_url: MyString
+  hard_mode: false
+
+two:
+  type: 
+  season: 1
+  scenario_number: 1
+  name: MyString
+  description: MyString
+  author: MyString
+  paizo_url: MyString
+  hard_mode: false

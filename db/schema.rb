@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160509013832) do
+ActiveRecord::Schema.define(version: 20160509032412) do
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
@@ -20,6 +20,20 @@ ActiveRecord::Schema.define(version: 20160509013832) do
     t.string   "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "scenarios", force: :cascade do |t|
+    t.string   "type"
+    t.integer  "season"
+    t.integer  "scenario_number"
+    t.string   "name"
+    t.string   "description"
+    t.string   "author"
+    t.string   "paizo_url"
+    t.boolean  "hard_mode"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.boolean  "pregen_only"
   end
 
   create_table "sessions", force: :cascade do |t|

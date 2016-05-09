@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @scenario.type %>
+</p>
+
+<p>
+  <strong>Season:</strong>
+  <%= @scenario.season %>
+</p>
+
+<p>
+  <strong>Scenario number:</strong>
+  <%= @scenario.scenario_number %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @scenario.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @scenario.description %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @scenario.author %>
+</p>
+
+<p>
+  <strong>Paizo url:</strong>
+  <%= @scenario.paizo_url %>
+</p>
+
+<p>
+  <strong>Hard mode:</strong>
+  <%= @scenario.hard_mode %>
+</p>
+
+<%= link_to 'Edit', edit_scenario_path(@scenario) %> |
+<%= link_to 'Back', scenarios_path %>

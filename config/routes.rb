@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :scenarios
   get 'welcome/index'
 
   resources :events do
