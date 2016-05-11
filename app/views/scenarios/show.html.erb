@@ -2,7 +2,7 @@
 
 <p>
   <strong>Type:</strong>
-  <%= @scenario.type %>
+  <%= @scenario.scenario_type %>
 </p>
 
 <p>
@@ -38,6 +38,10 @@
 <p>
   <strong>Hard mode:</strong>
   <%= @scenario.hard_mode %>
+</p>
+<p>
+  <strong>Pregen Only:</strong>
+  <%= @scenario.pregen_only %>
 </p>
 
 <%= link_to 'Edit', edit_scenario_path(@scenario) %> |

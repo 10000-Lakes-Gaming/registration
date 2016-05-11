@@ -27,4 +27,4 @@
 <br>
 
 <%= link_to "Back to #{@event.name}", event_path(@event) %>
-<%= link_to 'New Session', new_event_session_path %>
+<%= link_to 'New Session', new_event_session_path(@event, @session) %>

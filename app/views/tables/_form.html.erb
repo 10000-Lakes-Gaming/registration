@@ -21,7 +21,7 @@
 
   <div class="field">
     <%= f.label :scenario_id %><br>
-    <%= f.select :scenario_id, options_for_select(@scenarios.map{|scenario| [scenario.name, scenario.id]} )%>
+    <%= f.select :scenario_id, options_for_select(@scenarios.map{|scenario| [scenario.season.to_s + "-" + scenario.scenario_number.to_s + ": " + scenario.name, scenario.id]} )%>
   </div>
   <div class="field">
     <%= f.label :max_players %><br>

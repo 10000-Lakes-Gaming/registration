@@ -26,4 +26,6 @@
 
 <br>
 
-<%= link_to 'New Table', new_event_session_table_path %>
+<%= link_to 'New Table', new_event_session_table_path(@event, @session) %>
+<%= link_to "Back to #{@session.name}",event_session_path(@event, @session) %>
+

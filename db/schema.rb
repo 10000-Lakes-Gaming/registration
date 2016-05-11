@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20160509033735) do
   end
 
   create_table "scenarios", force: :cascade do |t|
-    t.string   "type"
+    t.string   "scenario_type"
     t.integer  "season"
     t.integer  "scenario_number"
     t.string   "name"

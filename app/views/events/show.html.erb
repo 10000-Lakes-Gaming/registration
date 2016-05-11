@@ -33,7 +33,7 @@
   <tbody>
   <% @event.sessions.each do |session| %>
       <tr>
-        <td><%= session.name %> (#<%= session.id %>)</td>
+        <td><%= session.name %></td>
         <td><%= session.start.to_s %></td>
         <td>-</td>
         <td><%= session.end.to_s %></td>

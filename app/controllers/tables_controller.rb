@@ -17,7 +17,7 @@ class TablesController < ApplicationController
   # GET /tables
   # GET /tables.json
   def index
-    @tables = Table.all
+    @tables = @session.tables
   end
 
   # GET /tables/1
@@ -37,7 +37,7 @@ class TablesController < ApplicationController
   # POST /tables
   # POST /tables.json
   def create
-    @table = Table.new(table_params)
+    @table = @session.tables.new(table_params)
 
     respond_to do |format|
       if @table.save

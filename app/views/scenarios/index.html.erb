@@ -2,13 +2,15 @@
 
 <h1>Listing Scenarios</h1>
 
-<table>
+<table cellpadding="2" cellspacing="2">
   <thead>
     <tr>
       <th>Type</th>
       <th>Number</th>
       <th>Name</th>
       <th>Author</th>
+      <th>Pregens Only</th>
+      <th>Hard Mode</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,10 +18,12 @@
   <tbody>
     <% @scenarios.each do |scenario| %>
       <tr>
-        <td><%= scenario.type %></td>
+        <td><%= scenario.scenario_type %></td>
         <td><%= scenario.season %> - <%= scenario.scenario_number %></td>
         <td><%= scenario.name %></td>
         <td><%= scenario.author %></td>
+        <td><%= scenario.pregen_only %></td>
+        <td><%= scenario.hard_mode %></td>
         <td><%= link_to 'Show', scenario %></td>
         <td><%= link_to 'Edit', edit_scenario_path(scenario) %></td>
         <td><%= link_to 'Destroy', scenario, method: :delete, data: { confirm: 'Are you sure?' } %></td>

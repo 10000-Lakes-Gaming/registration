@@ -2,7 +2,7 @@
 
 <p>
   <strong>Event:</strong>
-  <%= @session.event %>
+  <%= @session.event.name %>
 </p>
 
 <p>
@@ -20,5 +20,30 @@
   <%= @session.end %>
 </p>
 
+<h2>Scheduled Tables</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Scenario</th>
+    <th>Max players</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @session.tables.each do |table| %>
+      <tr>
+        <td><%= table.scenario.name %></td>
+        <td align="center"><%= table.max_players %></td>
+        <td><%= link_to 'Show', [@event, @session, table] %></td>
+        <td><%= link_to 'Edit', edit_event_session_table_path(@event, @session, table) %></td>
+        <td><%= link_to 'Destroy', [@event, @session, table], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<%= link_to 'Add New Table', new_event_session_table_path(@event, @session) %>
+<br>
 <%= link_to 'Edit', edit_event_session_path(@event,session) %> |
-<%= link_to 'Back', event_sessions_path %>
+<%= link_to "Back to #{@event.name}", event_path(@event) %>
