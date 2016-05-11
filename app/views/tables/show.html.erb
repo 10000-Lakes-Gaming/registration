@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Session:</strong>
+  <%= @session.name %>
+</p>
+
+<p>
+  <strong>Scenario:</strong>
+  <%= @table.scenario.name %>
+</p>
+
+<p>
+  <strong>Max players:</strong>
+  <%= @table.max_players %>
+</p>
+
+<%= link_to 'Edit', edit_event_session_table_path(@event,@session,@table) %> |
+<%= link_to 'Back', event_session_tables_path %>
