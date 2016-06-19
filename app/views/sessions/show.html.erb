@@ -25,6 +25,7 @@
 <table>
   <thead>
   <tr>
+    <th>Table</th>
     <th>Scenario</th>
     <th>Max players</th>
     <th colspan="3"></th>
@@ -34,6 +35,7 @@
   <tbody>
   <% @session.tables.each do |table| %>
       <tr>
+        <td><%= table.id %></td>
         <td><%= table.scenario.name %></td>
         <td align="center"><%= table.max_players %></td>
         <td><%= link_to 'Show', [@event, @session, table] %></td>

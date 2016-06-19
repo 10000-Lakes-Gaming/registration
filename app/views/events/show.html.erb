@@ -22,6 +22,7 @@
 <table>
   <thead>
   <tr>
+    <th>ID</th>
     <th>Name</th>
     <th>Start</th>
     <th> </th>
@@ -33,6 +34,7 @@
   <tbody>
   <% @event.sessions.each do |session| %>
       <tr>
+        <td><%= session.id %></td>
         <td><%= session.name %></td>
         <td><%= session.start.to_s %></td>
         <td>-</td>

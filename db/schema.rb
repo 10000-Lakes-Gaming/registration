@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160509033735) do
+ActiveRecord::Schema.define(version: 20160511182201) do
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20160509033735) do
   end
 
   create_table "scenarios", force: :cascade do |t|
-    t.string   "scenario_type"
+    t.string   "type"
     t.integer  "season"
     t.integer  "scenario_number"
     t.string   "name"
@@ -57,5 +57,15 @@ ActiveRecord::Schema.define(version: 20160509033735) do
 
   add_index "tables", ["scenario_id"], name: "index_tables_on_scenario_id"
   add_index "tables", ["session_id"], name: "index_tables_on_session_id"
+
+  create_table "users", force: :cascade do |t|
+    t.string   "username"
+    t.string   "name"
+    t.string   "email_address"
+    t.integer  "pfs_number"
+    t.boolean  "admin"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
 end
