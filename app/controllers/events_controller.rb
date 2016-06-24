@@ -10,11 +10,26 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
+    @registered = current_user.user_events.any? { |user_event| user_event.event_id == @event.id }
+    @tables = []
+    @sessions = []
+    @event.sessions.each do |session|
+      session.tables.each do |table|
+        table.registration_tables.each do |reg_table|
+          if reg_table.user_event.user_id == current_user.id
+            @tables << reg_table.table
+            @sessions << session
+          end
+        end
+      end
+    end
+
   end
 
   # GET /events/new
   def new
     @event = Event.new
+    @user_event = UserEvent.new
   end
 
   # GET /events/1/edit
@@ -62,13 +77,14 @@ class EventsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_event
-      @event = Event.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_event
+    @event = Event.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def event_params
-      params.require(:event).permit(:name, :start, :end, :location)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def event_params
+    params.require(:event).permit(:name, :start, :end, :location)
+  end
+
 end

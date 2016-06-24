@@ -1,4 +1,4 @@
 class Event < ActiveRecord::Base
   has_many :sessions
-  has_many :registrations
+  has_many :user_events
 end

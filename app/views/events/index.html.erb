@@ -2,14 +2,14 @@
 
 <h1>Listing Events</h1>
 
-<table>
+<table class="table table-striped">
   <thead>
   <tr>
     <th>Name</th>
     <th>Start</th>
     <th>End</th>
     <th>Location</th>
-    <th colspan="3"></th>
+    <th>Current Registrations</th>
   </tr>
   </thead>
 
@@ -20,21 +20,61 @@
         <td><%= event.start.to_formatted_s(:long) %></td>
         <td><%= event.end.to_formatted_s(:long) %></td>
         <td><%= event.location %></td>
+        <td><%= event.user_events.length %></td>
         <td><%= link_to 'Show', event %></td>
         <% if current_user.admin? %>
             <td><%= link_to 'Edit', edit_event_path(event) %></td>
             <td><%= link_to 'Destroy', event, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+
+            <td>
+              <!-- TODO - add clamshelling? -->
+              <b>Registered Players</b>
+              <% current_user.user_events.each do |registration| %>
+                  <div><%= registration.user.name %></div>
+              <% end %>
+            </td>
         <% end %>
       </tr>
   <% end %>
   </tbody>
 </table>
 
-<br>
+
+<div>
+  <% current_user.user_events.each do |registration| %>
+      <div class="row">
+        <div class="col-md-1"><%= registration.event.name %></div>
+        <div class="col-md-1"><%= registration.user.name %></div>
+      </div>
+  <% end %>
+
+
+</div>
+
+<!--<br>-->
+<!--<div>-->
+<!--<div class="row">-->
+<!--<div class="col-md-2">Name</div>-->
+<!--<div class="col-md-2">Start</div>-->
+<!--<div class="col-md-2">End</div>-->
+<!--<div class="col-md-2">Location</div>-->
+<!--</div>-->
+<!--
+<% @events.each do |event| %>-->
+    <!--<div class="row">-->
+    <!--<div class="col-md-2"><%= event.name %></div>-->
+    <!--<div class="col-md-2"><%= event.start.to_formatted_s(:long) %></div>-->
+    <!--<div class="col-md-2"><%= event.end.to_formatted_s(:long) %></div>-->
+    <!--<div class="col-md-2"><%= event.location %></div>-->
+    <!--<div class="col-md-1"><%= link_to 'Show', event %></div>-->
+    <!--</div>-->
+    <!--
+<% end %>-->
+<!--</div>-->
 
 <% if current_user.admin? %>
-<%= link_to 'New Event', new_event_path %>
-<br>
+    <%= link_to 'New Event', new_event_path %>
+    <br>
 <% end %>
 <%= link_to 'Home', welcome_index_path %>
 <br>

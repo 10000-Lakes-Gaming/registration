@@ -1,29 +1,37 @@
-<%= form_for(@user_event) do |f| %>
-  <% if @user_event.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user_event.errors.count, "error") %> prohibited this user_event from being saved:</h2>
+<%= form_for([@event, @user_event]) do |f| %>
+    <% if @user_event.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@user_event.errors.count, "error") %> prohibited this user_event from being saved:</h2>
 
-      <ul>
-      <% @user_event.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @user_event.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <% if !current_user.admin? %>
+        <div class="field">
+          <%= f.label :user_id %><br>
+          <%= f.text_field :user_id %>
+        </div>
+        <div class="field">
+          <%= f.label :event_id %><br>
+          <%= f.text_field :event_id %>
+        </div>
+        <div class="field">
+          <%= f.label :paid %><br>
+          <%= f.check_box :paid %>
+        </div>
+    <% else %>
+        <%= f.hidden_field :user_id, :value => current_user.id %>
+        <%= f.hidden_field :event_id, :value  => @event.id %>
+        <%= f.hidden_field :paid, :value  => false %>
+    <% end %>
+
+
+    <div class="actions">
+      <%= f.submit %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.text_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :event_id %><br>
-    <%= f.text_field :event_id %>
-  </div>
-  <div class="field">
-    <%= f.label :paid %><br>
-    <%= f.check_box :paid %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>

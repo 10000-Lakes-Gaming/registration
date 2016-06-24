@@ -1,5 +1,10 @@
 class UserEventsController < ApplicationController
   before_action :set_user_event, only: [:show, :edit, :update, :destroy]
+  before_filter :get_event
+
+  def get_event
+    @event = Event.find(params[:event_id])
+  end
 
   # GET /user_events
   # GET /user_events.json
@@ -24,12 +29,14 @@ class UserEventsController < ApplicationController
   # POST /user_events
   # POST /user_events.json
   def create
+    # here, we want to use the current user -- but we might have a way to have an admin register someone?
     @user_event = UserEvent.new(user_event_params)
 
     respond_to do |format|
       if @user_event.save
-        format.html { redirect_to @user_event, notice: 'User event was successfully created.' }
-        format.json { render :show, status: :created, location: @user_event }
+        # on the notice add the event name
+        format.html { redirect_to [@event,@user_event], notice: 'User was successfully registered.' }
+        format.json { render :show, status: :created, location: [@event,@user_event] }
       else
         format.html { render :new }
         format.json { render json: @user_event.errors, status: :unprocessable_entity }
@@ -42,8 +49,8 @@ class UserEventsController < ApplicationController
   def update
     respond_to do |format|
       if @user_event.update(user_event_params)
-        format.html { redirect_to @user_event, notice: 'User event was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user_event }
+        format.html { redirect_to [@event,@user_event], notice: 'User event was successfully updated.' }
+        format.json { render :show, status: :ok, location: [@event,@user_event] }
       else
         format.html { render :edit }
         format.json { render json: @user_event.errors, status: :unprocessable_entity }
@@ -56,7 +63,7 @@ class UserEventsController < ApplicationController
   def destroy
     @user_event.destroy
     respond_to do |format|
-      format.html { redirect_to user_events_url, notice: 'User event was successfully destroyed.' }
+      format.html { redirect_to user_events_url, notice: 'User event was successfully unregistered.' }
       format.json { head :no_content }
     end
   end

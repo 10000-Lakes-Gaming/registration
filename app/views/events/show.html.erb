@@ -1,11 +1,20 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%=  @event.name %></h1>
+<h1><%= @event.name %></h1>
 
 <h2>Details</h2>
 <p>
   <strong>Location:</strong>
   <%= @event.location %>
+</p>
+
+<p>
+  <strong>Registered?</strong>
+  <% if @registered %>
+      Yes
+  <% else %>
+      No
+  <% end %>
 </p>
 
 <p>
@@ -19,15 +28,14 @@
 </p>
 
 <h2>Session List for <%= @event.name %></h2>
-<table>
+<table class="table table-striped">
   <thead>
   <tr>
     <th>ID</th>
     <th>Name</th>
-    <th>Start</th>
-    <th> </th>
-    <th>End</th>
-    <th colspan="3"></th>
+    <th>Registered?</th>
+    <th>Start/End Time</th>
+    <th>Scenarios Offered (Seats available)</th>
   </tr>
   </thead>
 
@@ -36,20 +44,39 @@
       <tr>
         <td><%= session.id %></td>
         <td><%= session.name %></td>
-        <td><%= session.start.to_s %></td>
-        <td>-</td>
-        <td><%= session.end.to_s %></td>
-        <td><%= link_to 'Show', [@event, session] %></td>
-        <td><%= link_to 'Edit', edit_event_session_path(@event, session) %> </td>
-        <%#<td><%= link_to 'Destroy', [@event,session], method: :delete, data: { confirm: 'Are you sure?' } </td>%>
+        <td>
 
+        </td>
+        <td><%= session.start.to_s(:long) %> - <%= session.end.to_s(:long) %></td>
+        <td>
+          <% table_ok = true %>
+          <% session.tables.each do |table| %>
+
+              <div><%= table.scenario.season %>-<%= table.scenario.scenario_number %>:
+                <%= table.scenario.name %>
+                (<%= table.max_players - table.registration_tables.length %>/<%= table.max_players %>)
+                <% if @tables.include? table %>
+                    Registered
+                <% end %>
+                <% if !@sessions.include? session %>
+                    Add this table?
+                <% end %>
+              </div>
+          <% end %>
+        </td>
+        <td><%= link_to 'Show', [@event, session] %></td>
+        <% if current_user.admin? %>
+            <td><%= link_to 'Edit', edit_event_session_path(@event, session) %> </td>
+        <% end %>
       </tr>
   <% end %>
   </tbody>
 </table>
-<%= link_to 'Add Session', new_event_session_path(@event) %>
-
-<br>
-<br>
-<%= link_to 'Edit', edit_event_path(@event) %> |
+<% if !@registered %>
+    <div><%= link_to 'Register for event?', new_event_user_event_path(@event) %></div>
+<% end %>
+<% if current_user.admin? %>
+    <div><%= link_to 'Add Session', new_event_session_path(@event) %></div>
+    <%= link_to 'Edit', edit_event_path(@event) %> |
+<% end %>
 <%= link_to 'Back', events_path %>
