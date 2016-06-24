@@ -26,6 +26,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # This is the authen gem
 gem 'devise', '~> 4.1.1'
 gem 'omniauth', '~> 1.3.1'
+gem 'bootstrap-sass', '~> 3.3.3'
+gem 'autoprefixer-rails'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
