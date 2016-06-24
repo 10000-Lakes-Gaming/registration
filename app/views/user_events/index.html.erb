@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing User Events</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Event</th>
+      <th>Paid</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @user_events.each do |user_event| %>
+      <tr>
+        <td><%= user_event.user.name %></td>
+        <td><%= user_event.event.name %></td>
+        <td><%= user_event.paid %></td>
+        <td><%= link_to 'Show', user_event %></td>
+        <td><%= link_to 'Edit', edit_user_event_path(user_event) %></td>
+        <td><%= link_to 'Destroy', user_event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New User event', new_user_event_path %>

@@ -4,34 +4,38 @@
 
 <table>
   <thead>
-    <tr>
-      <th>Name</th>
-      <th>Start</th>
-      <th>End</th>
-      <th>Location</th>
-      <th colspan="3"></th>
-    </tr>
+  <tr>
+    <th>Name</th>
+    <th>Start</th>
+    <th>End</th>
+    <th>Location</th>
+    <th colspan="3"></th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @events.each do |event| %>
+  <% @events.each do |event| %>
       <tr>
         <td><%= event.name %></td>
         <td><%= event.start.to_formatted_s(:long) %></td>
         <td><%= event.end.to_formatted_s(:long) %></td>
         <td><%= event.location %></td>
         <td><%= link_to 'Show', event %></td>
-        <td><%= link_to 'Edit', edit_event_path(event) %></td>
-        <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if current_user.admin? %>
+            <td><%= link_to 'Edit', edit_event_path(event) %></td>
+            <td><%= link_to 'Destroy', event, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+        <% end %>
       </tr>
-    <% end %>
+  <% end %>
   </tbody>
 </table>
 
 <br>
 
+<% if current_user.admin? %>
 <%= link_to 'New Event', new_event_path %>
 <br>
+<% end %>
 <%= link_to 'Home', welcome_index_path %>
 <br>
 <%= link_to 'Scenario Listing', scenarios_path %>

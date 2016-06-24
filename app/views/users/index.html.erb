@@ -1,11 +1,9 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Listing Users</h1>
-
 <table>
   <thead>
     <tr>
-      <th>Username</th>
       <th>Name</th>
       <th>Email address</th>
       <th>Pfs number</th>
@@ -17,9 +15,8 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td><%= user.username %></td>
         <td><%= user.name %></td>
-        <td><%= user.email_address %></td>
+        <td><%= user.email %></td>
         <td><%= user.pfs_number %></td>
         <td><%= user.admin %></td>
         <td><%= link_to 'Show', user %></td>
@@ -31,5 +28,4 @@
 </table>
 
 <br>
-
 <%= link_to 'New User', new_user_path %>

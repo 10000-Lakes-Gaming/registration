@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Table:</strong>
+  <%= @registration_table.session.name %>: <%= @registration_table.table.scenario.name %>
+</p>
+
+<p>
+  <strong>Registration:</strong>
+  <%= @registration_table.user_event.event.name %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_registration_table_path(@registration_table) %> |
+<%= link_to 'Back', registration_tables_path %>

@@ -1,10 +1,4 @@
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Username:</strong>
-  <%= @user.username %>
-</p>
-
 <p>
   <strong>Name:</strong>
   <%= @user.name %>
@@ -12,7 +6,7 @@
 
 <p>
   <strong>Email address:</strong>
-  <%= @user.email_address %>
+  <%= @user.email %>
 </p>
 
 <p>
@@ -23,6 +17,17 @@
 <p>
   <strong>Admin:</strong>
   <%= @user.admin %>
+</p>
+
+<p>
+  <strong>Registrations</strong>
+  <% @user.user_events.each do |user_event| %>
+    <div><%= user_event.event.name %>
+      <% user_event.registration_tables.each do |reg_table| %>
+          <div><%= reg_table.table.session.name %>: <%= reg_table.table.scenario.name %></div>
+      <% end %>
+    </div>
+<% end %>
 </p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |

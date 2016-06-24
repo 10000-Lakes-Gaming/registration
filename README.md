@@ -1,10 +1,11 @@
 # Registration application
 
-### Players
-- Name (First Last?)
-- Alias
-- PFS Number
-- Email address (should this be a second table? Maybe in the future)
+### User
+- username
+- name
+- email_address
+- pfs_number
+- admin
 
 ### Player/Event
 This is a bridge entity between players and events.
