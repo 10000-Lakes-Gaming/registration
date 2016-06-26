@@ -1,14 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing User Registrations</h1>
+<h1>Registrations for <%= @event.name %></h1>
 
-<table>
+<table class="table table-stripe">
   <thead>
     <tr>
       <th>User</th>
       <th>Event</th>
       <th>Paid</th>
-      <th colspan="3"></th>
     </tr>
   </thead>
 
@@ -27,6 +26,7 @@
 </table>
 
 <br>
+<%= link_to "Back to #{@event.name}", event_path(@event) %>
 
 <!--
 <%= link_to 'New Event Registration', new_event_user_event_path %>
