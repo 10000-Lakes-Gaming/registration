@@ -1,25 +1,26 @@
-<%= form_for(@registration_table) do |f| %>
-  <% if @registration_table.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@registration_table.errors.count, "error") %> prohibited this registration_table from being saved:</h2>
+<%= form_for([@event, @session, @table, @registration_table]) do |f| %>
+    <% if @registration_table.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@registration_table.errors.count, "error") %> prohibited this registration_table from being
+            saved:</h2>
 
-      <ul>
-      <% @registration_table.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @registration_table.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <!-- if not admin then they can just confirm -->
+    <div class="field">
+      <%= f.label :table_id %>: <%= @table.scenario.name %>
+      <%= f.hidden_field :table_id, :value => @table.id %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :table_id %><br>
-    <%= f.text_field :table_id %>
-  </div>
-  <div class="field">
-    <%= f.label :user_event_id %><br>
-    <%= f.text_field :user_event_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="field">
+      <%= f.label :user_event_id %>: <%= @user_event.user.name %>
+      <%= f.hidden_field :user_event_id, :value => @user_event.id %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
 <% end %>

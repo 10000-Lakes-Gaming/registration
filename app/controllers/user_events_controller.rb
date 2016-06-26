@@ -9,7 +9,7 @@ class UserEventsController < ApplicationController
   # GET /user_events
   # GET /user_events.json
   def index
-    @user_events = UserEvent.all
+    @user_events = @event.user_events
   end
 
   # GET /user_events/1
