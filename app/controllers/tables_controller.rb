@@ -7,7 +7,7 @@ class TablesController < ApplicationController
   end
 
   def get_session
-     @session = @event.sessions.find(params[:session_id])
+    @session = @event.sessions.find(params[:session_id])
   end
 
   def get_event
@@ -41,8 +41,8 @@ class TablesController < ApplicationController
 
     respond_to do |format|
       if @table.save
-        format.html { redirect_to [@event,@session,@table], notice: 'Table was successfully created.' }
-        format.json { render :show, status: :created, location: [@event,@session,@table] }
+        format.html { redirect_to [@event, @session, @table], notice: 'Table was successfully created.' }
+        format.json { render :show, status: :created, location: [@event, @session, @table] }
       else
         format.html { render :new }
         format.json { render json: @table.errors, status: :unprocessable_entity }
@@ -55,8 +55,8 @@ class TablesController < ApplicationController
   def update
     respond_to do |format|
       if @table.update(table_params)
-        format.html { redirect_to [@event,@session,@table], notice: 'Table was successfully updated.' }
-        format.json { render :show, status: :ok, location: [@event,@session,@table] }
+        format.html { redirect_to [@event, @session, @table], notice: 'Table was successfully updated.' }
+        format.json { render :show, status: :ok, location: [@event, @session, @table] }
       else
         format.html { render :edit }
         format.json { render json: @table.errors, status: :unprocessable_entity }
@@ -75,13 +75,13 @@ class TablesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_table
-      @table = Table.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_table
+    @table = Table.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def table_params
-      params.require(:table).permit(:session_id, :scenario_id, :max_players)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def table_params
+    params.require(:table).permit(:session_id, :scenario_id, :max_players)
+  end
 end

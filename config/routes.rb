@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
 
-  resources :registration_tables
   resources :users
   resources :scenarios
   get 'welcome/index'
@@ -12,7 +11,9 @@ Rails.application.routes.draw do
   resources :events do
     resources :user_events
     resources :sessions do
-      resources :tables
+      resources :tables do
+        resources :registration_tables
+      end
     end
   end
 # The priority is based upon order of creation: first created -> highest priority.
