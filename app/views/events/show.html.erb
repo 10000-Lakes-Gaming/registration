@@ -33,7 +33,6 @@
   <tr>
     <th>ID</th>
     <th>Name</th>
-    <th>Registered?</th>
     <th>Start/End Time</th>
     <th>Scenarios Offered (Seats available)</th>
   </tr>
@@ -44,22 +43,26 @@
       <tr>
         <td><%= session.id %></td>
         <td><%= session.name %></td>
-        <td>
-
-        </td>
         <td><%= session.start.to_s(:long) %> - <%= session.end.to_s(:long) %></td>
         <td>
           <% table_ok = true %>
           <% session.tables.each do |table| %>
 
-              <div><%= table.scenario.season %>-<%= table.scenario.scenario_number %>:
+              <div class="row">
+                <%= table.scenario.season %>-<%= table.scenario.scenario_number %>:
                 <%= table.scenario.name %>
                 (<%= table.max_players - table.registration_tables.length %>/<%= table.max_players %>)
                 <% if @tables.include? table %>
                     Registered
+                    <!-- get table for this user -->
+                    <% table.registration_tables.each do |reg_table| %>
+                        <% if reg_table.user_event.user == current_user %>
+                            <%= link_to 'Remove this table', reg_table, method: :delete, data: {confirm: 'Are you sure?'} %>
+                        <% end %>
+                    <% end %>
                 <% end %>
                 <% if !@sessions.include? session %>
-                    Add this table?
+                    <%= link_to 'Add this table', new_registration_table_path %>
                 <% end %>
               </div>
           <% end %>
