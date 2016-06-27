@@ -1,23 +1,38 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-
+$main-background: #F00;
+$social-media-background: #008;
+$banner-background: #32cd32;
+$maroon: #7a0019;
+$white: #fff;
+$lightGrey: #eee;
+$darkerGrey: #ccc;
+$darkPink: #f99;
+$lightPink: #fdd;
+$orange: #fc9;
 
 .header-main{
-background-color: red;
+background-color: $main-background;
 }
 
 .social-media{
 height: 40px;
-background-color: navy;
+background-color: $social-media-background;
 }
 
 .banner{
 height: 100px;
-background-color: lime;
+background-color: $banner-background;
 }
 
 .footer-main{
 height: 60px;
-background-color: gray;
+background-color: $darkerGrey;
 }
+
+.row:nth-child(odd) {
+  background: $lightGrey;
+}
+
+

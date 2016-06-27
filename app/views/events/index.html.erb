@@ -1,76 +1,54 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Events</h1>
+<h1>All Events</h1>
 
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Start</th>
-    <th>End</th>
-    <th>Location</th>
-    <th>Current Registrations</th>
-  </tr>
-  </thead>
 
-  <tbody>
-  <% @events.each do |event| %>
-      <tr>
-        <td><%= event.name %></td>
-        <td><%= event.start.to_formatted_s(:long) %></td>
-        <td><%= event.end.to_formatted_s(:long) %></td>
-        <td><%= event.location %></td>
-        <td><%= event.user_events.length %></td>
-        <td><%= link_to 'Show', event %></td>
-        <% if current_user.admin? %>
-            <td><%= link_to 'Edit', edit_event_path(event) %></td>
-            <td><%= link_to 'Destroy', event, method: :delete, data: {confirm: 'Are you sure?'} %></td>
 
-            <td>
-              <!-- TODO - add clamshelling? -->
-              <b>Registered Players</b>
-              <% current_user.user_events.each do |registration| %>
-                  <div><%= registration.user.name %></div>
-              <% end %>
-            </td>
-        <% end %>
-      </tr>
+<!-- header row -->
+<div class="row">
+  <div class="col-md-1"><b>Name</b></div>
+  <div class="col-md-2"><b>Dates</b></div>
+  <div class="col-md-2"><b>Location</b></div>
+  <div class="col-md-1"><b>Registrations</b></div>
+  <div class="col-md-1"></div>
+  <% if current_user.admin? %>
+      <div class="col-md-2"></div>
   <% end %>
-  </tbody>
-</table>
-
-
-<div>
-  <% current_user.user_events.each do |registration| %>
-      <div class="row">
-        <div class="col-md-1"><%= registration.event.name %></div>
-        <div class="col-md-1"><%= registration.user.name %></div>
-      </div>
-  <% end %>
-
-
+  <div class="col-md-2"><b>Registered Users</b></div>
 </div>
 
-<!--<br>-->
-<!--<div>-->
-<!--<div class="row">-->
-<!--<div class="col-md-2">Name</div>-->
-<!--<div class="col-md-2">Start</div>-->
-<!--<div class="col-md-2">End</div>-->
-<!--<div class="col-md-2">Location</div>-->
-<!--</div>-->
-<!--
-<% @events.each do |event| %>-->
-    <!--<div class="row">-->
-    <!--<div class="col-md-2"><%= event.name %></div>-->
-    <!--<div class="col-md-2"><%= event.start.to_formatted_s(:long) %></div>-->
-    <!--<div class="col-md-2"><%= event.end.to_formatted_s(:long) %></div>-->
-    <!--<div class="col-md-2"><%= event.location %></div>-->
-    <!--<div class="col-md-1"><%= link_to 'Show', event %></div>-->
-    <!--</div>-->
-    <!--
-<% end %>-->
-<!--</div>-->
+<% @events.each do |event| %>
+    <div class="row">
+      <div class="col-md-1"><%= event.name %></div>
+      <div class="col-md-2"><%= event.start.to_formatted_s(:long) %> - <%= event.end.to_formatted_s(:long) %></div>
+      <div class="col-md-2"><%= event.location %></div>
+      <div class="col-md-1"><%= event.user_events.length %></div>
+      <div class="col-md-1"><%= link_to 'Show', event %></div>
+      <% if current_user.admin? %>
+          <div class="col-md-2">
+            <%= link_to 'Edit', edit_event_path(event) %>
+            <%= link_to 'Destroy', event, method: :delete, data: {confirm: 'Are you sure?'} %>
+          </div>
+      <% end %>
+      <!-- TODO - add clamshelling? -->
+      <div class="col-md-2">
+        <!-- this needs to be limited by this event -->
+        <% event.user_events.each do |registration| %>
+            <div><%= registration.user.name %></div>
+        <% end %>
+      </div>
+    </div>
+<% end %>
+
+<hr>
+
+<h3>Events that <%= current_user.name %> is registered for</h3>
+<% current_user.user_events.each do |registration| %>
+    <div><%= registration.event.name %> (<%= registration.event.start.to_formatted_s(:short) %>
+      - <%= registration.event.end.to_formatted_s(:short) %>)</div>
+<% end %>
+
+<hr>
 
 <% if current_user.admin? %>
     <%= link_to 'New Event', new_event_path %>
