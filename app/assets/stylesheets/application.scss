@@ -31,8 +31,12 @@ $orange: #fc9;
   background-color: $darkerGrey;
 }
 
-.row:nth-child(odd) {
+.row:nth-child(even) {
   background: $lightGrey;
+}
+
+h4 {
+  background-color: $white;
 }
 
 
