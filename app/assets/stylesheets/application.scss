@@ -8,6 +8,7 @@ $maroon: #7a0019;
 $white: #fff;
 $lightGrey: #eee;
 $darkerGrey: #ccc;
+$darkestGrey: #777;
 $darkPink: #f99;
 $lightPink: #fdd;
 $orange: #fc9;
@@ -36,7 +37,11 @@ $orange: #fc9;
 }
 
 h4 {
-  background-color: $white;
+  padding:0.25em;
+  margin: 0;
+  background-color: $darkestGrey;
+  color: yellow;
 }
+
 
 
