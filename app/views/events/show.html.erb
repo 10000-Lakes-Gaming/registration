@@ -21,9 +21,8 @@
   <div class="col-md-8">
     <div class="row">
       <div class="col-md-3"><h4>Scenarios Offered </h4></div>
-      <div class="col-md-2"><h4>(Seats Available)</h4></div>
-      <div class="col-md-2"><h4>Registered?</h4></div>
-      <div class="col-md-5"><h4></h4></div>
+      <div class="col-md-2"><h4>Seats Available</h4></div>
+      <div class="col-md-7"><h4>Registered?</h4></div>
     </div>
   </div>
 </div>
@@ -37,8 +36,8 @@
             <!-- inner rows -->
             <div class="row">
               <div class="col-md-3"><%= table.scenario.long_name %></div>
-              <div class="col-md-2">(<%= table.max_players - table.registration_tables.length %>
-                /<%= table.max_players %>)
+              <div class="col-md-2"><%= table.max_players - table.registration_tables.length %>
+                of <%= table.max_players %>
               </div>
               <div class="col-md-1">
                 <% if @tables.include? table %>
@@ -56,7 +55,9 @@
                         <% end %>
                     <% end %>
                 <% end %>
-                <% if !@sessions.include? session %>
+                <% registrations_available = (table.max_players > table.registration_tables.length) %>
+                <% registered_this_session = @sessions.include? session %>
+                <% if !registered_this_session && registrations_available %>
                     <%= link_to 'Add this table', new_event_session_table_registration_table_path(@event, session, table) %>
                 <% end %>
               </div>
