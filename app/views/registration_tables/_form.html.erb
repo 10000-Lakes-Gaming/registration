@@ -13,7 +13,7 @@
     <% end %>
     <!-- if not admin then they can just confirm -->
     <div class="field">
-      <%= f.label :table_id %>: <%= @table.scenario.name %>
+      <%= f.label :table_id %>: <%= @table.scenario.long_name %>
       <%= f.hidden_field :table_id, :value => @table.id %>
     </div>
     <div class="field">
@@ -21,6 +21,6 @@
       <%= f.hidden_field :user_event_id, :value => @user_event.id %>
     </div>
     <div class="actions">
-      <%= f.submit %>
+      <%= f.submit "Signup for #{@table.scenario.long_name}"%>
     </div>
 <% end %>
