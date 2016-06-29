@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   devise_for :users
   # You can have the root of your site routed with "root"
   root 'welcome#index'
@@ -7,6 +8,8 @@ Rails.application.routes.draw do
   resources :users
   resources :scenarios
   get 'welcome/index'
+
+  get 'admin/index'
 
   resources :events do
     resources :user_events

@@ -11,10 +11,10 @@
   <div class="col-md-2"><b>Location</b></div>
   <div class="col-md-1"><b>Registrations</b></div>
   <div class="col-md-1"></div>
+  <sdiv class="col-md-2"></sdiv>
   <% if current_user.admin? %>
-      <div class="col-md-2"></div>
+      <div class="col-md-2"><b>Registered Users</b></div>
   <% end %>
-  <div class="col-md-2"><b>Registered Users</b></div>
 </div>
 
 <% @events.each do |event| %>
@@ -30,13 +30,14 @@
             <%= link_to 'Destroy', event, method: :delete, data: {confirm: 'Are you sure?'} %>
           </div>
       <% end %>
-      <!-- TODO - add clamshelling? -->
-      <div class="col-md-2">
-        <!-- this needs to be limited by this event -->
-        <% event.user_events.each do |registration| %>
-            <div><%= registration.user.name %></div>
-        <% end %>
-      </div>
+      <% if current_user.admin? %>
+          <div class="col-md-2">
+            <!-- this needs to be limited by this event -->
+            <% event.user_events.each do |registration| %>
+                <div><%= registration.user.name %> (<%= registration.user.email %>)</div>
+            <% end %>
+          </div>
+      <% end %>
     </div>
 <% end %>
 
@@ -45,7 +46,8 @@
 <h3>Events that <%= current_user.name %> is registered for</h3>
 <% current_user.user_events.each do |registration| %>
     <div><%= registration.event.name %> (<%= registration.event.start.to_formatted_s(:short) %>
-      - <%= registration.event.end.to_formatted_s(:short) %>)</div>
+      - <%= registration.event.end.to_formatted_s(:short) %>)
+    </div>
 <% end %>
 
 <hr>

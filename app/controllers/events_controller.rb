@@ -5,14 +5,14 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     @events = Event.all
-
   end
-
+        0
   # GET /events/1
   # GET /events/1.json
   def show
-    @registered = current_user.user_events.any? { |user_event| user_event.event_id == @event.id }
-    @tables = []
+    # @registration = UserEvent.where( "event_id = '#{@event.id}'")
+    @registration = @event.user_events.where(user_id: current_user.id).first
+    @tawherebles = []
     @sessions = []
     @event.sessions.each do |session|
       session.tables.each do |table|

@@ -15,5 +15,7 @@
   <%= @user_event.paid %>
 </p>
 
+<% if current_user.admin? %>
 <%= link_to 'Edit', edit_event_user_event_path(@event,@user_event) %> |
-<%= link_to 'Back', event_user_events_path %>
+<% end %>
+<%= link_to "Back to #{@event.name}", event_path(@event) %>

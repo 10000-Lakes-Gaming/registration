@@ -1,5 +1,6 @@
-<h1>Register for Event</h1>
+<h1>Register for <%= @event.name %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', event_user_events_path %>
+<div>This is a test.</div>
+<%= link_to "Back to #{@event.name}", event_path(@event) %>

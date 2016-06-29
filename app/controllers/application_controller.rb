@@ -5,8 +5,6 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  puts("I am here!!!")
-
   # added for Devise
   before_action :authenticate_user!
   # puts("Authenticated? " + user_signed_in?)
