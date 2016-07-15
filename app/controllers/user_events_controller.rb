@@ -19,7 +19,7 @@ class UserEventsController < ApplicationController
 
   # GET /user_events/new
   def new
-    @user_event = UserEvent.new
+    @user_event = @event.user_events.create
   end
 
   # GET /user_events/1/edit
@@ -30,7 +30,8 @@ class UserEventsController < ApplicationController
   # POST /user_events.json
   def create
     # here, we want to use the current user -- but we might have a way to have an admin register someone?
-    @user_event = UserEvent.new(user_event_params)
+    # @user_event = UserEvent.new(user_event_params)
+    @user_event = @event.user_events.create(user_event_params)
 
     respond_to do |format|
       if @user_event.save
@@ -63,7 +64,7 @@ class UserEventsController < ApplicationController
   def destroy
     @user_event.destroy
     respond_to do |format|
-      format.html { redirect_to user_events_url, notice: 'User event was successfully unregistered.' }
+      format.html { redirect_to event_user_events_url, notice: 'User event was successfully unregistered.' }
       format.json { head :no_content }
     end
   end

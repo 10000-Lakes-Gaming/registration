@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>PfsRegistration</title>
+  <title>PFS Registration</title>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -10,21 +10,27 @@
 <body>
 <!--- Header info --->
 <div class="header-main">
-	<div class="social-media">
-		Social Media and External Link Area
-	</div>
-	<div class="banner">
-	Longform banner
-	</div>
-	<div class="menu">
-		Menu w/login after
-	<div class="container-fluid">
-  	<% if user_signed_in? %>
-   	   <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
-  	<% else %>
-   	   <%= link_to('Login', new_user_session_path) %>
-  	<% end %></div>
-	</div>	
+  <div class="social-media">
+    <div>Social Media and External Link Area</div>
+    <% if !current_user.nil? %>
+        <div>Logged in as: <%= current_user.name %> (<%= current_user.email %>)
+          <% if current_user.admin? %>[ADMIN]
+          <% end %>
+        </div>
+    <% end %>
+  </div>
+  <div class="banner">
+    Longform banner
+  </div>
+  <div class="menu">
+    Menu w/login after
+    <div class="container-fluid">
+      <% if user_signed_in? %>
+          <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+      <% else %>
+          <%= link_to('Login', new_user_session_path) %>
+      <% end %></div>
+  </div>
 </div>
 
 <!--- Main Content --->
@@ -33,7 +39,7 @@
 </div>
 
 <div class="footer-main">
-	© 2016 SkalCon
+  © 2016 SkalCon
 </div>
 
 </body>

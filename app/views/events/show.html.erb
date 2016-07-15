@@ -3,81 +3,81 @@
 <h1><%= @event.name %></h1>
 
 <h2>Details</h2>
-<p>
-  <strong>Location:</strong>
-  <%= @event.location %>
-</p>
 
-<p>
-  <strong>Registered?</strong>
-  <% if @registered %>
+<div><b>Location:</b> <%= @event.location %></div>
+<div><b>Registered? </b>
+  <% if @registration %>
       Yes
   <% else %>
       No
   <% end %>
-</p>
-
-<p>
-  <strong>Start:</strong>
-  <%= @event.start.to_formatted_s(:long) %>
-</p>
-
-<p>
-  <strong>End:</strong>
-  <%= @event.end.to_formatted_s(:long) %>
-</p>
-
-<h2>Session List for <%= @event.name %></h2>
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Name</th>
-    <th>Start/End Time</th>
-    <th>Scenarios Offered (Seats available)</th>
-  </tr>
-  </thead>
-
-  <tbody>
-  <% @event.sessions.each do |session| %>
-      <tr>
-        <td><%= session.id %></td>
-        <td><%= session.name %></td>
-        <td><%= session.start.to_s(:long) %> - <%= session.end.to_s(:long) %></td>
-        <td>
-          <% table_ok = true %>
-          <% session.tables.each do |table| %>
-
-              <div class="row">
-                <%= table.scenario.season %>-<%= table.scenario.scenario_number %>:
-                <%= table.scenario.name %>
-                (<%= table.max_players - table.registration_tables.length %>/<%= table.max_players %>)
-                <% if @tables.include? table %>
-                    Registered
-                    <!-- get table for this user -->
-                    <% table.registration_tables.each do |reg_table| %>
-                        <% if reg_table.user_event.user == current_user %>
-                            <%= link_to 'Remove this table', [@event, session, table, reg_table], method: :delete, data: {confirm: 'Are you sure?'} %>
+</div>
+<div><b>Date/Time: </b> <%= @event.start.to_formatted_s(:long) %>-<%= @event.end.to_formatted_s(:long) %></div>
+<hr>
+<h3>Sessions/Scenarios Offered</h3>
+<div class="row">
+  <div class="col-md-1"><h4>Name:</h4></div>
+  <div class="col-md-3"><h4>Start/End Time:</h4></div>
+  <div class="col-md-8">
+    <div class="row">
+      <div class="col-md-3"><h4>Scenarios Offered </h4></div>
+      <div class="col-md-2"><h4>Seats Available</h4></div>
+      <% if @registration %>
+          <div class="col-md-7"><h4>Registered?</h4></div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% @event.sessions.each do |session| %>
+    <div class="row">
+      <div class="col-md-1"><%= session.name %></div>
+      <div class="col-md-3"><%= session.start.to_s(:long) %> - <%= session.end.to_s(:long) %></div>
+      <!-- scenarios/tables -->
+      <div class="col-md-8">
+        <% session.tables.each do |table| %>
+            <!-- inner rows -->
+            <div class="row">
+              <div class="col-md-3"><%= table.scenario.long_name %></div>
+              <div class="col-md-2"><%= table.max_players - table.registration_tables.length %>
+                of <%= table.max_players %>
+              </div>
+              <% if @registration %>
+                  <div class="col-md-1">
+                    <% if @tables.include? table %>
+                        Yes
+                    <% else %>
+                        No
+                    <% end %>
+                  </div>
+                  <div class="col-md-5">
+                    <% if @tables.include? table %>
+                        <!-- get table for this user -->
+                        <% table.registration_tables.each do |reg_table| %>
+                            <% if reg_table.user_event.user == current_user %>
+                                <%= link_to 'Remove this table', [@event, session, table, reg_table], method: :delete, data: {confirm: 'Are you sure?'} %>
+                            <% end %>
                         <% end %>
                     <% end %>
-                <% end %>
-                <% if !@sessions.include? session %>
-                    <%= link_to 'Add this table', new_event_session_table_registration_table_path(@event, session, table ) %>
-                <% end %>
-              </div>
-          <% end %>
-        </td>
-        <td><%= link_to 'Show', [@event, session] %></td>
-        <% if current_user.admin? %>
-            <td><%= link_to 'Edit', edit_event_session_path(@event, session) %> </td>
+                    <% registrations_available = (table.max_players > table.registration_tables.length) %>
+                    <% registered_this_session = @sessions.include? session %>
+                    <% if !registered_this_session && registrations_available %>
+                        <%= link_to 'Add this table', new_event_session_table_registration_table_path(@event, session, table) %>
+                    <% end %>
+                  </div>
+              <% end %>
+            </div>
         <% end %>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
-<% if !@registered %>
+      </div>
+    </div>
+<% end %>
+
+<hr>
+<% if @registration %>
+    <div><%= link_to "Unregister for #{@registration.event.name}", [@event, @registration], method: :delete, data: { confirm: 'Are you sure?' } %></div>
+<% else %>
     <div><%= link_to 'Register for event?', new_event_user_event_path(@event) %></div>
 <% end %>
+<hr>
 <% if current_user.admin? %>
     <div><%= link_to 'Add Session', new_event_session_path(@event) %></div>
     <%= link_to 'Edit', edit_event_path(@event) %> |

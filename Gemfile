@@ -40,6 +40,7 @@ gem 'autoprefixer-rails'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
+  gem "capistrano", "~> 3.4"
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
