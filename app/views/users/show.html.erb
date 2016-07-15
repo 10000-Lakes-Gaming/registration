@@ -14,10 +14,12 @@
   <%= @user.pfs_number %>
 </p>
 
-<p>
-  <strong>Admin:</strong>
-  <%= @user.admin %>
-</p>
+<% if admin? %>
+    <p>
+      <strong>Admin:</strong>
+      <%= @user.admin %>
+    </p>
+<% end %>
 
 <p>
   <strong>Registrations</strong>
@@ -31,4 +33,8 @@
 </p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<% if admin? %>
+    <%= link_to 'Back', users_path %>
+<% else %>
+    <%= link_to 'Back', welcome_index_path %>
+<% end %>

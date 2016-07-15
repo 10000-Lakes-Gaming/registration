@@ -11,6 +11,6 @@ class WelcomeController < ApplicationController
         redirect_to events_path
         return
       end
-    end
+    end # current user not nil
   end
 end

@@ -7,8 +7,8 @@ Rails.application.routes.draw do
 
   resources :users
   resources :scenarios
-  get 'welcome/index'
 
+  get 'welcome/index'
   get 'admin/index'
 
   resources :events do

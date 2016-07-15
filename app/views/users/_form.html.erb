@@ -23,7 +23,7 @@
       <%= f.label :pfs_number %><br>
       <%= f.number_field :pfs_number %>
     </div>
-    <% if !current_user.admin? %>
+    <% if current_user.admin? %>
         <div class="field">
           <%= f.label :admin %><br>
           <%= f.check_box :admin %>
@@ -31,6 +31,6 @@
     <% end %>
 
     <div class="actions">
-      <%= f.submit %>
+      <%= f.submit "Save Changes" %>
     </div>
 <% end %>
