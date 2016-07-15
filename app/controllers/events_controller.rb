@@ -16,9 +16,9 @@ class EventsController < ApplicationController
       @sessions = []
       @tables = []
       @reg_tables = @registration.registration_tables
-      @reg_tables.each do |table|
-        @tables << table
-        @session << table.session
+      @reg_tables.each do |reg_table|
+        @tables << reg_table.table
+        @sessions << reg_table.table.session
       end
     end
   end

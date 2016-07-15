@@ -28,6 +28,7 @@
     </div>
   </div>
 </div>
+
 <% @event.sessions.each do |session| %>
     <div class="row">
       <div class="col-md-1"><%= session.name %></div>
@@ -53,7 +54,7 @@
                     <% if @tables.include? table %>
                         <!-- get table for this user -->
                         <% table.registration_tables.each do |reg_table| %>
-                            <% if reg_table.user_event.user == current_user %>
+                            <% if @reg_tables.include?(reg_table) %>
                                 <%= link_to 'Remove this table', [@event, session, table, reg_table], method: :delete, data: {confirm: 'Are you sure?'} %>
                             <% end %>
                         <% end %>
@@ -73,7 +74,7 @@
 
 <hr>
 <% if @registration %>
-    <div><%= link_to "Unregister for #{@registration.event.name}", [@event, @registration], method: :delete, data: { confirm: 'Are you sure?' } %></div>
+    <div><%= link_to "Unregister for #{@registration.event.name}", [@event, @registration], method: :delete, data: {confirm: 'Are you sure?'} %></div>
 <% else %>
     <div><%= link_to 'Register for event?', new_event_user_event_path(@event) %></div>
 <% end %>
