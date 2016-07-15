@@ -1,9 +1,9 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-$main-background: #F00;
-$social-media-background: #008;
-$banner-background: #32cd32;
+$red: #f00;
+$blue: #008;
+$bright-green: #32cd32;
 $maroon: #7a0019;
 $white: #fff;
 $lightGrey: #eee;
@@ -12,6 +12,10 @@ $darkestGrey: #777;
 $darkPink: #f99;
 $lightPink: #fdd;
 $orange: #fc9;
+
+$main-background: $lightPink;
+$social-media-background: $blue;
+$banner-background: $bright-green;
 
 .header-main {
   background-color: $main-background;
