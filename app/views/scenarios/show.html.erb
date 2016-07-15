@@ -43,6 +43,7 @@
   <strong>Pregen Only:</strong>
   <%= @scenario.pregen_only %>
 </p>
-
-<%= link_to 'Edit', edit_scenario_path(@scenario) %> |
+<% if admin? %>
+    <%= link_to 'Edit', edit_scenario_path(@scenario) %> |
+<% end %>
 <%= link_to 'Back', scenarios_path %>
