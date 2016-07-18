@@ -6,6 +6,7 @@ $blue: #008;
 $bright-green: #32cd32;
 $maroon: #7a0019;
 $white: #fff;
+$lightGreen: #efe;
 $lightGrey: #eee;
 $darkerGrey: #ccc;
 $darkestGrey: #777;
@@ -16,6 +17,7 @@ $orange: #fc9;
 $main-background: $lightPink;
 $social-media-background: $blue;
 $banner-background: $bright-green;
+
 
 .header-main {
   background-color: $main-background;
@@ -41,12 +43,26 @@ $banner-background: $bright-green;
   background: $lightGrey;
 }
 
+.sidebar {
+  background-color: $lightGreen;
+  // TODO make this dynamic?
+  height: 75%;
+}
+
+div.bottom {
+    position: absolute;
+    height: 100px;
+    top: 100%;
+    margin-top:-100px;
+}
+
 h4 {
   padding:0.25em;
   margin: 0;
   background-color: $darkestGrey;
   color: yellow;
 }
+
 
 
 

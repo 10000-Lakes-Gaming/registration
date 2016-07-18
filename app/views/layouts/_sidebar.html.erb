@@ -1,0 +1,14 @@
+<div class="nav-sidebar-menu" style="height: 100%;">
+  <% if user_signed_in? %>
+      <p style="margin-top: 1em;"><%= link_to 'Edit My Profile', edit_user_path(current_user) %></p>
+      <p><%= link_to 'Event Listings', events_path %></p>
+      <p><%= link_to 'Scenario Listings', scenarios_path %></p>
+  <% end %>
+  <div class="bottom">
+    <% if user_signed_in? %>
+        <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+    <% else %>
+        <%= link_to('Login', new_user_session_path) %>
+    <% end %>
+  </div>
+</div>

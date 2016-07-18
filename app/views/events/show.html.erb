@@ -12,7 +12,15 @@
       No
   <% end %>
 </div>
-<div><b>Date/Time: </b> <%= @event.start.to_formatted_s(:long) %>-<%= @event.end.to_formatted_s(:long) %></div>
+<div><b>Paid?</b>
+  <% if @registration && @registration.paid? %>
+      Yes
+  <% else %>
+      <% # This has to be dynamic for future events. %>
+      No: <a href="http://www.skalcon.org/index.php/register/">Register for SkålCon</a>
+  <% end %>
+</div>
+<div><b>Date/Time: </b> <%= @event.start.to_formatted_s(:long) %> to <%= @event.end.to_formatted_s(:long) %></div>
 <hr>
 <h3>Sessions/Scenarios Offered</h3>
 <div class="row">
@@ -59,9 +67,11 @@
                             <% end %>
                         <% end %>
                     <% end %>
+                    <% # TODO - move this to the controller - perhaps in a map? %>
                     <% registrations_available = (table.max_players > table.registration_tables.length) %>
                     <% registered_this_session = @sessions.include? session %>
                     <% if !registered_this_session && registrations_available %>
+                        <% # TODO - deny access to add tables if they are not paid %>
                         <%= link_to 'Add this table', new_event_session_table_registration_table_path(@event, session, table) %>
                     <% end %>
                   </div>
