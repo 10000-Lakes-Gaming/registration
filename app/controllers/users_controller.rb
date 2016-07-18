@@ -15,9 +15,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def redirect_to_user
+    redirect_to user_path (current_user)
+  end
+
   # GET /users
   # GET /users.json
   def index
+    if !current_user.admin?
+      redirect_to_user
+    end
     @users = User.all
   end
 
@@ -29,6 +36,7 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
+    admin_only
     @user = User.new
   end
 
@@ -41,6 +49,9 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     # do I need admin here?
+    if !current_user.admin?
+      redirect_to_user
+    end
     @user = User.new(user_params)
 
     respond_to do |format|
