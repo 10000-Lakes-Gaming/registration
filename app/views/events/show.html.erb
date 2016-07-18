@@ -24,14 +24,14 @@
 <hr>
 <h3>Sessions/Scenarios Offered</h3>
 <div class="row">
-  <div class="col-md-1"><h4>Name:</h4></div>
-  <div class="col-md-3"><h4>Start/End Time:</h4></div>
-  <div class="col-md-8">
+  <div class="col-md-2"><h4>Name:</h4></div>
+  <div class="col-md-4"><h4>Start/End Time:</h4></div>
+  <div class="col-md-6">
     <div class="row">
-      <div class="col-md-3"><h4>Scenarios Offered </h4></div>
-      <div class="col-md-2"><h4>Seats Available</h4></div>
+      <div class="col-md-5"><h4>Scenarios Offered </h4></div>
+      <div class="col-md-2"><h4>Seats</h4></div>
       <% if @registration %>
-          <div class="col-md-7"><h4>Registered?</h4></div>
+          <div class="col-md-5"><h4>Registered?</h4></div>
       <% end %>
     </div>
   </div>
@@ -39,14 +39,18 @@
 
 <% @event.sessions.each do |session| %>
     <div class="row">
-      <div class="col-md-1"><%= session.name %></div>
-      <div class="col-md-3"><%= session.start.to_s(:long) %> - <%= session.end.to_s(:long) %></div>
+      <div class="col-md-2">
+        <%= link_to "#{session.name}", [@event,session] %>
+      </div>
+      <div class="col-md-4"><%= session.start.to_s(:long) %> - <%= session.end.to_s(:long) %></div>
       <!-- scenarios/tables -->
-      <div class="col-md-8">
+      <div class="col-md-6">
         <% session.tables.each do |table| %>
             <!-- inner rows -->
             <div class="row">
-              <div class="col-md-3"><%= table.scenario.long_name %></div>
+              <div class="col-md-5">
+                <%= link_to "#{table.scenario.long_name}", table.scenario %>
+              </div>
               <div class="col-md-2"><%= table.max_players - table.registration_tables.length %>
                 of <%= table.max_players %>
               </div>
@@ -58,7 +62,7 @@
                         No
                     <% end %>
                   </div>
-                  <div class="col-md-5">
+                  <div class="col-md-4">
                     <% if @tables.include? table %>
                         <!-- get table for this user -->
                         <% table.registration_tables.each do |reg_table| %>

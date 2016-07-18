@@ -22,9 +22,9 @@
     <%= image_tag("skalbanner.png", size: "250x100", alt: "SkålCon") %>
   </div>
   <div class="menu">
-    Menu w/login after
     <div class="container-fluid">
-      <div class="col-md-1">
+      <div class="col-md-3">Menu w/login after</div>
+      <div class="col-md-1 col-sm-2">
         <% if user_signed_in? %>
             <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
         <% else %>
