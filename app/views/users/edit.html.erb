@@ -3,4 +3,8 @@
 <%= render 'form' %>
 
 <%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+<% if admin? %>
+    <%= link_to 'Back', users_path %>
+<% else %>
+    <%= link_to 'Back', welcome_index_path %>
+<% end %>

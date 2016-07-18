@@ -2,16 +2,14 @@
 
 <h1>All Events</h1>
 
-
-
 <!-- header row -->
 <div class="row">
-  <div class="col-md-1"><b>Name</b></div>
-  <div class="col-md-2"><b>Dates</b></div>
+  <div class="col-md-2"><b>Name</b></div>
+  <div class="col-md-4"><b>Dates</b></div>
   <div class="col-md-2"><b>Location</b></div>
   <div class="col-md-1"><b>Registrations</b></div>
   <div class="col-md-1"></div>
-  <sdiv class="col-md-2"></sdiv>
+  <div class="col-md-2"></div>
   <% if current_user.admin? %>
       <div class="col-md-2"><b>Registered Users</b></div>
   <% end %>
@@ -19,8 +17,8 @@
 
 <% @events.each do |event| %>
     <div class="row">
-      <div class="col-md-1"><%= event.name %></div>
-      <div class="col-md-2"><%= event.start.to_formatted_s(:long) %> - <%= event.end.to_formatted_s(:long) %></div>
+      <div class="col-md-2"><%= event.name %></div>
+      <div class="col-md-4"><%= event.start.to_formatted_s(:long) %> - <%= event.end.to_formatted_s(:long) %></div>
       <div class="col-md-2"><%= event.location %></div>
       <div class="col-md-1"><%= event.user_events.length %></div>
       <div class="col-md-1"><%= link_to 'Show', event %></div>
@@ -45,9 +43,7 @@
 
 <h3>Events that <%= current_user.name %> is registered for</h3>
 <% current_user.user_events.each do |registration| %>
-    <div><%= registration.event.name %> (<%= registration.event.start.to_formatted_s(:short) %>
-      - <%= registration.event.end.to_formatted_s(:short) %>)
-    </div>
+    <div><%= link_to "#{registration.event.name} (#{registration.event.start.to_formatted_s(:short)} to #{registration.event.end.to_formatted_s(:short)})", registration.event %></div>
 <% end %>
 
 <hr>

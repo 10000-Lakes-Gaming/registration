@@ -1,8 +1,6 @@
 <p id="notice"><%= notice %></p>
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
+
+  <h1><%= @user.name %></h1>
 
 <p>
   <strong>Email address:</strong>
@@ -14,21 +12,27 @@
   <%= @user.pfs_number %>
 </p>
 
-<p>
-  <strong>Admin:</strong>
-  <%= @user.admin %>
-</p>
-
-<p>
-  <strong>Registrations</strong>
-  <% @user.user_events.each do |user_event| %>
-    <div><%= user_event.event.name %>
-      <% user_event.registration_tables.each do |reg_table| %>
-          <div><%= reg_table.table.session.name %>: <%= reg_table.table.scenario.name %></div>
-      <% end %>
-    </div>
+<% if admin? %>
+    <p>
+      <strong>Admin:</strong>
+      <%= @user.admin %>
+    </p>
 <% end %>
-</p>
+
+<h2>Registrations</h2>
+<% @user.user_events.each do |user_event| %>
+    <h3><%= user_event.event.name %></h3>
+    <!-- TODO - add clamshell? -->
+    <ul>
+      <% user_event.registration_tables.each do |reg_table| %>
+          <li><%= reg_table.table.session.name %>: <%= reg_table.table.scenario.name %></li>
+      <% end %>
+    </ul>
+<% end %>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<% if admin? %>
+    <%= link_to 'Back', users_path %>
+<% else %>
+    <%= link_to 'Back', welcome_index_path %>
+<% end %>
