@@ -22,6 +22,7 @@
 <h2>Registrations</h2>
 <% @user.user_events.each do |user_event| %>
     <h3><%= user_event.event.name %></h3>
+    <!-- add clamshell? -->
     <ul>
       <% user_event.registration_tables.each do |reg_table| %>
           <li><%= reg_table.table.session.name %>: <%= reg_table.table.scenario.name %></li>
