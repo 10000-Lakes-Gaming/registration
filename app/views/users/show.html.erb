@@ -1,8 +1,6 @@
 <p id="notice"><%= notice %></p>
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
+
+  <h1><%= @user.name %></h1>
 
 <p>
   <strong>Email address:</strong>
@@ -21,16 +19,16 @@
     </p>
 <% end %>
 
-<p>
-  <strong>Registrations</strong>
-  <% @user.user_events.each do |user_event| %>
-    <div><%= user_event.event.name %>
+<h2>Registrations</h2>
+<% @user.user_events.each do |user_event| %>
+    <h3><%= user_event.event.name %></h3>
+    <!-- TODO - add clamshell? -->
+    <ul>
       <% user_event.registration_tables.each do |reg_table| %>
-          <div><%= reg_table.table.session.name %>: <%= reg_table.table.scenario.name %></div>
+          <li><%= reg_table.table.session.name %>: <%= reg_table.table.scenario.name %></li>
       <% end %>
-    </div>
+    </ul>
 <% end %>
-</p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <% if admin? %>

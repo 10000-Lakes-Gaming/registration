@@ -3,15 +3,21 @@ class EventsController < ApplicationController
   before_filter :restrict_to_admin, except: [:show, :index]
   # GET /events
   # GET /events.json
+  # TODO add logic/parameter to showall, and default to current/future
   def index
     @events = Event.all
+  end
+
+  def prevent_non_admin
+    unless current_user.admin?
+      redirect_to events_path
+    end
   end
 
   # GET /events/1
   # GET /events/1.json
   def show
     @registration = @event.user_events.where(user_id: current_user.id).first
-
     if @registration
       @sessions = []
       @tables = []
@@ -25,17 +31,20 @@ class EventsController < ApplicationController
 
   # GET /events/new
   def new
+    prevent_non_admin
     @event = Event.new
     @user_event = UserEvent.new
   end
 
   # GET /events/1/edit
   def edit
+    prevent_non_admin
   end
 
   # POST /events
   # POST /events.json
   def create
+    prevent_non_admin
     @event = Event.new(event_params)
 
     respond_to do |format|
@@ -52,6 +61,7 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1
   # PATCH/PUT /events/1.json
   def update
+    prevent_non_admin
     respond_to do |format|
       if @event.update(event_params)
         format.html { redirect_to @event, notice: 'Event was successfully updated.' }
@@ -66,6 +76,7 @@ class EventsController < ApplicationController
   # DELETE /events/1
   # DELETE /events/1.json
   def destroy
+    prevent_non_admin
     @event.destroy
     respond_to do |format|
       format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }

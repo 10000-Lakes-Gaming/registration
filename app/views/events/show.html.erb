@@ -12,18 +12,26 @@
       No
   <% end %>
 </div>
-<div><b>Date/Time: </b> <%= @event.start.to_formatted_s(:long) %>-<%= @event.end.to_formatted_s(:long) %></div>
+<div><b>Paid?</b>
+  <% if @registration && @registration.paid? %>
+      Yes
+  <% else %>
+      <% # This has to be dynamic for future events. %>
+      No: <a href="http://www.skalcon.org/index.php/register/">Pay for SkålCon</a>
+  <% end %>
+</div>
+<div><b>Date/Time: </b> <%= @event.start.to_formatted_s(:long) %> to <%= @event.end.to_formatted_s(:long) %></div>
 <hr>
 <h3>Sessions/Scenarios Offered</h3>
 <div class="row">
-  <div class="col-md-1"><h4>Name:</h4></div>
-  <div class="col-md-3"><h4>Start/End Time:</h4></div>
-  <div class="col-md-8">
+  <div class="col-md-2"><h4>Name:</h4></div>
+  <div class="col-md-4"><h4>Start/End Time:</h4></div>
+  <div class="col-md-6">
     <div class="row">
-      <div class="col-md-3"><h4>Scenarios Offered </h4></div>
-      <div class="col-md-2"><h4>Seats Available</h4></div>
+      <div class="col-md-5"><h4>Scenarios Offered </h4></div>
+      <div class="col-md-2"><h4>Seats</h4></div>
       <% if @registration %>
-          <div class="col-md-7"><h4>Registered?</h4></div>
+          <div class="col-md-5"><h4>Registered?</h4></div>
       <% end %>
     </div>
   </div>
@@ -31,14 +39,18 @@
 
 <% @event.sessions.each do |session| %>
     <div class="row">
-      <div class="col-md-1"><%= session.name %></div>
-      <div class="col-md-3"><%= session.start.to_s(:long) %> - <%= session.end.to_s(:long) %></div>
+      <div class="col-md-2">
+        <%= link_to "#{session.name}", [@event, session] %>
+      </div>
+      <div class="col-md-4"><%= session.start.to_s(:long) %> - <%= session.end.to_s(:long) %></div>
       <!-- scenarios/tables -->
-      <div class="col-md-8">
+      <div class="col-md-6">
         <% session.tables.each do |table| %>
             <!-- inner rows -->
             <div class="row">
-              <div class="col-md-3"><%= table.scenario.long_name %></div>
+              <div class="col-md-5">
+                <%= link_to "#{table.scenario.long_name}", table.scenario %>
+              </div>
               <div class="col-md-2"><%= table.max_players - table.registration_tables.length %>
                 of <%= table.max_players %>
               </div>
@@ -50,19 +62,21 @@
                         No
                     <% end %>
                   </div>
-                  <div class="col-md-5">
+                  <div class="col-md-4">
                     <% if @tables.include? table %>
                         <!-- get table for this user -->
                         <% table.registration_tables.each do |reg_table| %>
                             <% if @reg_tables.include?(reg_table) %>
-                                <%= link_to 'Remove this table', [@event, session, table, reg_table], method: :delete, data: {confirm: 'Are you sure?'} %>
+                                <%= link_to 'Remove table', [@event, session, table, reg_table], method: :delete, data: {confirm: 'Are you sure?'} %>
                             <% end %>
                         <% end %>
                     <% end %>
+                    <% # TODO - move this to the controller - perhaps in a map? %>
                     <% registrations_available = (table.max_players > table.registration_tables.length) %>
                     <% registered_this_session = @sessions.include? session %>
                     <% if !registered_this_session && registrations_available %>
-                        <%= link_to 'Add this table', new_event_session_table_registration_table_path(@event, session, table) %>
+                        <% # TODO - deny access to add tables if they are not paid %>
+                        <%= link_to 'Add table', new_event_session_table_registration_table_path(@event, session, table) %>
                     <% end %>
                   </div>
               <% end %>
@@ -74,7 +88,11 @@
 
 <hr>
 <% if @registration %>
-    <div><%= link_to "Unregister for #{@registration.event.name}", [@event, @registration], method: :delete, data: {confirm: 'Are you sure?'} %></div>
+    <div><%= link_to "Unregister for #{@registration.event.name}", [@event, @registration], method: :delete, data: {confirm: 'Are you sure? Unregistering for the event will remove you from all tables, and will not refund your payment.'} %>
+      <% if @registration && @registration.paid? %>
+          <em>Note: unregistering will not refund your payment.</em>
+      <% end %>
+    </div>
 <% else %>
     <div><%= link_to 'Register for event?', new_event_user_event_path(@event) %></div>
 <% end %>

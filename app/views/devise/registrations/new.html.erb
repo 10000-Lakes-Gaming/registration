@@ -5,19 +5,20 @@
 
 
     <div class="field">
-      <%= f.label :name %>
+      <%= f.label :name %> <br>
       <%= f.text_field :name %>
     </div>
     <br>
 
     <div class="field">
-      <%= f.label :pfs_number %>
+      <%= f.label :pfs_number %> <br>
       <%= f.text_field :pfs_number %>
     </div>
     <br>
 
     <div class="field">
-      <%= f.label :email %><br>
+      <%= f.label :email %>: <em>Please use your paizo.com email address.</em>
+      <br>
       <%= f.email_field :email, autofocus: true %>
     </div>
     <div class="field">
@@ -32,6 +33,9 @@
       <%= f.label :password_confirmation %><br/>
       <%= f.password_field :password_confirmation, autocomplete: "off" %>
     </div>
+
+    <%= f.hidden_field :admin, :value => false %>
+
 
     <div class="actions">
       <%= f.submit "Sign up" %>

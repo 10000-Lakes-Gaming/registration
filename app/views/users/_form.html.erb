@@ -11,20 +11,20 @@
         </div>
     <% end %>
 
-    <div class="field">
+    <div class="field form-group">
       <%= f.label :name %><br>
       <%= f.text_field :name %>
     </div>
-    <div class="field">
+    <div class="field form-group">
       <%= f.label :email %><br>
-      <%= f.text_field :email %>
+      <%= f.text_field :email,:readonly => true%>
     </div>
-    <div class="field">
+    <div class="field form-group">
       <%= f.label :pfs_number %><br>
       <%= f.number_field :pfs_number %>
     </div>
     <% if current_user.admin? %>
-        <div class="field">
+        <div class="field form-group">
           <%= f.label :admin %><br>
           <%= f.check_box :admin %>
         </div>
