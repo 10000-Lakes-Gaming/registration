@@ -78,7 +78,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.action_mailer.default_url_options = {:host => 'pfs-registration.herokuapp.com'}
-
+  config.action_mailer.delivery_method = :smtp
 
   ActionMailer::Base.smtp_settings = {
       :address => 'smtp.gmail.com',
@@ -87,6 +87,7 @@ Rails.application.configure do
       :authentication => :plain,
       :user_name => ENV['GMAIL_SMTP_USERNAME'],
       :password => ENV['GMAIL_SMTP_PASSWORD'],
+      :enable_starttls_auto => true
   }
   ActionMailer::Base.delivery_method = :smtp
 end
