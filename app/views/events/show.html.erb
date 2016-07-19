@@ -49,7 +49,11 @@
             <!-- inner rows -->
             <div class="row">
               <div class="col-md-5">
-                <%= link_to "#{table.scenario.long_name}", table.scenario %>
+                <% if table.scenario.paizo_url.nil? %>
+                    <%= link_to "#{table.scenario.long_name}", table.scenario %> <br/>
+                <% else %>
+                    <a target="_blank" href="<%= table.scenario.paizo_url %>"><%= table.scenario.long_name %></a>
+                <% end %>
               </div>
               <div class="col-md-2"><%= table.max_players - table.registration_tables.length %>
                 of <%= table.max_players %>
@@ -94,7 +98,7 @@
       <% end %>
     </div>
 <% else %>
-    <div><%= link_to 'Register for event?', new_event_user_event_path(@event) %></div>
+    <div><%= link_to "Register for #{@event.name}?", new_event_user_event_path(@event) %></div>
 <% end %>
 <hr>
 <% if current_user.admin? %>
