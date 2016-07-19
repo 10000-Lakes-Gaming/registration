@@ -1,6 +1,6 @@
 <!-- TODO - add active class! -->
 <ul>
-  <% if user_signed_in %>
+  <% if user_signed_in? %>
       <li><%= link_to 'My Profile', edit_user_path(current_user) %></li>
   <% end %>s
   <li><%= link_to 'Event Listings', events_path %></li>
