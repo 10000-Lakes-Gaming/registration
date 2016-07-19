@@ -1,3 +1,12 @@
 // Place all the styles related to the Registrations controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+$red: #f00;
+
+.password {
+  color: $red;
+  font-family: "Helvetica Neue", Arial, "Lucida Grande", sans-serif;
+}

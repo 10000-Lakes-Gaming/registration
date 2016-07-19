@@ -1,14 +1,17 @@
-<div class="nav-sidebar-menu" style="height: 100%;">
-  <% if user_signed_in? %>
-      <p style="margin-top: 1em;"><%= link_to 'My Profile', edit_user_path(current_user) %></p>
-      <p><%= link_to 'Event Listings', events_path %></p>
-      <p><%= link_to 'Scenario Listings', scenarios_path %></p>
+<!-- TODO - add active class! -->
+<ul>
+  <li><%= link_to 'My Profile', edit_user_path(current_user) %></li>
+   <li><%= link_to 'Event Listings', events_path %></li>
+  <li><%= link_to 'Home', welcome_index_path %></li>
+
+  <% if current_user.admin? %>
+   <li><%= link_to 'Scenario Listings', scenarios_path %></li>
   <% end %>
-  <div class="bottom">
+  <li>
     <% if user_signed_in? %>
         <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
     <% else %>
         <%= link_to('Login', new_user_session_path) %>
     <% end %>
-  </div>
-</div>
+  </li>
+</ul>
