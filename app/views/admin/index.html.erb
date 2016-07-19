@@ -4,3 +4,9 @@
 <div><%= link_to 'Manage Events', events_path %></div>
 <div><%= link_to 'Manage Scenarios', scenarios_path %></div>
 <div><%= link_to 'Manage Users', users_path %></div>
+
+
+
+<% if user_signed_in? && current_user.email = 'silbeg@gmail.com' %>
+    <%= debug ENV.to_h.to_yaml %>
+<% end %>

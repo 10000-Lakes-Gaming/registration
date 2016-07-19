@@ -53,10 +53,6 @@
 <% end %>
 
 <hr>
-<% if user_signed_in? && current_user.email = 'silbeg@comcast.net' %>
-    <%= debug ENV.to_h.to_yaml %>
-<% end %>
-
 
 <% if current_user.admin? %>
     <%= link_to 'New Event', new_event_path %>
