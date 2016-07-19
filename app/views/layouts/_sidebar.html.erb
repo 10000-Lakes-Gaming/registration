@@ -1,11 +1,13 @@
 <!-- TODO - add active class! -->
 <ul>
-  <li><%= link_to 'My Profile', edit_user_path(current_user) %></li>
-   <li><%= link_to 'Event Listings', events_path %></li>
+  <% if user_signed_in %>
+      <li><%= link_to 'My Profile', edit_user_path(current_user) %></li>
+  <% end %>s
+  <li><%= link_to 'Event Listings', events_path %></li>
   <li><%= link_to 'Home', welcome_index_path %></li>
 
   <% if current_user.admin? %>
-   <li><%= link_to 'Scenario Listings', scenarios_path %></li>
+      <li><%= link_to 'Scenario Listings', scenarios_path %></li>
   <% end %>
   <li>
     <% if user_signed_in? %>
