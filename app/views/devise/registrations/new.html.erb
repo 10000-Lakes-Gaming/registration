@@ -17,7 +17,7 @@
     <br>
 
     <div class="field">
-      <%= f.label :email %>: <em>Please use your paizo.com email address.</em>
+      <%= f.label :email %>: <em>Please use the email address that you registered with paizo.com.</em>
       <br>
       <%= f.email_field :email, autofocus: true %>
     </div>
@@ -25,6 +25,7 @@
       <%= f.label :password %>
       <% if @minimum_password_length %>
           <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <em>Please do not use the same password that you used on paizo.com.</em>
       <% end %><br/>
       <%= f.password_field :password, autocomplete: "off" %>
     </div>
