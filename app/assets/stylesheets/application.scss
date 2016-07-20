@@ -26,7 +26,8 @@ $skal-gray: #555555;
 
 .social-media {
   background-color: $social-media-background;
-  color: $white
+  color: $white;
+  display: flex;
 }
 
 .banner {
@@ -99,6 +100,7 @@ li a:hover {
 }
 
 .divider {
-  height: 5px;
+  color: $white;
+  height: auto;
   background-color: $skal-gray;
 }
