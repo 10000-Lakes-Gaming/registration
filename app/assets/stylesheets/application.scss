@@ -26,7 +26,8 @@ $skal-gray: #555555;
 
 .social-media {
   background-color: $social-media-background;
-  color: $white
+  color: $white;
+  display: flex;
 }
 
 .banner {
@@ -90,9 +91,7 @@ ul.sidebar {
     color: white;
     text-decoration: none;
   }
-
 }
-
 
 .active {
   background-color: #4CAF50;
@@ -100,6 +99,8 @@ ul.sidebar {
 }
 
 .divider {
-  height: 5px;
+  color: $white;
+  height: auto;
   background-color: $skal-gray;
+  padding-left: 10px;
 }

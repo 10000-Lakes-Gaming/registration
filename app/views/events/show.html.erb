@@ -2,93 +2,100 @@
 
 <h1><%= @event.name %></h1>
 
-<h2>Details</h2>
-
-<div><b>Location:</b> <%= @event.location %></div>
-<div><b>Registered? </b>
-  <% if @registration %>
-      Yes
-  <% else %>
-      No
-  <% end %>
-</div>
-<div><b>Paid?</b>
-  <% if @registration && @registration.paid? %>
-      Yes
-  <% else %>
-      <% # This has to be dynamic for future events. %>
-      No: <a href="http://www.skalcon.org/index.php/register/">Pay for SkålCon</a>
-  <% end %>
-</div>
-<div><b>Date/Time: </b> <%= @event.start.to_formatted_s(:long) %> to <%= @event.end.to_formatted_s(:long) %></div>
-<hr>
-<h3>Sessions/Scenarios Offered</h3>
-<div class="row">
-  <div class="col-md-2"><h4>Name:</h4></div>
-  <div class="col-md-4"><h4>Start/End Time:</h4></div>
-  <div class="col-md-6">
-    <div class="row">
-      <div class="col-md-5"><h4>Scenarios Offered </h4></div>
-      <div class="col-md-2"><h4>Seats</h4></div>
-      <% if @registration %>
-          <div class="col-md-5"><h4>Registered?</h4></div>
-      <% end %>
-    </div>
+<div class="detailsBlock" style="border: solid thin black;">
+  <h2>Details</h2>
+  <div><b>Location:</b> <%= @event.location %></div>
+  <div><b>Registered? </b>
+    <% if @registration %>
+        Yes
+    <% else %>
+        No
+    <% end %>
   </div>
+  <div><b>Paid?</b>
+    <% if @registration && @registration.paid? %>
+        Yes
+    <% else %>
+        <% # This has to be dynamic for future events. %>
+        No: <a href="http://www.skalcon.org/index.php/register/">Pay for SkålCon</a>
+    <% end %>
+  </div>
+  <div><b>Date/Time: </b> <%= @event.start.to_formatted_s(:long) %> to <%= @event.end.to_formatted_s(:long) %></div>
 </div>
 
-<% @event.sessions.each do |session| %>
-    <div class="row">
-      <div class="col-md-2">
-        <%= link_to "#{session.name}", [@event, session] %>
-      </div>
-      <div class="col-md-4"><%= session.start.to_s(:long) %> - <%= session.end.to_s(:long) %></div>
-      <!-- scenarios/tables -->
-      <div class="col-md-6">
-        <% session.tables.each do |table| %>
-            <!-- inner rows -->
-            <div class="row">
-              <div class="col-md-5">
-                <% if table.scenario.paizo_url.nil? %>
-                    <%= link_to "#{table.scenario.long_name}", table.scenario %> <br/>
-                <% else %>
-                    <a target="_blank" href="<%= table.scenario.paizo_url %>"><%= table.scenario.long_name %></a>
-                <% end %>
-              </div>
-              <div class="col-md-2"><%= table.max_players - table.registration_tables.length %>
-                of <%= table.max_players %>
-              </div>
-              <% if @registration %>
-                  <div class="col-md-1">
-                    <% if @tables.include? table %>
-                        Yes
-                    <% else %>
-                        No
-                    <% end %>
-                  </div>
-                  <div class="col-md-4">
-                    <% if @tables.include? table %>
-                        <!-- get table for this user -->
-                        <% table.registration_tables.each do |reg_table| %>
-                            <% if @reg_tables.include?(reg_table) %>
-                                <%= link_to 'Remove table', [@event, session, table, reg_table], method: :delete, data: {confirm: 'Are you sure?'} %>
-                            <% end %>
-                        <% end %>
-                    <% end %>
-                    <% # TODO - move this to the controller - perhaps in a map? %>
-                    <% registrations_available = (table.max_players > table.registration_tables.length) %>
-                    <% registered_this_session = @sessions.include? session %>
-                    <% if !registered_this_session && registrations_available %>
-                        <% # TODO - deny access to add tables if they are not paid %>
-                        <%= link_to 'Add table', new_event_session_table_registration_table_path(@event, session, table) %>
-                    <% end %>
-                  </div>
-              <% end %>
-            </div>
+
+<div class="sessionsOffered" style="border: solid thin black;">
+  <h3>Sessions/Scenarios Offered</h3>
+  <div class="row">
+    <div class="col-md-2"><h4>Name:</h4></div>
+    <div class="col-md-4"><h4>Start/End Time:</h4></div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-5"><h4>Scenarios Offered </h4></div>
+        <div class="col-md-2"><h4>Seats</h4></div>
+        <% if @registration %>
+            <div class="col-md-5"><h4>Registered?</h4></div>
         <% end %>
       </div>
     </div>
-<% end %>
+  </div>
+
+
+  <% @event.sessions.each do |session| %>
+      <div class="row" style="border-bottom: solid black thin;">
+        <div class="col-md-2">
+          <%= link_to "#{session.name}", [@event, session] %>
+        </div>
+        <div class="col-md-4"><%= session.start.to_s(:long) %> - <%= session.end.to_s(:long) %></div>
+        <!-- scenarios/tables -->
+        <div class="col-md-6">
+          <% session.tables.each do |table| %>
+              <!-- inner rows -->
+              <div class="row">
+                <div class="col-md-5">
+                  <% if table.scenario.paizo_url.nil? %>
+                      <%= link_to "#{table.scenario.long_name}", table.scenario %> <br/>
+                  <% else %>
+                      <a target="_blank" href="<%= table.scenario.paizo_url %>"><%= table.scenario.long_name %></a>
+                  <% end %>
+                </div>
+                <div class="col-md-2"><%= table.max_players - table.registration_tables.length %>
+                  of <%= table.max_players %>
+                </div>
+                <% if @registration %>
+                    <div class="col-md-1">
+                      <% if @tables.include? table %>
+                          Yes
+                      <% else %>
+                          No
+                      <% end %>
+                    </div>
+                    <div class="col-md-4">
+                      <% if @tables.include? table %>
+                          <!-- get table for this user -->
+                          <% table.registration_tables.each do |reg_table| %>
+                              <% if @reg_tables.include?(reg_table) %>
+                                  <%= link_to 'Remove table', [@event, session, table, reg_table], method: :delete, data: {confirm: 'Are you sure?'} %>
+                              <% end %>
+                          <% end %>
+                      <% end %>
+                      <% # TODO - move this to the controller - perhaps in a map? %>
+                      <% registrations_available = (table.max_players > table.registration_tables.length) %>
+                      <% registered_this_session = @sessions.include? session %>
+                      <% if !registered_this_session && registrations_available %>
+                          <% # TODO - deny access to add tables if they are not paid %>
+                          <%= link_to 'Add table', new_event_session_table_registration_table_path(@event, session, table) %>
+                      <% end %>
+                    </div>
+                <% end %>
+              </div>
+          <% end %>
+        </div>
+      </div>
+  <% end %>
+</div>
+
+
 
 <hr>
 <% if @registration %>
