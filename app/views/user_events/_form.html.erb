@@ -12,21 +12,35 @@
     <% end %>
 
     <% if current_user.admin? %>
-        <div class="row">
-          <div class="field col-md-4">
-            <%= f.label :user_id %>:
-            <%= f.select :user_id, options_for_select(@users.map{|user| ["#{user.name} (#{user.email})", user.id]}.to_h), include_blank: 'Select User...' %>
-          </div>
-          <div class="field col-md-2">
-            <%= f.label :event_id %>:
-            <%= f.select :event_id, options_for_select(@events.map{ |event| [event.name, event.id]}.to_h, @event.id)  %>
-          </div>
-          <div class="field col-md-4">
-            <!--- TODO - maybe add some JavaScript to change user to the selected user name? -->
-            <%= f.label :paid, 'Has the user paid for the event?' %>
-            <%= f.check_box :paid %>
-          </div>
+        <div>
+          <%= f.label :user_id %>:
+          <% if @user_event.persisted? %>
+              <%= f.hidden_field :user_id, :value => @user_event.user_id %>
+              <%= "#{@user_event.user.name} (#{@user_event.user.email})" %>
+          <% else %>
+              <%= f.select :user_id, options_for_select(@users.map { |user| ["#{user.name} (#{user.email})", user.id] }.to_h, @user_event.user_id), include_blank: 'Select User...' %>
+          <% end %>
         </div>
+
+        <div>
+          <%= f.label :event_id %>:
+          <% unless @user_event.persisted? %>
+              <%= f.select :event_id, options_for_select(@events.map { |event| [event.name, event.id] }.to_h, @event.id) %>
+          <% else %>
+              <%= @event.name %>
+          <% end %>
+        </div>
+
+        <div>
+          <% if @user_event.persisted?
+               username = @user_event.user.name
+               else
+               username = ''
+             end %>
+          <%= f.label :paid, "Check when #{username} has paid: " %>
+          <%= f.check_box :paid %>
+        </div>
+
     <% else %>
         <%= f.hidden_field :user_id, :value => current_user.id %>
         <%= f.hidden_field :event_id, :value => @event.id %>

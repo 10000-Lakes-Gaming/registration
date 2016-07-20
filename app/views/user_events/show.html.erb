@@ -1,13 +1,19 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>User:</strong>
-  <%= @user_event.user.name %>
-</p>
 
+
+<h1>Registration for <%= @event.name %></h1>
+<h2>Player information</h2>
 <p>
-  <strong>Event:</strong>
-  <%= @user_event.event.name %>
+  <strong>Player Name:</strong>
+  <%= @user_event.user.name %>
+</p><p>
+  <strong>PFS Number:</strong>
+  <%= @user_event.user.pfs_number %>
+</p>
+<p>
+  <strong>Email:</strong>
+  <%= @user_event.user.email %>
 </p>
 
 <p>
@@ -15,7 +21,15 @@
   <%= @user_event.paid %>
 </p>
 
+
+<%# Show the tables the person is registered for! %>
+<h2>Registered Sessions</h2>
+<ul>
+  <% @user_event.registration_tables.each do |reg_table| %>
+  <li><%= "#{reg_table.table.session.name}: #{reg_table.table.scenario.name}" %></li>
+  <% end %>
+</ul>
 <% if current_user.admin? %>
-<%= link_to 'Edit', edit_event_user_event_path(@event,@user_event) %> |
+    <%= link_to 'Edit', edit_event_user_event_path(@event, @user_event) %> |
 <% end %>
 <%= link_to "Back to #{@event.name}", event_path(@event) %>
