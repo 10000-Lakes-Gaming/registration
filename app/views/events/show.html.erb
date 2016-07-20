@@ -23,6 +23,26 @@
   <div><b>Date/Time: </b> <%= @event.start.to_formatted_s(:long) %> to <%= @event.end.to_formatted_s(:long) %></div>
 </div>
 
+<!--
+<h3>New Version:</h3>
+<div class="sessionsOffered" style="border: solid thin black;box-sizing: border-box;">
+  <h3>Sessions/Scenarios Offered</h3>
+
+  <% sessionList = @event.sessions.sort { |a, b| a.start <=> b.start } %>
+
+  <ul class="list-group">
+    <% sessionList.each do |session| %>
+        <li class="row list-group-item">
+          <%= link_to "#{session.name}", [@event, session] %>
+        </li>
+    <% end %>
+  </ul>
+
+
+</div>
+-->
+
+
 
 <div class="sessionsOffered" style="border: solid thin black;box-sizing: border-box;">
   <h3>Sessions/Scenarios Offered</h3>
