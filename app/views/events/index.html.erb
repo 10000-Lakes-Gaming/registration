@@ -12,34 +12,36 @@
   <div class="col-md-2"></div>
 </div>
 
-<% @events.each do |event| %>
-    <div class="row">
-      <div class="col-md-2"><%= event.name %></div>
-      <div class="col-md-4"><%= event.start.to_formatted_s(:long) %> - <%= event.end.to_formatted_s(:long) %></div>
-      <div class="col-md-2"><%= event.location %></div>
-      <div class="col-md-1"><%= event.user_events.length %></div>
-      <div class="col-md-1"><%= link_to 'Show', event %></div>
-      <% if current_user.admin? %>
-          <div class="col-md-2">
-            <%= link_to 'Edit', edit_event_path(event) %>
-            <%= link_to 'Destroy', event, method: :delete, data: {confirm: 'Are you sure?'} %>
-          </div>
-      <% end %>
-    </div>
-<% end %>
-
+<ul class="list-group">
+  <% @events.each do |event| %>
+      <li class="row list-group-item">
+        <div class="col-md-2"><%= event.name %></div>
+        <div class="col-md-4"><%= event.start.to_formatted_s(:long) %> - <%= event.end.to_formatted_s(:long) %></div>
+        <div class="col-md-2"><%= event.location %></div>
+        <div class="col-md-1"><%= event.user_events.length %></div>
+        <div class="col-md-1"><%= link_to 'Show', event %></div>
+        <% if current_user.admin? %>
+            <div class="col-md-2">
+              <%= link_to 'Edit', edit_event_path(event) %>
+              <%= link_to 'Destroy', event, method: :delete, data: {confirm: 'Are you sure?'} %>
+            </div>
+        <% end %>
+      </li>
+  <% end %>
+</ul>
 <hr>
 
-<h3>Events that <%= current_user.name %> is registered for</h3>
+<h2><%= current_user.name %>'s registrations</h2>
+<ul class="list-group">
 <% current_user.user_events.each do |registration| %>
-    <div><%= link_to "#{registration.event.name} (#{registration.event.start.to_formatted_s(:short)} to #{registration.event.end.to_formatted_s(:short)})", registration.event %></div>
+    <h3><%= link_to "#{registration.event.name} (#{registration.event.start.to_formatted_s(:short)} to #{registration.event.end.to_formatted_s(:short)})", registration.event %></h3>
     <% # Add in their tables %>
-    <ul>
-      <% registration.registration_tables.each do |reg_table| %>
-          <li><%= link_to "#{reg_table.table.scenario.long_name}", reg_table.table.scenario %></li>
+      <% sorted = registration.registration_tables.sort { |a,b| a.start <=> b.start} %>
+      <% sorted.each do |reg_table| %>
+          <li class="row list-group-item"><%= reg_table.table.session.name %>: <%= link_to "#{reg_table.table.scenario.long_name}", reg_table.table.scenario %></li>
       <% end %>
-    </ul>
 <% end %>
+</ul>
 
 <hr>
 

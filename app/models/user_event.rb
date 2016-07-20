@@ -3,4 +3,5 @@ class UserEvent < ActiveRecord::Base
   belongs_to :event
   has_many :registration_tables
   validates :event_id, :user_id, :presence => true
+  delegate :name, to: :event
 end

@@ -7,18 +7,16 @@
   <li><%= link_to 'Event Listings', events_path %></li>
 
   <% if user_signed_in? && current_user.admin? %>
-      <li>
-        <hr/>
-      </li>
-      <li><%= link_to 'Manage Events', events_path %></li>
+      <li style="padding-top: 1em;"><u>Admin</u></li>
+      <li><%= link_to 'Events', events_path %></li>
       <% if @event %>
-          <li><%= link_to 'Manage Registrations', event_user_events_path(@event)%></li>
+          <li><%= link_to 'Registrations', event_user_events_path(@event)%></li>
       <% end %>
-      <li><%= link_to 'Manage Scenarios', scenarios_path %></li>
-      <li><%= link_to 'Manage Users', users_path %></li>
+      <li><%= link_to 'Scenarios', scenarios_path %></li>
+      <li><%= link_to 'Users', users_path %></li>
 
   <% end %>
-  <li>
+  <li style="padding-top: 1em;">
     <% if user_signed_in? %>
         <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
     <% else %>
