@@ -16,7 +16,9 @@
 <!--- Header info --->
 <div class="header-main">
   <div class="social-media">
-    <div>Social Media and External Link Area</div>
+    <div style="padding: 5px;">
+      <%= image_tag("FB-f-Logo__blue_58.png", alt:"SkalCon Facebook") %>
+    </div>
     <% if user_signed_in? %>
         <div>Logged in as: <%= current_user.name %> (<%= current_user.email %>)
           <% if current_user.admin? %>[ADMIN]
@@ -25,25 +27,11 @@
     <% end %>
   </div>
   <div class="banner">
+    <div class="bannerimg">
     <%= image_tag("skalbanner.png", size: "250x100", alt: "SkålCon") %>
-  </div>
-  <div class="menu">
-    <div class="container-fluid">
-      <div class="col-md-3">Menu w/login after</div>
-      <div class="col-md-1 col-sm-2">
-        <% if user_signed_in? %>
-            <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
-        <% else %>
-            <%= link_to('Login', new_user_session_path) %>
-        <% end %>
-      </div>
-      <div class="col-md-2">
-        <% if user_signed_in? %>
-            <%= link_to 'Edit My Profile', edit_user_path(current_user) %>
-        <% end %>
-      </div>
     </div>
   </div>
+  <div class="divider" />
 </div>
 
 
