@@ -72,7 +72,7 @@ h4 {
   color: yellow;
 }
 
-ul {
+ul.sidebar {
   list-style-type: none;
   margin: 0;
   padding: 20px;
@@ -81,17 +81,16 @@ ul {
   //height: 100%; /* Full height */
   position: fixed; /* Make it stick, even on scroll */
   overflow: auto; /* Enable scrolling if the sidenav has too much content */
-}
-
-li a {
-  display: block;
-  //background-color: $lightGrey;
-}
-/* Change the link color on hover */
-li a:hover {
-  background-color: $maroon;
-  color: white;
-  text-decoration: none;
+  li a {
+    display: block;
+    //background-color: $lightGrey;
+  }
+  /* Change the link color on hover */
+  li a:hover {
+    background-color: $maroon;
+    color: white;
+    text-decoration: none;
+  }
 }
 
 .active {

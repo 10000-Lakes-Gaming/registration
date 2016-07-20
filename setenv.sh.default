@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# to use this, copy to setenv.sh
+# set the values between the square brackets to the proper values
+# and then run the script
+#
+# WARNING!
+# Never update THIS file except to add more environment properties
+# Always update a copy, and run the copy.
+
+
+export  GMAIL_SMTP_USERNAME=[YOUR GMAIL USERNAME]@gmail.com
+export GMAIL_SMTP_PASSWORD=[YOUR GMAIL PASSWORD]
+
+clear
+date
+env
