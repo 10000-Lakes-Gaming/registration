@@ -29,7 +29,7 @@
 
   <% sessionList = @event.sessions.sort { |a, b| a.start <=> b.start } %>
   <!-- header -->
-  <ul class="list-group">
+  <ul class="list-group no-pad">
     <li class="row list-group-item no-pad">
       <div class="col-md-5 no-pad">
         <div class="row no-pad">
@@ -47,7 +47,7 @@
       </div>
     </li>
   </ul>
-  <ul class="list-group">
+  <ul class="list-group no-pad">
     <% sessionList.each do |session| %>
         <li class="row list-group-item no-pad">
           <div class="col-md-5 no-pad">
