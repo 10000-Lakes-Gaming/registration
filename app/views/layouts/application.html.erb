@@ -31,12 +31,16 @@
   </div>
   <div class="divider">
   <% if user_signed_in? %>
-      <div>Logged in as: <%= current_user.name %> (<%= current_user.email %>)
-        <% if current_user.admin? %>[ADMIN]
-        <% end %>
+      <div>
+          Logged in as: <%= current_user.name %> (<%= current_user.email %>)
+          <% if current_user.admin? %>[ADMIN]
+          <% end %>
+      </div>
+  <% else %>
+      <div>
+          <%= link_to('Login', new_user_session_path) %>
       </div>
   <% end %>
-   <!--- TODO Add 'If not logged in' --->
   </div>
 </div>
 
