@@ -10,9 +10,6 @@
   <div class="col-md-1"><b>Registrations</b></div>
   <div class="col-md-1"></div>
   <div class="col-md-2"></div>
-  <% if current_user.admin? %>
-      <div class="col-md-2"><b>Registered Users</b></div>
-  <% end %>
 </div>
 
 <% @events.each do |event| %>
@@ -26,14 +23,6 @@
           <div class="col-md-2">
             <%= link_to 'Edit', edit_event_path(event) %>
             <%= link_to 'Destroy', event, method: :delete, data: {confirm: 'Are you sure?'} %>
-          </div>
-      <% end %>
-      <% if current_user.admin? %>
-          <div class="col-md-2">
-            <!-- this needs to be limited by this event -->
-            <% event.user_events.each do |registration| %>
-                <div><%= registration.user.name %> (<%= registration.user.email %>)</div>
-            <% end %>
           </div>
       <% end %>
     </div>
