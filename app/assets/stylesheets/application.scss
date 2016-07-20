@@ -48,6 +48,10 @@ $skal-gray: #555555;
   background-color: $skal-gray;
 }
 
+.row:nth-child(odd) {
+  background: $white;
+}
+
 .row:nth-child(even) {
   background: $lightGrey;
 }
