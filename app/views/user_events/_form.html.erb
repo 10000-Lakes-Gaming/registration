@@ -13,17 +13,17 @@
 
     <% if current_user.admin? %>
         <div class="row">
-          <div class="col-md-1 field">
+          <div class="field col-md-4">
             <%= f.label :user_id %>:
-            <%= f.hidden_field :user_id %>
-            <%= @user_event.user.name %>
+            <%= f.select :user_id, options_for_select(@users.map{|user| ["#{user.name} (#{user.email})", user.id]}.to_h), include_blank: 'Select User...' %>
           </div>
-          <div class="field col-md-1">
+          <div class="field col-md-2">
             <%= f.label :event_id %>:
-            <%= f.hidden_field :event_id %><%= @event.name %>
+            <%= f.select :event_id, options_for_select(@events.map{ |event| [event.name, event.id]}.to_h, @event.id)  %>
           </div>
-          <div class="field col-md-1">
-            <%= f.label :paid %>
+          <div class="field col-md-4">
+            <!--- TODO - maybe add some JavaScript to change user to the selected user name? -->
+            <%= f.label :paid, 'Has the user paid for the event?' %>
             <%= f.check_box :paid %>
           </div>
         </div>

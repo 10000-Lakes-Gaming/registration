@@ -1,10 +1,20 @@
 class UserEventsController < ApplicationController
   before_action :set_user_event, only: [:show, :edit, :update, :destroy]
-  before_filter :get_event
+  before_filter :get_event, :get_users, :get_all_events
+
+
+  def get_users
+    @users = User.all.order(:name)
+  end
 
   def get_event
     @event = Event.find(params[:event_id])
   end
+
+  def get_all_events
+    @events = Event.all.order(:start).order(:name)
+  end
+
 
   # GET /user_events
   # GET /user_events.json
@@ -62,9 +72,11 @@ class UserEventsController < ApplicationController
   # DELETE /user_events/1
   # DELETE /user_events/1.json
   def destroy
+    # TODO - force to current user if not admin.
+    # TODO - if not admin, redirect to home.
     @user_event.destroy
     respond_to do |format|
-      format.html { redirect_to event_user_events_url, notice: 'User event was successfully unregistered.' }
+      format.html { redirect_to events_path, notice: 'User event was successfully unregistered.' }
       format.json { head :no_content }
     end
   end

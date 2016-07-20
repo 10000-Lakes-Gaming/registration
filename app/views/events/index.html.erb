@@ -44,6 +44,12 @@
 <h3>Events that <%= current_user.name %> is registered for</h3>
 <% current_user.user_events.each do |registration| %>
     <div><%= link_to "#{registration.event.name} (#{registration.event.start.to_formatted_s(:short)} to #{registration.event.end.to_formatted_s(:short)})", registration.event %></div>
+    <% # Add in their tables %>
+    <ul>
+      <% registration.registration_tables.each do |reg_table| %>
+          <li><%= link_to "#{reg_table.table.scenario.long_name}", reg_table.table.scenario %></li>
+      <% end %>
+    </ul>
 <% end %>
 
 <hr>
@@ -52,6 +58,3 @@
     <%= link_to 'New Event', new_event_path %>
     <br>
 <% end %>
-<%= link_to 'Home', welcome_index_path %>
-<br>
-<%= link_to 'Scenario Listing', scenarios_path %>

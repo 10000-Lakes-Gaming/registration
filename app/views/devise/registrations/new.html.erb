@@ -5,25 +5,27 @@
 
 
     <div class="field">
-      <%= f.label :name %>
+      <%= f.label :name %> <br>
       <%= f.text_field :name %>
     </div>
     <br>
 
     <div class="field">
-      <%= f.label :pfs_number %>
+      <%= f.label :pfs_number %> <br>
       <%= f.text_field :pfs_number %>
     </div>
     <br>
 
     <div class="field">
-      <%= f.label :email %><br>
+      <%= f.label :email %>: <em>Please use the email address that you registered with paizo.com.</em>
+      <br>
       <%= f.email_field :email, autofocus: true %>
     </div>
     <div class="field">
       <%= f.label :password %>
       <% if @minimum_password_length %>
           <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <em>Do not use the same password that you used on paizo.com.</em>
       <% end %><br/>
       <%= f.password_field :password, autocomplete: "off" %>
     </div>
@@ -33,9 +35,13 @@
       <%= f.password_field :password_confirmation, autocomplete: "off" %>
     </div>
 
+    <%= f.hidden_field :admin, :value => false %>
+
+
     <div class="actions">
       <%= f.submit "Sign up" %>
     </div>
 <% end %>
 
 <%= render "devise/shared/links" %>
+                                                                                       t
