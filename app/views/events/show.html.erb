@@ -24,7 +24,7 @@
 </div>
 
 <h4>New Version:</h4>
-<div class="sessionsOffered" style="border: solid thin black;box-sizing: border-box;">
+<div class="sessionsOffered" style="border: solid thin black;">
   <h3>Sessions/Scenarios Offered</h3>
 
   <% sessionList = @event.sessions.sort { |a, b| a.start <=> b.start } %>
@@ -49,7 +49,7 @@
   </ul>
   <ul class="list-group no-pad">
     <% sessionList.each do |session| %>
-        <li class="row list-group-item no-pad">
+        <li class="row list-group-item no-pad" style="border-bottom: solid black thin;">
           <div class="col-md-5 no-pad">
             <div class="row no-pad">
               <div class="col-md-6 no-pad">

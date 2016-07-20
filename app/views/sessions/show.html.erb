@@ -48,6 +48,6 @@
 <% if current_user.admin? %>
     <%= link_to 'Add New Table', new_event_session_table_path(@event, @session) %>
     <br>
-    <%= link_to 'Edit', edit_event_session_path(@event, session) %> |
+    <%= link_to 'Edit', edit_event_session_path(@event, @session) %> |
 <% end %>
 <%= link_to "Back to #{@event.name}", event_path(@event) %>
