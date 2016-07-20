@@ -23,38 +23,106 @@
   <div><b>Date/Time: </b> <%= @event.start.to_formatted_s(:long) %> to <%= @event.end.to_formatted_s(:long) %></div>
 </div>
 
-<!--
-<h3>New Version:</h3>
+<h4>New Version:</h4>
 <div class="sessionsOffered" style="border: solid thin black;box-sizing: border-box;">
   <h3>Sessions/Scenarios Offered</h3>
 
   <% sessionList = @event.sessions.sort { |a, b| a.start <=> b.start } %>
-
+  <!-- header -->
+  <ul class="list-group">
+    <li class="row list-group-item no-pad">
+      <div class="col-md-5 no-pad">
+        <div class="row no-pad">
+          <div class="col-md-6 header no-pad">Session:</div>
+          <div class="col-md-6 header no-pad">Start/End Time:</div>
+        </div>
+      </div>
+      <div class="col-md-7 no-pad">
+        <div class="row">
+          <div class="col-md-6 header no-pad">Scenarios Offered:</div>
+          <div class="col-md-3 header no-pad">Seats</div>
+          <div class="col-md-2 header no-pad">Registered</div>
+          <div class="col-md-1 header no-pad">&nbsp;</div>
+        </div>
+      </div>
+    </li>
+  </ul>
   <ul class="list-group">
     <% sessionList.each do |session| %>
-        <li class="row list-group-item">
-          <%= link_to "#{session.name}", [@event, session] %>
+        <li class="row list-group-item no-pad">
+          <div class="col-md-5 no-pad">
+            <div class="row no-pad">
+              <div class="col-md-6 no-pad">
+                <%= link_to "#{session.name}", [@event, session] %>
+              </div>
+              <div class="col-md-6 no-pad">
+                <%= session.start.strftime("%a %H:%M") %> - <%= session.end.strftime("%a %H:%M") %>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 no-pad">
+            <!-- scenarios here -->
+            <ul class="list-group row no-pad">
+              <% session.tables.each do |table| %>
+                  <li class="row list-group-item no-pad">
+                    <div class="col-md-6 no-pad">
+                      <% if table.scenario.paizo_url.nil? %>
+                          <%= link_to "#{table.scenario.long_name}", table.scenario %> <br/>
+                      <% else %>
+                          <a target="_blank" href="<%= table.scenario.paizo_url %>"><%= table.scenario.long_name %></a>
+                      <% end %>
+                    </div>
+                    <div class="col-md-3 no-pad"><%= table.max_players - table.registration_tables.length %>
+                      of <%= table.max_players %>
+                    </div>
+                    <% if @registration %>
+                        <div class="col-md-1 no-pad">
+                          <% if @tables.include? table %>
+                              <b>Yes</b>
+                          <% else %>
+                              No
+                          <% end %>
+                        </div>
+                        <div class="col-md-2 no-pad">
+                          <% if @tables.include? table %>
+                              <!-- get table for this user -->
+                              <% table.registration_tables.each do |reg_table| %>
+                                  <% if @reg_tables.include?(reg_table) %>
+                                      <%= link_to 'Remove', [@event, session, table, reg_table], method: :delete, data: {confirm: 'Are you sure?'} %>
+                                  <% end %>
+                              <% end %>
+                          <% end %>
+                          <% # TODO - move this to the controller - perhaps in a map? %>
+                          <% registrations_available = (table.max_players > table.registration_tables.length) %>
+                          <% registered_this_session = @sessions.include? session %>
+                          <% if !registered_this_session && registrations_available %>
+                              <% # TODO - deny access to add tables if they are not paid %>
+                              <%= link_to 'Add', new_event_session_table_registration_table_path(@event, session, table) %>
+                          <% end %>
+                        </div>
+                    <% end %>
+                  </li>
+              <% end %>
+            </ul>
+          </div>
         </li>
     <% end %>
   </ul>
 
-
 </div>
--->
 
-
-
+<h4>Old version</h4>
 <div class="sessionsOffered" style="border: solid thin black;box-sizing: border-box;">
   <h3>Sessions/Scenarios Offered</h3>
-  <div class="row">
-    <div class="col-md-2"><h4>Name:</h4></div>
-    <div class="col-md-4"><h4>Start/End Time:</h4></div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-5"><h4>Scenarios Offered </h4></div>
-        <div class="col-md-2"><h4>Seats</h4></div>
+  <div class="row no-pad">
+    <div class="col-md-2 header no-pad">Name:</div>
+    <div class="col-md-4 header no-pad">Start/End Time:</div>
+    <div class="col-md-6 no-pad">
+      <div class="row no-pad">
+        <div class="col-md-5 header no-pad">Scenarios Offered</div>
+        <div class="col-md-2 header no-pad">Seats</div>
         <% if @registration %>
-            <div class="col-md-5"><h4>Registered?</h4></div>
+            <div class="col-md-5 header no-pad">Registered?</div>
         <% end %>
       </div>
     </div>
@@ -62,28 +130,28 @@
 
 
   <% @event.sessions.each do |session| %>
-      <div class="row" style="border-bottom: solid black thin;">
-        <div class="col-md-2">
+      <div class="row no-pad" style="border-bottom: solid black thin;">
+        <div class="col-md-2 no-pad">
           <%= link_to "#{session.name}", [@event, session] %>
         </div>
-        <div class="col-md-4"><%= session.start.to_s(:long) %> - <%= session.end.to_s(:long) %></div>
+        <div class="col-md-4 no-pad"><%= session.start.strftime("%a %H:%M")  %> - <%= session.end.strftime("%a %H:%M")  %></div>
         <!-- scenarios/tables -->
-        <div class="col-md-6">
+        <div class="col-md-6 no-pad">
           <% session.tables.each do |table| %>
               <!-- inner rows -->
-              <div class="row">
-                <div class="col-md-5">
+              <div class="row no-pad">
+                <div class="col-md-5 no-pad">
                   <% if table.scenario.paizo_url.nil? %>
                       <%= link_to "#{table.scenario.long_name}", table.scenario %> <br/>
                   <% else %>
                       <a target="_blank" href="<%= table.scenario.paizo_url %>"><%= table.scenario.long_name %></a>
                   <% end %>
                 </div>
-                <div class="col-md-2"><%= table.max_players - table.registration_tables.length %>
+                <div class="col-md-2 no-pad"><%= table.max_players - table.registration_tables.length %>
                   of <%= table.max_players %>
                 </div>
                 <% if @registration %>
-                    <div class="col-md-1">
+                    <div class="col-md-1 no-pad">
                       <% if @tables.include? table %>
                           Yes
                       <% else %>
@@ -114,7 +182,6 @@
       </div>
   <% end %>
 </div>
-
 
 
 <hr>
