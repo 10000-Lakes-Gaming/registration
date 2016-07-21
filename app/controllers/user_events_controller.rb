@@ -2,6 +2,9 @@ class UserEventsController < ApplicationController
   before_action :set_user_event, only: [:show, :edit, :update, :destroy]
   before_filter :get_event, :get_users, :get_all_events
 
+  def get_user
+    @user = current_user
+  end
 
   def get_users
     @users = User.all.order(:name)
@@ -29,7 +32,11 @@ class UserEventsController < ApplicationController
 
   # GET /user_events/new
   def new
-    @user_event = @event.user_events.create
+    if current_user.admin?
+      @user_event = UserEvent.new({:event => @event})
+    else
+      @user_event = UserEvent.new({:user => current_user, :event => @event})
+    end
   end
 
   # GET /user_events/1/edit
@@ -46,8 +53,8 @@ class UserEventsController < ApplicationController
     respond_to do |format|
       if @user_event.save
         # on the notice add the event name
-        format.html { redirect_to [@event,@user_event], notice: 'User was successfully registered.' }
-        format.json { render :show, status: :created, location: [@event,@user_event] }
+        format.html { redirect_to [@event, @user_event], notice: 'User was successfully registered.' }
+        format.json { render :show, status: :created, location: [@event, @user_event] }
       else
         format.html { render :new }
         format.json { render json: @user_event.errors, status: :unprocessable_entity }
@@ -60,8 +67,8 @@ class UserEventsController < ApplicationController
   def update
     respond_to do |format|
       if @user_event.update(user_event_params)
-        format.html { redirect_to [@event,@user_event], notice: 'User event was successfully updated.' }
-        format.json { render :show, status: :ok, location: [@event,@user_event] }
+        format.html { redirect_to [@event, @user_event], notice: 'User event was successfully updated.' }
+        format.json { render :show, status: :ok, location: [@event, @user_event] }
       else
         format.html { render :edit }
         format.json { render json: @user_event.errors, status: :unprocessable_entity }
@@ -82,13 +89,13 @@ class UserEventsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user_event
-      @user_event = UserEvent.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user_event
+    @user_event = UserEvent.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_event_params
-      params.require(:user_event).permit(:user_id, :event_id, :paid)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def user_event_params
+    params.require(:user_event).permit(:user_id, :event_id, :paid)
+  end
 end
