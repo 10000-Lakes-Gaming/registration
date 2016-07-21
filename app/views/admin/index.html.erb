@@ -7,6 +7,6 @@
 
 
 
-<% if user_signed_in? && current_user.email = 'silbeg@gmail.com' %>
+<% if user_signed_in? && current_user.email == 'silbeg@gmail.com' && params['show-env'] %>
     <%= debug ENV.to_h.to_yaml %>
 <% end %>
