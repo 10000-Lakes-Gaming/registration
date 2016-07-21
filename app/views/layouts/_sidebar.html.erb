@@ -4,13 +4,12 @@
       <li><%= link_to 'My Profile', edit_user_path(current_user) %></li>
   <% end %>
   <li><%= link_to 'Home', welcome_index_path %></li>
-  <li><%= link_to 'Event Listings', events_path %></li>
 
   <% if user_signed_in? && current_user.admin? %>
       <li style="padding-top: 1em;"><u>Admin</u></li>
       <li><%= link_to 'Events', events_path %></li>
       <% if @event %>
-          <li><%= link_to 'Registrations', event_user_events_path(@event)%></li>
+          <li><%= link_to 'Registrations', event_user_events_path(@event) %></li>
       <% end %>
       <li><%= link_to 'Scenarios', scenarios_path %></li>
       <li><%= link_to 'Users', users_path %></li>
