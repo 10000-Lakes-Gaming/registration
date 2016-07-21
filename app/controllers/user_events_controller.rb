@@ -18,7 +18,6 @@ class UserEventsController < ApplicationController
     @events = Event.all.order(:start).order(:name)
   end
 
-
   # GET /user_events
   # GET /user_events.json
   def index
@@ -46,9 +45,13 @@ class UserEventsController < ApplicationController
   # POST /user_events
   # POST /user_events.json
   def create
+    # this one is trickier, due to users needing to be able to do it.
     # here, we want to use the current user -- but we might have a way to have an admin register someone?
-    # @user_event = UserEvent.new(user_event_params)
+    # Note: we also don't want to create a user event if one already exists
     @user_event = @event.user_events.create(user_event_params)
+    unless current_user.admin?
+      @user_event.user = current_user
+    end
 
     respond_to do |format|
       if @user_event.save

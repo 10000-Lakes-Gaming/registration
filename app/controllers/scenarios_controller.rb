@@ -2,7 +2,7 @@ class ScenariosController < ApplicationController
   helper ApplicationHelper
   before_action :set_scenario, only: [:show, :edit, :update, :destroy]
 
-  def admin_only
+  def prevent_non_admin
     if !current_user.admin?
       redirect_to scenarios_path
     end
@@ -21,20 +21,20 @@ class ScenariosController < ApplicationController
 
   # GET /scenarios/new
   def new
-    admin_only
+    prevent_non_admin
     @scenario = Scenario.new
   end
 
   # GET /scenarios/1/edit
   def edit
-    admin_only
+    prevent_non_admin
   end
 
 
   # POST /scenarios
   # POST /scenarios.json
   def create
-    admin_only
+    prevent_non_admin
     @scenario = Scenario.new(scenario_params)
 
     respond_to do |format|
@@ -51,7 +51,7 @@ class ScenariosController < ApplicationController
   # PATCH/PUT /scenarios/1
   # PATCH/PUT /scenarios/1.json
   def update
-    admin_only
+    prevent_non_admin
     respond_to do |format|
       if @scenario.update(scenario_params)
         format.html { redirect_to @scenario, notice: 'Scenario was successfully updated.' }
@@ -66,7 +66,7 @@ class ScenariosController < ApplicationController
   # DELETE /scenarios/1
   # DELETE /scenarios/1.json
   def destroy
-    admin_only
+    prevent_non_admin
     @scenario.destroy
     respond_to do |format|
       format.html { redirect_to scenarios_url, notice: 'Scenario was successfully destroyed.' }

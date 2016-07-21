@@ -2,6 +2,12 @@ class RegistrationTablesController < ApplicationController
   before_action :set_registration_table, only: [:show, :edit, :update, :destroy]
   before_filter :get_event, :get_session, :get_table, :get_user_event
 
+  def prevent_non_admin
+    unless current_user.admin?
+      redirect_to events_path
+    end
+  end
+
 
   def get_table
     @table = Table.find(params[:table_id])
@@ -19,12 +25,13 @@ class RegistrationTablesController < ApplicationController
   def get_user_event
     # this only works in non-admin mode -- we'll need to figure this out later.
     # UserEvent.where(user_id: == current_user.id AND event_id: == @event.id)
-    @user_event = UserEvent.find_by_event_id_and_user_id(params[:event_id], current_user.id )
+    @user_event = UserEvent.find_by_event_id_and_user_id(params[:event_id], current_user.id)
   end
 
   # GET /registration_tables
   # GET /registration_tables.json
   def index
+    prevent_non_admin
     @registration_tables = RegistrationTable.all
   end
 
@@ -46,7 +53,6 @@ class RegistrationTablesController < ApplicationController
   # POST /registration_tables.json
   def create
     @registration_table = RegistrationTable.new(registration_table_params)
-
     respond_to do |format|
       if @registration_table.save
         format.html { redirect_to [@event], notice: 'Table was successfully added.' }
@@ -63,7 +69,7 @@ class RegistrationTablesController < ApplicationController
   def update
     respond_to do |format|
       if @registration_table.update(registration_table_params)
-        format.html { redirect_to [@event, @session, @table,@registration_table], notice: 'Registration table was successfully updated.' }
+        format.html { redirect_to [@event, @session, @table, @registration_table], notice: 'Registration table was successfully updated.' }
         format.json { render :show, status: :ok, location: [@event, @session, @table, @registration_table] }
       else
         format.html { render :edit }

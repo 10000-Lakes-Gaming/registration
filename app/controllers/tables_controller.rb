@@ -14,6 +14,13 @@ class TablesController < ApplicationController
     @event = Event.find(params[:event_id])
   end
 
+
+  def prevent_non_admin
+    unless current_user.admin?
+      redirect_to events_path
+    end
+  end
+
   # GET /tables
   # GET /tables.json
   def index
@@ -27,16 +34,19 @@ class TablesController < ApplicationController
 
   # GET /tables/new
   def new
+    prevent_non_admin
     @table = Table.new
   end
 
   # GET /tables/1/edit
   def edit
+    prevent_non_admin
   end
 
   # POST /tables
   # POST /tables.json
   def create
+    prevent_non_admin
     @table = @session.tables.new(table_params)
 
     respond_to do |format|
@@ -53,6 +63,7 @@ class TablesController < ApplicationController
   # PATCH/PUT /tables/1
   # PATCH/PUT /tables/1.json
   def update
+    prevent_non_admin
     respond_to do |format|
       if @table.update(table_params)
         format.html { redirect_to [@event, @session, @table], notice: 'Table was successfully updated.' }
@@ -67,6 +78,7 @@ class TablesController < ApplicationController
   # DELETE /tables/1
   # DELETE /tables/1.json
   def destroy
+    prevent_non_admin
     @table.destroy
     respond_to do |format|
       format.html { redirect_to event_session_tables_url, notice: 'Table was successfully destroyed.' }

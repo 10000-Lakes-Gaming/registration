@@ -29,4 +29,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def force_to_current_user
+    @user = current_user
+  end
+
 end
