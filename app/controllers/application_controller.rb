@@ -24,8 +24,7 @@ class ApplicationController < ActionController::Base
   # end
 
   def restrict_to_admin
-    if !current_user.admin?
-      flash[:notice] = "You are not authorized to view that page."
+    unless current_user.admin?
       redirect_to root_path
     end
   end
