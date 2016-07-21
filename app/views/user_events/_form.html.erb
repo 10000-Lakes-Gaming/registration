@@ -11,7 +11,9 @@
         </div>
     <% end %>
 
+
     <% if current_user.admin? %>
+        <%# admin section %>
         <div>
           <%= f.label :user_id %>:
           <% if @user_event.persisted? %>
@@ -40,8 +42,9 @@
           <%= f.label :paid, "Check when #{username} has paid: " %>
           <%= f.check_box :paid %>
         </div>
-
+        <%# end admin section %>
     <% else %>
+        <%# Normal user block %>
         <%= f.hidden_field :user_id, :value => current_user.id %>
         <%= f.hidden_field :event_id, :value => @event.id %>
         <%= f.hidden_field :paid, :value => false %>
