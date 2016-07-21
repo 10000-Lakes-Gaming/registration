@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Game Masters for <%= @table.session.name %>: <%= @table.scenario.name %></h1>
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th>User event</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @game_masters.each do |game_master| %>
+      <tr>
+        <td><%= game_master.user_event.user.name %></td>
+        <td><%= link_to 'Show', [@event, @session, @table, game_master] %></td>
+        <td><%= button_to 'Remove', [@event, @session, @table, game_master], method: :delete, data: { confirm: 'Are you sure?' }, :class => 'formButton' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= button_to 'Add Game master', new_event_session_table_game_master_path(@event, @session, @table), :class => 'formButton' %>

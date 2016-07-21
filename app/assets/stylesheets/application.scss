@@ -13,12 +13,12 @@ $darkestGrey: #777;
 $darkPink: #f99;
 $lightPink: #fdd;
 $orange: #fc9;
+$purple: #800080;
 
 $main-background: #FFFFFF;
 $social-media-background: #555555;
 $banner-background: #FFFFFF;
 $skal-gray: #555555;
-
 
 .header-main {
   background-color: $main-background;
@@ -63,10 +63,10 @@ $skal-gray: #555555;
 }
 
 div.bottom {
-    position: absolute;
-    height: 100px;
-    top: 100%;
-    margin-top:-100px;
+  position: absolute;
+  height: 100px;
+  top: 100%;
+  margin-top: -100px;
 }
 
 .header {
@@ -84,7 +84,7 @@ ul.sidebar {
   margin: 0;
   padding: 20px;
   width: 13%;
-  background-color: $lightGrey ;
+  background-color: $lightGrey;
   //height: 100%; /* Full height */
   position: fixed; /* Make it stick, even on scroll */
   overflow: auto; /* Enable scrolling if the sidenav has too much content */
@@ -114,4 +114,14 @@ ul.sidebar {
 
 .row {
   margin: 0;
+}
+
+.formButton {
+  background: $lightGrey;
+  border-color: $purple;
+  color: $purple;
+  border-style: solid;
+  border-width: 1px;
+  font-weight: bold;
+  border-radius: 3px;
 }

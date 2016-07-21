@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Table:</strong>
+  <%= @game_master.table.session.name %> <%= @game_master.table.scenario.name %>
+</p>
+
+<p>
+  <strong>User event:</strong>
+  <%= @game_master.user_event.user.name %>
+</p>
+
+<%= link_to 'Edit', edit_event_session_table_game_master_path(@event, @session, @table, @game_master) %> |
+<%= link_to 'Back', event_session_table_game_masters_path %>

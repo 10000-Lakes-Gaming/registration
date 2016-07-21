@@ -11,6 +11,25 @@
 </p>
 
 <p>
+  <strong>Total GMs Needed:</strong>
+  <% if @table.game_masters.nil? %>
+      <%= @table.gms_needed %>
+  <% else %>
+      <%= @table.gms_needed -  @table.game_masters.size %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Current GMs:</strong>
+<ul>
+  <% @table.game_masters.each do |gm| %>
+      <% person = gm.user_event.user %>
+      <li><%= person.name %> (<%= person.email %>)</li>
+  <% end %>
+</ul>
+</p>
+
+<p>
   <strong>Scenario:</strong>
   <% scenario = @table.scenario %>
   <%= scenario.season.to_s + "-" + scenario.scenario_number.to_s + ": " + scenario.name %>
@@ -33,15 +52,15 @@
 </p>
 
 <% if scenario.hard_mode %>
-   <p>
-     <strong>This scenario has a Hard Mode</strong>
-   </p>
+    <p>
+      <strong>This scenario has a Hard Mode</strong>
+    </p>
 <% end %>
 
 <% if scenario.pregen_only? %>
-   <p>
-     <strong>This is a Pregens Only scenario</strong>
-   </p>
+    <p>
+      <strong>This is a Pregens Only scenario</strong>
+    </p>
 <% end %>
 
 <%= link_to 'Edit', edit_event_session_table_path(@event, @session, @table) %> |

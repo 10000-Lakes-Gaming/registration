@@ -16,11 +16,10 @@ Rails.application.routes.draw do
     resources :sessions do
       resources :tables do
         resources :registration_tables
+        resources :game_masters
       end
     end
   end
 # The priority is based upon order of creation: first created -> highest priority.
 # See how all your routes lay out with "rake routes".
-
-
 end

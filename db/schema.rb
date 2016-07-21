@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160624153720) do
+ActiveRecord::Schema.define(version: 20160721205413) do
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
@@ -21,6 +21,16 @@ ActiveRecord::Schema.define(version: 20160624153720) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "game_masters", force: :cascade do |t|
+    t.integer  "table_id"
+    t.integer  "user_event_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "game_masters", ["table_id"], name: "index_game_masters_on_table_id"
+  add_index "game_masters", ["user_event_id"], name: "index_game_masters_on_user_event_id"
 
   create_table "registration_tables", force: :cascade do |t|
     t.integer  "table_id"
@@ -60,6 +70,7 @@ ActiveRecord::Schema.define(version: 20160624153720) do
     t.integer  "max_players"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "gms_needed"
   end
 
   add_index "tables", ["scenario_id"], name: "index_tables_on_scenario_id"

@@ -83,7 +83,7 @@ class RegistrationTablesController < ApplicationController
   def destroy
     @registration_table.destroy
     respond_to do |format|
-      format.html { redirect_to [@event], notice: 'Registration table was successfully destroyed.' }
+      format.html { redirect_to [@event], notice: 'RSVP was removed from table.' }
       format.json { head :no_content }
     end
   end
