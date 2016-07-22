@@ -112,30 +112,31 @@ ul.sidebar {
   padding-top: 3px;
 }
 
-.striped {
+.striped-sessions {
   border-bottom: solid black thin;
   padding-left: 1em;
 }
 
-.striped:nth-child(odd) {
+.striped-sessions:nth-child(odd) {
   background: $white;
 }
 
-.striped:nth-child(even) {
+.striped-sessions:nth-child(even) {
   background: $lightGrey;
 }
 
-.striped-inner {
-  height: 35px;
+.striped-scenarios {
+  min-height: 35px;
   padding-left: 0.5em;
+  padding-right: 0.5em;
   margin-right: 0.5em;
 }
 
-.striped-inner:nth-child(odd) {
+.striped-scenarios:nth-child(odd) {
   background: $inner-stripe-odd;
 }
 
-.striped-inner:nth-child(even) {
+.striped-scenarios:nth-child(even) {
   background: $inner-stripe-even;
 }
 

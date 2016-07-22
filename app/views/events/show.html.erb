@@ -49,7 +49,7 @@
   </div>
 
   <% sessionList.each do |session| %>
-      <div class="row no-pad striped" style="">
+      <div class="row no-pad striped-sessions" style="">
         <div class="col-md-5 no-pad">
           <div class="row no-pad">
             <div class="col-md-6 no-pad">
@@ -64,10 +64,10 @@
           <!-- scenarios here -->
           <div class="row no-pad">
             <% session.tables.each do |table| %>
-                <div class="row no-pad striped-inner">
+                <div class="row no-pad striped-scenarios">
                   <div class="col-md-5 no-pad">
                     <% if table.scenario.paizo_url.nil? %>
-                        <%= link_to "#{table.scenario.long_name}", table.scenario %> <br/>
+                        <%= link_to "#{table.scenario.long_name}", table.scenario %>
                     <% else %>
                         <a target="_blank" href="<%= table.scenario.paizo_url %>"><%= table.scenario.long_name %></a>
                     <% end %>
