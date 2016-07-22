@@ -31,17 +31,31 @@
 </ul>
 <hr>
 
-<h2>Events that you are registered for: </h2>
-<ul class="list-group">
-<% current_user.user_events.each do |registration| %>
-    <h3><%= link_to "#{registration.event.name} (#{registration.event.start.to_formatted_s(:short)} to #{registration.event.end.to_formatted_s(:short)})", registration.event %></h3>
-    <% # Add in their tables %>
-      <% sorted = registration.registration_tables.sort { |a,b| a.start <=> b.start} %>
-      <% sorted.each do |reg_table| %>
-          <li class="row list-group-item"><%= reg_table.table.session.name %>: <%= link_to "#{reg_table.table.scenario.long_name}", reg_table.table.scenario %></li>
-      <% end %>
-<% end %>
-</ul>
+<h2>Events that you are registered for:</h2>
+<div class="text-info">Clink name of event to see sessions you are attending.</div>
+<div class="panel-group" id="accordian">
+  <% current_user.user_events.each do |registration| %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%#= link_to "#{registration.event.name} (#{registration.event.start.to_formatted_s(:short)} to #{registration.event.end.to_formatted_s(:short)})", registration.event %>
+            <a data-toggle="collapse" data-parent="#accordian" href="#collapse<%= registration.event_id %>"><%= registration.event.name %> <%= registration.event.start.to_formatted_s(:short) %>
+              to <%= registration.event.end.to_formatted_s(:short) %></a>
+          </h3>
+        </div>
+        <% # Add in their tables %>
+        <div id="collapse<%= registration.event_id %>" class="panel-collapse collapse">
+          <ul class="list-group">
+            <% sorted = registration.registration_tables.sort { |a, b| a.start <=> b.start } %>
+            <% sorted.each do |reg_table| %>
+                <li class="row list-group-item"><%= reg_table.table.session.name %>
+                  : <%= link_to "#{reg_table.table.scenario.long_name}", reg_table.table.scenario %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+  <% end %>
+</div>
 
 <hr>
 
