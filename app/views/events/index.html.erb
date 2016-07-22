@@ -31,7 +31,7 @@
 </ul>
 <hr>
 
-<h2><%= current_user.name %>'s registrations</h2>
+<h2>Events that you are registered for: </h2>
 <ul class="list-group">
 <% current_user.user_events.each do |registration| %>
     <h3><%= link_to "#{registration.event.name} (#{registration.event.start.to_formatted_s(:short)} to #{registration.event.end.to_formatted_s(:short)})", registration.event %></h3>
