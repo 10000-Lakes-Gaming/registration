@@ -41,15 +41,15 @@
     <div class="col-md-7 no-pad">
       <div class="row">
         <div class="col-md-5 header no-pad">Scenarios Offered:</div>
-        <div class="col-md-2 header no-pad">Seats Left</div>
-        <div class="col-md-3 header no-pad">Signed Up?</div>
+        <div class="col-md-1 header no-pad">Seats</div>
+        <div class="col-md-4 header no-pad">Attending?</div>
         <div class="col-md-2 header no-pad">GMs Needed</div>
       </div>
     </div>
   </div>
 
   <% sessionList.each do |session| %>
-      <div class="row no-pad" style="border-bottom: solid black thin;">
+      <div class="row no-pad striped" style="">
         <div class="col-md-5 no-pad">
           <div class="row no-pad">
             <div class="col-md-6 no-pad">
@@ -64,7 +64,7 @@
           <!-- scenarios here -->
           <div class="row no-pad">
             <% session.tables.each do |table| %>
-                <div class="row no-pad">
+                <div class="row no-pad striped-inner">
                   <div class="col-md-5 no-pad">
                     <% if table.scenario.paizo_url.nil? %>
                         <%= link_to "#{table.scenario.long_name}", table.scenario %> <br/>
@@ -72,15 +72,15 @@
                         <a target="_blank" href="<%= table.scenario.paizo_url %>"><%= table.scenario.long_name %></a>
                     <% end %>
                   </div>
-                  <div class="col-md-2 no-pad"><%= table.max_players - table.registration_tables.length %>
+                  <div class="col-md-1 no-pad"><%= table.max_players - table.registration_tables.length %>
                     of <%= table.max_players %>
                   </div>
                   <% if @registration %>
-                      <div class="col-md-1 no-pad">
+                      <div class="col-md-2 no-pad">
                         <% if @tables.include? table %>
-                            <b>Yes</b>
+                            <b>Attending</b>
                         <% else %>
-                            No
+                           <!-- No -->
                         <% end %>
                       </div>
                       <div class="col-md-2 no-pad">
@@ -92,12 +92,10 @@
                                 <% end %>
                             <% end %>
                         <% end %>
-                        <% # TODO - move this to the controller - perhaps in a map? %>
                         <% registrations_available = (table.max_players > table.registration_tables.length) %>
                         <% registered_this_session = @sessions.include? session %>
-                        <% if !registered_this_session && registrations_available %>
-                            <% # TODO - deny access to add tables if they are not paid %>
-                            <%= button_to 'Add', new_event_session_table_registration_table_path(@event, session, table), :class => 'formButton', :method => :get  %>
+                        <% if !registered_this_session && registrations_available && @registration.paid?%>
+                            <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table), :class => 'formButton', :method => :get  %>
                         <% end %>
                       </div>
                   <% end %>
@@ -119,13 +117,13 @@
 
 <hr>
 <% if @registration %>
-    <div><%= button_to "Unregister for #{@registration.event.name}", [@event, @registration], method: :delete, data: {confirm: 'Are you sure? Unregistering for the event will remove you from all tables, and will not refund your payment.'}, :class => 'formButton' %>
+    <div><%= button_to "Unregister for #{@registration.event.name}", [@event, @registration], method: :delete, data: {confirm: 'Are you sure? Unregistering for the event will remove you from all tables, and will not refund your payment.'}, :class => 'mainButton' %>
       <% if @registration && @registration.paid? %>
           <em>Note: unregistering will not refund your payment.</em>
       <% end %>
     </div>
 <% else %>
-    <div><%= button_to "Register for #{@event.name}?", new_event_user_event_path(@event), :class => 'formButton' %></div>
+    <div><%= button_to "Register for #{@event.name}?", new_event_user_event_path(@event), :class => 'mainButton' %></div>
 <% end %>
 <hr>
 <% if current_user.admin? %>

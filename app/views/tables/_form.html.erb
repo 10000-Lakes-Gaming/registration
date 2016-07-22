@@ -1,37 +1,37 @@
-<%= form_for([@event,@session, @table]) do |f| %>
-  <% if @table.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@table.errors.count, "error") %> prohibited this table from being saved:</h2>
+<%= form_for([@event, @session, @table]) do |f| %>
+    <% if @table.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@table.errors.count, "error") %> prohibited this table from being saved:</h2>
 
-      <ul>
-      <% @table.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @table.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <b>Session: </b> <%= @session.name %>
     </div>
-  <% end %>
 
-  <div class="field">
-    <b>Session: </b> <%= @session.name %>
-  </div>
+    <div class="field">
+      Table Number: <%= @table.id %>
+    </div>
 
-   <div class="field">
-     Table Number: <%= @table.id %>
-   </div>
-
-  <div class="field">
-    <%= f.label :scenario_id %><br>
-    <%= f.select :scenario_id, options_for_select(@scenarios.map{|scenario| [scenario.season.to_s + "-" + scenario.scenario_number.to_s + ": " + scenario.name, scenario.id]}, @table.scenario_id )%>
-  </div>
-  <div class="field">
-    <%= f.label :max_players %><br>
-    <%= f.number_field :max_players %>
-  </div>
-  <div class="field">
-    <%= f.label :gms_needed %><br>
-    <%= f.number_field :gms_needed %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="field">
+      <%= f.label :scenario_id %><br>
+      <%= f.select :scenario_id, options_for_select(@scenarios.map { |scenario| [scenario.season.to_s + "-" + scenario.scenario_number.to_s + ": " + scenario.name, scenario.id] }, @table.scenario_id) %>
+    </div>
+    <div class="field">
+      <%= f.label :max_players %><br>
+      <%= f.number_field :max_players %>
+    </div>
+    <div class="field">
+      <%= f.label :gms_needed %><br>
+      <%= f.number_field :gms_needed %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
 <% end %>

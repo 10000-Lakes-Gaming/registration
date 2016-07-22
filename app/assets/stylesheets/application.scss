@@ -8,6 +8,8 @@ $maroon: #7a0019;
 $white: #fff;
 $lightGreen: #efe;
 $lightGrey: #eee;
+$inner-stripe-odd: #F5FFFA ;
+$inner-stripe-even: #fffafa;
 $darkerGrey: #ccc;
 $darkestGrey: #777;
 $darkPink: #f99;
@@ -46,14 +48,6 @@ $skal-gray: #555555;
 .footer-main {
   height: 60px;
   background-color: $skal-gray;
-}
-
-.row:nth-child(odd) {
-  background: $white;
-}
-
-.row:nth-child(even) {
-  background: $lightGrey;
 }
 
 .sidebar {
@@ -114,6 +108,35 @@ ul.sidebar {
 
 .row {
   margin: 0;
+  padding-bottom: 3px;
+  padding-top: 3px;
+}
+
+.striped {
+  border-bottom: solid black thin;
+  padding-left: 1em;
+}
+
+.striped:nth-child(odd) {
+  background: $white;
+}
+
+.striped:nth-child(even) {
+  background: $lightGrey;
+}
+
+.striped-inner {
+  height: 35px;
+  padding-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+.striped-inner:nth-child(odd) {
+  background: $inner-stripe-odd;
+}
+
+.striped-inner:nth-child(even) {
+  background: $inner-stripe-even;
 }
 
 .formButton {
@@ -121,7 +144,19 @@ ul.sidebar {
   border-color: $purple;
   color: $purple;
   border-style: solid;
-  border-width: 1px;
+  border-width: 2px;
   font-weight: bold;
+  font-size: 75%;
+  border-radius: 3px;
+}
+
+.mainButton {
+  background: $lightGrey;
+  border-color: $purple;
+  color: $purple;
+  border-style: solid;
+  border-width: 2px;
+  font-weight: bold;
+  font-size: 75%;
   border-radius: 3px;
 }
