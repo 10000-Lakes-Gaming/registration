@@ -25,7 +25,7 @@ class UserEventsController < ApplicationController
     # remove all user_events that don't have an event or user
     @user_events.each do |user_event|
       if user_event.user.nil? || user_event.event.nil?
-        @user_events - user_event
+        @user_events - [user_event]
         user_event.destroy
       end
     end
