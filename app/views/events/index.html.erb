@@ -2,24 +2,26 @@
 
 <h1>All Events</h1>
 
-<!-- header row -->
-<div class="row">
-  <div class="col-md-2"><b>Name</b></div>
-  <div class="col-md-4"><b>Dates</b></div>
-  <div class="col-md-2"><b>Location</b></div>
-  <div class="col-md-1"><b>Registrations</b></div>
-  <div class="col-md-1"></div>
-  <div class="col-md-2"></div>
-</div>
-
 <ul class="list-group">
+  <li class="row list-group-item">
+    <div class="col-md-2 list"><b>Name</b></div>
+    <div class="col-md-4"><b>Dates</b></div>
+    <div class="col-md-2"><b>Location</b></div>
+    <div class="col-md-1">
+      <% unless @my_events.nil? %><b>Attending</b>
+      <% end %></div>
+    <div class="col-md-2">&nbsp;</div>
+  </li>
   <% @events.each do |event| %>
       <li class="row list-group-item">
-        <div class="col-md-2"><%= event.name %></div>
-        <div class="col-md-4"><%= event.start.to_formatted_s(:long) %> - <%= event.end.to_formatted_s(:long) %></div>
+        <div class="col-md-2"><%= link_to "#{event.name}", event %></div>
+        <div class="col-md-4"><small><%= event.start.to_formatted_s(:long) %> - <%= event.end.to_formatted_s(:long) %></small></div>
         <div class="col-md-2"><%= event.location %></div>
-        <div class="col-md-1"><%= event.user_events.length %></div>
-        <div class="col-md-1"><%= link_to 'Show', event %></div>
+        <div class="col-md-1">
+          <% if @my_events.include? event %>
+              <%= link_to "Attending", event %>
+          <% end %>
+        </div>
         <% if current_user.admin? %>
             <div class="col-md-2">
               <%= link_to 'Edit', edit_event_path(event) %>
@@ -37,11 +39,16 @@
   <% current_user.user_events.each do |registration| %>
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">
-            <%#= link_to "#{registration.event.name} (#{registration.event.start.to_formatted_s(:short)} to #{registration.event.end.to_formatted_s(:short)})", registration.event %>
-            <a data-toggle="collapse" data-parent="#accordian" href="#collapse<%= registration.event_id %>"><%= registration.event.name %> <%= registration.event.start.to_formatted_s(:short) %>
-              to <%= registration.event.end.to_formatted_s(:short) %></a>
-          </h3>
+          <div class="row">
+            <div class="col-sm-4">
+              <a data-toggle="collapse" data-parent="#accordian" href="#collapse<%= registration.event_id %>"><%= registration.event.name %> <%= registration.event.start.to_formatted_s(:short) %>
+                to <%= registration.event.end.to_formatted_s(:short) %></a>
+            </div>
+            <div class="col-sm-2">
+              <%= button_to "Manage RSVP", registration.event, method: :get, :class => 'mainButton' %>
+            </div>
+          </div>
+
         </div>
         <% # Add in their tables %>
         <div id="collapse<%= registration.event_id %>" class="panel-collapse collapse">

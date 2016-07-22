@@ -1,6 +1,8 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
   before_filter :restrict_to_admin, except: [:show, :index]
+  before_filter :get_my_events
+
   # GET /events
   # GET /events.json
   # TODO add logic/parameter to showall, and default to current/future
@@ -11,6 +13,14 @@ class EventsController < ApplicationController
   def prevent_non_admin
     unless current_user.admin?
       redirect_to events_path
+    end
+  end
+
+  def get_my_events
+    @my_events = []
+    user_events = UserEvent.where(user_id: current_user.id)
+    user_events.each do |user_event|
+      @my_events.push user_event.event
     end
   end
 
