@@ -23,17 +23,12 @@ class UserEventsController < ApplicationController
   def index
     @user_events = @event.user_events
     # remove all user_events that don't have an event or user
-    bad_events = []
-    @user_events.each do |event|
-      if event.user.nil?
-        bad_events.push event
-      end
-      if event.event.nil? and !bad_events.contains? event
-        bad_events.push event
+    @user_events.each do |user_event|
+      if user_event.user.nil? || user_event.event.nil?
+        @user_events - user_event
+        user_event.destroy
       end
     end
-    # This should be enough.
-    @user_events - bad_events
   end
 
   # GET /user_events/1
