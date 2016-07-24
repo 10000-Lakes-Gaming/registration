@@ -3,7 +3,7 @@ class ScenariosController < ApplicationController
   before_action :set_scenario, only: [:show, :edit, :update, :destroy]
 
   def prevent_non_admin
-    if !current_user.admin?
+    unless current_user.admin?
       redirect_to scenarios_path
     end
   end
@@ -17,6 +17,8 @@ class ScenariosController < ApplicationController
   # GET /scenarios/1
   # GET /scenarios/1.json
   def show
+
+
   end
 
   # GET /scenarios/new

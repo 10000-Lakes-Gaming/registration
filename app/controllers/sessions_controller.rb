@@ -23,7 +23,36 @@ class SessionsController < ApplicationController
 
   # GET /sessions/1
   # GET /sessions/1.json
-  def show
+  def show      # TODO add in counts for each table (gm, players)
+    @registration_tables = {}
+    @gm_sessions = {}
+    @player_sessions = {}
+    @rsvps = @event.user_events
+
+    @rsvps.each do |rsvp|
+      player_tables = rsvp.registration_tables
+      player_tables.each do |reg_table|
+        if reg_table.table.session == @session
+          players = @player_sessions[reg_table.table]
+          if players.nil?
+            players = []
+            @player_sessions[reg_table.table] = players
+          end
+          players.push reg_table.user_event.user
+        end
+      end # end player_tables iteration
+      gm_tables = rsvp.game_masters
+      gm_tables.each do |gm_table|
+        if gm_table.table.session == @session
+          gms = @gm_sessions[gm_table.table]
+          if gms.nil?
+            gms = []
+            @gm_sessions[gm_table.table] = gms
+          end
+          gms.push gm_table.user_event.user
+        end
+      end
+    end
   end
 
   # GET /sessions/new

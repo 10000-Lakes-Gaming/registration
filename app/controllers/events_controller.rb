@@ -31,10 +31,17 @@ class EventsController < ApplicationController
     if @registration
       @sessions = []
       @tables = []
+      @gm_tables = []
+      @gm_sessions = []
       @reg_tables = @registration.registration_tables
       @reg_tables.each do |reg_table|
         @tables << reg_table.table
         @sessions << reg_table.table.session
+      end
+      @game_masters = @registration.game_masters
+      @game_masters.each do |gm|
+        @gm_tables << gm.table
+        @gm_sessions << gm.table.session
       end
     end
   end

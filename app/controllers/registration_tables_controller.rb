@@ -1,6 +1,6 @@
 class RegistrationTablesController < ApplicationController
   before_action :set_registration_table, only: [:show, :edit, :update, :destroy]
-  before_filter :get_event, :get_session, :get_table, :get_user_event
+  before_filter :get_event, :get_session, :get_table, :get_registration_tables
 
   def prevent_non_admin
     unless current_user.admin?
@@ -22,17 +22,14 @@ class RegistrationTablesController < ApplicationController
     @event = Event.find(params[:event_id])
   end
 
-  def get_user_event
-    # this only works in non-admin mode -- we'll need to figure this out later.
-    # UserEvent.where(user_id: == current_user.id AND event_id: == @event.id)
-    @user_event = UserEvent.find_by_event_id_and_user_id(params[:event_id], current_user.id)
+  def get_registration_tables
+    @registration_tables = @table.registration_tables
   end
 
   # GET /registration_tables
   # GET /registration_tables.json
   def index
     prevent_non_admin
-    @registration_tables = RegistrationTable.all
   end
 
   # GET /registration_tables/1

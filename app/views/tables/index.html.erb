@@ -4,28 +4,30 @@
 
 <table>
   <thead>
-    <tr>
-      <th>Scenario</th>
-      <th>Max players</th>
-      <th colspan="3"></th>
-    </tr>
+  <tr>
+    <th>Scenario</th>
+    <th>Max players</th>
+    <th colspan="3"></th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @tables.each do |table| %>
+  <% @tables.each do |table| %>
       <tr>
         <td><%= table.scenario.name %></td>
         <td align="center"><%= table.max_players %></td>
         <td><%= link_to 'Show', [@event, @session, table] %></td>
-        <td><%= link_to 'Edit', edit_event_session_table_path(@event, @session, table) %></td>
-        <td><%= link_to 'Destroy', [@event, @session, table], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% unless admin? %>
+            <td><%= link_to 'Edit', edit_event_session_table_path(@event, @session, table) %></td>
+            <td><%= link_to 'Destroy', [@event, @session, table], method: :delete, data: {confirm: 'Are you sure?'} %></td>
+        <% end %>
       </tr>
-    <% end %>
+  <% end %>
   </tbody>
 </table>
 
 <br>
 
 <%= link_to 'New Table', new_event_session_table_path(@event, @session) %>
-<%= link_to "Back to #{@session.name}",event_session_path(@event, @session) %>
+<%= link_to "Back to #{@session.name}", event_session_path(@event, @session) %>
 
