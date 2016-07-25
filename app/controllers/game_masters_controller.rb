@@ -1,6 +1,6 @@
 class GameMastersController < ApplicationController
   before_action :set_game_master, only: [:show, :edit, :update, :destroy]
-  before_filter :get_event, :get_session, :get_table, :get_user_event
+  before_filter :get_event, :get_session, :get_table, :get_user_event, :get_possible_gms
 
   def prevent_non_admin
     unless current_user.admin?
@@ -17,6 +17,24 @@ class GameMastersController < ApplicationController
   # GET /game_masters/new
   def new
     @game_master = GameMaster.new
+  end
+
+  def get_possible_gms
+    @possible_gms = []
+
+    @event.user_events.each do |user_event|
+      in_session = false
+      user_event.registration_tables.each do |reg_table|
+        in_session ||= reg_table.table.session == @session
+      end
+      user_event.game_masters.each do |game_master|
+        in_session ||= game_master.table.session == @session
+      end
+
+      unless in_session
+        @possible_gms.push user_event
+      end
+    end
   end
 
 
@@ -38,6 +56,7 @@ class GameMastersController < ApplicationController
     @user_event = UserEvent.find_by_event_id_and_user_id(params[:event_id], current_user.id)
   end
 
+
   # GET /game_masters
   # GET /game_masters.json
   def index
@@ -53,6 +72,7 @@ class GameMastersController < ApplicationController
   # POST /game_masters.json
   # TODO - can only admins add GMs?
   def create
+    # TODO - do something if already regisered for table/session
     @game_master = GameMaster.new(game_master_params)
     respond_to do |format|
       if @game_master.save
@@ -88,6 +108,7 @@ class GameMastersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 
   private
   # Use callbacks to share common setup or constraints between actions.
