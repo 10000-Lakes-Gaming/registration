@@ -40,6 +40,13 @@ class RegistrationTablesController < ApplicationController
   # GET /registration_tables/new
   def new
     @registration_table = RegistrationTable.new
+    @user_event
+    current_user.user_events.each do |rsvp|
+      if rsvp.event == @event
+        @user_event = rsvp
+      end
+    end
+
   end
 
   # GET /registration_tables/1/edit
