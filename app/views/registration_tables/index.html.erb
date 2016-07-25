@@ -38,7 +38,7 @@
         <td><%= link_to 'Show', [@event, @session, @table, registration_table] %></td>
         <% if admin? %>
             <td><%= link_to 'Edit', edit_event_session_table_registration_table_path(@event, @session, @table, registration_table) %></td>
-            <td><%= link_to 'Delete', [@event, @session, @table, registration_table], method: :delete, data: {confirm: 'Are you sure?'} %></td>
+            <td><%= link_to 'Remove from Table', [@event, @session, @table, registration_table], method: :delete, data: {confirm: 'Are you sure?'} %></td>
         <% end %>
       </tr>
   <% end %>
