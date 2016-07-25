@@ -34,6 +34,7 @@ class TablesController < ApplicationController
   # GET /tables/1
   # GET /tables/1.json
   def show
+    @scenario = @table.scenario
   end
 
   # GET /tables/new

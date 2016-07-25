@@ -1,67 +1,71 @@
 <p id="notice"><%= notice %></p>
+<div class="page-header">
+  <h1><%= @event.name %></h1>
+  <h2><%= @session.name %>
+    <small><%= @session.timeslot %></small>
+  </h2>
+  <h3><%= @table.long_name %></h3>
+</div>
 
-<p>
-  <strong>Session:</strong>
-  <%= @session.name %>
-</p>
+<div class="well">
+  <%= @scenario.description %>
 
-<p>
-  <strong>Max players:</strong>
-  <%= @table.max_players %>
-</p>
+  <div>by <%= @scenario.author %></div>
 
-<p>
-  <strong>Total GMs Needed:</strong>
-  <% if @table.game_masters.nil? %>
-      <%= @table.gms_needed %>
-  <% else %>
-      <%= @table.gms_needed -  @table.game_masters.size %>
+  <% if @scenario.hard_mode %>
+      <div class="text-danger">This scenario has a Hard Mode</div>
   <% end %>
-</p>
 
-<p>
-  <strong>Current GMs:</strong>
-<ul>
-  <% @table.game_masters.each do |gm| %>
-      <% person = gm.user_event.user %>
-      <li><%= person.name %> (<%= person.email %>)</li>
+  <% if @scenario.pregen_only? %>
+      <div class="text-warning">This is a Pregens Only scenario</div>
   <% end %>
-</ul>
-</p>
+</div>
 
-<p>
-  <strong>Scenario:</strong>
-  <% scenario = @table.scenario %>
-  <%= scenario.season.to_s + "-" + scenario.scenario_number.to_s + ": " + scenario.name %>
-</p>
 
-<p>
-  <strong>Description :</strong>
-  <%= scenario.description %>
-</p>
+<h4>Player Information</h4>
+<div class="well">
+  <div>This table current has <span class="badge"><%= @table.registration_tables.size %></span> out of <span class="badge"><%= @table.max_players %></span> players.</div>
+  <button data-toggle="collapse" data-target="#players" class="btn-info">Current Players</button>
+  <div id="players" class="collapse">
+    <%#  header row %>
+    <div class="row">
+      <div class="col-md-2 label label-default">Name</div>
+      <div class="col-md-3 label label-default">Email</div>
+      <div class="col-md-2 label label-default">PFS Number</div>
+    </div>
+    <% @table.registration_tables.each do |reg_table| %>
+        <% player = reg_table.user_event.user %>
+        <div class="row">
+          <div class="col-md-2"><%= player.name %></div>
+          <div class="col-md-3"><%= player.email %></div>
+          <div class="col-md-2"><%= player.pfs_number %></div>
+        </div>
+    <% end %>
+  </div>
+</div>
+<h4>GM Information</h4>
+<div class="well">
+  <div>This table current has <span class="badge"><%= @table.game_masters.size %></span> out of <span class="badge"><%= @table.gms_needed %></span> game masters.</div>
+  <button data-toggle="collapse" data-target="#gamemasters" class="btn-info">Current Game Masters</button>
+  <div id="gamemasters" class="collapse">
+    <%#  header row %>
+    <div class="row">
+      <div class="col-md-2 label label-default">Name</div>
+      <div class="col-md-3 label label-default">Email</div>
+      <div class="col-md-2 label label-default">PFS Number</div>
+    </div>
+    <% @table.game_masters.each do |reg_table| %>
+        <% gm = reg_table.user_event.user %>
+        <div class="row">
+          <div class="col-md-2"><%= gm.name %></div>
+          <div class="col-md-3"><%= gm.email %></div>
+          <div class="col-md-2"><%= gm.pfs_number %></div>
+        </div>
+    <% end %>
+  </div>
+</div>
 
-<p>
-  <strong>Author:</strong>
-  <%= scenario.author %>
-</p>
-
-<p>
-  <strong>Paizo URL:</strong>
-  <%# Make this a real URL? %>
-  <%= scenario.paizo_url %>
-</p>
-
-<% if scenario.hard_mode %>
-    <p>
-      <strong>This scenario has a Hard Mode</strong>
-    </p>
-<% end %>
-
-<% if scenario.pregen_only? %>
-    <p>
-      <strong>This is a Pregens Only scenario</strong>
-    </p>
-<% end %>
-
-<%= link_to 'Edit', edit_event_session_table_path(@event, @session, @table) %> |
-<%= link_to 'Back', event_session_tables_path %>
+<hr>
+<%= button_to 'Edit this table', edit_event_session_table_path(@event, @session, @table), method: :get, :class => "mainButton" %>
+<%= button_to 'Back', event_session_tables_path, method: :get, :class => "mainButton" %>
+<hr>

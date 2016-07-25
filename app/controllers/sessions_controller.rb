@@ -6,7 +6,6 @@ class SessionsController < ApplicationController
     @event = Event.find(params[:event_id])
   end
 
-
   def prevent_non_admin
     unless current_user.admin?
       redirect_to events_path
@@ -23,7 +22,7 @@ class SessionsController < ApplicationController
 
   # GET /sessions/1
   # GET /sessions/1.json
-  def show      # TODO add in counts for each table (gm, players)
+  def show
     @registration_tables = {}
     @gm_sessions = {}
     @player_sessions = {}

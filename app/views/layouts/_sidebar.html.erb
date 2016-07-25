@@ -14,6 +14,7 @@
           <li class="col-xs-offset-1"><%= link_to 'Sessions', event_sessions_path(@event) %></li>
 
           <% if @session %>
+              <li class="col-xs-offset-2"><%= link_to 'Session', event_session_path(@event, @session) %></li>
               <li class="col-xs-offset-2"><%= link_to 'Tables', event_session_tables_path(@event, @session) %></li>
           <% end %>
           <% if @table %>

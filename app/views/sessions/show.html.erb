@@ -1,26 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Event:</strong>
-  <%= @session.event.name %>
-</p>
+<h1><%= @event.name %></h1>
+<h2><%= @session.name %>
+  <small><%= @session.timeslot %></small>
+</h2>
 
-<p>
-  <strong>Name:</strong>
-  <%= @session.name %>
-</p>
-
-<p>
-  <strong>Start:</strong>
-  <%= @session.start.to_s(:long) %>
-</p>
-
-<p>
-  <strong>End:</strong>
-  <%= @session.end.to_s(:long) %>
-</p>
-
-<h2>Scheduled Tables</h2>
+<h3>Scheduled Tables</h3>
 
 <table class="table table-striped">
   <thead>
@@ -35,13 +20,17 @@
   <tbody>
   <% @session.tables.each do |table| %>
       <tr>
+        <!-- TODO - add link to scenario -->
         <td><%= table.scenario.name %></td>
-        <td align="center"><%= @player_sessions.size %> / <%= table.max_players %></td>
-        <td align="center"><%= @gm_sessions.size %> / <%= table.gms_needed %></td>
-        <td><%= link_to 'Show', [@event, @session, table] %></td>
+        <td>
+          <%= link_to "#{@player_sessions.size} / #{table.max_players}", event_session_table_registration_tables_path(@event, @session, table) %>
+
+        </td>
+        <td><%= link_to "#{@gm_sessions.size} / #{table.gms_needed}", event_session_table_game_masters_path(@event, @session, table) %> </td>
+        <td><%= button_to 'Show', [@event, @session, table], method: :get, :class => 'formButton' %></td>
         <% if admin? %>
-            <td><%= link_to 'Edit', edit_event_session_ta ble_path(@event, @session, table) %></td>
-            <td><%= link_to 'Destroy', [@event, @session, table], method: :delete, data: {confirm: 'Are you sure?'} %></td>
+            <td><%= button_to 'Edit', edit_event_session_table_path(@event, @session, table), method: :get, :class => 'formButton' %></td>
+            <td><%= button_to 'Remove', [@event, @session, table], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'formButton' %></td>
         <% end %>
       </tr>
   <% end %>
@@ -49,9 +38,8 @@
 </table>
 
 
-<% if admin? %>
-    <%= link_to 'Add New Table', new_event_session_table_path(@event, @session) %>
-    <br>
-    <%= link_to 'Edit', edit_event_session_path(@event, @session) %> |
-<% end %>
-<%= link_to "Back to #{@event.name}", event_path(@event) %>
+  <% if admin? %>
+      <div class="inline"><%= button_to 'Add New Table', new_event_session_table_path(@event, @session), method: :get, :class => 'mainButton' %></div>
+      <div class="inline"><%= button_to 'Edit', edit_event_session_path(@event, @session), method: :get, :class => 'mainButton' %></div>
+  <% end %>
+  <div><%= button_to "Back to #{@event.name}", event_path(@event), method: :get, :class => 'mainButton' %></div>

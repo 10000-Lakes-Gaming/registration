@@ -8,7 +8,7 @@ $maroon: #7a0019;
 $white: #fff;
 $lightGreen: #efe;
 $lightGrey: #eee;
-$inner-stripe-odd: #F5FFFA ;
+$inner-stripe-odd: #F5FFFA;
 $inner-stripe-even: #fffafa;
 $darkerGrey: #ccc;
 $darkestGrey: #777;
@@ -48,6 +48,7 @@ $skal-gray: #555555;
 .footer-main {
   height: 60px;
   background-color: $skal-gray;
+  color: $white;
 }
 
 .sidebar {
@@ -112,31 +113,31 @@ ul.sidebar {
   padding-top: 3px;
 }
 
-.striped-sessions {
+.striped-outer {
   border-bottom: solid black thin;
   padding-left: 1em;
 }
 
-.striped-sessions:nth-child(odd) {
+.striped-outer:nth-child(odd) {
   background: $white;
 }
 
-.striped-sessions:nth-child(even) {
+.striped-outer:nth-child(even) {
   background: $lightGrey;
 }
 
-.striped-scenarios {
+.striped-inner {
   min-height: 35px;
   padding-left: 0.5em;
   padding-right: 0.5em;
   margin-right: 0.5em;
 }
 
-.striped-scenarios:nth-child(odd) {
+.striped-inner:nth-child(odd) {
   background: $inner-stripe-odd;
 }
 
-.striped-scenarios:nth-child(even) {
+.striped-inner:nth-child(even) {
   background: $inner-stripe-even;
 }
 
@@ -158,6 +159,20 @@ ul.sidebar {
   border-style: solid;
   border-width: 2px;
   font-weight: bold;
-  font-size: 75%;
   border-radius: 3px;
+}
+
+.inline {
+  display: inline-block;
+}
+
+/* Override label to align left. */
+.label {
+  text-align: left;
+}
+
+// Allow these to be inline, rather than
+.button_to,
+.button_to div {
+  display: inline;
 }
