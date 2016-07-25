@@ -16,6 +16,7 @@ class GameMastersController < ApplicationController
 
   # GET /game_masters/new
   def new
+    prevent_non_admin
     @game_master = GameMaster.new
   end
 
@@ -66,12 +67,14 @@ class GameMastersController < ApplicationController
 
   # GET /game_masters/1/edit
   def edit
+    prevent_non_admin
   end
 
   # POST /game_masters
   # POST /game_masters.json
   # TODO - can only admins add GMs?
   def create
+    prevent_non_admin
     # TODO - do something if already regisered for table/session
     @game_master = GameMaster.new(game_master_params)
     respond_to do |format|
@@ -88,6 +91,7 @@ class GameMastersController < ApplicationController
   # PATCH/PUT /game_masters/1
   # PATCH/PUT /game_masters/1.json
   def update
+    prevent_non_admin
     respond_to do |format|
       if @game_master.update(game_master_params)
         format.html { redirect_to @game_master, notice: 'Game master was successfully updated.' }
@@ -102,9 +106,10 @@ class GameMastersController < ApplicationController
   # DELETE /game_masters/1
   # DELETE /game_masters/1.json
   def destroy
+    prevent_non_admin
     @game_master.destroy
     respond_to do |format|
-      format.html { redirect_to [@event], notice: 'Game Master was removed from table.' }
+      format.html { redirect_to [@event], notice: "#{@game_master.user_event.user.long_name} was removed as a Game Master from table." }
       format.json { head :no_content }
     end
   end
