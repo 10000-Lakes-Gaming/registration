@@ -103,7 +103,7 @@
                             <% end %>
                         <% end %>
                         <% registrations_available = (table.max_players > table.registration_tables.length) %>
-                        <% registered_this_session = @sessions.include? session %>
+                        <% registered_this_session = @sessions.include?(session) || @gm_sessions.include?(session) %>
                         <% if !registered_this_session && registrations_available && @registration.paid? %>
                             <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table), :class => 'formButton', :method => :get %>
                         <% end %>
