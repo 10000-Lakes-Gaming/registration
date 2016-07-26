@@ -1,29 +1,45 @@
 <p id="notice"><%= notice %></p>
 
 <h1><%= @event.name %></h1>
-
+<h2><%= @event.location %></h2>
+<h2><%= @event.start.to_formatted_s(:long) %> to <%= @event.end.to_formatted_s(:long) %></h2>
 
 <div class="detailsBlock" style="border: solid thin black;">
-  <h2>Details</h2>
-  <div><b>Location:</b> <%= @event.location %></div>
-  <div><b>Registered? </b>
-    <% if @registration %>
-        Yes
-    <% else %>
-        No
-    <% end %>
-  </div>
-  <% if @registration %>
-      <div><b>Paid?</b>
-        <% if @registration.paid? %>
+  <h3>Registration Details</h3>
+  <div class="well">
+    <div class="row">
+      <div class="col-md-2">
+        <b>Registered? </b>
+      </div>
+      <div class="col-md-2">
+        <% if @registration %>
             Yes
         <% else %>
-            <% # This has to be dynamic for future events. %>
-            No: <a href="http://www.skalcon.org/index.php/register/">Pay for SkålCon</a>
+            No
         <% end %>
       </div>
-  <% end %>
-  <div><b>Date/Time: </b> <%= @event.start.to_formatted_s(:long) %> to <%= @event.end.to_formatted_s(:long) %></div>
+    </div>
+
+    <% if @registration %>
+        <div class="row">
+          <div class="col-md-2"><b>Paid?</b></div>
+          <% if @registration.paid? %>
+              <div class="col-md-2">
+                Yes
+              </div>
+          <% else %>
+              <div class="col-md-2">
+                <% # This has to be dynamic for future events. %>
+                No:
+              </div>
+              <div class="col-md-6">
+                <a href="http://www.skalcon.org/index.php/register/">Pay for SkålCon</a>
+              </div>
+          <% end %>
+        </div>
+    <% end %>
+
+  </div>
 </div>
 
 <div class="sessionsOffered" style="border: solid thin black;">
@@ -80,7 +96,7 @@
                     <%= scenario.name %>
                   </div>
                   <div class="col-md-1 no-pad">
-                    <button data-toggle="modal" title="<%= scenario.name %>" data-target="#scenario_<%= scenario.id %>" class="formButton">Show</button>
+                    <button data-toggle="modal" title="<%= scenario.name %>" data-target="#scenario_<%= scenario.id %>" class="formButton">Details</button>
                     <div id="scenario_<%= scenario.id %>" class="modal fade" role="dialog">
                       <div class="modal-dialog">
                         <div class="modal-content">
