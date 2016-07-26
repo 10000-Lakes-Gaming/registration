@@ -23,25 +23,43 @@
       <tr>
         <td>
           <%# make this show the scenario data as a collapsable %>
-          <%= table.scenario.name %>
-          <% scenario = table.scenario %>
+          <%= table.scenario.long_name %>
         </td>
         <td>
-          <button data-toggle="collapse" data-target="#scenario_<%= scenario.id %>" class="btn btn-info">Show
+          <% scenario = table.scenario %>
+          <button data-toggle="modal" data-target="#scenario_<%= scenario.id %>" class="btn btn-info">Scenario
             Details
           </button>
-          <div id="scenario_<%= scenario.id %>" class="collapse well-sm">
-            <div><b>Type:</b>  <%= scenario.type %></div>
-            <% if scenario.pregen_only %>
-            <div class="bg-primary">This scenario is pregen-only.</div>
-            <% end %>
-            <% if scenario.hard_mode %>
-            <div class="bg-primary">This scenario has a hard mode.</div>
-            <% end %>
-            <hr>
-            <div  style="white-space: pre-wrap;"><%= scenario.description %></div>
-            <div><strong>Written by:</strong> <%= scenario.author %></div>
-            <div><a href="<%= scenario.paizo_url %>" target="_blank">Click to see on Paizo's site</a>.  </div>
+          <div id="scenario_<%= scenario.id %>" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-header"><%= scenario.name %></h4>
+                </div>
+                <div class="modal-body">
+                  <div><b>Type:</b>  <%= scenario.type %></div>
+                  <% if scenario.pregen_only %>
+                      <div class="bg-primary">This scenario is pregen-only.</div>
+                  <% end %>
+                  <% if scenario.hard_mode %>
+                      <div class="bg-primary">This scenario has a hard mode.</div>
+                  <% end %>
+                  <hr>
+                  <div style="white-space: pre-wrap;"><%= scenario.description %></div>
+                  <div><strong>Written by:</strong> <%= scenario.author %></div>
+                  <div><a href="<%= scenario.paizo_url %>" target="_blank">Click to see on Paizo's site</a>.</div>
+                  <div>
+                    <% if table.scenario.paizo_url.nil? %>
+                        <a href="<%= scenario.paizo_url %>" target="_blank">Click to see on Paizo's site</a>.
+                    <% end %>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
           </div>
         </td>
         <% if admin? %>
