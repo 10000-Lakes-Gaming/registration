@@ -87,6 +87,11 @@
 </div>
 
 <hr>
-<%= button_to 'Edit this table', edit_event_session_table_path(@event, @session, @table), method: :get, :class => "mainButton" %>
-<%= button_to 'Back', event_session_tables_path, method: :get, :class => "mainButton" %>
+<% if admin? %>
+    <%= button_to 'Edit this table', edit_event_session_table_path(@event, @session, @table), method: :get,
+                  :class => "mainButton" %>
+    <%= button_to 'Back', event_session_tables_path, method: :get, :class => "mainButton" %>
+<% else %>
+    <%= button_to 'Back', event_path, method: :get, :class => "mainButton" %>
+<% end %>
 <hr>

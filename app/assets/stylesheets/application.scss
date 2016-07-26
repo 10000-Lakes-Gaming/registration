@@ -132,6 +132,10 @@ ul.sidebar {
   padding-right: 0.5em;
   margin-right: 0.5em;
 }
+.last {
+  padding-right: 0.5em;
+  margin-right: 0.5em;
+}
 
 .striped-inner:nth-child(odd) {
   background: $inner-stripe-odd;

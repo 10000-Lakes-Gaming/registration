@@ -11,26 +11,32 @@
         </div>
     <% end %>
 
-    <div class="field form-group">
-      <%= f.label :name %><br>
-      <%= f.text_field :name %>
-    </div>
-    <div class="field form-group">
-      <%= f.label :email %><br>
-      <%= f.text_field :email,:readonly => true%>
-    </div>
-    <div class="field form-group">
-      <%= f.label :pfs_number %><br>
-      <%= f.number_field :pfs_number %>
-    </div>
-    <% if current_user.admin? %>
-        <div class="field form-group">
-          <%= f.label :admin %><br>
-          <%= f.check_box :admin %>
-        </div>
-    <% end %>
+
+    <table class="table table-responsive">
+      <tbody>
+      <tr>
+        <td><%= f.label :name %></td>
+        <td><%= f.text_field :name %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :email %></td>
+        <td><%= @user.email %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :pfs_number %></td>
+        <td><%= f.text_field :pfs_number %></td>
+      </tr>
+      <% if admin? %>
+          <tr>
+            <td><%= f.label :admin %></td>
+            <td><%= f.check_box :admin %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
 
     <div class="actions">
-      <%= f.submit "Save Changes" %>
+      <%= f.submit "Save Changes", :class => 'btn btn-primary' %>
     </div>
 <% end %>

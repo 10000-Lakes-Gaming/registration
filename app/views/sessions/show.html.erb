@@ -11,6 +11,7 @@
   <thead>
   <tr>
     <th>Scenario</th>
+    <th></th>
     <th>Players</th>
     <th>Game Masters</th>
     <th colspan="3"></th>
@@ -20,15 +21,46 @@
   <tbody>
   <% @session.tables.each do |table| %>
       <tr>
-        <!-- TODO - add link to scenario -->
-        <td><%= table.scenario.name %></td>
         <td>
-          <%= link_to "#{@player_sessions.size} / #{table.max_players}", event_session_table_registration_tables_path(@event, @session, table) %>
-
+          <%# make this show the scenario data as a collapsable %>
+          <%= table.scenario.name %>
+          <% scenario = table.scenario %>
         </td>
-        <td><%= link_to "#{@gm_sessions.size} / #{table.gms_needed}", event_session_table_game_masters_path(@event, @session, table) %> </td>
-        <td><%= button_to 'Show', [@event, @session, table], method: :get, :class => 'formButton' %></td>
+        <td>
+          <button data-toggle="collapse" data-target="#scenario_<%= scenario.id %>" class="btn btn-info">Show
+            Details
+          </button>
+          <div id="scenario_<%= scenario.id %>" class="collapse well-sm">
+            <div><b>Type:</b>  <%= scenario.type %></div>
+            <% if scenario.pregen_only %>
+            <div class="bg-primary">This scenario is pregen-only.</div>
+            <% end %>
+            <% if scenario.hard_mode %>
+            <div class="bg-primary">This scenario has a hard mode.</div>
+            <% end %>
+            <hr>
+            <div><%= scenario.description %></div>
+            <div><strong>Written by:</strong> <%= scenario.author %></div>
+            <div><a href="<%= scenario.paizo_url %>" target="_blank">Click to see on Paizo's site</a>.  </div>
+          </div>
+        </td>
         <% if admin? %>
+            <td>
+              <%= link_to "#{@player_sessions.size} / #{table.max_players}", event_session_table_registration_tables_path(@event, @session, table) %>
+            </td>
+            <td>
+              <%= link_to "#{@gm_sessions.size} / #{table.gms_needed}", event_session_table_game_masters_path(@event, @session, table) %>
+            </td>
+        <% else %>
+            <td>
+              <%= @player_sessions.size %>/ <%= table.max_players %>
+            </td>
+            <td>
+              <%= @gm_sessions.size %>/ <%= table.gms_needed %>
+            </td>
+        <% end %>
+        <% if admin? %>
+            <td><%= button_to 'Show', [@event, @session, table], method: :get, :class => 'formButton' %></td>
             <td><%= button_to 'Edit', edit_event_session_table_path(@event, @session, table), method: :get, :class => 'formButton' %></td>
             <td><%= button_to 'Remove', [@event, @session, table], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'formButton' %></td>
         <% end %>
@@ -38,8 +70,9 @@
 </table>
 
 
-  <% if admin? %>
-      <div class="inline"><%= button_to 'Add New Table', new_event_session_table_path(@event, @session), method: :get, :class => 'mainButton' %></div>
-      <div class="inline"><%= button_to 'Edit', edit_event_session_path(@event, @session), method: :get, :class => 'mainButton' %></div>
-  <% end %>
-  <div><%= button_to "Back to #{@event.name}", event_path(@event), method: :get, :class => 'mainButton' %></div>
+<% if admin? %>
+    <div class="inline"><%= button_to 'Add New Table', new_event_session_table_path(@event, @session), method: :get, :class => 'mainButton' %></div>
+    <div class="inline"><%= button_to 'Edit', edit_event_session_path(@event, @session), method: :get, :class => 'mainButton' %></div>
+<% end %>
+<div><%= button_to "Back to #{@event.name}", event_path(@event), method: :get, :class => 'mainButton' %></div>
+

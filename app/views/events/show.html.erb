@@ -31,7 +31,10 @@
 
   <div class="well">
     <div class="bg-warning text-danger lead" style="margin-bottom: 0"><strong>Attention GMs!</strong></div>
-    <div class="bg-warning text-primary" style="margin-top: 0">If you are planning on GMing in a slot, please do not sign up to play in that slot. The hosts of <%= @event.name %> will assign you to your GM slot once you have registered and paid for <%= @event.name %>. Note that currently marking a person as paid is currently a manual process, so there may be a lag of a day or two once your payment has processed.<br>
+    <div class="bg-warning text-primary" style="margin-top: 0">If you are planning on GMing in a slot, please do not
+      sign up to play in that slot. The hosts of <%= @event.name %> will assign you to your GM slot once you have
+      registered and paid for <%= @event.name %>. Note that currently marking a person as paid is currently a manual
+      process, so there may be a lag of a day or two once your payment has processed.<br>
       Thank you.
     </div>
   </div>
@@ -39,25 +42,25 @@
   <% sessionList = @event.sessions.sort { |a, b| a.start <=> b.start } %>
   <!-- header -->
   <div class="row list-group-item no-pad">
-    <div class="col-md-5 no-pad">
+    <div class="col-md-4 no-pad">
       <div class="row no-pad">
-        <div class="col-md-6 header no-pad">Session:</div>
-        <div class="col-md-6 header no-pad">Start/End Time:</div>
+        <div class="col-md-6 header">Session:</div>
+        <div class="col-md-6 header">Start/End Time:</div>
       </div>
     </div>
-    <div class="col-md-7 no-pad">
-      <div class="row">
-        <div class="col-md-5 header no-pad">Scenarios Offered:</div>
-        <div class="col-md-1 header no-pad">Seats</div>
-        <div class="col-md-4 header no-pad">Attending?</div>
-        <div class="col-md-2 header no-pad">GMs Needed</div>
+    <div class="col-md-8 no-pad">
+      <div class="row no-pad">
+        <div class="col-md-6 header">Scenarios Offered:</div>
+        <div class="col-md-1 header" style="padding-left: 0.75em;">Seats</div>
+        <div class="col-md-4 header" style="padding-left: 2px;">Attending?</div>
+        <div class="col-md-1 header no-pad">GMs</div>
       </div>
     </div>
   </div>
 
   <% sessionList.each do |session| %>
-      <div class="row no-pad striped-outer" style="">
-        <div class="col-md-5 no-pad">
+      <div class="row no-pad striped-outer">
+        <div class="col-md-4 no-pad">
           <div class="row no-pad">
             <div class="col-md-6 no-pad">
               <%= link_to "#{session.name}", [@event, session] %>
@@ -67,19 +70,59 @@
             </div>
           </div>
         </div>
-        <div class="col-md-7 no-pad">
+        <div class="col-md-8 no-pad">
           <!-- scenarios here -->
           <div class="row no-pad">
             <% session.tables.each do |table| %>
                 <div class="row no-pad striped-inner">
                   <div class="col-md-5 no-pad">
-                    <% if table.scenario.paizo_url.nil? %>
-                        <%= link_to "#{table.scenario.long_name}", table.scenario %>
-                    <% else %>
-                        <a target="_blank" href="<%= table.scenario.paizo_url %>"><%= table.scenario.long_name %></a>
-                    <% end %>
+                    <% scenario = table.scenario %>
+                    <%= scenario.name %>
                   </div>
-                  <div class="col-md-1 no-pad"><%= table.max_players - table.registration_tables.length %>
+                  <div class="col-md-1 no-pad">
+                    <button data-toggle="modal" title="<%= scenario.name %>" data-target="#scenario_<%= scenario.id %>" class="formButton">Show</button>
+                    <div id="scenario_<%= scenario.id %>" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-header"><%= scenario.name %></h4>
+                          </div>
+                          <div class="modal-body">
+                            <div>
+                              <b>Type:</b>  <%= scenario.type %>
+                            </div>
+                            <% if scenario.pregen_only %>
+                                <div class="bg-primary">
+                                  This scenario is pregen-only.
+                                </div>
+                            <% end %>
+                            <% if scenario.hard_mode %>
+                                <div class="bg-primary">
+                                  This scenario has a hard mode.
+                                </div>
+                            <% end %>
+                            <hr>
+                            <div>
+                              <%= scenario.description %>
+                            </div>
+                            <div>
+                              <strong>Written by:</strong> <%= scenario.author %>
+                            </div>
+                            <div>
+                              <% if table.scenario.paizo_url.nil? %>
+                                  <a href="<%= scenario.paizo_url %>" target="_blank">Click to see on Paizo's site</a>.
+                              <% end %>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-1 no-pad" style="padding-left: 0.5em;"><%= table.max_players - table.registration_tables.length %>
                     of <%= table.max_players %>
                   </div>
                   <% if @registration %>
