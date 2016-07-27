@@ -1,35 +1,57 @@
 <p id="notice"><%= notice %></p>
 
 
+<h1><%= @event.name %></h1>
+<h2>Player Information</h2>
 
-<h1>Registration for <%= @event.name %></h1>
-<h2>Player information</h2>
-<p>
-  <strong>Player Name:</strong>
-  <%= @user_event.user.name %>
-</p><p>
-  <strong>PFS Number:</strong>
-  <%= @user_event.user.pfs_number %>
-</p>
-<p>
-  <strong>Email:</strong>
-  <%= @user_event.user.email %>
-</p>
+<% player = @user_event.user %>
+<div class="well">
+  <div class="row">
+    <div class="col-md-2 col-sm-3"><strong>Name:</strong></div>
+    <div class="col-md-6 col-sm-5"><%= player.name %></div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 col-sm-3"><strong>PFS Number:</strong></div>
+    <div class="col-md-6 col-sm-5"><%= player.pfs_number %></div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 col-sm-3"><strong>Email:</strong></div>
+    <div class="col-md-6 col-sm-5"><%= player.email %></div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 col-sm-3"><strong>Paid:</strong></div>
+    <div class="col-md-6 col-sm-5"><%= @user_event.paid? %></div>
+  </div>
+</div>
 
-<p>
-  <strong>Paid:</strong>
-  <%= @user_event.paid %>
-</p>
+<hr>
 
-
-<%# Show the tables the person is registered for! %>
-<h2>Registered Sessions</h2>
-<ul>
-  <% @user_event.registration_tables.each do |reg_table| %>
-  <li><%= "#{reg_table.table.session.name}: #{reg_table.table.scenario.name}" %></li>
-  <% end %>
-</ul>
-<% if current_user.admin? %>
-    <%= link_to 'Edit', edit_event_user_event_path(@event, @user_event) %> |
+<% unless @user_event.registration_tables.empty? %>
+<h2>Player Sessions</h2>
+<div class="well">
+  <ul>
+    <% @user_event.registration_tables.each do |reg_table| %>
+        <li><%= "#{reg_table.table.session.name}: #{reg_table.table.scenario.name}" %></li>
+    <% end %>
+  </ul>
+</div>
 <% end %>
-<%= link_to "Back to #{@event.name}", event_path(@event) %>
+
+<% unless @user_event.game_masters.empty? %>
+    <h2>GM Sessions</h2>
+    <div class="well">
+      <ul>
+        <% @user_event.game_masters.each do |reg_table| %>
+            <li><%= "#{reg_table.table.session.name}: #{reg_table.table.scenario.name}" %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>
+
+
+<% if current_user.admin? %>
+    <%= link_to 'Back to Registrations', event_user_events_path(@event) %> |
+    <%= link_to 'Edit', edit_event_user_event_path(@event, @user_event) %>
+<% else %>
+    <%= link_to "Back to #{@event.name}", event_path(@event) %>
+<% end %>

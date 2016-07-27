@@ -18,14 +18,24 @@
 
     <div class="field">
       <%= f.label :email %>: <em>Please use the email address that you registered with paizo.com.</em>
+      <a href="#" class="btn" data-toggle="collapse" data-target="#emailInfo"><span class='glyphicon glyphicon-info-sign text-info' aria-hidden='true'></span></a>
+      <div id="emailInfo" class="bg-info collapse">
+        Using the same email address as you used for paizo.com will help us to get scenarios to you for conventions if
+        you are a GM.
+      </div>
       <br>
       <%= f.email_field :email, autofocus: true %>
     </div>
+    <br>
     <div class="field">
       <%= f.label :password %>
+      <em>Do not use the same password that you used on paizo.com.</em>
+      <a href="#" class="btn" data-toggle="collapse" data-target="#pwWarn"><span class='glyphicon glyphicon-exclamation-sign text-danger' aria-hidden='true'></span></a>
+      <div id="pwWarn" class="bg-danger collapse">
+        For your own safety, you should <i>always</i> use a different password for every site that you visit.
+      </div>
       <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> characters minimum)</em>
-          <em>Do not use the same password that you used on paizo.com.</em>
+          <div><em>(<%= @minimum_password_length %> characters minimum)</em></div>
       <% end %><br/>
       <%= f.password_field :password, autocomplete: "off" %>
     </div>
@@ -37,11 +47,11 @@
 
     <%= f.hidden_field :admin, :value => false %>
 
-
+    <hr>
     <div class="actions">
-      <%= f.submit "Sign up" %>
+      <%= f.submit "Sign up", :class => 'btn btn-success' %>
     </div>
 <% end %>
 
 <%= render "devise/shared/links" %>
-                                                                                       t
+

@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-  <h1><%= @user.name %></h1>
+<h1><%= @user.name %></h1>
 
 <p>
   <strong>Email address:</strong>
@@ -21,18 +21,20 @@
 
 <h2>Registrations</h2>
 <% @user.user_events.each do |user_event| %>
-    <h3><%= user_event.event.name %></h3>
-    <!-- TODO - add clamshell? -->
-    <ul>
-      <% user_event.registration_tables.each do |reg_table| %>
-          <li><%= reg_table.table.session.name %>: <%= reg_table.table.scenario.name %></li>
-      <% end %>
-    </ul>
+    <div class="well">
+      <h3><%= user_event.event.name %></h3>
+      <!-- TODO - add clamshell? -->
+      <ul>
+        <% user_event.registration_tables.each do |reg_table| %>
+            <li><%= reg_table.table.session.name %>: <%= reg_table.table.scenario.name %></li>
+        <% end %>
+      </ul>
+    </div>
 <% end %>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= button_to 'Edit', edit_user_path(@user), method: :get, :class => 'mainButton' %> |
 <% if admin? %>
-    <%= link_to 'Back', users_path %>
+    <%= button_to 'Back', users_path, method: :get, :class => 'mainButton' %>
 <% else %>
-    <%= link_to 'Back', welcome_index_path %>
+    <%= button_to 'Back', welcome_index_path, method: :get, :class => 'mainButton' %>
 <% end %>

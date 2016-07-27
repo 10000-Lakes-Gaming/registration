@@ -2,9 +2,23 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @user %> |
-<% if admin? %>
-    <%= link_to 'Back', users_path %>
-<% else %>
-    <%= link_to 'Back', welcome_index_path %>
+
+<h2>Registrations</h2>
+<% @user.user_events.each do |user_event| %>
+    <div class="well">
+      <h3><%= user_event.event.name %></h3>
+      <ul>
+        <% user_event.registration_tables.each do |reg_table| %>
+            <li><%= reg_table.table.session.name %>: <%= reg_table.table.scenario.name %></li>
+        <% end %>
+      </ul>
+    </div>
 <% end %>
+
+<%= button_to 'Show', @user, method: :get, :class => 'mainButton' %> |
+<% if admin? %>
+    <%= button_to 'Back', users_path, method: :get, :class => 'mainButton' %>
+<% else %>
+    <%= button_to 'Back', welcome_index_path, method: :get, :class => 'mainButton' %>
+<% end %>
+
