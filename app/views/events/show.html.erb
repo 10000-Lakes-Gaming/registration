@@ -138,7 +138,13 @@
                   </div>
                   <div class="col-md-1 no-pad" style="padding-left: 0.25em;">
                     <%# this needs a touch more room if 2 digit number --%>
-                    <%= table.max_players - table.registration_tables.length %> of <%= table.max_players %>
+                    <% if table.max_players > 9 %>
+                        <span class="small"><%= table.max_players - table.registration_tables.length %>
+                          of <%= table.max_players %></span>
+                    <% else %>
+                        <%= table.max_players - table.registration_tables.length %> of <%= table.max_players %>
+                    <% end %>
+
                   </div>
                   <% if @registration %>
                       <div class="col-md-2 no-pad">
