@@ -140,7 +140,7 @@
                     of <%= table.max_players %>
                   </div>
                   <% if @registration %>
-                  <div class="col-md-2 no-pad">
+                      <div class="col-md-2 no-pad">
                         <% if @tables.include? table %>
                             <b>Attending</b>
                         <% elsif @gm_tables.include? table %>
@@ -148,25 +148,28 @@
                         <% else %>
                             <!-- No -->
                         <% end %>
-                  </div>
+                      </div>
 
-                  <%# Add in column to indicate if GMing. Or, have Yes changed to GMing? %>
-                  <div class="col-md-2 no-pad">
+                      <%# Add in column to indicate if GMing. Or, have Yes changed to GMing? %>
+                      <div class="col-md-2 no-pad">
                         <% if @tables.include? table %>
-                        <!-- get table for this user -->
-                        <% table.registration_tables.each do |reg_table| %>
-                            <% if @reg_tables.include?(reg_table) %>
-                                <%= button_to 'Remove', [@event, session, table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove your signup for #{reg_table.name}: #{reg_table.table.scenario.name}?"}, :class => 'formButton', method: :delete %>
+                            <!-- get table for this user -->
+                            <% table.registration_tables.each do |reg_table| %>
+                                <% if @reg_tables.include?(reg_table) %>
+                                    <%= button_to 'Remove', [@event, session, table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove your signup for #{reg_table.name}: #{reg_table.table.scenario.name}?"}, :class => 'formButton', method: :delete %>
+                                <% end %>
                             <% end %>
                         <% end %>
-                    <% end %>
-                    <% registrations_available = (table.max_players > table.registration_tables.length) %>
-                    <% registered_this_session = @sessions.include?(session) || @gm_sessions.include?(session) %>
-                    <% if !registered_this_session && registrations_available && @registration.paid? %>
-                        <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table), :class => 'formButton', :method => :get %>
-                    <% end %>
-                  </div>
+                        <% registrations_available = (table.max_players > table.registration_tables.length) %>
+                        <% registered_this_session = @sessions.include?(session) || @gm_sessions.include?(session) %>
+                        <% if !registered_this_session && registrations_available && @registration.paid? %>
+                            <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table), :class => 'formButton', :method => :get %>
+                        <% end %>
+                      </div>
+                  <% else %>
+                      <div class="col-md-4 no-pad">&nbsp;</div>
                   <% end %>
+                  <!-- end of is registered -->
                   <div class="col-md-1 no-pad">
                     <% if table.game_masters.nil? %>
                         <%= table.gms_needed %>
