@@ -14,7 +14,7 @@
   <tbody>
   <% @tables.each do |table| %>
       <tr>
-        <td><%= table.scenario.name %></td>
+        <td><%= table.scenario.long_name %></td>
         <td align="center"><%= table.max_players %></td>
         <td><%= link_to 'Show', [@event, @session, table] %></td>
         <% unless admin? %>

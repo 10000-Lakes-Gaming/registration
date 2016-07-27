@@ -13,9 +13,8 @@
     <hr>
     <div style="white-space: pre-wrap;"><%= @scenario.description %></div>
     <div><strong>Written by:</strong> <%= @scenario.author %></div>
-    <div><a href="<%= @scenario.paizo_url %>" target="_blank">Click to see on Paizo's site</a>.</div>
     <div>
-      <% if @scenario.paizo_url.nil? %>
+      <% unless @scenario.paizo_url.nil? %>
           <a href="<%= @scenario.paizo_url %>" target="_blank">Click to see on Paizo's site</a>.
       <% end %>
     </div>

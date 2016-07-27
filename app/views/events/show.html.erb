@@ -124,7 +124,7 @@
                               <strong>Written by:</strong> <%= scenario.author %>
                             </div>
                             <div>
-                              <% if table.scenario.paizo_url.nil? %>
+                              <% unless table.scenario.paizo_url.nil? %>
                                   <a href="<%= scenario.paizo_url %>" target="_blank">Click to see on Paizo's site</a>.
                               <% end %>
                             </div>
@@ -163,7 +163,7 @@
                             <!-- get table for this user -->
                             <% table.registration_tables.each do |reg_table| %>
                                 <% if @reg_tables.include?(reg_table) %>
-                                    <%= button_to 'Remove', [@event, session, table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove your signup for #{reg_table.name}: #{reg_table.table.scenario.name}?"}, :class => 'formButton', method: :delete %>
+                                    <%= button_to 'Remove', [@event, session, table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove your signup for #{reg_table.name}: #{reg_table.table.scenario.long_name}?"}, :class => 'formButton', method: :delete %>
                                 <% end %>
                             <% end %>
                         <% end %>

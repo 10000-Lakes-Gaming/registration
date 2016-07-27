@@ -26,7 +26,7 @@
       <!-- TODO - add clamshell? -->
       <ul>
         <% user_event.registration_tables.each do |reg_table| %>
-            <li><%= reg_table.table.session.name %>: <%= reg_table.table.scenario.name %></li>
+            <li><%= reg_table.table.session.name %>: <%= reg_table.table.scenario.long_name %></li>
         <% end %>
       </ul>
     </div>
