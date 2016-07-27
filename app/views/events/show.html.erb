@@ -170,16 +170,16 @@
                     <% end %>
                     &nbsp;
                   </div>
-            <% end %>
-            <div class="col-md-1 no-pad">
-              <% if table.game_masters.nil? %>
-                  <%= table.gms_needed %>
-              <% else %>
-                  <%= table.gms_needed - table.game_masters.size %>
-              <% end %> of <%= table.gms_needed %>
-            </div>
-            </div>
 
+                  <div class="col-md-1 no-pad">
+                    <% if table.game_masters.nil? %>
+                        <%= table.gms_needed %>
+                    <% else %>
+                        <%= table.gms_needed - table.game_masters.size %>
+                    <% end %> of <%= table.gms_needed %>
+                  </div>
+                </div>
+            <% end %>
           </div>
         </div>
       </div>
