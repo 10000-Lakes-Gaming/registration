@@ -139,8 +139,9 @@
                   <div class="col-md-1 no-pad" style="padding-left: 0.5em;"><%= table.max_players - table.registration_tables.length %>
                     of <%= table.max_players %>
                   </div>
-                  <% if @registration %>
-                      <div class="col-md-2 no-pad">
+
+                  <div class="col-md-2 no-pad">
+                    <% if @registration %>
                         <% if @tables.include? table %>
                             <b>Attending</b>
                         <% elsif @gm_tables.include? table %>
@@ -148,33 +149,37 @@
                         <% else %>
                             <!-- No -->
                         <% end %>
-                      </div>
-                      <%# Add in column to indicate if GMing. Or, have Yes changed to GMing? %>
-                      <div class="col-md-2 no-pad">
-                        <% if @tables.include? table %>
-                            <!-- get table for this user -->
-                            <% table.registration_tables.each do |reg_table| %>
-                                <% if @reg_tables.include?(reg_table) %>
-                                    <%= button_to 'Remove', [@event, session, table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove your signup for #{reg_table.name}: #{reg_table.table.scenario.name}?"}, :class => 'formButton', method: :delete %>
-                                <% end %>
+                    <% end %>
+                    &nbsp;
+                  </div>
+
+                  <%# Add in column to indicate if GMing. Or, have Yes changed to GMing? %>
+                  <div class="col-md-2 no-pad">
+                    <% if @tables.include? table %>
+                        <!-- get table for this user -->
+                        <% table.registration_tables.each do |reg_table| %>
+                            <% if @reg_tables.include?(reg_table) %>
+                                <%= button_to 'Remove', [@event, session, table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove your signup for #{reg_table.name}: #{reg_table.table.scenario.name}?"}, :class => 'formButton', method: :delete %>
                             <% end %>
                         <% end %>
-                        <% registrations_available = (table.max_players > table.registration_tables.length) %>
-                        <% registered_this_session = @sessions.include?(session) || @gm_sessions.include?(session) %>
-                        <% if !registered_this_session && registrations_available && @registration.paid? %>
-                            <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table), :class => 'formButton', :method => :get %>
-                        <% end %>
-                      </div>
-                  <% end %>
-                  <div class="col-md-1 no-pad">
-                    <% if table.game_masters.nil? %>
-                        <%= table.gms_needed %>
-                    <% else %>
-                        <%= table.gms_needed - table.game_masters.size %>
-                    <% end %> of <%= table.gms_needed %>
+                    <% end %>
+                    <% registrations_available = (table.max_players > table.registration_tables.length) %>
+                    <% registered_this_session = @sessions.include?(session) || @gm_sessions.include?(session) %>
+                    <% if !registered_this_session && registrations_available && @registration.paid? %>
+                        <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table), :class => 'formButton', :method => :get %>
+                    <% end %>
+                    &nbsp;
                   </div>
-                </div>
             <% end %>
+            <div class="col-md-1 no-pad">
+              <% if table.game_masters.nil? %>
+                  <%= table.gms_needed %>
+              <% else %>
+                  <%= table.gms_needed - table.game_masters.size %>
+              <% end %> of <%= table.gms_needed %>
+            </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -201,6 +206,6 @@
 <hr>
 <% if current_user.admin? %>
     <%= button_to 'Add Session', new_event_session_path(@event), :class => 'mainButton', :method => :get %>
-    <%= button_to 'Edit', edit_event_path(@event) , :class => 'mainButton', :method => :get%>
+    <%= button_to 'Edit', edit_event_path(@event), :class => 'mainButton', :method => :get %>
 <% end %>
-<%= button_to 'Back', events_path , :class => 'mainButton', :method => :get%>
+<%= button_to 'Back', events_path, :class => 'mainButton', :method => :get %>
