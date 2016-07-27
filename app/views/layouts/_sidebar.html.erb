@@ -13,11 +13,11 @@
           <li class="col-xs-offset-1"><%= link_to 'Registrations', event_user_events_path(@event) %></li>
           <li class="col-xs-offset-1"><%= link_to 'Sessions', event_sessions_path(@event) %></li>
 
-          <% if @session %>
+          <% if @session && @session.persisted? %>
               <li class="col-xs-offset-2"><%= link_to 'Session', event_session_path(@event, @session) %></li>
               <li class="col-xs-offset-2"><%= link_to 'Tables', event_session_tables_path(@event, @session) %></li>
           <% end %>
-          <% if @table %>
+          <% if @table && @table.persisted? %>
               <li class="col-xs-offset-3"><%= link_to 'Players', event_session_table_registration_tables_path(@event, @session, @table) %></li>
               <li class="col-xs-offset-3">Game Masters</li>
           <% end %>
