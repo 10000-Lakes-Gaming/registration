@@ -139,9 +139,8 @@
                   <div class="col-md-1 no-pad" style="padding-left: 0.5em;"><%= table.max_players - table.registration_tables.length %>
                     of <%= table.max_players %>
                   </div>
-
+                  <% if @registration %>
                   <div class="col-md-2 no-pad">
-                    <% if @registration %>
                         <% if @tables.include? table %>
                             <b>Attending</b>
                         <% elsif @gm_tables.include? table %>
@@ -149,13 +148,11 @@
                         <% else %>
                             <!-- No -->
                         <% end %>
-                    <% end %>
-                    &nbsp;
                   </div>
 
                   <%# Add in column to indicate if GMing. Or, have Yes changed to GMing? %>
                   <div class="col-md-2 no-pad">
-                    <% if @tables and @tables.include? table %>
+                        <% if @tables.include? table %>
                         <!-- get table for this user -->
                         <% table.registration_tables.each do |reg_table| %>
                             <% if @reg_tables.include?(reg_table) %>
@@ -168,9 +165,8 @@
                     <% if !registered_this_session && registrations_available && @registration.paid? %>
                         <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table), :class => 'formButton', :method => :get %>
                     <% end %>
-                    &nbsp;
                   </div>
-
+                  <% end %>
                   <div class="col-md-1 no-pad">
                     <% if table.game_masters.nil? %>
                         <%= table.gms_needed %>
