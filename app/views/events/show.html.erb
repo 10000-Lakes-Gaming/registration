@@ -155,7 +155,7 @@
 
                   <%# Add in column to indicate if GMing. Or, have Yes changed to GMing? %>
                   <div class="col-md-2 no-pad">
-                    <% if @tables.include? table %>
+                    <% if @tables and @tables.include? table %>
                         <!-- get table for this user -->
                         <% table.registration_tables.each do |reg_table| %>
                             <% if @reg_tables.include?(reg_table) %>
