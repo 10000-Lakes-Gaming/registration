@@ -35,6 +35,14 @@ class TablesController < ApplicationController
   # GET /tables/1.json
   def show
     @scenario = @table.scenario
+    # let's clean up bad registrations.
+    @table.registration_tables.each do |reg_table|
+      # if reg_table.user_event.nil? || reg_table.table.nil?
+      if reg_table.user_event.nil?
+        @table.registration_tables - [reg_table]
+        reg_table.destroy
+      end
+    end
   end
 
   # GET /tables/new

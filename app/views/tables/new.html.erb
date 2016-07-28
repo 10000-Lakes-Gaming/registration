@@ -3,7 +3,10 @@
   <h2><%= @session.name %>
     <small><%= @session.timeslot %></small>
   </h2>
-  <h3><%= @table.long_name %></h3>
+  <% if @table.persisted? %>
+    <h3><%= @table.long_name %></h3>
+  <% end %>
+
 </div>
 <h4>Add Table to <%= @session.name %></h4>
 
