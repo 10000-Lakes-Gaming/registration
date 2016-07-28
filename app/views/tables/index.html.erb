@@ -21,6 +21,7 @@
       <tr>
         <td>
           <%= table.scenario.long_name %>
+          <span class="badge"><%= table.scenario.tier %></span>
           <% if table.core? %>
               <span class="badge badge-core">Core</span>
           <% end %>
@@ -36,7 +37,6 @@
           <% if table.scenario.retired? %>
               <span class="badge badge-retired">Retired</span>
           <% end %>
-          <span class="badge"><%= table.scenario.tier %></span>
         </td>
         <td class="text-center"><%= table.registration_tables.size %>/<%= table.max_players %></td>
         <td class="text-center"><%= table.game_masters.size %>/<%= table.gms_needed %></td>

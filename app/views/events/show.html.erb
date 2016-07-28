@@ -94,6 +94,7 @@
                   <div class="col-md-5 no-pad">
                     <% scenario = table.scenario %>
                     <%= scenario.long_name %>
+                    <span class="badge"><%= table.scenario.tier %></span>
                     <% if table.core? %>
                         <span class="badge badge-core">Core</span>
                     <% end %>
@@ -109,7 +110,6 @@
                     <% if table.scenario.retired? %>
                         <span class="badge badge-retired">Retired</span>
                     <% end %>
-                    <span class="badge"><%= table.scenario.tier %></span>
                   </div>
                   <div class="col-md-1 no-pad">
                     <button data-toggle="modal" title="<%= scenario.long_name %>" data-target="#scenario_<%= scenario.id %>" class="formButton">Details</button>
