@@ -21,6 +21,8 @@ $main-background: #FFFFFF;
 $social-media-background: #555555;
 $banner-background: #FFFFFF;
 $skal-gray: #555555;
+$info: #269abc;
+$success: #398439;
 
 .header-main {
   background-color: $main-background;
@@ -211,4 +213,11 @@ ul.sidebar {
   td.changedData {
     background-color: $lightPink;
   }
+}
+
+.badge-core {
+  background-color: $info;
+}
+.badge-raffle {
+  background-color: $success;
 }
