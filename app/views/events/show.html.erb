@@ -66,9 +66,9 @@
     </div>
     <div class="col-md-8 no-pad">
       <div class="row no-pad">
-        <div class="col-md-6 header">Scenarios Offered:</div>
-        <div class="col-md-1 header" style="padding-left: 0.75em;">Seats</div>
-        <div class="col-md-4 header" style="padding-left: 2px;">Attending?</div>
+        <div class="col-md-7 header no-pad">Scenarios Offered:</div>
+        <div class="col-md-1 header no-pad" style="padding-left: 0.75em;">Seats</div>
+        <div class="col-md-3 header no-pad " style="padding-left: 2px;">RSVP?</div>
         <div class="col-md-1 header no-pad">GMs</div>
       </div>
     </div>
@@ -91,7 +91,7 @@
           <div class="row no-pad">
             <% session.tables.sort {|a,b| a <=> b}.each do |table| %>
                 <div class="row no-pad striped-inner">
-                  <div class="col-md-5 no-pad">
+                  <div class="col-md-6 no-pad">
                     <% scenario = table.scenario %>
                     <%= scenario.long_name %>
                     <span class="badge"><%= table.scenario.tier %></span>
@@ -163,11 +163,11 @@
 
                   </div>
                   <% if @registration %>
-                      <div class="col-md-2 no-pad">
+                      <div class="col-md-1 no-pad">
                         <% if @tables.include? table %>
-                            <b>Attending</b>
+                            <b>Yes</b>
                         <% elsif @gm_tables.include? table %>
-                            Game Master
+                            <b>GM</b>
                         <% else %>
                             <!-- No -->
                         <% end %>
