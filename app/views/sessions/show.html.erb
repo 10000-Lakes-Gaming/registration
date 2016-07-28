@@ -15,19 +15,22 @@
     <th></th>
     <th width="1%">Players</th>
     <th width="1%">GMs</th>
-    <th width="1%">Raffle&nbsp;Table</th>
-    <th width="1%">Core</th>
-    <th colspan="3"></th>
   </tr>
   </thead>
 
   <tbody>
   <%
-     @session.tables.sort {|a,b| a <=> b}.each do |table| %>
+    @session.tables.sort { |a, b| a <=> b }.each do |table| %>
       <tr>
         <td>
           <%# make this show the scenario data as a collapsable %>
           <%= table.scenario.long_name %>
+          <% if table.core? %>
+              <span class="badge badge-core">Core</span>
+          <% end %>
+          <% if table.raffle? %>
+              <span class="badge badge-raffle">Raffle</span>
+          <% end %>
         </td>
         <td>
           <% scenario = table.scenario %>
@@ -81,21 +84,13 @@
               <%= @gm_sessions.size %>/ <%= table.gms_needed %>
             </td>
         <% end %>
-        <td class="text-center">
-          <% if table.raffle %>
-              <span class="glyphicon glyphicon-align-center glyphicon-ok-circle"></span>
+        <td>
+          <% if admin? %>
+              <%= button_to 'Show', [@event, @session, table], method: :get, :class => 'btn btn-info' %>
+              <%= button_to 'Edit', edit_event_session_table_path(@event, @session, table), method: :get, :class => 'btn btn-primary' %>
+              <%= button_to 'Remove', [@event, @session, table], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %>
           <% end %>
         </td>
-        <td class="text-center">
-          <% if table.core %>
-              <span class="glyphicon glyphicon-align-center glyphicon-ok-circle"></span>
-          <% end %>
-        </td>
-        <% if admin? %>
-            <td><%= button_to 'Show', [@event, @session, table], method: :get, :class => 'formButton' %></td>
-            <td><%= button_to 'Edit', edit_event_session_table_path(@event, @session, table), method: :get, :class => 'formButton' %></td>
-            <td><%= button_to 'Remove', [@event, @session, table], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'formButton' %></td>
-        <% end %>
       </tr>
   <% end %>
   </tbody>
@@ -103,8 +98,8 @@
 
 
 <% if admin? %>
-    <div class="inline"><%= button_to 'Add New Table', new_event_session_table_path(@event, @session), method: :get, :class => 'mainButton' %></div>
-    <div class="inline"><%= button_to 'Edit', edit_event_session_path(@event, @session), method: :get, :class => 'mainButton' %></div>
+    <%= button_to 'Add New Table', new_event_session_table_path(@event, @session), method: :get, :class => 'btn btn-warning' %>
+    <%= button_to 'Edit', edit_event_session_path(@event, @session), method: :get, :class => 'btn btn-primary' %>
 <% end %>
-<div><%= button_to "Back to #{@event.name}", event_path(@event), method: :get, :class => 'mainButton' %></div>
+<%= button_to "Back to #{@event.name}", event_path(@event), method: :get, :class => 'btn btn-success' %>
 

@@ -100,6 +100,12 @@
                     <% if table.raffle? %>
                         <span class="badge badge-raffle">Raffle</span>
                     <% end %>
+                    <% if table.scenario.hard_mode? %>
+                        <span class="badge badge-hardmode"><small>Hard Mode</small></span>
+                    <% end %>
+                    <% if table.scenario.pregen_only? %>
+                        <span class="badge badge-pregen">Pregen</span>
+                    <% end %>
                   </div>
                   <div class="col-md-1 no-pad">
                     <button data-toggle="modal" title="<%= scenario.long_name %>" data-target="#scenario_<%= scenario.id %>" class="formButton">Details</button>
