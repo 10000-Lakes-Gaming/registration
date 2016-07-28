@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Tables for <%= @session.name %></h1>
+<h1><%= @event.name %></h1>
+<h2>
+  <%= @session.name %>
+  <small><%= @session.timeslot %></small>
+</h2>
+
 
 <table class="table table-striped">
   <thead>
@@ -19,20 +24,20 @@
       <tr>
         <td><%= table.scenario.long_name %></td>
         <td class="text-center"><%= table.registration_tables.size %>/<%= table.max_players %></td>
-        <td class="text-center"><%= table.game_masters.size %>/<%= table.gms_needed  %></td>
+        <td class="text-center"><%= table.game_masters.size %>/<%= table.gms_needed %></td>
         <td class="text-center">
-          <% if table.raffle %>
+          <% if table.raffle? %>
               <span class="glyphicon glyphicon-align-center glyphicon-ok-circle"></span>
           <% end %>
         </td>
         <td class="text-center">
-          <% if table.core %>
+          <% if table.core? %>
               <span class="glyphicon glyphicon-align-center glyphicon-ok-circle"></span>
           <% end %>
         </td>
         <td><%= link_to 'Show', [@event, @session, table], :class => 'btn btn-info' %></td>
         <% if admin? %>
-            <td><%= link_to 'Edit', edit_event_session_table_path(@event, @session, table), :class => 'btn btn-primary'  %></td>
+            <td><%= link_to 'Edit', edit_event_session_table_path(@event, @session, table), :class => 'btn btn-primary' %></td>
             <td><%= link_to 'Destroy', [@event, @session, table], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %></td>
         <% end %>
       </tr>
