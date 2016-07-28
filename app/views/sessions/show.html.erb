@@ -12,8 +12,10 @@
   <tr>
     <th>Scenario</th>
     <th></th>
-    <th>Players</th>
-    <th>Game Masters</th>
+    <th width="1%">Players</th>
+    <th width="1%">GMs</th>
+    <th width="1%">Raffle&nbsp;Table</th>
+    <th width="1%">Core</th>
     <th colspan="3"></th>
   </tr>
   </thead>
@@ -77,6 +79,16 @@
               <%= @gm_sessions.size %>/ <%= table.gms_needed %>
             </td>
         <% end %>
+        <td class="text-center">
+          <% if table.raffle %>
+              <span class="glyphicon glyphicon-align-center glyphicon-ok-circle"></span>
+          <% end %>
+        </td>
+        <td class="text-center">
+          <% if table.core %>
+              <span class="glyphicon glyphicon-align-center glyphicon-ok-circle"></span>
+          <% end %>
+        </td>
         <% if admin? %>
             <td><%= button_to 'Show', [@event, @session, table], method: :get, :class => 'formButton' %></td>
             <td><%= button_to 'Edit', edit_event_session_table_path(@event, @session, table), method: :get, :class => 'formButton' %></td>

@@ -99,6 +99,6 @@ class TablesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def table_params
-    params.require(:table).permit(:session_id, :scenario_id, :max_players, :gms_needed)
+    params.require(:table).permit(:session_id, :scenario_id, :max_players, :gms_needed, :raffle, :core)
   end
 end

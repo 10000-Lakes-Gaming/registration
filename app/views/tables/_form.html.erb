@@ -11,27 +11,40 @@
         </div>
     <% end %>
 
-    <div class="field">
-      <b>Session: </b> <%= @session.name %>
-    </div>
+    <table class="table formTable">
+      <tr>
+        <td>
+          <%= f.label :scenario_id %>
+        </td>
+        <td>
+          <%= f.select :scenario_id, options_for_select(@scenarios.map { |scenario| [scenario.season.to_s + "-" +scenario.scenario_number.to_s + ": " + scenario.name, scenario.id] }, @table.scenario_id) %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= f.label :raffle, 'The table is for a raffle?' %>
+        </td>
+        <td>
+          <%= f.check_box :raffle %>
+        </td>
+      </tr>
+      <tr>
+        <td><%= f.label :core, 'CORE table' %></td>
+        <td><%= f.check_box :core %></td>
+      </tr>
 
-    <div class="field">
-      Table Number: <%= @table.id %>
-    </div>
+      <tr>
+        <td><%= f.label :max_players %></td>
+        <td><%= f.number_field :max_players %></td>
+      </tr>
 
-    <div class="field">
-      <%= f.label :scenario_id %><br>
-      <%= f.select :scenario_id, options_for_select(@scenarios.map { |scenario| [scenario.season.to_s + "-" + scenario.scenario_number.to_s + ": " + scenario.name, scenario.id] }, @table.scenario_id) %>
-    </div>
-    <div class="field">
-      <%= f.label :max_players %><br>
-      <%= f.number_field :max_players %>
-    </div>
-    <div class="field">
-      <%= f.label :gms_needed %><br>
-      <%= f.number_field :gms_needed %>
-    </div>
+      <tr>
+        <td><%= f.label :gms_needed %></td>
+        <td><%= f.number_field :gms_needed %></td>
+      </tr>
+    </table>
+
     <div class="actions">
-      <%= f.submit %>
+      <%= f.submit 'Save Changes',:class => 'btn btn-primary'%>
     </div>
 <% end %>

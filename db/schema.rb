@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160721205413) do
+ActiveRecord::Schema.define(version: 20160728122744) do
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
@@ -68,9 +68,11 @@ ActiveRecord::Schema.define(version: 20160721205413) do
     t.integer  "session_id"
     t.integer  "scenario_id"
     t.integer  "max_players"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "gms_needed"
+    t.boolean  "raffle",      default: false
+    t.boolean  "core",        default: false
   end
 
   add_index "tables", ["scenario_id"], name: "index_tables_on_scenario_id"

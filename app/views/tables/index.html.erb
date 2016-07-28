@@ -2,11 +2,14 @@
 
 <h1>Listing Tables for <%= @session.name %></h1>
 
-<table>
+<table class="table table-striped">
   <thead>
   <tr>
     <th>Scenario</th>
-    <th>Max players</th>
+    <th width="1%">Players</th>
+    <th width="1%">GMs</th>
+    <th width="1%">Raffle&nbsp;Table</th>
+    <th width="1%">Core</th>
     <th colspan="3"></th>
   </tr>
   </thead>
@@ -15,11 +18,22 @@
   <% @tables.each do |table| %>
       <tr>
         <td><%= table.scenario.long_name %></td>
-        <td align="center"><%= table.max_players %></td>
-        <td><%= link_to 'Show', [@event, @session, table] %></td>
-        <% unless admin? %>
-            <td><%= link_to 'Edit', edit_event_session_table_path(@event, @session, table) %></td>
-            <td><%= link_to 'Destroy', [@event, @session, table], method: :delete, data: {confirm: 'Are you sure?'} %></td>
+        <td class="text-center"><%= table.registration_tables.size %>/<%= table.max_players %></td>
+        <td class="text-center"><%= table.game_masters.size %>/<%= table.gms_needed  %></td>
+        <td class="text-center">
+          <% if table.raffle %>
+              <span class="glyphicon glyphicon-align-center glyphicon-ok-circle"></span>
+          <% end %>
+        </td>
+        <td class="text-center">
+          <% if table.core %>
+              <span class="glyphicon glyphicon-align-center glyphicon-ok-circle"></span>
+          <% end %>
+        </td>
+        <td><%= link_to 'Show', [@event, @session, table], :class => 'btn btn-info' %></td>
+        <% if admin? %>
+            <td><%= link_to 'Edit', edit_event_session_table_path(@event, @session, table), :class => 'btn btn-primary'  %></td>
+            <td><%= link_to 'Destroy', [@event, @session, table], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %></td>
         <% end %>
       </tr>
   <% end %>
@@ -28,6 +42,6 @@
 
 <br>
 
-<%= link_to 'New Table', new_event_session_table_path(@event, @session) %>
-<%= link_to "Back to #{@session.name}", event_session_path(@event, @session) %>
+<%= link_to 'New Table', new_event_session_table_path(@event, @session), :class => 'btn btn-primary' %>
+<%= link_to "Back to #{@session.name}", event_session_path(@event, @session), :class => 'btn btn-success' %>
 

@@ -19,7 +19,7 @@
           <% end %>
           <% if @table && @table.persisted? %>
               <li class="col-xs-offset-3"><%= link_to 'Players', event_session_table_registration_tables_path(@event, @session, @table) %></li>
-              <li class="col-xs-offset-3">Game Masters</li>
+              <li class="col-xs-offset-3"><%= link_to 'GMs', event_session_table_game_masters_path(@event, @session, @table) %></li>
           <% end %>
       <% end %>
       <li><%= link_to 'Scenarios', scenarios_path %></li>

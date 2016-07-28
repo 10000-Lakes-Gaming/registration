@@ -132,6 +132,7 @@ ul.sidebar {
   padding-right: 0.5em;
   margin-right: 0.5em;
 }
+
 .last {
   padding-right: 0.5em;
   margin-right: 0.5em;
@@ -179,4 +180,35 @@ ul.sidebar {
 .button_to,
 .button_to div {
   display: inline;
+}
+
+.formTable {
+  border-spacing: 2px;
+  border-collapse: separate;
+  width: 100%;
+  td {
+    font-size: 0.79em;
+    padding: 5px;
+    background-color: $white;
+    vertical-align: top;
+  }
+  td:first-child {
+    font-weight: bold;
+    background-color: $lightGrey;
+    width: 25%;
+    white-space: nowrap;
+  }
+  td.tableHeaderInfo {
+    width: 100%;
+    color: #666666;
+    border: thin solid #CCCCCC;
+    background-color: #FFF2BF;
+    white-space: normal;
+  }
+  td.changedLabel {
+    background-color: $darkPink;
+  }
+  td.changedData {
+    background-color: $lightPink;
+  }
 }

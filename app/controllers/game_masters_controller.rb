@@ -109,7 +109,11 @@ class GameMastersController < ApplicationController
     prevent_non_admin
     @game_master.destroy
     respond_to do |format|
-      format.html { redirect_to [@event], notice: "#{@game_master.user_event.user.long_name} was removed as a Game Master from table." }
+      gm_name = "<UNKNOWN>"
+      unless @game_master.user_event.nil?
+        gm_name = @game_master.user_event.user.long_name
+      end
+      format.html { redirect_to [@event], notice: "#{gm_name} was removed as a Game Master from table." }
       format.json { head :no_content }
     end
   end
