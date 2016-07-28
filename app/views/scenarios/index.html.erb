@@ -2,15 +2,16 @@
 
 <h1>Listing Scenarios</h1>
 
-<table cellpadding="2" cellspacing="2">
+<table class="table table-striped">
   <thead>
   <tr>
     <th>Type</th>
-    <th>Number</th>
     <th>Name</th>
     <th>Author</th>
     <th>Pregens Only</th>
     <th>Hard Mode</th>
+    <th>Tier</th>
+    <th>Retired</th>
     <th colspan="3"></th>
   </tr>
   </thead>
@@ -19,11 +20,12 @@
   <% @scenarios.each do |scenario| %>
       <tr>
         <td><%= scenario.type %></td>
-        <td><%= scenario.season %> - <%= scenario.scenario_number %></td>
-        <td><%= scenario.name %></td>
+        <td><%= scenario.long_name %></td>
         <td><%= scenario.author %></td>
         <td><%= scenario.pregen_only %></td>
         <td><%= scenario.hard_mode %></td>
+        <td><%= scenario.tier %></td>
+        <td><%= scenario.retired %></td>
         <td><%= link_to 'Show', scenario %></td>
         <% if current_user.admin? %>
             <td><%= link_to 'Edit', edit_scenario_path(scenario) %></td>

@@ -1,6 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
-
+$black: #000;
 $red: #f00;
 $blue: #008;
 $bright-green: #32cd32;
@@ -226,4 +226,7 @@ ul.sidebar {
 }
 .badge-hardmode {
   background-color: $red;
+}
+.badge-retired {
+  background-color: $black;
 }

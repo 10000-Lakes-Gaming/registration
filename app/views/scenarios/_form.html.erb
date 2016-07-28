@@ -1,53 +1,60 @@
 <%= form_for(@scenario) do |f| %>
-  <% if @scenario.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@scenario.errors.count, "error") %> prohibited this scenario from being saved:</h2>
+    <% if @scenario.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@scenario.errors.count, "error") %> prohibited this scenario from being saved:</h2>
 
-      <ul>
-      <% @scenario.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @scenario.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :type %><br>
+      <%= f.select :type, ['Scenario', 'Quest', 'Module', 'Adventure Path'] %>
     </div>
-  <% end %>
+    <div class="field">
+      <%= f.label :season %><br>
+      <%= f.number_field :season %>
+    </div>
+    <div class="field">
+      <%= f.label :scenario_number %><br>
+      <%= f.number_field :scenario_number %>
+    </div>
+    <div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
+    </div>
 
-  <div class="field">
-    <%= f.label :type %><br>
-    <%= f.select :type, ['Scenario', 'Quest', 'Module', 'Adventure Path']%>
-  </div>
-  <div class="field">
-    <%= f.label :season %><br>
-    <%= f.number_field :season %>
-  </div>
-  <div class="field">
-    <%= f.label :scenario_number %><br>
-    <%= f.number_field :scenario_number %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :author %><br>
-    <%= f.text_field :author %>
-  </div>
-  <div class="field">
-    <%= f.label :paizo_url %><br>
-    <%= f.text_field :paizo_url %>
-  </div>
-  <div class="field">
-    <%= f.label :hard_mode %><br>
-    <%= f.check_box :hard_mode %>
-  </div>
-  <div class="field">
-    <%= f.label :pregen_only, 'Pregens Only'%><br>
-    <%= f.check_box :pregen_only %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="field">
+      <%= f.label :tier %><br>
+      <%= f.select :tier, ['1', '1-2', '1-5', '3', '3-7', '4', '5-9', '6', '7', '8', '7-11', '12-15', '1-11', '1-15', '1-19'] %>
+    </div>
+
+    <div class="field">
+      <%= f.label :description %><br>
+      <%= f.text_area :description %>
+    </div>
+    <div class="field">
+      <%= f.label :author %><br>
+      <%= f.text_field :author %>
+    </div>
+    <div class="field">
+      <%= f.label :paizo_url %><br>
+      <%= f.text_field :paizo_url %>
+    </div>
+    <div class="field">
+      <%= f.label :hard_mode %> <%= f.check_box :hard_mode %>
+    </div>
+    <div class="field">
+      <%= f.label :pregen_only, 'Pregens Only' %> <%= f.check_box :pregen_only %>
+    </div>
+    <div class="field">
+      <%= f.label :retired, 'Retired' %> <%= f.check_box :retired %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
 <% end %>
