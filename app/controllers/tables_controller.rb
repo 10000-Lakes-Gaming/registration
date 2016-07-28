@@ -28,7 +28,7 @@ class TablesController < ApplicationController
   # GET /tables
   # GET /tables.json
   def index
-    @tables = @session.tables
+    @tables = @session.tables.sort {|a,b| a <=> b}
   end
 
   # GET /tables/1

@@ -15,7 +15,7 @@
   </thead>
 
   <tbody>
-  <% @sessions.each do |session| %>
+  <% @sessions.sort{ |a, b| a.start <=> b.start }.each do |session| %>
       <tr>
         <td><%= session.name %></td>
         <td><%= session.start.to_s(:long) %></td>

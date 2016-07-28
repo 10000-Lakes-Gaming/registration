@@ -16,4 +16,31 @@ class Table < ActiveRecord::Base
       self.save
     end
   end
+
+  def <=> (tab)
+    # first sort by the scenario
+    sort = self.scenario <=> tab.scenario
+
+    # then by core
+    if sort == 0
+      if tab.core == self.core
+        sort = 0
+      elsif tab.core
+        sort = -1
+      else
+        sort = 1
+      end
+    end
+    # then by raffle
+    if sort == 0
+      if tab.raffle == self.raffle
+        sort = 0
+      elsif tab.raffle
+        sort = -1
+      else
+        sort = 1
+      end
+    end
+    sort
+  end
 end
