@@ -30,7 +30,7 @@
                  @table.registration_tables.each do |reg_table| %>
                   <% if reg_table.user_event.user == player %>
                       <div class="col-md-2">
-                        <%= button_to 'Remove from Table', [@event, @session, @table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove #{player.long_name} from #{@table.scenario.long_name}?"}, :class => "btn btn-warning" %>
+                        <%= button_to 'Remove from Table', [@event, @session, @table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove #{player.long_name} from #{@table.scenario.long_name}?"}, :class => "btn btn-danger" %>
                       </div>
                   <% end %>
               <% end %>
@@ -64,11 +64,11 @@
           <div class="col-md-3"><%= gm.email %></div>
           <div class="col-md-2"><%= gm.pfs_number %></div>
           <% if admin? %>
-              <div class="col-md-2"><%= button_to 'Remove from Table', [@event, @session, @table, game_master], method: :delete, data: {confirm: "Are you sure you want to remove #{gm.long_name} as a GM from #{@table.scenario.long_name}?"}, :class => "formButton" %></div>
+              <div class="col-md-2"><%= button_to 'Remove from Table', [@event, @session, @table, game_master], method: :delete, data: {confirm: "Are you sure you want to remove #{gm.long_name} as a GM from #{@table.scenario.long_name}?"}, :class => "btn btn-danger" %></div>
           <% end %>
         </div>
     <% end %>
   </div>
 </div>
 
-<%= link_to 'Back', event_session_table_game_masters_path %>
+<%= link_to 'Back', event_session_table_game_masters_path, :class => 'btn btn-success' %>
