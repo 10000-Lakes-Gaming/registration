@@ -15,10 +15,10 @@
     </div>
 <% end %>
 
-<%= button_to 'Show', @user, method: :get, :class => 'mainButton' %> |
+<%= button_to 'Show', @user, method: :get, :class => 'btn btn-info' %>
 <% if admin? %>
-    <%= button_to 'Back', users_path, method: :get, :class => 'mainButton' %>
+    <%= button_to 'Back', users_path, method: :get, :class => 'btn btn-success' %>
 <% else %>
-    <%= button_to 'Back', welcome_index_path, method: :get, :class => 'mainButton' %>
+    <%= button_to 'Back', welcome_index_path, method: :get, :class => 'btn btn-success' %>
 <% end %>
 

@@ -32,9 +32,9 @@
     </div>
 <% end %>
 
-<%= button_to 'Edit', edit_user_path(@user), method: :get, :class => 'mainButton' %> |
+<%= button_to 'Edit', edit_user_path(@user), method: :get, :class => 'btn btn-primary' %>
 <% if admin? %>
-    <%= button_to 'Back', users_path, method: :get, :class => 'mainButton' %>
+    <%= button_to 'Back', users_path, method: :get, :class => 'btn btn-success' %>
 <% else %>
-    <%= button_to 'Back', welcome_index_path, method: :get, :class => 'mainButton' %>
+    <%= button_to 'Back', welcome_index_path, method: :get, :class => 'btn btn-success' %>
 <% end %>

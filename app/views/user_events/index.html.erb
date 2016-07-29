@@ -1,29 +1,37 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Registrations for <%= @event.name %></h1>
+<h1><%= @event.name %></h1>
+<h2>Registrations/RSVPs</h2>
 
-<table class="table table-stripe">
+<table class="table table-striped">
   <thead>
-    <tr>
-      <th>User</th>
-      <th>Event</th>
-      <th>Paid</th>
-    </tr>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>PFS#</th>
+    <th>Paid</th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @user_events.each do |user_event| %>
+  <% @user_events.each do |user_event| %>
       <tr>
         <td><%= user_event.user.name %></td>
-        <td><%= user_event.event.name %></td>
-        <td><%= user_event.paid %></td>
-        <td><%= link_to 'Show', event_user_event_path(@event, user_event)  %></td>
-        <td><%= link_to 'Edit', edit_event_user_event_path(@event, user_event) %></td>
-        <td><%= link_to 'Unregister', [@event,user_event], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= user_event.user.email %></td>
+        <td><%= user_event.user.pfs_number %></td>
+        <td>
+          <% if user_event.paid? %>
+              <span class="glyphicon glyphicon-ok-circle"></span>
+          <% end %>
+        </td>
+        <td><%= link_to 'Show', event_user_event_path(@event, user_event), :class => 'btn btn-info' %>
+          <%= link_to 'Edit', edit_event_user_event_path(@event, user_event), :class => 'btn btn-primary' %>
+          <%= link_to 'Unregister', [@event, user_event], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %>
+        </td>
       </tr>
-    <% end %>
+  <% end %>
   </tbody>
 </table>
 
 <br>
-<%= link_to "Back to #{@event.name}", event_path(@event) %>
+<%= link_to "Back to #{@event.name}", event_path(@event), :class => 'btn btn-success' %>

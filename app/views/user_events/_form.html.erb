@@ -37,7 +37,7 @@
           <% if @user_event.persisted?
                username = @user_event.user.name
                else
-               username = ''
+               username = 'the player'
              end %>
           <%= f.label :paid, "Check when #{username} has paid: " %>
           <%= f.check_box :paid %>
@@ -53,6 +53,6 @@
 
     <%# we need styling on the buttons. %>
     <div class="actions">
-      <%= f.submit "Register" %>
+      <%= f.submit "Register", :class => 'btn btn-primary' %>
     </div>
 <% end %>

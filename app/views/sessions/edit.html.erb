@@ -1,6 +1,8 @@
-<h1>Editing Session</h1>
+<h1><%= @event.name %></h1>
+<h2><%= @session.name %><small><%= @session.timeslot %></small></h2>
+
 
 <%= render 'form' %>
 
-<%= link_to 'Show', [@event,@session] %> |
-<%= link_to 'Back', event_sessions_path %>
+<%= link_to 'Show', [@event,@session], :class => 'btn btn-info' %>
+<%= link_to 'Back', event_sessions_path, :class => 'btn btn-success' %>

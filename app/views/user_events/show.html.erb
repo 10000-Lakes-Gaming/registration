@@ -50,8 +50,8 @@
 
 
 <% if current_user.admin? %>
-    <%= link_to 'Back to Registrations', event_user_events_path(@event) %> |
-    <%= link_to 'Edit', edit_event_user_event_path(@event, @user_event) %>
+    <%= link_to 'Back to Registrations', event_user_events_path(@event), :class => 'btn btn-success' %>
+    <%= link_to 'Edit', edit_event_user_event_path(@event, @user_event) , :class => 'btn btn-primary'%>
 <% else %>
-    <%= link_to "Back to #{@event.name}", event_path(@event) %>
+    <%= link_to "Back to #{@event.name}", event_path(@event), :class => 'btn btn-success' %>
 <% end %>

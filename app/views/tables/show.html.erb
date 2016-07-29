@@ -97,9 +97,9 @@
 <hr>
 <% if admin? %>
     <%= button_to 'Edit this table', edit_event_session_table_path(@event, @session, @table), method: :get,
-                  :class => "mainButton" %>
-    <%= button_to 'Back', event_session_tables_path, method: :get, :class => "mainButton" %>
+                  :class => "btn btn-primary" %>
+    <%= button_to 'Back', event_session_tables_path, method: :get, :class => "btn btn-success" %>
 <% else %>
-    <%= button_to 'Back', event_path, method: :get, :class => "mainButton" %>
+    <%= button_to 'Back', event_path, method: :get, :class => "btn btn-success" %>
 <% end %>
 <hr>

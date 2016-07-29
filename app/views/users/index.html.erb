@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Listing Users</h1>
-<table>
+<table class="table table-striped">
   <thead>
   <tr>
     <th>Name</th>
@@ -18,11 +18,15 @@
         <td><%= user.name %></td>
         <td><%= user.email %></td>
         <td><%= user.pfs_number %></td>
-        <td><%= user.admin %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
         <td>
-          <%- # <%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% if user.admin? %>
+              <span class="glyphicon glyphicon-user"></span>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to 'Show', user, :class => 'btn btn-info' %>
+          <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-primary' %>
+          <%= link_to 'Destroy', user, method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %>
         </td>
       </tr>
   <% end %>
@@ -30,4 +34,4 @@
 </table>
 
 <br>
-<%= link_to 'New User', new_user_path %>
+<%= link_to 'New User', new_user_path, :class => 'btn btn-warning' %>

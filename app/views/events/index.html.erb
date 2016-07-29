@@ -14,18 +14,20 @@
   </li>
   <% @events.each do |event| %>
       <li class="row list-group-item">
-        <div class="col-md-2"><%= link_to "#{event.name}", event %></div>
-        <div class="col-md-4"><small><%= event.start.to_formatted_s(:long) %> - <%= event.end.to_formatted_s(:long) %></small></div>
+        <div class="col-md-2"><%= link_to "#{event.name}", event, :class => 'btn btn-sm btn-info' %></div>
+        <div class="col-md-4">
+          <small><%= event.start.to_formatted_s(:long) %> - <%= event.end.to_formatted_s(:long) %></small>
+        </div>
         <div class="col-md-2"><%= event.location %></div>
         <div class="col-md-1">
           <% if @my_events.include? event %>
-              <%= link_to "Attending", event %>
+              <%= link_to "Attending", event, :class => 'btn btn-sm btn-primary' %>
           <% end %>
         </div>
         <% if current_user.admin? %>
             <div class="col-md-2">
-              <%= link_to 'Edit', edit_event_path(event) %>
-              <%= link_to 'Destroy', event, method: :delete, data: {confirm: 'Are you sure?'} %>
+              <%= link_to 'Edit', edit_event_path(event), :class => 'btn btn-sm  btn-primary' %>
+              <%= link_to 'Destroy', event, method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-sm btn-danger' %>
             </div>
         <% end %>
       </li>
@@ -34,7 +36,9 @@
 <hr>
 
 <h2>Events that you are registered for:</h2>
-<div class="text-info bg-info" style="padding: 5px">To see the sessions you are attending in an event, please click on the name of the event below.</div>
+<div class="text-info bg-info" style="padding: 5px">To see the sessions you are attending in an event, please click on
+  the name of the event below.
+</div>
 <div class="panel-group" id="accordian">
   <% current_user.user_events.each do |registration| %>
       <div class="panel panel-default">
@@ -45,7 +49,7 @@
                 to <%= registration.event.end.to_formatted_s(:short) %></a>
             </div>
             <div class="col-sm-2">
-              <%= button_to "Manage RSVP", registration.event, method: :get, :class => 'mainButton' %>
+              <%= button_to "Manage RSVP", registration.event, method: :get, :class => 'btn btn-primary' %>
             </div>
           </div>
 
@@ -67,6 +71,6 @@
 <hr>
 
 <% if current_user.admin? %>
-    <%= link_to 'New Event', new_event_path %>
+    <%= link_to 'New Event', new_event_path, :class => 'btn btn-warning' %>
     <br>
 <% end %>

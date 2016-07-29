@@ -112,7 +112,7 @@
                     <% end %>
                   </div>
                   <div class="col-md-1 no-pad">
-                    <button data-toggle="modal" title="<%= scenario.long_name %>" data-target="#scenario_<%= scenario.id %>" class="formButton">Details</button>
+                    <button data-toggle="modal" title="<%= scenario.long_name %>" data-target="#scenario_<%= scenario.id %>" class="btn btn-xs btn-info">Details</button>
                     <div id="scenario_<%= scenario.id %>" class="modal fade" role="dialog">
                       <div class="modal-dialog">
                         <div class="modal-content">
@@ -179,7 +179,7 @@
                             <!-- get table for this user -->
                             <% table.registration_tables.each do |reg_table| %>
                                 <% if @reg_tables.include?(reg_table) %>
-                                    <%= button_to 'Remove', [@event, session, table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove your signup for #{reg_table.name}: #{reg_table.table.scenario.long_name}?"}, :class => 'formButton', method: :delete %>
+                                    <%= button_to 'Remove', [@event, session, table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove your signup for #{reg_table.name}: #{reg_table.table.scenario.long_name}?"}, :class => 'btn btn-xs btn-danger', method: :delete %>
                                 <% end %>
                             <% end %>
                         <% end %>
@@ -187,7 +187,7 @@
                         <% registered_this_session = @sessions.include?(session) || @gm_sessions.include?(session) %>
                         <% if !registered_this_session && registrations_available && @registration.paid? %>
                             <% unless table.raffle? %>
-                                <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table), :class => 'formButton', :method => :get %>
+                                <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table), :class =>  "btn btn-xs btn-primary", :method => :get %>
                             <% end %>
 
                         <% end %>
@@ -230,7 +230,7 @@
 <% end %>
 <hr>
 <% if current_user.admin? %>
-    <%= button_to 'Add Session', new_event_session_path(@event), :class => 'mainButton', :method => :get %>
-    <%= button_to 'Edit', edit_event_path(@event), :class => 'mainButton', :method => :get %>
+    <%= button_to 'Add Session', new_event_session_path(@event), :class => 'btn btn-warning', :method => :get %>
+    <%= button_to 'Edit', edit_event_path(@event), :class => 'btn btn-primary', :method => :get %>
 <% end %>
-<%= button_to 'Back', events_path, :class => 'mainButton', :method => :get %>
+<%= button_to 'Back', events_path, :class => 'btn btn-success', :method => :get %>

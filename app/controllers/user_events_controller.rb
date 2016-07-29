@@ -29,6 +29,8 @@ class UserEventsController < ApplicationController
         user_event.destroy
       end
     end
+    # sort the user events by email?
+    @user_events = @user_events.sort{ |a, b| a <=> b }
   end
 
   # GET /user_events/1
