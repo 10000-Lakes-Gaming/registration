@@ -226,7 +226,7 @@
       <% end %>
     </div>
 <% else %>
-    <div><%= button_to "Register for #{@event.name}?", new_event_user_event_path(@event), :class => 'mainButton', method: :get %></div>
+    <div><%= button_to "Register for #{@event.name}?", new_event_user_event_path(@event), :class => 'btn btn-warning', method: :get %></div>
 <% end %>
 <hr>
 <% if current_user.admin? %>

@@ -53,7 +53,7 @@
           <div class="col-md-3"><%= player.email %></div>
           <div class="col-md-2"><%= player.pfs_number %></div>
           <% if admin? %>
-              <div class="col-md-2"><%= button_to 'Remove from Table', [@event, @session, @table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove #{player.long_name} from #{@scenario.long_name}?"}, :class => "formButton" %></div>
+              <div class="col-md-2"><%= button_to 'Remove from Table', [@event, @session, @table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove #{player.long_name} from #{@scenario.long_name}?"}, :class => "btn btn-danger" %></div>
           <% end %>
         </div>
     <% end %>
@@ -87,7 +87,7 @@
           <div class="col-md-3"><%= gm.email %></div>
           <div class="col-md-2"><%= gm.pfs_number %></div>
           <% if admin? %>
-              <div class="col-md-2"><%= button_to 'Remove from Table', [@event, @session, @table, game_master], method: :delete, data: {confirm: "Are you sure you want to remove #{gm.long_name} as a GM from #{@scenario.long_name}?"}, :class => "formButton" %></div>
+              <div class="col-md-2"><%= button_to 'Remove from Table', [@event, @session, @table, game_master], method: :delete, data: {confirm: "Are you sure you want to remove #{gm.long_name} as a GM from #{@scenario.long_name}?"}, :class => "btn btn-danger" %></div>
           <% end %>
         </div>
     <% end %>

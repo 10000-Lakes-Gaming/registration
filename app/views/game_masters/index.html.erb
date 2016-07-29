@@ -19,7 +19,7 @@
           <% end %>
         </td>
         <td><%= link_to 'Show', [@event, @session, @table, game_master] %></td>
-        <td><%= button_to 'Remove', [@event, @session, @table, game_master], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'formButton' %></td>
+        <td><%= button_to 'Remove', [@event, @session, @table, game_master], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %></td>
       </tr>
   <% end %>
   </tbody>
@@ -27,4 +27,4 @@
 
 <br>
 
-<%= button_to 'Add Game master', new_event_session_table_game_master_path(@event, @session, @table), :class => 'formButton' %>
+<%= button_to 'Add Game master', new_event_session_table_game_master_path(@event, @session, @table), :class => 'btn btn-warning' %>
