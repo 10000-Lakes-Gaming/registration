@@ -56,13 +56,17 @@
         </div>
         <% # Add in their tables %>
         <div id="collapse<%= registration.event_id %>" class="panel-collapse collapse">
-          <ul class="list-group">
-            <% sorted = registration.registration_tables.sort { |a, b| a.start <=> b.start } %>
-            <% sorted.each do |reg_table| %>
-                <li class="row list-group-item"><%= reg_table.table.session.name %>
-                  : <%= link_to "#{reg_table.table.scenario.long_name}", reg_table.table.scenario %></li>
-            <% end %>
-          </ul>
+          <% if registration.registration_tables.nil? or registration.registration_tables.empty? %>
+              <div class="bg-warning">You are not yet registered for any tables.</div>
+          <% else %>
+              <ul class="list-group">
+                <% sorted = registration.registration_tables.sort { |a, b| a.start <=> b.start } %>
+                <% sorted.each do |reg_table| %>
+                    <li class="row list-group-item"><%= reg_table.table.session.name %>
+                      : <%= link_to "#{reg_table.table.scenario.long_name}", reg_table.table.scenario %></li>
+                <% end %>
+              </ul>
+          <% end %>
         </div>
       </div>
   <% end %>
