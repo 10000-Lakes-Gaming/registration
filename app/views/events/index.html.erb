@@ -22,6 +22,8 @@
         <div class="col-md-1">
           <% if @my_events.include? event %>
               <%= link_to "Attending", event, :class => 'btn btn-sm btn-primary' %>
+          <% else %>
+              <%= link_to "Register", new_event_user_event_path(event), :class => 'btn  btn-sm  btn-warning' %>
           <% end %>
         </div>
         <% if current_user.admin? %>
