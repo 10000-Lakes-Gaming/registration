@@ -32,7 +32,14 @@
       <tr>
         <td>
           <%= f.label :email %></td>
-        <td><%= @user.email %></td>
+        <td>
+          <%= @user.email %>
+          <div>
+            <% if admin? %>
+                <%= f.text_field :email %>
+            <% end %>
+          </div>
+        </td>
       </tr>
       <tr>
         <td><%= f.label :pfs_number %></td>
