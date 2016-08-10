@@ -20,9 +20,14 @@
 
     <%# need the UserEvent for the current user %>
     <% if admin? %>
+        <% if @registration_table.user_event
+             player_id = @registration_table.user_event.user_id
+           else
+             player_id = current_user.id
+           end %>
         <div class="field">
 
-          <%= f.select :user_event_id, options_for_select(@possible_players.map { |user_event| [user_event.user.name, user_event.id] }.to_h, gm_id), include_blank: 'Select User...', :selected => user_event.id  %>
+          <%= f.select :user_event_id, options_for_select(@possible_players.map { |user_event| [user_event.user.name, user_event.id] }.to_h, player_id), include_blank: 'Select User...'  %>
         </div>
     <% else %>
         <div class="field">
