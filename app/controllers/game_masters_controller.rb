@@ -2,6 +2,8 @@ class GameMastersController < ApplicationController
   before_action :set_game_master, only: [:show, :edit, :update, :destroy]
   before_filter :get_event, :get_session, :get_table, :get_user_event, :get_possible_gms
 
+  # TODO - prevent a multiple on GM assignment
+
   def prevent_non_admin
     unless current_user.admin?
       redirect_to events_path
@@ -22,6 +24,7 @@ class GameMastersController < ApplicationController
 
   def get_possible_gms
     @possible_gms = []
+    @not_available = []
 
     @event.user_events.each do |user_event|
       in_session = false
@@ -32,9 +35,14 @@ class GameMastersController < ApplicationController
         in_session ||= game_master.table.session == @session
       end
 
-      unless in_session
+      if in_session
+          @not_available.push user_event
+      else
         @possible_gms.push user_event
       end
+      # need to sort the gms
+      # @tables = @session.tables.sort {|a,b| a <=> b}
+      @possible_gms = @possible_gms.sort { |a, b| a <=> b }
     end
   end
 
