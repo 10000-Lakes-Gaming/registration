@@ -24,8 +24,8 @@ class SessionsController < ApplicationController
   # GET /sessions/1.json
   def show
     @registration_tables = {}
-    @gm_sessions = {}
-    @player_sessions = {}
+    @gm_sessions = init_gm_sessions
+    @player_sessions = init_player_sessions
     @rsvps = @event.user_events
 
     @rsvps.each do |rsvp|
@@ -52,6 +52,22 @@ class SessionsController < ApplicationController
         end
       end
     end
+  end
+
+  def init_player_sessions
+    @player_sessions = {}
+    @session.tables.each do |table|
+      @player_sessions[table] = []
+    end
+    @player_sessions
+  end
+
+  def init_gm_sessions
+    @gm_sessions = {}
+    @session.tables.each do |table|
+      @gm_sessions[table] = []
+    end
+    @gm_sessions
   end
 
   # GET /sessions/new
