@@ -31,6 +31,14 @@ class UserEventsController < ApplicationController
     end
     # sort the user events by email?
     @user_events = @user_events.sort{ |a, b| a <=> b }
+
+    # how many have paid?
+    @paid = 0
+    @user_events.each do |rsvp|
+      if rsvp.paid?
+        @paid = @paid + 1
+      end
+    end
   end
 
   # GET /user_events/1
