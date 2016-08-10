@@ -9,7 +9,7 @@
       <li style="padding-top: 1em;"><u>Admin</u></li>
       <li><%= link_to 'Events', events_path %></li>
       <%# TODO - this would be better, I think, if it indented inside of the event? --%>
-      <% if @event %>
+      <% if @event and @event.persisted? %>
           <li class="col-xs-offset-1"><%= link_to 'Registrations', event_user_events_path(@event) %></li>
           <li class="col-xs-offset-1"><%= link_to 'Sessions', event_sessions_path(@event) %></li>
 
