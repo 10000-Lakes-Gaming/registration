@@ -12,14 +12,26 @@
     <% end %>
 
 
+    <div class="well">
+      <div class="bg-warning">
+        <div class="lead text-danger"><b>Do not use an alias!</b>.</div>
+        <div>Please enter your complete first and last name into the name field.<br/>
+          Using anything other than your full name will prevent admins from confirming your paid status within the
+          application.
+        </div>
+      </div>
+    </div>
+
     <table class="table table-responsive">
       <tbody>
       <tr>
-        <td><%= f.label :name %></td>
+        <td>
+          <%= f.label :name %></td>
         <td><%= f.text_field :name %></td>
       </tr>
       <tr>
-        <td><%= f.label :email %></td>
+        <td>
+          <%= f.label :email %></td>
         <td><%= @user.email %></td>
       </tr>
       <tr>

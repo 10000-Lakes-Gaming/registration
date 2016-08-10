@@ -4,6 +4,17 @@
     <%= devise_error_messages! %>
 
 
+
+    <div class="well">
+      <div class="bg-warning">
+        <div class="lead text-danger"><b>Do not use an alias!</b>.</div>
+        <div>Please enter your complete first and last name into the name field.<br/>
+          Using anything other than your full name will prevent admins from confirming your paid status within the
+          application.
+        </div>
+      </div>
+    </div>
+
     <div class="field">
       <%= f.label :name %> <br>
       <%= f.text_field :name %>
