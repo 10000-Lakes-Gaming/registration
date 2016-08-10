@@ -1,6 +1,6 @@
 class RegistrationTablesController < ApplicationController
   before_action :set_registration_table, only: [:show, :edit, :update, :destroy]
-  before_filter :get_event, :get_session, :get_table, :get_registration_tables
+  before_filter :get_event, :get_session, :get_table, :get_registration_tables, :get_possible_players
 
   def prevent_non_admin
     unless current_user.admin?
@@ -24,6 +24,30 @@ class RegistrationTablesController < ApplicationController
 
   def get_registration_tables
     @registration_tables = @table.registration_tables
+  end
+
+  def get_possible_players
+    @possible_players = []
+    @not_available = []
+
+    @event.user_events.each do |user_event|
+      in_session = false
+      user_event.registration_tables.each do |reg_table|
+        in_session ||= reg_table.table.session == @session
+      end
+      user_event.game_masters.each do |game_master|
+        in_session ||= game_master.table.session == @session
+      end
+
+      if in_session
+        @not_available.push user_event
+      else
+        @possible_players.push user_event
+      end
+      # need to sort the gms
+      # @tables = @session.tables.sort {|a,b| a <=> b}
+      @possible_players = @possible_players.sort { |a, b| a <=> b }
+    end
   end
 
   # GET /registration_tables
