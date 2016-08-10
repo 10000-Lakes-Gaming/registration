@@ -81,17 +81,17 @@
         </td>
         <% if admin? %>
             <td>
-              <%= link_to "#{@player_sessions.size} / #{table.max_players}", event_session_table_registration_tables_path(@event, @session, table) %>
+              <%= link_to "#{@player_sessions[table].size} / #{table.max_players}", event_session_table_registration_tables_path(@event, @session, table) %>
             </td>
             <td>
-              <%= link_to "#{@gm_sessions.size} / #{table.gms_needed}", event_session_table_game_masters_path(@event, @session, table) %>
+              <%= link_to "#{@gm_sessions[table].size} / #{table.gms_needed}", event_session_table_game_masters_path(@event, @session, table) %>
             </td>
         <% else %>
             <td>
-              <%= @player_sessions.size %>/ <%= table.max_players %>
+              <%= @player_sessions[table].size %>/ <%= table.max_players %>
             </td>
             <td>
-              <%= @gm_sessions.size %>/ <%= table.gms_needed %>
+              <%= @gm_sessions.size[table] %>/ <%= table.gms_needed %>
             </td>
         <% end %>
         <td>
