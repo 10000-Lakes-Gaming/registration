@@ -36,7 +36,7 @@ class GameMastersController < ApplicationController
       end
 
       if in_session
-          @not_available.push user_event
+        @not_available.push user_event
       else
         @possible_gms.push user_event
       end
@@ -70,7 +70,7 @@ class GameMastersController < ApplicationController
   # GET /game_masters.json
   def index
     prevent_non_admin
-    @game_masters = GameMaster.all
+    @game_masters = GameMaster.where(table_id: @table.id)
   end
 
   # GET /game_masters/1/edit
