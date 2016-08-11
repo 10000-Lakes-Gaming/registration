@@ -66,9 +66,9 @@
     </div>
     <div class="col-md-8 no-pad">
       <div class="row no-pad">
-        <div class="col-md-7 header no-pad">Scenarios Offered:</div>
-        <div class="col-md-1 header no-pad" style="padding-left: 0.75em;">Seats</div>
-        <div class="col-md-3 header no-pad " style="padding-left: 2px;">RSVP?</div>
+        <div class="col-md-6 header no-pad">Scenarios Offered:</div>
+        <div class="col-md-2 header text-right no-pad" style="padding-left: 0.75em;">Available Seats</div>
+        <div class="col-md-3 header no-pad ">&nbsp;</div>
         <div class="col-md-1 header no-pad">GMs</div>
       </div>
     </div>
@@ -165,7 +165,7 @@
                   <% if @registration %>
                       <div class="col-md-1 no-pad">
                         <% if @tables.include? table %>
-                            <b>Yes</b>
+                            <b>Player</b>
                         <% elsif @gm_tables.include? table %>
                             <b>GM</b>
                         <% else %>
