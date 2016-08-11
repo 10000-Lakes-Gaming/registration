@@ -6,6 +6,15 @@
 
 <div class="detailsBlock" style="border: solid thin black;">
   <h3>Registration Details</h3>
+
+  <div class="well">
+    <div class="bg-warning text-danger lead" style="margin-bottom: 0"><strong>Important Note on Payment</strong></div>
+    <div class="bg-warning text-primary" style="margin-top: 0">
+      Note that currently marking a person as paid is currently a manual process, so there may be a lag of a day or two
+      once your payment has processed.<br><br>
+      Thank you for your patience.
+    </div>
+  </div>
   <div class="well">
     <div class="row">
       <div class="col-md-2">
@@ -45,13 +54,12 @@
 <div class="sessionsOffered" style="border: solid thin black;">
   <h3>Sessions/Scenarios Offered</h3>
 
+
   <div class="well">
     <div class="bg-warning text-danger lead" style="margin-bottom: 0"><strong>Attention GMs!</strong></div>
     <div class="bg-warning text-primary" style="margin-top: 0">If you are planning on GMing in a slot, please do not
-      sign up to play in that slot. The hosts of <%= @event.name %> will assign you to your GM slot once you have
-      registered and paid for <%= @event.name %>. Note that currently marking a person as paid is currently a manual
-      process, so there may be a lag of a day or two once your payment has processed.<br>
-      Thank you.
+      sign up to play in that slot. <br>The hosts of <%= @event.name %> will assign you to your GM slot once you have
+      registered and paid for <%= @event.name %>.
     </div>
   </div>
 
@@ -89,7 +97,7 @@
         <div class="col-md-8 no-pad">
           <!-- scenarios here -->
           <div class="row no-pad">
-            <% session.tables.sort {|a,b| a <=> b}.each do |table| %>
+            <% session.tables.sort { |a, b| a <=> b }.each do |table| %>
                 <div class="row no-pad striped-inner">
                   <div class="col-md-6 no-pad">
                     <% scenario = table.scenario %>
@@ -156,7 +164,7 @@
                   <div class="col-md-1 no-pad" style="padding-left: 0.25em;">
                     <% if !registrations_available %>
                         <span class="text-primary"><b>Full</b></span>
-                    <%# this needs a touch more room if 2 digit number --%>
+                        <%# this needs a touch more room if 2 digit number --%>
                     <% elsif table.max_players > 9 %>
                         <span class="small"><%= table.max_players - table.registration_tables.length %>
                           of <%= table.max_players %></span>
@@ -190,7 +198,7 @@
                         <% registered_this_session = @sessions.include?(session) || @gm_sessions.include?(session) %>
                         <% if !registered_this_session && registrations_available && @registration.paid? %>
                             <% unless table.raffle? %>
-                                <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table), :class =>  "btn btn-xs btn-primary", :method => :get %>
+                                <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table), :class => "btn btn-xs btn-primary", :method => :get %>
                             <% end %>
 
                         <% end %>
