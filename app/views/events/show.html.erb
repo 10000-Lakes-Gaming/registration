@@ -152,9 +152,12 @@
                       </div>
                     </div>
                   </div>
+                  <% registrations_available = (table.max_players > table.registration_tables.length) %>
                   <div class="col-md-1 no-pad" style="padding-left: 0.25em;">
+                    <% if !registrations_available %>
+                        <span class="text-primary"><b>Full</b></span>
                     <%# this needs a touch more room if 2 digit number --%>
-                    <% if table.max_players > 9 %>
+                    <% elsif table.max_players > 9 %>
                         <span class="small"><%= table.max_players - table.registration_tables.length %>
                           of <%= table.max_players %></span>
                     <% else %>
@@ -183,7 +186,7 @@
                                 <% end %>
                             <% end %>
                         <% end %>
-                        <% registrations_available = (table.max_players > table.registration_tables.length) %>
+
                         <% registered_this_session = @sessions.include?(session) || @gm_sessions.include?(session) %>
                         <% if !registered_this_session && registrations_available && @registration.paid? %>
                             <% unless table.raffle? %>
