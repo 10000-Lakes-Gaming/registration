@@ -22,6 +22,7 @@ class UsersController < ApplicationController
   def index
     prevent_non_admin
     @users = User.all
+    @users = @users.sort { |a, b| a <=> b }
   end
 
   # GET /users/1
