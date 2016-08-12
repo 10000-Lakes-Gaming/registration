@@ -116,9 +116,9 @@ ul.sidebar {
 
 .striped-outer {
   border-bottom: solid black thin;
-  padding-left: 1em;
+  //padding-left: 1em;
 }
-
+.row > div[class^="col-"]:first-child{padding-left:2px;}
 .striped-outer:nth-child(odd) {
   background: $white;
 }
@@ -129,14 +129,6 @@ ul.sidebar {
 
 .striped-inner {
   min-height: 35px;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-  margin-right: 0.5em;
-}
-
-.last {
-  padding-right: 0.5em;
-  margin-right: 0.5em;
 }
 
 .striped-inner:nth-child(odd) {
@@ -185,12 +177,6 @@ ul.sidebar {
     background-color: #FFF2BF;
     white-space: normal;
   }
-  td.changedLabel {
-    background-color: $darkPink;
-  }
-  td.changedData {
-    background-color: $lightPink;
-  }
 }
 
 .badge-core {
@@ -207,4 +193,14 @@ ul.sidebar {
 }
 .badge-retired {
   background-color: $black;
+}
+.badge-player {
+  background-color: $maroon;
+}
+.badge-gm {
+  background-color: $bright-green;
+}
+
+.bordered {
+  border: 2px solid $red;
 }

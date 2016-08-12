@@ -74,10 +74,10 @@
     </div>
     <div class="col-md-8 no-pad">
       <div class="row no-pad">
-        <div class="col-md-6 header no-pad">Scenarios Offered:</div>
-        <div class="col-md-2 header text-right no-pad" style="padding-left: 0.75em;">Available Seats</div>
-        <div class="col-md-2 header no-pad ">&nbsp;</div>
-        <div class="col-md-2 header text-right no-pad">GMs Needed&nbsp;</div>
+        <div class="col-md-5 header no-pad">Scenarios Offered:</div>
+        <div class="col-md-3 header text-right no-pad">Seats Remaining</div>
+        <div class="col-md-2 header no-pad" style="padding-left: 1em;">RSVP</div>
+        <div class="col-md-2 header no-pad text-right" style="padding-right: 2px;">GMs Needed</div>
       </div>
     </div>
   </div>
@@ -96,127 +96,121 @@
         </div>
         <div class="col-md-8 no-pad">
           <!-- scenarios here -->
-          <div class="row no-pad">
-            <% session.tables.sort { |a, b| a <=> b }.each do |table| %>
-                <div class="row no-pad striped-inner">
-                  <div class="col-md-6 no-pad">
-                    <% scenario = table.scenario %>
-                    <%= scenario.long_name %>
-                    <span class="badge"><%= table.scenario.tier %></span>
-                    <% if table.core? %>
-                        <span class="badge badge-core">Core</span>
-                    <% end %>
-                    <% if table.raffle? %>
-                        <span class="badge badge-raffle">Raffle</span>
-                    <% end %>
-                    <% if table.scenario.hard_mode? %>
-                        <span class="badge badge-hardmode"><small>Hard Mode</small></span>
-                    <% end %>
-                    <% if table.scenario.pregen_only? %>
-                        <span class="badge badge-pregen">Pregen</span>
-                    <% end %>
-                    <% if table.scenario.retired? %>
-                        <span class="badge badge-retired">Retired</span>
-                    <% end %>
-                  </div>
-                  <div class="col-md-1 no-pad">
-                    <button data-toggle="modal" title="<%= scenario.long_name %>" data-target="#scenario_<%= scenario.id %>" class="btn btn-xs btn-info">Details</button>
-                    <div id="scenario_<%= scenario.id %>" class="modal fade" role="dialog">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-header"><%= scenario.long_name %></h4>
+          <% session.tables.sort { |a, b| a <=> b }.each do |table| %>
+              <div class="row no-pad striped-inner">
+                <div class="col-md-5 no-pad ">
+                  <% scenario = table.scenario %>
+                  <%= scenario.long_name %>
+                  <span class="badge"><%= table.scenario.tier %></span>
+                  <% if table.core? %>
+                      <span class="badge badge-core">Core</span>
+                  <% end %>
+                  <% if table.raffle? %>
+                      <span class="badge badge-raffle">Raffle</span>
+                  <% end %>
+                  <% if table.scenario.hard_mode? %>
+                      <span class="badge badge-hardmode"><small>Hard Mode</small></span>
+                  <% end %>
+                  <% if table.scenario.pregen_only? %>
+                      <span class="badge badge-pregen">Pregen</span>
+                  <% end %>
+                  <% if table.scenario.retired? %>
+                      <span class="badge badge-retired">Retired</span>
+                  <% end %>
+                </div>
+                <div class="col-md-1 no-pad">
+                  <button data-toggle="modal" title="<%= scenario.long_name %>" data-target="#scenario_<%= scenario.id %>" class="btn btn-xs btn-info">Details</button>
+                  <div id="scenario_<%= scenario.id %>" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-header"><%= scenario.long_name %></h4>
+                        </div>
+                        <div class="modal-body">
+                          <div>
+                            <b>Type:</b>  <%= scenario.type %>
                           </div>
-                          <div class="modal-body">
-                            <div>
-                              <b>Type:</b>  <%= scenario.type %>
-                            </div>
-                            <% if scenario.pregen_only %>
-                                <div class="bg-primary">
-                                  This scenario is pregen-only.
-                                </div>
+                          <% if scenario.pregen_only %>
+                              <div class="bg-primary">
+                                This scenario is pregen-only.
+                              </div>
+                          <% end %>
+                          <% if scenario.hard_mode %>
+                              <div class="bg-primary">
+                                This scenario has a hard mode.
+                              </div>
+                          <% end %>
+                          <hr>
+                          <div style="white-space: pre-wrap;"><%= scenario.description %></div>
+                          <div>
+                            <strong>Written by:</strong> <%= scenario.author %>
+                          </div>
+                          <div>
+                            <% unless table.scenario.paizo_url.nil? %>
+                                <a href="<%= scenario.paizo_url %>" target="_blank">Click to see on Paizo's site</a>.
                             <% end %>
-                            <% if scenario.hard_mode %>
-                                <div class="bg-primary">
-                                  This scenario has a hard mode.
-                                </div>
-                            <% end %>
-                            <hr>
-                            <div style="white-space: pre-wrap;"><%= scenario.description %></div>
-                            <div>
-                              <strong>Written by:</strong> <%= scenario.author %>
-                            </div>
-                            <div>
-                              <% unless table.scenario.paizo_url.nil? %>
-                                  <a href="<%= scenario.paizo_url %>" target="_blank">Click to see on Paizo's site</a>.
-                              <% end %>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <% registrations_available = (table.max_players > table.registration_tables.length) %>
-                  <div class="col-md-1 no-pad" style="padding-left: 0.25em;">
-                    <% if !registrations_available %>
-                        <span class="text-primary"><b>Full</b></span>
-                        <%# this needs a touch more room if 2 digit number --%>
-                    <% elsif table.max_players > 9 %>
-                        <span class="small"><%= table.max_players - table.registration_tables.length %>
-                          of <%= table.max_players %></span>
-                    <% else %>
-                        <%= table.max_players - table.registration_tables.length %> of <%= table.max_players %>
-                    <% end %>
-
-                  </div>
-                  <% if @registration %>
-                      <div class="col-md-1 no-pad">
-                        <% if @tables.include? table %>
-                            <b>Player</b>
-                        <% elsif @gm_tables.include? table %>
-                            <b>GM</b>
-                        <% else %>
-                            <!-- No -->
-                        <% end %>
-                      </div>
-
-                      <%# Add in column to indicate if GMing. Or, have Yes changed to GMing? %>
-                      <div class="col-md-2 no-pad">
-                        <% if @tables.include? table %>
-                            <!-- get table for this user -->
-                            <% table.registration_tables.each do |reg_table| %>
-                                <% if @reg_tables.include?(reg_table) %>
-                                    <%= button_to 'Remove', [@event, session, table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove your signup for #{reg_table.name}: #{reg_table.table.scenario.long_name}?"}, :class => 'btn btn-xs btn-danger', method: :delete %>
-                                <% end %>
-                            <% end %>
-                        <% end %>
-
-                        <% registered_this_session = @sessions.include?(session) || @gm_sessions.include?(session) %>
-                        <% if !registered_this_session && registrations_available && @registration.paid? %>
-                            <% unless table.raffle? %>
-                                <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table), :class => "btn btn-xs btn-primary", :method => :get %>
-                            <% end %>
-
-                        <% end %>
-                      </div>
-                  <% else %>
-                      <div class="col-md-4 no-pad">&nbsp;</div>
-                  <% end %>
-                  <!-- end of is registered -->
-                  <div class="col-md-1 no-pad">
-                    <% if table.game_masters.nil? %>
-                        <%= table.gms_needed %>
-                    <% else %>
-                        <%= table.gms_needed - table.game_masters.size %>
-                    <% end %> of <%= table.gms_needed %>
-                  </div>
                 </div>
-            <% end %>
-          </div>
+                <% registrations_available = (table.max_players > table.registration_tables.length) %>
+                <div class="col-md-2 no-pad " style="padding-left: 0.25em;">
+                  <% if !registrations_available %>
+                      <span class="text-danger"><b>Full</b></span>
+                  <% else %>
+                      <%= table.max_players - table.registration_tables.length %> of <%= table.max_players %> left
+                  <% end %>
+
+                </div>
+                <% if @registration %>
+                    <%# Add in column to indicate if GMing. Or, have Yes changed to GMing? %>
+                    <div class="col-md-3 no-pad " style="padding-left: 1em;">
+                      <% if @tables.include? table %>
+                          <span class="badge badge-player">Player</span>
+                      <% elsif @gm_tables.include? table %>
+                          <span class="badge badge-gm">GM</span>
+                      <% else %>
+                          <!-- No -->
+                      <% end %>
+
+                      <% if @tables.include? table %>
+                          <!-- get table for this user -->
+                          <% table.registration_tables.each do |reg_table| %>
+                              <% if @reg_tables.include?(reg_table) %>
+                                  <%= button_to 'Remove', [@event, session, table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove your signup for #{reg_table.name}: #{reg_table.table.scenario.long_name}?"}, :class => 'btn btn-xs btn-danger', method: :delete %>
+                              <% end %>
+                          <% end %>
+                      <% end %>
+
+                      <% registered_this_session = @sessions.include?(session) || @gm_sessions.include?(session) %>
+                      <% if !registered_this_session && registrations_available && @registration.paid? %>
+                          <% unless table.raffle? %>
+                              <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table), :class => "btn btn-xs btn-primary", :method => :get %>
+                          <% end %>
+
+                      <% end %>
+
+
+                    </div>
+                <% else %>
+                    <div class="col-md-4 no-pad">&nbsp;</div>
+                <% end %>
+                <!-- end of is registered -->
+                <div class="col-md-1 no-pad ">
+                  <% if table.game_masters.nil? %>
+                      <%= table.gms_needed %>
+                  <% else %>
+                      <%= table.gms_needed - table.game_masters.size %>
+                  <% end %> of <%= table.gms_needed %>
+                </div>
+              </div>
+          <% end %>
         </div>
       </div>
   <% end %>
