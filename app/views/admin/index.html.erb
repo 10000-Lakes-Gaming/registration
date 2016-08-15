@@ -5,10 +5,10 @@
 <div class="jumbotron">
   <div class="text-info"><mark>More stuff will be coming here, such as the ability to drill into events, etc.</mark></div>
 
-  <div><%= link_to 'Manage Events', events_path %></div>
-  <div><%= link_to 'Manage Scenarios', scenarios_path %></div>
-  <div><%= link_to 'Manage Users', users_path %></div>
-
+  <p><%= link_to 'Manage Events', events_path , :class => 'btn btn-primary'%></p>
+  <p><%= link_to 'Manage Scenarios', scenarios_path, :class => 'btn btn-success' %></p>
+  <p><%= link_to 'Manage Users', users_path, :class => 'btn btn-info' %></p>
+  <p><%= button_to 'Send Reminder Email', session_reminder_path, :class => 'btn btn-warning' %></p>
 </div>
 
 
