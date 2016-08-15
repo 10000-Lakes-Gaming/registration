@@ -9,13 +9,13 @@
       </div>
 
       <div class="field">
-         <%= f.label :email, "My Email" %>: <%= current_user.email %>
+        <%= f.label :email, "My Email" %>: <%= current_user.email %>
         <%= f.hidden_field :email, :value => current_user.email %>
       </div>
 
       <div class="field">
         <%= f.label :subject, "My reason for contact?" %>:<br>
-        <%= f.select :subject, ['I want to volunteer and/or GM!', 'Thank you for being Awesome!' ,'Payment Problems', 'Registration Problems', 'Password Problems', 'I am too impatient to wait 24 hours to see \'Paid\' status', 'Other'] %>
+        <%= f.select :subject, ['I want to volunteer and/or GM!', 'I have something to donate!', 'Thank you for being Awesome!', 'Payment Problems', 'Registration Problems', 'Password Problems', 'I am too impatient to wait 24 hours to see \'Paid\' status', 'Other'] %>
       </div>
 
       <div class="field" style="padding-top: 1em;">
@@ -27,7 +27,7 @@
     <fieldset>
       <div class="field">
         <%= f.submit "Send Message", :class => 'btn btn-warning' %>
-        <%= link_to 'Cancel', welcome_index_path, :class => 'btn btn-success'%>
+        <%= link_to 'Cancel', welcome_index_path, :class => 'btn btn-success' %>
       </div>
     </fieldset>
 <% end %>
