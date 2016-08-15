@@ -21,6 +21,7 @@
   <tbody>
   <%
     @session.tables.sort { |a, b| a <=> b }.each do |table| %>
+
       <tr>
         <td>
           <%# make this show the scenario data as a collapsable %>
@@ -103,6 +104,19 @@
         </td>
       </tr>
   <% end %>
+  <tr>
+    <td colspan="2"><strong>Totals:</strong></td>
+    <td>
+      <%# players %>
+      <%= @total_players %> / <%= @total_players_available %>
+    </td>
+    <td>
+      <%# GMs %>
+      <%= @total_gms %> / <%= @total_gms_available %>
+    </td>
+    <td></td>
+  </tr>
+
   </tbody>
 </table>
 

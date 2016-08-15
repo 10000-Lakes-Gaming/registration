@@ -27,6 +27,18 @@ class SessionsController < ApplicationController
     @gm_sessions = init_gm_sessions
     @player_sessions = init_player_sessions
     @rsvps = @event.user_events
+    @total_players_available = 0
+    @total_gms_available = 0
+    @total_players = 0
+    @total_gms = 0
+
+    @session.tables.each do |table|
+      # don't count raffle tables
+      unless table.raffle?
+        @total_players_available = @total_players_available + table.max_players
+        @total_gms_available = @total_gms_available + table.gms_needed
+      end
+    end
 
     @rsvps.each do |rsvp|
       player_tables = rsvp.registration_tables
@@ -40,6 +52,7 @@ class SessionsController < ApplicationController
           players.push reg_table.user_event.user
         end
       end # end player_tables iteration
+
       gm_tables = rsvp.game_masters
       gm_tables.each do |gm_table|
         if gm_table.table.session == @session
@@ -52,6 +65,14 @@ class SessionsController < ApplicationController
         end
       end
     end
+
+    @player_sessions.each do |key, array|
+      @total_players = @total_players + array.length
+    end
+    @gm_sessions.each do |key,array|
+      @total_gms = @total_gms + array.length
+    end
+
   end
 
   def init_player_sessions
