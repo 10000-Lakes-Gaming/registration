@@ -34,7 +34,16 @@
         <%= link_to('Login', new_user_session_path) %>
     <% end %>
   </li>
-  <li style="padding-top: 1em;">
+  <li>
     <a href="mailto:mn.pfs.reg@gmail.com">Contact Us!</a>
   </li>
+  <!--
+  <li style="padding-top: 1em;">
+    <% if current_user.nil? %>
+        <a href="mailto:mn.pfs.reg@gmail.com">Contact Us!</a>
+    <% else %>
+     <%= link_to('Contact Us!', contact_path)  %>
+    <% end %>
+  </li>
+  -->
 </ul>

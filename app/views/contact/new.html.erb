@@ -1,0 +1,33 @@
+<h1>Contact Us!</h1>
+
+
+<%= form_for @message, url: contact_path do |f| %>
+    <fieldset>
+      <div class="field">
+        <%= f.label :name, "My Name" %>: <%= current_user.name %>
+        <%= f.hidden_field :name, :value => current_user.name %>
+      </div>
+
+      <div class="field">
+         <%= f.label :email, "My Email" %>: <%= current_user.email %>
+        <%= f.hidden_field :email, :value => current_user.email %>
+      </div>
+
+      <div class="field">
+        <%= f.label :subject, "My reason for contact?" %>:<br>
+        <%= f.select :subject, ['I want to volunteer and/or GM!', 'Thank you for being Awesome!' ,'Payment Problems', 'Registration Problems', 'Password Problems', 'I am too impatient to wait 24 hours to see \'Paid\' status', 'Other'] %>
+      </div>
+
+      <div class="field" style="padding-top: 1em;">
+        <%= f.label :content, "My Message" %><br>
+        <%= f.text_area :content, placeholder: "Message", size: "70x10" %>
+      </div>
+    </fieldset>
+    <hr>
+    <fieldset>
+      <div class="field">
+        <%= f.submit "Send Message", :class => 'btn btn-warning' %>
+        <%= link_to 'Cancel', welcome_index_path, :class => 'btn btn-success'%>
+      </div>
+    </fieldset>
+<% end %>

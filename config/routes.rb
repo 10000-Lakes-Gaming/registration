@@ -20,6 +20,11 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  # message stuffs
+  get 'contact', to: 'contact#new', as: 'contact'
+  post 'contact', to: 'contact#create'
+  resources :contact
 # The priority is based upon order of creation: first created -> highest priority.
 # See how all your routes lay out with "rake routes".
 end
