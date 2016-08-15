@@ -1,9 +1,8 @@
 class ContactMailer < ApplicationMailer
 
-  def new_message(message)
+  def contact_email(message)
     @message = message
-
-    mail_subject = @message.subject
+    mail(to: @message.email, subject: @message.subject)
   end
 
 end
