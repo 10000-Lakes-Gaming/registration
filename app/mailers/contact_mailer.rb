@@ -5,4 +5,9 @@ class ContactMailer < ApplicationMailer
     mail(from: @message.email, subject: @message.subject)
   end
 
+  def session_reminder(message)
+    @message = message
+    mail(subject: @message.subject)
+  end
+
 end

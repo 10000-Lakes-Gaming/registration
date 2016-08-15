@@ -10,4 +10,11 @@ class ContactMailerPreview < ActionMailer::Preview
     message.email = 'silbeg@gmail.com'
     ContactMailer.contact_email(message)
   end
+
+  def session_reminder_preview
+    message = Message.new
+    message.name = "Skål Con"
+    message.subject = "Reminder"
+    ContactMailer.session_reminder(message)
+  end
 end
