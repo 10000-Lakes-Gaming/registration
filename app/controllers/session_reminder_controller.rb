@@ -11,6 +11,8 @@ class SessionReminderController < ApplicationController
     @user_events.each do |user|
       @users.push user.user
     end
+    # sort the users
+    @users = @users.sort { |a, b| a <=> b }
   end
 
   def get_admin_users
