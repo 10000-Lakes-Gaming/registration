@@ -3,7 +3,14 @@ class SessionReminderController < ApplicationController
   before_action :get_users
 
   def get_users
-    @users = get_admin_users
+    # @users = get_admin_users
+    # TODO - make this a value pulled in from the user
+    @user_events = UserEvent.where(event_id: 3)
+    # pull the users out of this
+    @users = []
+    @user_events.each do |user|
+      @users.push user.user
+    end
   end
 
   def get_admin_users
