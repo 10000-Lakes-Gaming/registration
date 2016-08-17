@@ -3,7 +3,7 @@ class ContactMailer < ApplicationMailer
   def contact_email(message)
     @message = message
     @from = @message.email
-    mail(from: message.email, subject: message.subject)
+    mail(from: message.email, reply_to: message.email, subject: message.subject)
   end
 
   def session_reminder(message, emails)
