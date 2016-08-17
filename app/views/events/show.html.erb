@@ -221,7 +221,7 @@
                 of <%= session.total_max_players %> left</span></div>
             <div class="col-md-3 no-pad ">&nbsp;</div>
 
-            <% if @session.gm_count == @session.total_gms_needed %>
+            <% if session.gm_count == session.total_gms_needed %>
                 <% klass = 'text-primary' %>
             <% else %>
                 <% klass = 'text-danger' %>
