@@ -216,9 +216,19 @@
           <%# this should be a different shading for the totals %>
           <div class="row no-pad totals">
             <div class="col-md-1 col-md-offset-5"><span class="text-primary"><strong>Totals:</strong></span></div>
-            <div class="col-md-2 no-pad "><span class="text-primary"><%= session.total_max_players - session.players_count %> of <%= session.total_max_players %> left</span></div>
+            <div class="col-md-2 no-pad ">
+              <span class="text-primary"><%= session.total_max_players - session.players_count %>
+                of <%= session.total_max_players %> left</span></div>
             <div class="col-md-3 no-pad ">&nbsp;</div>
-            <div class="col-md-1 no-pad"><span class="text-primary"><%= session.gm_count %> of <%= session.total_gms_needed %> filled</span> </div>
+
+            <% if @session.gm_count == @session.total_gms_needed %>
+                <% klass = 'text-primary' %>
+            <% else %>
+                <% klass = 'text-danger' %>
+            <% end %>
+            <div class="col-md-1 no-pad"><span class="<%= klass %>"><%= session.total_gms_needed - session.gm_count %>
+              of <%= session.total_gms_needed %> needed</span>
+            </div>
           </div>
         </div>
       </div>
