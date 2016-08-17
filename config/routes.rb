@@ -20,6 +20,7 @@ Rails.application.routes.draw do
         resources :game_masters
       end
     end
+    resources :session_reminder
   end
 
   # message stuffs
@@ -27,9 +28,6 @@ Rails.application.routes.draw do
   post 'contact', to: 'contact#create'
   resources :contact
 
-  get 'session_reminder', to: 'session_reminder#new', as: 'session_reminder'
-  post 'session_reminder', to: 'session_reminder#create'
-  resources :session_reminder
 # The priority is based upon order of creation: first created -> highest priority.
 # See how all your routes lay out with "rake routes".
 end

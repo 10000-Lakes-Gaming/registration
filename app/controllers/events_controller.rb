@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
   before_filter :restrict_to_admin, except: [:show, :index]
-  before_filter :get_my_events
+  before_action :get_my_events
 
   # GET /events
   # GET /events.json

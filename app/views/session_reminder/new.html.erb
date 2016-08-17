@@ -1,25 +1,27 @@
-<h1>Send reminder message!</h1>
+<h1><%= @event.name %></h1>
+<h2>Send Session Signup Reminder Message</h2>
 <p id="notice"><%= notice %></p><p id="notice"><%= notice %></p>
 
-<%= form_for @message, url: session_reminder_path do |f| %>
-    <% if @message.errors.any? %>
+<%= form_for (@event), url: new_event_session_reminder_path do |f| %>
+    <% if @event.errors.any? %>
         <div id="error_explanation">
-          <h2><%= pluralize(@message.errors.count, "error") %> prohibited this user_event from being saved:</h2>
+          <h2><%= pluralize(@event.errors.count, "error") %> prohibited this user_event from being saved:</h2>
 
           <ul>
-            <% @message.errors.full_messages.each do |message| %>
+            <% @event.errors.full_messages.each do |message| %>
                 <li><%= message %></li>
             <% end %>
           </ul>
         </div>
     <% end %>
+
+    <h3>Users being sent message:</h3>
     <ul>
       <% @users.each do |user| %>
-          <li><%= user.name %></li>
+      <li><%= user.name %></li>
       <% end %>
     </ul>
 
-    <div>Sending reminder email to <%= @users.length %> players.</div>
 
     <hr>
     <fieldset>

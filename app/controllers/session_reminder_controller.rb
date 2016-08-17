@@ -1,11 +1,15 @@
 class SessionReminderController < ApplicationController
   before_filter :restrict_to_admin
-  before_action :get_users
+  before_action :get_event, :get_users
+
+  def get_event
+    @event = Event.find(params[:event_id])
+  end
 
   def get_users
     # @users = get_admin_users
     # TODO - make this a value pulled in from the user
-    @user_events = UserEvent.where(event_id: 3)
+    @user_events = UserEvent.where(event_id: @event.id)
     # pull the users out of this
     @users = []
     @user_events.each do |user|
@@ -15,25 +19,20 @@ class SessionReminderController < ApplicationController
     @users = @users.sort { |a, b| a <=> b }
   end
 
-  def get_admin_users
-    admins = User.where(admin: true)
-  end
-
   def new
-    @message = Message.new
+
   end
 
-  def create
-    @message = Message.new(message_params)
-    @message.email = "mn.pfs.reg@gmail.com"
-    @message.subject = "Reminder Message"
+  def update
+    @message = Message.new
+    @message.email = current_user.email
+    @message.subject = "Session Signup Remdinder Message"
     @message.content = "This is my content"
-    @message.name = "SkålCon"
+    @message.name = @event.name
 
     emails = @users.collect(&:email).join(",")
 
     if @message.valid?
-
       ContactMailer.session_reminder(@message, emails).deliver_now
       redirect_to welcome_index_path, notice: "Your messages has been sent."
     else
@@ -43,8 +42,9 @@ class SessionReminderController < ApplicationController
   end
 
   private
+  # Use callbacks to share common setup or constraints between actions.
 
   def message_params
-    # params.require().permit(:name, :email, :content, :subject)
+    params.require(:event)
   end
 end
