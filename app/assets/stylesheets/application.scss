@@ -11,7 +11,7 @@ $lightGrey: #eee;
 $inner-stripe-odd: #F5FFFA;
 $inner-stripe-even: #fffafa;
 $darkerGrey: #ccc;
-$darkestGrey: #777;
+$darkestGrey: dimgrey;
 $darkPink: #f99;
 $lightPink: #fdd;
 $orange: #fc9;
@@ -138,6 +138,12 @@ ul.sidebar {
 .striped-inner:nth-child(even) {
   background: $inner-stripe-even;
 }
+
+.totals {
+  background: oldlace;
+  color: black;
+}
+
 
 .inline {
   display: inline-block;

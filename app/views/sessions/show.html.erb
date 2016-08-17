@@ -105,21 +105,21 @@
       </tr>
   <% end %>
   <tr>
-    <td colspan="2" class="text-right"><strong>Totals:</strong></td>
+    <td colspan="2" class="text-right"><strong>Totals (does not include raffles):</strong></td>
     <td>
       <%# TODO - maybe color code by percentage needed. %>
       <%# players %>
-      <span class="text-success"><%= @total_players %> / <%= @total_players_available %></span>
+      <span class="text-success"><%= @session.players_count %> / <%= @session.total_max_players %></span>
     </td>
     <td colspan="2">
       <%# GMs %>
-      <% if @total_gms == @total_gms_available %>
+      <% if @session.gm_count == @session.total_gms_needed %>
           <% klass = 'text-success' %>
       <% else %>
           <% klass = 'text-danger' %>
       <% end %>
 
-      <span class="<%= klass %>"><%= @total_gms %> / <%= @total_gms_available %></span>
+      <span class="<%= klass %>"><%= @session.gm_count %> / <%=@session.total_gms_needed %></span>
     </td>
   </tr>
 

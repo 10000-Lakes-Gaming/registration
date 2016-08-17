@@ -16,6 +16,10 @@ class Session < ActiveRecord::Base
     players
   end
 
+  def players_count
+    players.length
+  end
+
   def gms
     gms = []
     self.tables.each do |table|
@@ -24,5 +28,30 @@ class Session < ActiveRecord::Base
       end
     end
     gms
+  end
+
+  def gm_count
+    gms.length
+  end
+
+  def total_max_players
+    total_max_players = 0
+    self.tables.each do |table|
+      unless table.raffle?
+        total_max_players = total_max_players + table.max_players
+      end
+    end
+    total_max_players
+  end
+
+  def total_gms_needed
+    total_max_gms = 0
+
+    self.tables.each do |table|
+      unless table.raffle?
+        total_max_gms = total_max_gms + table.gms_needed
+      end
+    end
+    total_max_gms
   end
 end

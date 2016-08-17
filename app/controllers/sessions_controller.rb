@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :get_event
   before_action :set_session, only: [:show, :edit, :update, :destroy]
-  before_filter :get_event
 
   def get_event
     @event = Event.find(params[:event_id])
@@ -18,32 +18,26 @@ class SessionsController < ApplicationController
   def index
     prevent_non_admin
     @sessions = Session.where(event_id: @event.id)
+
   end
 
   # GET /sessions/1
   # GET /sessions/1.json
   def show
+    get_session_data(@session)
+  end
+
+  def get_session_data (session)
     @registration_tables = {}
     @gm_sessions = init_gm_sessions
     @player_sessions = init_player_sessions
     @rsvps = @event.user_events
-    @total_players_available = 0
-    @total_gms_available = 0
-    @total_players = 0
-    @total_gms = 0
 
-    @session.tables.each do |table|
-      # don't count raffle tables
-      unless table.raffle?
-        @total_players_available = @total_players_available + table.max_players
-        @total_gms_available = @total_gms_available + table.gms_needed
-      end
-    end
 
     @rsvps.each do |rsvp|
       player_tables = rsvp.registration_tables
       player_tables.each do |reg_table|
-        if reg_table.table.session == @session
+        if reg_table.table.session == session
           players = @player_sessions[reg_table.table]
           if players.nil?
             players = []
@@ -55,7 +49,7 @@ class SessionsController < ApplicationController
 
       gm_tables = rsvp.game_masters
       gm_tables.each do |gm_table|
-        if gm_table.table.session == @session
+        if gm_table.table.session == session
           gms = @gm_sessions[gm_table.table]
           if gms.nil?
             gms = []
@@ -64,13 +58,6 @@ class SessionsController < ApplicationController
           gms.push gm_table.user_event.user
         end
       end
-    end
-
-    @player_sessions.each do |key, array|
-      @total_players = @total_players + array.length
-    end
-    @gm_sessions.each do |key,array|
-      @total_gms = @total_gms + array.length
     end
 
   end

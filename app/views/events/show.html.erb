@@ -75,7 +75,8 @@
     <div class="col-md-8 no-pad">
       <div class="row no-pad">
         <div class="col-md-5 header no-pad">Scenarios Offered:</div>
-        <div class="col-md-3 header text-right no-pad">Seats Remaining</div>
+        <div class="col-md-1 header no-pad">Details</div>
+        <div class="col-md-2 header no-pad">Seats Remaining</div>
         <div class="col-md-2 header no-pad" style="padding-left: 1em;">RSVP</div>
         <div class="col-md-2 header no-pad text-right" style="padding-right: 2px;">GMs Needed</div>
       </div>
@@ -209,8 +210,16 @@
                       <%= table.gms_needed - table.game_masters.size %>
                   <% end %> of <%= table.gms_needed %>
                 </div>
-              </div>
+              </div> <%# end of the scenario list %>
+
           <% end %>
+          <%# this should be a different shading for the totals %>
+          <div class="row no-pad totals">
+            <div class="col-md-1 col-md-offset-5"><span class="text-primary"><strong>Totals:</strong></span></div>
+            <div class="col-md-2 no-pad "><span class="text-primary"><%= session.players_count %> of <%= session.total_max_players %> left</span></div>
+            <div class="col-md-3 no-pad ">&nbsp;</div>
+            <div class="col-md-1 no-pad"><span class="text-primary"><%= session.gm_count %> of <%= session.total_gms_needed %> filled</span> </div>
+          </div>
         </div>
       </div>
   <% end %>
