@@ -41,7 +41,13 @@
     <% if current_user.nil? %>
         <a href="mailto:mn.pfs.reg@gmail.com">Contact Us!</a>
     <% else %>
-     <%= link_to('Contact Us!', contact_path)  %>
+        <%= link_to('Contact Us!', contact_path) %>
+
     <% end %>
   </li>
+  <% if admin? %>
+      <li style="padding-top: 1em;">
+        <%= link_to('Admin Send Email', admin_email_path) %>
+      </li>
+  <% end %>
 </ul>

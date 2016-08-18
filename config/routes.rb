@@ -30,6 +30,10 @@ Rails.application.routes.draw do
   post 'contact', to: 'contact#create'
   resources :contact
 
+  get 'admin_email', to: 'admin_email#new', as: 'admin_email'
+  post 'contact', to: 'admin_email#create'
+  resources :admin_email
+
 # The priority is based upon order of creation: first created -> highest priority.
 # See how all your routes lay out with "rake routes".
 end
