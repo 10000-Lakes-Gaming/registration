@@ -9,7 +9,7 @@ class AdminEmailController < ApplicationController
   def create
     @message = Message.new(message_params)
     if @message.valid?
-      ContactMailer.create_account_reminder(@message, emails).deliver_now
+      ContactMailer.admin_email(@message, emails).deliver_now
       redirect_to welcome_index_path, notice: "Your messages has been sent."
     else
       flash[:alert] = "An error occurred while delivering this message."
