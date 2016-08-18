@@ -28,7 +28,7 @@ class PaymentReminderController < ApplicationController
   def update
     @message = Message.new
     @message.email = current_user.email
-    @message.subject = @event.name + "Payment Reminder Message"
+    @message.subject = @event.name + " Payment Reminder Message"
     @message.content = "This is my content"
     @message.name = @event.name
 
