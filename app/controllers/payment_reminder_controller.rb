@@ -1,4 +1,4 @@
-class SessionReminderController < ApplicationController
+class PaymentReminderController < ApplicationController
   before_filter :restrict_to_admin
   before_action :get_event, :get_users
 
@@ -13,7 +13,9 @@ class SessionReminderController < ApplicationController
     # pull the users out of this
     @users = []
     @user_events.each do |user|
-      @users.push user.user
+      unless user.paid?
+        @users.push user.user
+      end
     end
     # sort the users
     @users = @users.sort { |a, b| a <=> b }
@@ -26,14 +28,14 @@ class SessionReminderController < ApplicationController
   def update
     @message = Message.new
     @message.email = current_user.email
-    @message.subject = "Session Signup Reminder Message"
+    @message.subject = @event.name + "Payment Reminder Message"
     @message.content = "This is my content"
     @message.name = @event.name
 
     emails = @users.collect(&:email).join(",")
 
     if @message.valid?
-      ContactMailer.session_reminder(@message, emails).deliver_now
+      ContactMailer.payment_reminder(@message, emails).deliver_now
       redirect_to welcome_index_path, notice: "Your messages has been sent."
     else
       flash[:alert] = "An error occurred while delivering this message."

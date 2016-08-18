@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       end
     end
     resources :session_reminder
+    resources :payment_reminder
   end
 
   # message stuffs

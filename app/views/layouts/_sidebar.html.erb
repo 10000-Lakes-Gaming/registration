@@ -23,6 +23,7 @@
               <li class="col-xs-offset-3"><%= link_to 'GMs', event_session_table_game_masters_path(@event, @session, @table) %></li>
           <% end %>
           <li class="col-xs-offset-1"><%= link_to "Session Reminder", new_event_session_reminder_path(@event) %></li>
+          <li class="col-xs-offset-1"><%= link_to "Payment Reminder", new_event_payment_reminder_path(@event) %></li>
       <% end %>
       <li><%= link_to 'Scenarios', scenarios_path %></li>
       <li><%= link_to 'Users', users_path %></li>
