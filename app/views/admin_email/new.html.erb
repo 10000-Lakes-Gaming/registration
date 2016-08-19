@@ -1,7 +1,7 @@
 <h1>Send Reminder to Create Account!</h1>
 
 
-<%= form_for @message, url: contact_path do |f| %>
+<%= form_for @message, url: admin_email_path do |f| %>
     <fieldset>
       <%= f.hidden_field :name, :value => 'MSP Pathfinders and Skål Con' %>
       <%= f.hidden_field :email, :value => 'mn.pfs.reg@gmail.com' %>

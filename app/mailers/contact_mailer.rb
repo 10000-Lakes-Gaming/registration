@@ -6,11 +6,10 @@ class ContactMailer < ApplicationMailer
     mail(from: message.email, reply_to: message.email, subject: message.subject)
   end
 
-  def admin_email(message)
+  def admin_email(message, emails)
     @message = message
-    @from = @message.email
-    @emails = @message.email_list.split
-    mail(from: message.email, reply_to: message.email, subject: message.subject, bcc: @emails)
+    @emails = emails
+    mail(subject: message.subject, bcc: @emails)
   end
 
 
