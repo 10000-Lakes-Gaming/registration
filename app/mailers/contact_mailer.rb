@@ -9,7 +9,13 @@ class ContactMailer < ApplicationMailer
   def admin_email(message, emails)
     @message = message
     @emails = emails
-    mail(subject: message.subject, bcc: @emails)
+    # mail(subject: message.subject, bcc: @emails)
+    # let's try iteration
+    @emails.each do |email|
+      mail(subject: message.subject, to: @emails)
+    end
+
+
   end
 
 
