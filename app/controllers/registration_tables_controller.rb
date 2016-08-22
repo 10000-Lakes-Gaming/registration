@@ -2,6 +2,7 @@ class RegistrationTablesController < ApplicationController
   before_action :set_registration_table, only: [:show, :edit, :update, :destroy]
   before_filter :get_event, :get_session, :get_table, :get_registration_tables, :get_possible_players
 
+
   def prevent_non_admin
     unless current_user.admin?
       redirect_to events_path
