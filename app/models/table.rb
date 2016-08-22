@@ -8,7 +8,7 @@ class Table < ActiveRecord::Base
   delegate :start, to: :session
   validates :scenario_id, :session_id, :max_players, :gms_needed, :presence => true
   validates_numericality_of :gms_needed, :max_players, greater_than: 0
-  validate :check_player_count
+  # validate :check_player_count
 
   # TODO - This may not be needed forever
   after_initialize do
@@ -45,8 +45,8 @@ class Table < ActiveRecord::Base
   end
 
   def check_player_count
-    byebug
-    # errors.add :registration_tables, "Max Players Exceeded" if registration_tables.length > max_players
+    # byebug
+    # errors.addgit  :registration_tables, "Max Players Exceeded" if registration_tables.length > max_players
     errrors.add :registration_tables
   end
 
