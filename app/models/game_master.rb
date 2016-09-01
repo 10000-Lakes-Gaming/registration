@@ -9,4 +9,14 @@ class GameMaster < ActiveRecord::Base
     errors.add :game_masters, "Max GMs Exceeded" if table.game_masters.count > table.gms_needed
   end
 
+  def <=> (other)
+    # sort by user
+    sorted = self.user_event <=> other.user_event
+    if  sorted == 0
+      # then scenario number
+      sorted = self.table.scenario <=> other.table.scenario
+    end
+    sorted
+  end
+
 end
