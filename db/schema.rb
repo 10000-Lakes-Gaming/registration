@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160729151855) do
+ActiveRecord::Schema.define(version: 20160901193643) do
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(version: 20160729151855) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "forum_username"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

@@ -45,6 +45,10 @@
         <td><%= f.label :pfs_number %></td>
         <td><%= f.text_field :pfs_number %></td>
       </tr>
+      <tr>
+        <td><%= f.label :forum_username, "Username used on Paizo Forums" %></td>
+        <td><%= f.text_field :forum_username %></td>
+      </tr>
       <% if admin? %>
           <tr>
             <td><%= f.label :admin %></td>

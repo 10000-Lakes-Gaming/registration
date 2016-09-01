@@ -8,12 +8,14 @@
 <table class="table table-striped">
   <tr>
     <th>GM Name</th>
+    <th>GM Forum Name</th>
     <th>GM Email</th>
     <th>Scenario</th>
   </tr>
   <% @game_masters.each do |gm| %>
       <tr>
         <td><%= gm.user_event.user.name %></td>
+        <td><%= gm.user_event.user.forum_name %></td>
         <td><%= gm.user_event.user.email %></td>
         <td><%= gm.table.scenario.long_name %></td>
       </tr>
