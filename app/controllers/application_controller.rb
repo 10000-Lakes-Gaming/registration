@@ -1,4 +1,8 @@
 class ApplicationController < ActionController::Base
+  def get_event
+    @event = Event.find(params[:event_id])
+  end
+
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
   protected

@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @event.name %></h1>
+<h2><%= @event.location %></h2>
+<h2><%= @event.start.to_formatted_s(:long) %> to <%= @event.end.to_formatted_s(:long) %></h2>
+
+<!-- for now, first pass, list all the GMs -->
+<ul>
+<% @game_masters.each do |gm| %>
+     <li><%= gm.user_event.user.name %>: <%= gm.table.scenario.long_name %></li>
+<% end %>
+</ul>

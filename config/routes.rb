@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :admin
 
   resources :events do
+    resources :gm_list
     resources :user_events
     resources :sessions do
       resources :tables do
