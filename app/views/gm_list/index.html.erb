@@ -5,8 +5,17 @@
 <h2><%= @event.start.to_formatted_s(:long) %> to <%= @event.end.to_formatted_s(:long) %></h2>
 
 <!-- for now, first pass, list all the GMs -->
-<ul>
-<% @game_masters.each do |gm| %>
-     <li><%= gm.user_event.user.name %>: <%= gm.table.scenario.long_name %></li>
-<% end %>
-</ul>
+<table class="table table-striped">
+  <tr>
+    <th>GM Name</th>
+    <th>GM Email</th>
+    <th>Scenario</th>
+  </tr>
+  <% @game_masters.each do |gm| %>
+      <tr>
+        <td><%= gm.user_event.user.name %></td>
+        <td><%= gm.user_event.user.email %></td>
+        <td><%= gm.table.scenario.long_name %></td>
+      </tr>
+  <% end %>
+</table>
