@@ -4,17 +4,7 @@
 </head>
 <body>
 <%= image_tag("skalbanner.png", size: "250x100", alt: "SkålCon") %>
-<h1>SkålCon Registration!</h1>
-<p>Please go to <a href="https://pfs-registration.herokuapp.com/">MSP PFS Registration</a> and create your account. Once you have verified your email, please click on the goldenrod "Register" button next to SkålCon to register for the convention. Within 24 hours, volunteers will verify your "paid" status, and you will be able to sign up for specific games.</p>
-
-<p>If you have already registered for SkålCon on the site, thank you! Pleas feel free to ignore this message.</p>
-
-<h2>Donations accepted!</h2>
-<p>If you would like to donate something for either the silent auction or the raffle, please let us know by going to
-  <a href="https://pfs-registration.herokuapp.com/contact">our contact page</a> and selecting 'I have something to
-  donate!' in the dropdown. Someone will contact you to arrange for your donation.</p>
-
-<p>Thank you for making this convention a success!</p>
+<%= @message.content %>
 
 <hr>
 <p>SkålCon and MSP Pathfinders</p>
