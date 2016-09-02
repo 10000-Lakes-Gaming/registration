@@ -12,7 +12,7 @@ class ContactMailer < ApplicationMailer
     # mail(subject: message.subject, bcc: @emails)
     # let's try iteration
     @emails.each do |email|
-      mail(subject: message.subject, to: @emails)
+      mail(subject: message.subject, bcc: @emails)
     end
 
 
