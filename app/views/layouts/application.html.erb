@@ -35,7 +35,7 @@
           Logged in as: <%= current_user.name %> (<%= current_user.email %>)
           <% if current_user.admin? %>[ADMIN]
           <% end %>
-          <% unless current_user.forum_username.nil? %><%= current_user.forum_username %>
+          <% unless current_user.forum_username.nil? %>{<%= current_user.forum_username %>}
           <% end %>
         </div>
     <% else %>
@@ -48,7 +48,7 @@
 </div>
 
 <% if user_signed_in? %>
-    <% if current_user.forum_username or current_user.forum_username.empty? %>
+    <% if current_user.forum_username.nil? or current_user.forum_username.empty? %>
         <div class="well">
           <div class="text-warning bg-warning">You have not entered your paizo.com forum username into your profile.
             Please add yours by going to <%= link_to 'My Profile', edit_user_path(current_user) %> and adding your
