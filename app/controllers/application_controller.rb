@@ -1,16 +1,9 @@
 class ApplicationController < ActionController::Base
-  before_action :reload_current_user
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
 
   def get_event
     @event = Event.find(params[:event_id])
-  end
-
-
-  private
-  def reload_current_user
-    current_user.reload
   end
 
   protected
