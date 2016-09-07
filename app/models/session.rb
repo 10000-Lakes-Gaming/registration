@@ -2,6 +2,10 @@ class Session < ActiveRecord::Base
   belongs_to :event
   has_many :tables
 
+  def long_name
+    self.name + " " + self.timeslot
+  end
+
   def timeslot
     self.start.strftime("%a %H:%M to ") + self.end.strftime("%a %H:%M")
   end
