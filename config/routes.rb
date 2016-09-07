@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   resources :events do
     resources :gm_list
+    resources :table_assignment
     resources :user_events
     resources :sessions do
       resources :tables do
@@ -24,6 +25,7 @@ Rails.application.routes.draw do
     resources :session_reminder
     resources :payment_reminder
     resources :registration_reminder
+    resources :attendee_email
   end
 
   # message stuffs

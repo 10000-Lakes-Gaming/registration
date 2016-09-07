@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @event.name %></h1>
+<h2><%= @event.location %></h2>
+<h2><%= @event.start.to_formatted_s(:long) %> to <%= @event.end.to_formatted_s(:long) %></h2>
+
+<!-- for now, first pass, list all the GMs -->
+<h3>All Table Assignments, By Session:</h3>
+
+
+<% @event.sessions.each do |session| %>
+    <h4>Session: <%= session.long_name %></h4>
+    <div class="row">
+      <% session.tables.each do |table| %>
+          <div class="col-md-3">
+            <h5><%= table.name %></h5>
+            <h6>Players</h6>
+            <ul>
+              <% table.registration_tables.each do |rsvp| %>
+                  <li><%= rsvp.user_event.user.name %></li>
+              <% end %>
+            </ul>
+            <h6>GMs</h6>
+            <ul>
+              <% table.game_masters.each do |gm| %>
+                  <li><%= gm.user_event.user.name %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+    </div>
+<% end %>
