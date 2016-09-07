@@ -5,11 +5,19 @@ class RegistrationTable < ActiveRecord::Base
   delegate :start, to: :table
   validates :table_id, :presence => true, :uniqueness => {:scope => :user_event_id}
   validates :user_event_id, :presence => true, :uniqueness => {:scope => :table_id}
-  # validates_associated :table
   validate :check_player_count
 
   def check_player_count
     errors.add :registration_tables, "Max Players Exceeded" if table.registration_tables.count > table.max_players
   end
 
+  def <=> (other)
+    # sort by user
+    sorted = self.user_event <=> other.user_event
+    if  sorted == 0
+      # then scenario number
+      sorted = self.table.scenario <=> other.table.scenario
+    end
+    sorted
+  end
 end
