@@ -58,4 +58,16 @@ class Session < ActiveRecord::Base
     end
     total_max_gms
   end
+
+
+  def <=> (other)
+    sort = self.start <=> other.start
+    if sort == 0
+      sort = self.end <=> other.end
+    end
+    if sort == 0
+      sort = self.long_name <=> other.long_name
+    end
+    sort
+  end
 end
