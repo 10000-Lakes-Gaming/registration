@@ -7,7 +7,6 @@
 <!-- for now, first pass, list all the GMs -->
 <h3>All Table Assignments, By Session:</h3>
 
-<!--
 <% @event.sessions.sort { |a, b| a <=> b }.each do |session| %>
     <h4 class="bg-primary">Session: <%= session.long_name %></h4>
 
@@ -39,45 +38,4 @@
         </div>
     <% end %>
 <% end %>
--->
 
-<% @event.sessions.sort { |a, b| a <=> b }.each do |session| %>
-    <table class="table">
-      <tr>
-        <td colspan="5">Session: <%= session.long_name %></td>
-      </tr>
-      <% session.tables.sort { |a, b| a <=> b }.each_slice(5) do |slice| %>
-          <tr>
-            <% slice.each do |table| %>
-                <th width="20%">
-                  <div><%= table.long_name %></div>
-                </th>
-            <% end %>
-          </tr>
-          <tr>
-            <% slice.each do |table| %>
-                <td>
-                  <ul class="list-group">
-                    <li class="list-group-item list-group-item-info">Players</li>
-                    <% table.registration_tables.sort { |a, b| a <=> b }.each do |rsvp| %>
-                        <li class="list-group-item"><%= rsvp.user_event.user.name %></li>
-                    <% end %>
-                    <% (1..table.remaining_seats).each do |i| %>
-                        <li class="list-group-item">&nbsp;</li>
-                    <% end %>
-                  </ul>
-                  <ul class="list-group">
-                    <li class="list-group-item list-group-item-info">GMs</li>
-                    <% table.game_masters.sort { |a, b| a <=> b }.each do |gm| %>
-                        <li class="list-group-item small"><%= gm.user_event.user.name %></li>
-                    <% end %>
-                    <% (1..table.gms_short).each do |i| %>
-                        <li class="list-group-item">&nbsp;</li>
-                    <% end %>
-                  </ul>
-                </td>
-            <% end %>
-          </tr>
-      <% end %>
-    </table>
-<% end %>
