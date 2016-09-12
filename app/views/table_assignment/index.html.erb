@@ -18,11 +18,11 @@
               <ul class="list-group">
                 <li class="list-group-item  list-group-item-info">Players</li>
                 <% table.registration_tables.sort { |a, b| a <=> b }.each do |rsvp| %>
-                    <li class="list-group-item"><%= rsvp.user_event.user.name %></li>
+                    <li class="list-group-items mall"><%= rsvp.user_event.user.name %></li>
                 <% end %>
 
                 <% (1..table.remaining_seats).each do |i| %>
-                    <li class="list-group-item">&nbsp;</li>
+                    <li class="list-group-item small">&nbsp;</li>
                 <% end %>
               </ul>
               <ul class="list-group">
