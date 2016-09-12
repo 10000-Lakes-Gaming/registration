@@ -51,5 +51,8 @@ class Table < ActiveRecord::Base
   def remaining_seats
     self.max_players - self.registration_tables.length
   end
+  def gms_short
+    self.gms_needed - self.game_masters.length
+  end
 
 end
