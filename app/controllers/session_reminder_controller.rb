@@ -26,7 +26,7 @@ class SessionReminderController < ApplicationController
   def update
     @message = Message.new
     @message.email = current_user.email
-    @message.subject = "Session Signup Reminder Message"
+    @message.subject = "Time is running out to pre-register for sessions at " + @event.name
     @message.content = "This is my content"
     @message.name = @event.name
 
