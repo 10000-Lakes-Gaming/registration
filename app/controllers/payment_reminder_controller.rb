@@ -8,7 +8,6 @@ class PaymentReminderController < ApplicationController
 
   def get_users
     # @users = get_admin_users
-    # TODO - make this a value pulled in from the user
     @user_events = UserEvent.where(event_id: @event.id)
     # pull the users out of this
     @users = []
@@ -28,7 +27,7 @@ class PaymentReminderController < ApplicationController
   def update
     @message = Message.new
     @message.email = current_user.email
-    @message.subject = @event.name + " Payment Reminder Message"
+    @message.subject = "Time is running out to pre-register for " + @event.name
     @message.content = "This is my content"
     @message.name = @event.name
 
