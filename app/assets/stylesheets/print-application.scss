@@ -1,0 +1,35 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+$black: #000;
+$red: #f00;
+$blue: #008;
+$bright-green: #32cd32;
+$maroon: #7a0019;
+$white: #fff;
+$lightGreen: #efe;
+$lightGrey: #eee;
+$inner-stripe-odd: #F5FFFA;
+$inner-stripe-even: #fffafa;
+$darkerGrey: #ccc;
+$darkestGrey: dimgrey;
+$darkPink: #f99;
+$lightPink: #fdd;
+$orange: #fc9;
+$purple: #800080;
+
+$main-background: #FFFFFF;
+$social-media-background: #555555;
+$banner-background: #FFFFFF;
+$skal-gray: #555555;
+$info: #269abc;
+$success: #398439;
+
+@media print {
+  form, img {
+    display: none;
+  }
+  .no-print {
+    display: none;
+  }
+}

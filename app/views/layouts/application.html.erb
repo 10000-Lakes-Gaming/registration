@@ -2,6 +2,8 @@
 <head>
   <title>PFS Registration</title>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'screen, projection', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'print-application', media: 'print' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,7 +16,7 @@
 </head>
 <body>
 <!--- Header info --->
-<div class="header-main">
+<div class="header-main no-print">
   <div class="social-media">
     <div style="padding: 5px;" href="https://www.facebook.com/pfsskalcon/">
       <%= image_tag("FB-f-Logo__blue_58.png", alt: "SkalCon Facebook", height: "40") %>
@@ -44,27 +46,32 @@
         </div>
     <% end %>
   </div>
-  <div class="divider"/>
+  <div class="divider"></div>
 </div>
 
-<% if user_signed_in? %>
-    <% if current_user.forum_username.nil? or current_user.forum_username.empty? %>
-        <div class="well">
-          <div class="text-warning bg-warning">You have not entered your paizo.com forum username into your profile.
-            Please add yours by going to <%= link_to 'My Profile', edit_user_path(current_user) %> and adding your
-            primary
-            forum username. This can be helpful when trying to get scenarios to GMs, or when troubleshooting
-            reporting.<br/>
-            Thank you.
+<div class="no-print">
+  <% if user_signed_in? %>
+      <% if current_user.forum_username.nil? or current_user.forum_username.empty? %>
+          <div class="well">
+            <div class="text-warning bg-warning">You have not entered your paizo.com forum username into your profile.
+              Please add yours by going to <%= link_to 'My Profile', edit_user_path(current_user) %> and adding your
+              primary
+              forum username. This can be helpful when trying to get scenarios to GMs, or when troubleshooting
+              reporting.<br/>
+              Thank you.
+            </div>
           </div>
-        </div>
-    <% end %>
-<% end %>
+      <% end %>
+  <% end %>
+</div>
 <!--- Main Content --->
 <div id="main-content" class="container-fluid">
-  <div class="col-sm-4 col-md-2 col-xs-5 sidebar">
-    <%= render partial: "layouts/sidebar" %>
+  <div class="no-print">
+    <div class="col-sm-4 col-md-2 col-xs-5 sidebar">
+      <%= render partial: "layouts/sidebar" %>
+    </div>
   </div>
+
   <div class="col-md-10 col-sm-8 col-xs-7">
     <%= yield %>
   </div>
