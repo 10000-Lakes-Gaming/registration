@@ -18,17 +18,17 @@
               <ul class="list-group">
                 <li class="list-group-item  list-group-item-info">Players</li>
                 <% table.registration_tables.sort { |a, b| a <=> b }.each do |rsvp| %>
-                    <li class="list-group-items small"><%= rsvp.user_event.user.name %></li>
+                    <li class="list-group-items"><span class="small"><%= rsvp.user_event.user.name %></span></li>
                 <% end %>
 
                 <% (1..table.remaining_seats).each do |i| %>
-                    <li class="list-group-item small">&nbsp;</li>
+                    <li class="list-group-item">&nbsp;</li>
                 <% end %>
               </ul>
               <ul class="list-group">
                 <li class="list-group-item  list-group-item-info">GMs</li>
                 <% table.game_masters.sort { |a, b| a <=> b }.each do |gm| %>
-                    <li class="list-group-item"><%= gm.user_event.user.name %></li>
+                    <li class="list-group-item"><span class="small"><%= gm.user_event.user.name %></span></li>
                 <% end %>
               </ul>
             </div>
