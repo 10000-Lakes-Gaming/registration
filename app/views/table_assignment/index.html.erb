@@ -12,13 +12,13 @@
       <h4 class="bg-primary">Session: <%= session.long_name %></h4>
       <div class="row">
         <% session.tables.sort { |a, b| a <=> b }.each do |table| %>
-            <div class="col-md-3 col-lg-3 col-sm-4">
+            <div class="col-md-3 col-lg-2 col-sm-4">
               <h5 class="bg-success"><%= table.long_name %></h5>
 
               <ul class="list-group">
                 <li class="list-group-item  list-group-item-info">Players</li>
                 <% table.registration_tables.sort { |a, b| a <=> b }.each do |rsvp| %>
-                    <li class="list-group-items mall"><%= rsvp.user_event.user.name %></li>
+                    <li class="list-group-items small"><%= rsvp.user_event.user.name %></li>
                 <% end %>
 
                 <% (1..table.remaining_seats).each do |i| %>
