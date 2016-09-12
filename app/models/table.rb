@@ -45,9 +45,11 @@ class Table < ActiveRecord::Base
   end
 
   def check_player_count
-    # byebug
-    # errors.addgit  :registration_tables, "Max Players Exceeded" if registration_tables.length > max_players
-    errrors.add :registration_tables
+    errors.add :registration_tables
+  end
+
+  def remaining_seats
+    self.max_players - self.registration_tables.length
   end
 
 end

@@ -11,11 +11,7 @@
 <% @event.sessions.sort { |a, b| a <=> b }.each do |session| %>
     <h4 class="bg-primary">Session: <%= session.long_name %></h4>
     <div class="row">
-      <% session.tables.sort { |a, b| a <=> b }.each_with_index do |table, index| %>
-          <%# if index % 4 == 0 %>
-              <!--</div>-->
-              <!--<div class="row">-->
-          <%# end %>
+      <% session.tables.sort { |a, b| a <=> b }.each do |table| %>
           <div class="col-md-3 col-lg-2 col-sm-4">
             <h5 class="bg-success"><%= table.long_name %></h5>
 
@@ -23,6 +19,10 @@
               <li class="list-group-item  list-group-item-info">Players</li>
               <% table.registration_tables.sort { |a, b| a <=> b }.each do |rsvp| %>
                   <li class="list-group-item"><%= rsvp.user_event.user.name %></li>
+              <% end %>
+
+              <% (1..table.remaining_seats).each do |i| %>
+                  <li class="list-group-item">&nbsp;</li>
               <% end %>
             </ul>
             <ul class="list-group">
@@ -33,5 +33,5 @@
             </ul>
           </div>
       <% end %>
-      </div>
+    </div>
 <% end %>
