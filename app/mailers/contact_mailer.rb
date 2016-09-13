@@ -21,17 +21,8 @@ class ContactMailer < ApplicationMailer
 
   def session_reminder(message, emails)
     @message = message
-    list = emails.split(",")
-    puts "The list => #{list}"
-    list.each_slice(2) do |email_list|
-      puts "Sending to #{email_list}"
-      @emails = email_list.join(",")
-      # @email = email
-      @email = "silbeg@comcast.net"
-
-      mail(subject: "#{@message.subject} -> #{@emails}" , to: @email)
-      sleep 5.seconds
-    end
+    @emails = emails
+    mail(subject: @message.subject, bcc: @emails)
   end
 
   def payment_reminder(message, emails)
