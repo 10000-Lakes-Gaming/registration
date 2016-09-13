@@ -3,13 +3,17 @@ class Event < ActiveRecord::Base
   has_many :user_events, dependent: :destroy
 
 
-  def <=>  (event)
+  def <=> (event)
     self.name <=> event.name
   end
 
   def closed?
-    now = DateTime.now
-    self.rsvp_close <= now
+    closed = false;
+    unless self.rsvp_close.nil?
+      now = DateTime.now
+      closed = self.rsvp_close <= now
+    end
+    closed
   end
 
 
