@@ -2,6 +2,16 @@
 
 <h1>Listing Scenarios</h1>
 
+
+<% if admin? %>
+    <div class="well">
+      <div class="bg-success">Jolene's fancy new button!
+        <div>Use this <%= link_to 'New Scenario Button', new_scenario_path, :class => 'btn btn-warning' %> to add new scenarios to the list.
+        </div>
+      </div>
+    </div>
+<% end %>
+
 <table class="table table-striped">
   <thead>
   <tr>
@@ -17,6 +27,7 @@
   </thead>
 
   <tbody>
+
   <% @scenarios.each do |scenario| %>
       <tr>
         <td><%= scenario.type %></td>
