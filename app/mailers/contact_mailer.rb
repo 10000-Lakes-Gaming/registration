@@ -23,12 +23,14 @@ class ContactMailer < ApplicationMailer
     @message = message
     list = emails.split(",")
     puts "The list => #{list}"
-    list.each do |email|
-      puts "Sending to #{email}"
+    list.each_slice(2) do |email_list|
+      puts "Sending to #{email_list}"
+      @emails = email_list.join(",")
       # @email = email
       @email = "silbeg@comcast.net"
 
-      mail(subject: "#{@message.subject} -> #{email}" , to: @email)
+      mail(subject: "#{@message.subject} -> #{@emails}" , to: @email)
+      sleep 5.seconds
     end
   end
 
