@@ -10,10 +10,10 @@
 <% @event.sessions.sort { |a, b| a <=> b }.each do |session| %>
     <h4 class="bg-primary">Session: <%= session.long_name %></h4>
 
-    <% session.tables.sort { |a, b| a <=> b }.each_slice(5) do |slice| %>
+    <% session.tables.sort { |a, b| a <=> b }.each_slice(4) do |slice| %>
         <div class="row pageinate">
           <% slice.each do |table| %>
-              <div class="col-lg-2 col-md-2 col-sm-2">
+              <div class="col-lg-3 col-md-3 col-sm-3">
 
                 <div class="header-main bg-success"><%= table.long_name %></div>
                 <ul class="list-group">
