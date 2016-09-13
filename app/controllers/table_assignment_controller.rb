@@ -3,5 +3,6 @@ class TableAssignmentController < ApplicationController
 
   def index
     # should have everything with the event.
+    render layout: "table-assignment"
   end
 end

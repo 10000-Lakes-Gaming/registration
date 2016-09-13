@@ -1,22 +1,21 @@
 <p id="notice"><%= notice %></p>
-<div class="no-print">
+<div class="hidden-print">
   <h1><%= @event.name %></h1>
   <h2><%= @event.location %></h2>
   <h2><%= @event.start.to_formatted_s(:long) %> to <%= @event.end.to_formatted_s(:long) %></h2>
 </div>
 <!-- for now, first pass, list all the GMs -->
-<h3>All Table Assignments, By Session:</h3>
+<h3 class="hidden-print">All Table Assignments, By Session:</h3>
 
 <% @event.sessions.sort { |a, b| a <=> b }.each do |session| %>
     <h4 class="bg-primary">Session: <%= session.long_name %></h4>
 
     <% session.tables.sort { |a, b| a <=> b }.each_slice(5) do |slice| %>
-        <div class="row">
+        <div class="row pageinate">
           <% slice.each do |table| %>
-              <div class="col-lg-2
-                <% if slice.first == table %>col-lg-offset-1
-                <% end %>">
-                <div class="bg-success"><%= table.long_name %></div>
+              <div class="col-lg-2 col-md-2 col-sm-2">
+
+                <div class="header-main bg-success"><%= table.long_name %></div>
                 <ul class="list-group">
                   <li class="list-group-item list-group-item-info">Players</li>
                   <% table.registration_tables.sort { |a, b| a <=> b }.each do |rsvp| %>
