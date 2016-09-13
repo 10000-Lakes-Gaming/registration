@@ -21,9 +21,9 @@ class ContactMailer < ApplicationMailer
 
   def session_reminder(message, emails)
     @message = message
-    emails.split(",").each_slice(10) do |partials|
-      @emails = partials.join(",")
-      mail(subject: @message.subject, bcc: @emails)
+    emails.split(",").each do |email|
+      @email = email
+      mail(subject: @message.subject, to: @email)
     end
   end
 
