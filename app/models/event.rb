@@ -6,4 +6,11 @@ class Event < ActiveRecord::Base
   def <=>  (event)
     self.name <=> event.name
   end
+
+  def closed?
+    now = DateTime.now
+    self.rsvp_close <= now
+  end
+
+
 end

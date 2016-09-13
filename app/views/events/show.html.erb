@@ -4,6 +4,12 @@
 <h2><%= @event.location %></h2>
 <h2><%= @event.start.to_formatted_s(:long) %> to <%= @event.end.to_formatted_s(:long) %></h2>
 
+<% if @event.closed? %>
+    <div class="alert-danger lead">RSVPs are closed!</div>
+<% else %>
+    <div class="lead text-warning">RSVPs close: <%= @event.rsvp_close.to_formatted_s(:long) %></div>
+<% end %>
+
 <div class="detailsBlock" style="border: solid thin black;">
   <h3>Registration Details</h3>
 
@@ -54,14 +60,22 @@
 <div class="sessionsOffered" style="border: solid thin black;">
   <h3>Sessions/Scenarios Offered</h3>
 
-
-  <div class="well">
-    <div class="bg-warning text-danger lead" style="margin-bottom: 0"><strong>Attention GMs!</strong></div>
-    <div class="bg-warning text-primary" style="margin-top: 0">If you are planning on GMing in a slot, please do not
-      sign up to play in that slot. <br>The hosts of <%= @event.name %> will assign you to your GM slot once you have
-      registered and paid for <%= @event.name %>.
-    </div>
-  </div>
+  <% if @event.closed? %>
+      <div class="well">
+        <div class="bg-warning text-danger lead" style="margin-bottom: 0"><strong>Online registration is closed</strong>
+        </div>
+        <div class="bg-warning text-primary" style="margin-top: 0">In order to make any changes to your registrations and signups, you will need to see HQ at the event.
+        </div>
+      </div>
+  <% else %>
+      <div class="well">
+        <div class="bg-warning text-danger lead" style="margin-bottom: 0"><strong>Attention GMs!</strong></div>
+        <div class="bg-warning text-primary" style="margin-top: 0">If you are planning on GMing in a slot, please do not
+          sign up to play in that slot. <br>The hosts of <%= @event.name %> will assign you to your GM slot once you
+          have registered and paid for <%= @event.name %>.
+        </div>
+      </div>
+  <% end %>
 
   <% sessionList = @event.sessions.sort { |a, b| a.start <=> b.start } %>
   <!-- header -->
@@ -183,15 +197,17 @@
                       <% if @tables.include? table %>
                           <!-- get table for this user -->
                           <% table.registration_tables.each do |reg_table| %>
-                              <% if @reg_tables.include?(reg_table) %>
-                                  <%= button_to 'Remove', [@event, session, table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove your signup for #{reg_table.name}: #{reg_table.table.scenario.long_name}?"}, :class => 'btn btn-xs btn-danger', method: :delete %>
+                              <% unless @event.closed? %>
+                                  <% if @reg_tables.include?(reg_table) %>
+                                      <%= button_to 'Remove', [@event, session, table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove your signup for #{reg_table.name}: #{reg_table.table.scenario.long_name}?"}, :class => 'btn btn-xs btn-danger', method: :delete %>
+                                  <% end %>
                               <% end %>
                           <% end %>
                       <% end %>
 
                       <% registered_this_session = @sessions.include?(session) || @gm_sessions.include?(session) %>
                       <% if !registered_this_session && registrations_available && @registration.paid? %>
-                          <% unless table.raffle? %>
+                          <% unless table.raffle? or @event.closed? %>
                               <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table), :class => "btn btn-xs btn-primary", :method => :get %>
                           <% end %>
 
