@@ -21,9 +21,14 @@ class ContactMailer < ApplicationMailer
 
   def session_reminder(message, emails)
     @message = message
-    emails.split(",").each do |email|
-      @email = email
-      mail(subject: @message.subject, to: @email)
+    list = emails.split(",")
+    puts "The list => #{list}"
+    list.each do |email|
+      puts "Sending to #{email}"
+      # @email = email
+      @email = "silbeg@comcast.net"
+
+      mail(subject: "#{@message.subject} -> #{email}" , to: @email)
     end
   end
 
