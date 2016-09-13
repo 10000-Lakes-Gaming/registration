@@ -9,7 +9,7 @@ class SessionReminderController < ApplicationController
   def get_users
     # @users = get_admin_users
     # TODO - make this a value pulled in from the user
-    @user_events = UserEvent.where(event_id: @event.id).limit(20).offset(60)
+    @user_events = UserEvent.where(event_id: @event.id).limit(40).offset(80)
     # pull the users out of this
     @users = []
     @user_events.each do |user|
