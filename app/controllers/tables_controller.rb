@@ -78,7 +78,6 @@ class TablesController < ApplicationController
   def update
     prevent_non_admin
     respond_to do |format|
-      rails.logger.info "Setting location to #{@event.location}"
       if @table.update(table_params)
         format.html { redirect_to [@event, @session, @table], notice: 'Table was successfully updated.' }
         format.json { render :show, status: :ok, location: [@event, @session, @table] }
