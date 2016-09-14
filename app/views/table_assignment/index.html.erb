@@ -14,9 +14,13 @@
         <div class="row pageinate">
           <% slice.each do |table| %>
               <div class="col-lg-3 col-md-3 col-sm-3">
-
-                <div class="header-main bg-success"><%= table.long_name %></div>
                 <ul class="list-group">
+                  <li class="list-group-item list-group-item-success">
+                    <%= table.long_name %>
+                    <% unless table.location.nil? %>
+                        <div>Table: <%= table.location %></div>
+                    <% end %>
+                  </li>
                   <li class="list-group-item list-group-item-info">Players</li>
                   <% table.registration_tables.sort { |a, b| a <=> b }.each do |rsvp| %>
                       <li class="list-group-item"><%= rsvp.user_event.user.name %></li>
@@ -26,7 +30,7 @@
                   <% end %>
                 </ul>
                 <ul class="list-group">
-                  <li class="list-group-item  list-group-item-info">GMs</li>
+                  <li class="list-group-item  list-group-item-warning">GMs</li>
                   <% table.game_masters.sort { |a, b| a <=> b }.each do |gm| %>
                       <li class="list-group-item"><%= gm.user_event.user.name %></li>
                   <% end %>

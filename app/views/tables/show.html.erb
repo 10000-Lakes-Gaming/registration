@@ -5,6 +5,9 @@
     <small><%= @session.timeslot %></small>
   </h2>
   <h3><%= @table.long_name %></h3>
+  <% unless @table.location.nil? %>
+      <h4>Table Location(s): <%= @table.location %></h4>
+  <% end %>
 </div>
 
 <div class="well">

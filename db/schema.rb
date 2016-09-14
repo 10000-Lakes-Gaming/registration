@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160913222049) do
+ActiveRecord::Schema.define(version: 20160914193615) do
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20160913222049) do
     t.integer  "gms_needed"
     t.boolean  "raffle",      default: false
     t.boolean  "core",        default: false
+    t.string   "location"
   end
 
   add_index "tables", ["scenario_id"], name: "index_tables_on_scenario_id"
