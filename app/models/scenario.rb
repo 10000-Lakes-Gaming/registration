@@ -11,6 +11,9 @@ class Scenario < ActiveRecord::Base
       sorted *= -1
     else
       sorted = self.scenario_number <=> scenario.scenario_number
+      if sorted == 0
+        sorted = self.name <=> scenario.name
+      end
     end
     sorted
   end
