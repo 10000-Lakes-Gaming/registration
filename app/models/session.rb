@@ -52,7 +52,9 @@ class Session < ActiveRecord::Base
     total_max_gms = 0
 
     self.tables.each do |table|
-      unless table.raffle?
+      if table.raffle?
+        total_max_gms = total_max_gms + table.game_masters.length
+      else
         total_max_gms = total_max_gms + table.gms_needed
       end
     end
