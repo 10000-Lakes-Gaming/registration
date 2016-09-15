@@ -9,7 +9,7 @@ class SessionReminderController < ApplicationController
   def get_users
     # @users = get_admin_users
     # TODO - make this a value pulled in from the user
-    @user_events = UserEvent.where(event_id: @event.id)
+    @user_events = UserEvent.where(event_id: @event.id) .offset(40)
     # @user_events = UserEvent.where(event_id: @event.id).limit(40).offset(80)
     # pull the users out of this
     @users = []
@@ -34,10 +34,9 @@ class SessionReminderController < ApplicationController
     if @message.valid?
       @users.collect(&:email).each_slice(20) do |slice|
         emails = slice.join(",")
-
         ContactMailer.session_reminder(@message, emails).deliver_now
-        redirect_to welcome_index_path, notice: "Your messages has been sent."
       end
+      redirect_to welcome_index_path, notice: "Your messages has been sent."
 
 
     else
