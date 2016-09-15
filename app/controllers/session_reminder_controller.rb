@@ -9,7 +9,8 @@ class SessionReminderController < ApplicationController
   def get_users
     # @users = get_admin_users
     # TODO - make this a value pulled in from the user
-    @user_events = UserEvent.where(event_id: @event.id).limit(40).offset(80)
+    @user_events = UserEvent.where(event_id: @event.id)
+    # @user_events = UserEvent.where(event_id: @event.id).limit(40).offset(80)
     # pull the users out of this
     @users = []
     @user_events.each do |user|
@@ -26,15 +27,19 @@ class SessionReminderController < ApplicationController
   def update
     @message = Message.new
     @message.email = current_user.email
-    @message.subject = "SkålCon Guest GM Raffles Presales end Wednesday at 5PM!"
+    @message.subject = "SkålCon Food Drive"
     @message.content = "This is my content"
     @message.name = @event.name
 
-    emails = @users.collect(&:email).join(",")
-
     if @message.valid?
-      ContactMailer.session_reminder(@message, emails).deliver_now
-      redirect_to welcome_index_path, notice: "Your messages has been sent."
+      @users.collect(&:email).each_slice(20) do |slice|
+        emails = slice.join(",")
+
+        ContactMailer.session_reminder(@message, emails).deliver_now
+        redirect_to welcome_index_path, notice: "Your messages has been sent."
+      end
+
+
     else
       flash[:alert] = "An error occurred while delivering this message."
       render :new
