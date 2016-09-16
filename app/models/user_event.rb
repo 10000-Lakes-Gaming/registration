@@ -23,4 +23,7 @@ class UserEvent < ActiveRecord::Base
     sort
   end
 
+  def gamemaster?
+    !game_masters.nil? and game_masters.length > 0
+  end
 end

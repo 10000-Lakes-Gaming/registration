@@ -75,6 +75,7 @@
               <div class="bg-warning">You are not yet registered for any tables.</div>
           <% else %>
               <ul class="list-group">
+                <li class="list-group-item list-group-item-heading">Player Tables</li>
                 <% sorted = registration.registration_tables.sort { |a, b| a.start <=> b.start } %>
                 <% sorted.each do |reg_table| %>
                     <li class="row list-group-item"><%= reg_table.table.session.name %>
@@ -82,8 +83,7 @@
                 <% end %>
               </ul>
           <% end %>
-          <% unless registration.game_masters.nil? or registration.game_masters.empty? %>
-
+          <% unless registration.gamemaster? %>
               <ul class="list-group">
                 <li class="list-group-item list-group-item-heading">Game Master Tables</li>
                 <% registration.game_masters.sort { |a, b| a.start <=> b.start }.each do |gm| %>
