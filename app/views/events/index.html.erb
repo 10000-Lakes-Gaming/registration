@@ -5,9 +5,11 @@
   <div class="bg-warning">
     <div class="lead text-danger"><b>Important Note:</b></div>
     <div>Registering for the application will not register you for any events. This application can and will support
-      many events, so you will need to register for the specific event (convention/game day/etc) that you wish to attend.
+      many events, so you will need to register for the specific event (convention/game day/etc) that you wish to
+      attend.
       <br/><br/>
-      This is done by clicking the <span class="btn btn-warning">Register</span> button next to the event on the events listing.
+      This is done by clicking the <span class="btn btn-warning">Register</span> button next to the event on the events
+      listing.
     </div>
   </div>
 </div>
@@ -32,7 +34,9 @@
           <% if @my_events.include? event %>
               <%= link_to "Attending", event, :class => 'btn btn-sm btn-primary' %>
           <% else %>
-              <%= link_to "Register", new_event_user_event_path(event), :class => 'btn  btn-sm  btn-warning' %>
+              <% unless event.closed? %>
+                  <%= link_to "Register", new_event_user_event_path(event), :class => 'btn  btn-sm  btn-warning' %>
+              <% end %>
           <% end %>
         </div>
         <% if current_user.admin? %>
