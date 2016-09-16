@@ -82,10 +82,10 @@
                 <% end %>
               </ul>
           <% end %>
-          <% unless registration.game_master.nil? or registration.game_master.empty? %>
+          <% unless registration.game_masters.nil? or registration.game_masters.empty? %>
               <div>Game Master Tables</div>
               <ul class="list-group">
-                <% registration.game_master.sort { |a, b| a.start <=> b.start }.each do |gm| %>
+                <% registration.game_masters.sort { |a, b| a.start <=> b.start }.each do |gm| %>
                     <li class="row list-group-item"><%= gm.table.session.name %>
                       : <%= link_to "#{gm.table.scenario.long_name}", gm.table.scenario %></li>
                 <% end %>
