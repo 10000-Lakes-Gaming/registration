@@ -7,17 +7,20 @@ class UserEvent < ActiveRecord::Base
   validates :user_id, :presence => true, :uniqueness => {:scope => :event_id}
   delegate :name, to: :event
 
-  def <=> (rsvp)
+  def <=> (other)
     sort = 0
-    unless self == rsvp
-      if self.user.nil?
+    unless self == other
+      if other.nil?
+        sort = 1
+      elsif self.user.nil?
         sort = -1;
-      elsif rsvp.user.nil?
+      elsif other.user.nil?
         sort = 1
       else
-        sort = self.user <=> rsvp.user
+        sort = self.user <=> other.user
       end
     end
     sort
   end
+
 end

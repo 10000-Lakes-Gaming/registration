@@ -9,3 +9,8 @@ normal_guy_my_event:
   user: normal_guy
   event: my_event
   paid: true
+
+admin_other_event:
+  user: admin
+  event: other
+  paid: true
