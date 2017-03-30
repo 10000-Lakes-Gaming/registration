@@ -2,6 +2,7 @@ require 'test_helper'
 
 class UserEventsControllerTest < ActionController::TestCase
   setup do
+    skip("Not ready to test")
     @user_event = user_events(:one)
   end
 

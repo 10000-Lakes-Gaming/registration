@@ -2,6 +2,7 @@ require 'test_helper'
 
 class RegistrationsControllerTest < ActionController::TestCase
   setup do
+    skip("Not ready to test")
     @registration = registrations(:one)
   end
 

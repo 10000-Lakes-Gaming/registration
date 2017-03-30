@@ -2,6 +2,7 @@ require 'test_helper'
 
 class SessionsControllerTest < ActionController::TestCase
   setup do
+    skip("Not ready to test")
     @session = sessions(:one)
   end
 

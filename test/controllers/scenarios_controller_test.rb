@@ -2,6 +2,7 @@ require 'test_helper'
 
 class ScenariosControllerTest < ActionController::TestCase
   setup do
+    skip("Not ready to test")
     @scenario = scenarios(:one)
   end
 
