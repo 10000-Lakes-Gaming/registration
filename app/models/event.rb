@@ -8,7 +8,7 @@ class Event < ActiveRecord::Base
   end
 
   def closed?
-    closed = false;
+    closed = false
     unless self.rsvp_close.nil?
       now = DateTime.now
       closed = self.rsvp_close <= now
