@@ -30,4 +30,8 @@ class UserTest < ActiveSupport::TestCase
     assert user.valid?
   end
 
+  test "user vs nill sort is -1" do
+    assert_equal -1, @admin <=> nil
+  end
+
 end
