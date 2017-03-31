@@ -9,7 +9,7 @@ my_event:
 
 other:
   name: Other Event
-  start:
-  end:
+  start: 2017-06-24 09:00:00
+  end: 2017-06-24 15:00:00
   location: MyString
-  rsvp_close: 2116-03-31 00:00:00
+  rsvp_close: 2116-05-31 00:00:00

@@ -2,14 +2,28 @@ require 'test_helper'
 
 class EventsControllerTest < ActionController::TestCase
   setup do
-    skip("Not ready to test")
-    @event = events(:one)
+    $disable_authentication = true
+    @event                  = events(:my_event)
+    @user                   = users(:admin)
+    sign_in users(:admin)
+  end
+
+  teardown do
+    $disable_authentication = false
   end
 
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:events)
+  end
+
+  test "should create route to show" do
+    assert_generates "/events/#{@event.id}",
+                     {controller: 'events', action: 'show', id: @event.id}
+  end
+
+  test "should recognize route to show" do
+    assert_recognizes({controller: 'events', action: 'show', id: "#{@event.id}"}, "/events/#{@event.id}")
   end
 
   test "should get new" do
@@ -18,8 +32,9 @@ class EventsControllerTest < ActionController::TestCase
   end
 
   test "should create event" do
+
     assert_difference('Event.count') do
-      post :create, event: { end: @event.end, location: @event.location, name: @event.name, start: @event.start }
+      post :create, event: {end: @event.end, location: @event.location, name: @event.name, start: @event.start}
     end
 
     assert_redirected_to event_path(assigns(:event))
@@ -36,7 +51,7 @@ class EventsControllerTest < ActionController::TestCase
   end
 
   test "should update event" do
-    patch :update, id: @event, event: { end: @event.end, location: @event.location, name: @event.name, start: @event.start }
+    patch :update, id: @event, event: {end: @event.end, location: @event.location, name: @event.name, start: @event.start}
     assert_redirected_to event_path(assigns(:event))
   end
 
@@ -44,7 +59,6 @@ class EventsControllerTest < ActionController::TestCase
     assert_difference('Event.count', -1) do
       delete :destroy, id: @event
     end
-
     assert_redirected_to events_path
   end
 end
