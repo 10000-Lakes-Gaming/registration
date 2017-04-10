@@ -1,21 +1,31 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  type: 
+scenario_one_five:
+  type: Scenario
   season: 1
   scenario_number: 1
-  name: MyString
-  description: MyString
-  author: MyString
-  paizo_url: MyString
+  name: Interesting delve into the Earth
+  description:
+  author: Some Author
+  paizo_url:
   hard_mode: false
+  tier: 1-5
 
-two:
-  type: 
-  season: 1
-  scenario_number: 1
-  name: MyString
-  description: MyString
-  author: MyString
-  paizo_url: MyString
-  hard_mode: false
+scenario_two_seven:
+  type: Scenario
+  season: 2
+  scenario_number: 7
+  name: Death to Pathfinders
+  description:
+  author: Thursty Thursty
+  paizo_url:
+  hard_mode: true
+  tier: 7-11
+
+scenario_two_twenty:
+  type: Scenario
+  season: 2
+  scenario_number: 20
+  name: Later In Season Story
+  tier: 3-7
+  
