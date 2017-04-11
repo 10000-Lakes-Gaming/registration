@@ -8,7 +8,6 @@ class Table < ActiveRecord::Base
   delegate :start, to: :session
   validates :scenario_id, :session_id, :max_players, :gms_needed, :presence => true
   validates_numericality_of :gms_needed, :max_players, greater_than: 0
-  # validate :check_player_count
 
   def <=> (tab)
     sort = 0
@@ -41,10 +40,19 @@ class Table < ActiveRecord::Base
   end
 
   def remaining_seats
-    self.max_players - self.registration_tables.length
+    self.max_players - current_registrations
   end
+
+  def current_registrations
+    self.registration_tables.length
+  end
+
   def gms_short
-    self.gms_needed - self.game_masters.length
+    self.gms_needed - current_gms
+  end
+
+  def current_gms
+    self.game_masters.length
   end
 
 end
