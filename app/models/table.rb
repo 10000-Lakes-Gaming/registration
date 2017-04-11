@@ -10,14 +10,6 @@ class Table < ActiveRecord::Base
   validates_numericality_of :gms_needed, :max_players, greater_than: 0
   # validate :check_player_count
 
-  # TODO - This may not be needed forever
-  after_initialize do
-    if self.gms_needed.nil?
-      self.gms_needed = 1
-      self.save
-    end
-  end
-
   def <=> (tab)
     sort = 0
     if tab.raffle == self.raffle
