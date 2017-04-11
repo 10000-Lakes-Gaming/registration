@@ -52,7 +52,7 @@ group :development, :test do
   gem 'sqlite3'
   # Use SCSS for stylesheets
   # gem 'rspec-rails', '~> 3.5', '>= 3.5.2'
-
+  gem 'rails-controller-testing'
 end
 
 
