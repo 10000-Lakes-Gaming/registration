@@ -3,7 +3,7 @@ class WelcomeController < ApplicationController
 
 
   def index
-    if !current_user.nil?
+    unless current_user.nil?
       if current_user.admin?
         redirect_to admin_index_path
         return

@@ -18,14 +18,6 @@ class ApplicationController < ActionController::Base
 
   # added for Devise
   before_action :authenticate_user!
-  # puts("Authenticated? " + user_signed_in?)
-  # def after_sign_in_path_for (resource)
-  #
-  # end
-
-  # def after_sign_in_path_for(resource)
-  #   current_user_path
-  # end
 
   def restrict_to_admin
     unless current_user.admin?
@@ -35,6 +27,11 @@ class ApplicationController < ActionController::Base
 
   def force_to_current_user
     @user = current_user
+  end
+
+  private
+  def authenticate_user!
+    super unless $disable_authentication
   end
 
 end

@@ -1,11 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  user_id: 
-  event_id: 
+admin_my_event:
+  user: admin
+  event: my_event
   paid: false
 
-two:
-  user_id: 
-  event_id: 
-  paid: false
+normal_guy_my_event:
+  user: normal_guy
+  event: my_event
+  paid: true
+
+admin_other_event:
+  user: admin
+  event: other
+  paid: true

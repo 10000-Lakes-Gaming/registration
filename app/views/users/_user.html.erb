@@ -1,0 +1,16 @@
+<tr>
+  <td><%= user.name %></td>
+  <td><%= user.email %></td>
+  <td><%= user.pfs_number %></td>
+  <td><%= user.forum_username %></td>
+  <td>
+    <% if user.admin? %>
+        <span class="glyphicon glyphicon-user"></span>
+    <% end %>
+  </td>
+  <td>
+    <%= link_to 'Show', user, :class => 'btn btn-info' %>
+    <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-primary' %>
+    <%= link_to 'Destroy', user, method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %>
+  </td>
+</tr>

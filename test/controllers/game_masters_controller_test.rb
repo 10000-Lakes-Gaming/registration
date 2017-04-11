@@ -2,6 +2,7 @@ require 'test_helper'
 
 class GameMastersControllerTest < ActionController::TestCase
   setup do
+    skip("Not ready to test")
     @game_master = game_masters(:one)
   end
 

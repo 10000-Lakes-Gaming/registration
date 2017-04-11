@@ -1,9 +1,15 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  table: 
-  registration: 
+  table:
+  user_event:
 
 two:
-  table: 
-  registration: 
+  table:
+  user_event:
+
+three:
+  table:
+  user_event:
+
+four:
+  table:
+  user_event:

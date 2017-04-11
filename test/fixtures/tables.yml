@@ -1,11 +1,12 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  session_id: 
-  scenario_id: 
-  max_players: 1
+  session: morning
+  scenario: scenario_one_five
+  max_players: 6
+  gms_needed: 1
 
 two:
-  session_id: 
-  scenario_id: 
-  max_players: 1
+  session: morning
+  scenario: scenario_two_seven
+  max_players: 12
+  gms_needed: 2
+  core: true

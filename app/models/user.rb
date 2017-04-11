@@ -12,6 +12,12 @@ class User < ActiveRecord::Base
   end
 
   def <=> (user)
-    self.name <=> user.name
+    sort = 0
+    if user.nil?
+      sort = -1
+    else
+      sort = self.name <=> user.name
+    end
+    sort
   end
 end

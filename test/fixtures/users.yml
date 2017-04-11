@@ -1,0 +1,11 @@
+normal_guy:
+  name: Joe Normal
+  pfs_number: 123456
+  admin: false
+  email: normal@mail.com
+
+admin:
+  name: Master Admin
+  pfs_number: 1123
+  admin: true
+  email: admin@mail.com
