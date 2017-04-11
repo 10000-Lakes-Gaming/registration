@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -28,10 +27,9 @@ ActiveRecord::Schema.define(version: 20160914193615) do
     t.integer  "user_event_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.index ["table_id"], name: "index_game_masters_on_table_id"
+    t.index ["user_event_id"], name: "index_game_masters_on_user_event_id"
   end
-
-  add_index "game_masters", ["table_id"], name: "index_game_masters_on_table_id"
-  add_index "game_masters", ["user_event_id"], name: "index_game_masters_on_user_event_id"
 
   create_table "registration_tables", force: :cascade do |t|
     t.integer  "table_id"
@@ -63,9 +61,8 @@ ActiveRecord::Schema.define(version: 20160914193615) do
     t.datetime "end"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_sessions_on_event_id"
   end
-
-  add_index "sessions", ["event_id"], name: "index_sessions_on_event_id"
 
   create_table "tables", force: :cascade do |t|
     t.integer  "session_id"
@@ -73,14 +70,13 @@ ActiveRecord::Schema.define(version: 20160914193615) do
     t.integer  "max_players"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.integer  "gms_needed"
+    t.integer  "gms_needed",  default: 1
     t.boolean  "raffle",      default: false
     t.boolean  "core",        default: false
     t.string   "location"
+    t.index ["scenario_id"], name: "index_tables_on_scenario_id"
+    t.index ["session_id"], name: "index_tables_on_session_id"
   end
-
-  add_index "tables", ["scenario_id"], name: "index_tables_on_scenario_id"
-  add_index "tables", ["session_id"], name: "index_tables_on_session_id"
 
   create_table "user_events", force: :cascade do |t|
     t.integer  "user_id"
@@ -88,10 +84,9 @@ ActiveRecord::Schema.define(version: 20160914193615) do
     t.boolean  "paid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_user_events_on_event_id"
+    t.index ["user_id"], name: "index_user_events_on_user_id"
   end
-
-  add_index "user_events", ["event_id"], name: "index_user_events_on_event_id"
-  add_index "user_events", ["user_id"], name: "index_user_events_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
@@ -110,10 +105,9 @@ ActiveRecord::Schema.define(version: 20160914193615) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "forum_username"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["pfs_number"], name: "index_users_on_pfs_number", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["pfs_number"], name: "index_users_on_pfs_number", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end

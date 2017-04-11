@@ -6,7 +6,7 @@ source 'https://rubygems.org'
 gem 'rails_12factor'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.2'
+gem 'rails', '~>  5.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
@@ -41,6 +41,9 @@ group :development do
   gem 'web-console', '~> 2.0'
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+# This probably belons in development
+  gem 'thin'
+
 end
 
 group :development, :test do
@@ -48,7 +51,7 @@ group :development, :test do
   gem 'byebug'
   gem 'sqlite3'
   # Use SCSS for stylesheets
-  gem 'rspec-rails', '~> 3.5', '>= 3.5.2'
+  # gem 'rspec-rails', '~> 3.5', '>= 3.5.2'
 
 end
 
