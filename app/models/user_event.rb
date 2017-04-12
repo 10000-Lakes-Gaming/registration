@@ -8,19 +8,7 @@ class UserEvent < ActiveRecord::Base
   delegate :name, to: :event
 
   def <=> (other)
-    sort = 0
-    unless self == other
-      if other.nil?
-        sort = 1
-      elsif self.user.nil?
-        sort = -1;
-      elsif other.user.nil?
-        sort = 1
-      else
-        sort = self.user <=> other.user
-      end
-    end
-    sort
+    self.user <=> other.user
   end
 
   def gamemaster?
