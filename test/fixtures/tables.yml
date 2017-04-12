@@ -12,7 +12,7 @@ two:
   max_players: 12
   gms_needed: 2
   raffle: false
-  core: true
+  core: false
 
 core:
   session: morning
