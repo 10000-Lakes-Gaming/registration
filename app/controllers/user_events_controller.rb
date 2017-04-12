@@ -1,6 +1,6 @@
 class UserEventsController < ApplicationController
   before_action :set_user_event, only: [:show, :edit, :update, :destroy]
-  before_filter :get_event, :get_users, :get_all_events
+  before_action :get_event, :get_users, :get_all_events
 
   def get_user
     @user = current_user

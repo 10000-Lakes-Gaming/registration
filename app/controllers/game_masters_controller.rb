@@ -1,6 +1,6 @@
 class GameMastersController < ApplicationController
   before_action :set_game_master, only: [:show, :edit, :update, :destroy]
-  before_filter :get_event, :get_session, :get_table, :get_user_event, :get_possible_gms
+  before_action :get_event, :get_session, :get_table, :get_user_event, :get_possible_gms
 
   # TODO - prevent a multiple on GM assignment
 
