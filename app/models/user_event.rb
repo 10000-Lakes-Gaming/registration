@@ -12,6 +12,10 @@ class UserEvent < ActiveRecord::Base
   end
 
   def gamemaster?
-    !game_masters.nil? and game_masters.length > 0
+    !game_masters.empty?
+  end
+
+  def current_gming_count
+    game_masters.length
   end
 end

@@ -31,5 +31,14 @@ class UserEventTest < ActiveSupport::TestCase
     assert_equal(-1, @normal_guy <=> nil)
   end
 
+  test 'no game master list is safe' do
+    assert_equal 0, @normal_guy_my_event.current_gming_count
+    assert_equal [], @normal_guy_my_event.game_masters
+    assert_not_equal nil, @normal_guy_my_event.game_masters
+  end
+
+  test 'not a gm' do
+    assert_not@normal_guy_my_event.gamemaster?
+  end
 
 end
