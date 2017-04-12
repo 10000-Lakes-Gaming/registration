@@ -95,13 +95,14 @@ class TableTest < ActiveSupport::TestCase
   end
 
   test 'sort by season 2 before season 1' do
-    assert((@table_one <=> @table_two) > 0)
+    assert_equal(1, @table_one <=> @table_two)
   end
 
   test 'start time is session start time' do
     assert @morning.start == @table_one.start
   end
-  test 'end time is session start time' do
+
+  test 'end time is session end time' do
     assert @morning.end == @table_one.end
   end
 
