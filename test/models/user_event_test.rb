@@ -7,6 +7,7 @@ class UserEventTest < ActiveSupport::TestCase
     @admin_other_event   = user_events(:admin_other_event)
     @admin               = users(:admin)
     @normal_guy          = users(:normal_guy)
+    @my_event            = events(:my_event)
   end
 
   test 'Admin has his events and not others' do
@@ -38,7 +39,11 @@ class UserEventTest < ActiveSupport::TestCase
   end
 
   test 'not a gm' do
-    assert_not@normal_guy_my_event.gamemaster?
+    assert_not @normal_guy_my_event.gamemaster?
+  end
+
+  test 'Name of registration is that of the event' do
+    assert_equal @my_event.name, @normal_guy_my_event.name
   end
 
 end
