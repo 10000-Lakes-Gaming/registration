@@ -1,7 +1,7 @@
-one:
-  table_id: 
-  user_event_id: 
+gm_admin_one:
+  user_event: admin_my_event
+  table: one
 
-two:
-  table_id: 
-  user_event_id: 
+gm_admin_two:
+   user_event: admin_my_event
+   table: two
