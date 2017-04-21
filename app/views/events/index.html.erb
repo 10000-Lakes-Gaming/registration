@@ -86,7 +86,8 @@
           <% if registration.gamemaster? %>
               <ul class="list-group">
                 <li class="list-group-item list-group-item-heading">Game Master Tables</li>
-                <% registration.game_masters.sort { |a, b| a.start <=> b.start }.each do |gm| %>
+
+                <% registration.game_masters.sort.each do |gm| %>
                     <li class="row list-group-item"><%= gm.table.session.name %>
                       : <%= link_to "#{gm.table.scenario.long_name}", gm.table.scenario %></li>
                 <% end %>
