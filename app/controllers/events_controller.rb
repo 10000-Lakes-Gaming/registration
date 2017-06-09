@@ -8,7 +8,7 @@ class EventsController < ApplicationController
   def index
     all = params[:all]
     if all.nil? || all != true
-      @events = Event.where("end >= :current", {current: Date.today} )
+      @events = Event.where("rsvp_close >= :current", {current: Date.today} )
     else
       @events = Event.all
     end
