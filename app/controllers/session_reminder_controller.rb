@@ -1,5 +1,5 @@
 class SessionReminderController < ApplicationController
-  before_filter :restrict_to_admin
+  before_action :restrict_to_admin
   before_action :get_event, :get_users
 
   def get_event

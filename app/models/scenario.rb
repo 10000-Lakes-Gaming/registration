@@ -6,10 +6,8 @@ class Scenario < ActiveRecord::Base
 
 
   def <=>(scenario)
-    sorted = self.season <=> scenario.season
-    if sorted != 0
-      sorted *= -1
-    else
+    sorted = (self.season <=> scenario.season) * -1
+    if sorted == 0
       sorted = self.scenario_number <=> scenario.scenario_number
       if sorted == 0
         sorted = self.name <=> scenario.name

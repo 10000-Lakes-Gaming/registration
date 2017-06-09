@@ -1,5 +1,5 @@
 class AdminEmailController < ApplicationController
-  before_filter :restrict_to_admin
+  before_action :restrict_to_admin
 
   def new
     @message = Message.new

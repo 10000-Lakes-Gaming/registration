@@ -3,10 +3,29 @@ one:
   scenario: scenario_one_five
   max_players: 6
   gms_needed: 1
+  raffle: false
+  core: false
 
 two:
   session: morning
   scenario: scenario_two_seven
   max_players: 12
   gms_needed: 2
+  raffle: false
+  core: false
+
+core:
+  session: morning
+  scenario: scenario_one_five
+  max_players: 6
+  gms_needed: 1
+  raffle: false
   core: true
+
+raffle:
+  session: morning
+  scenario: scenario_one_five
+  max_players: 6
+  gms_needed: 1
+  raffle: true
+  core: false

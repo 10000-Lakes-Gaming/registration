@@ -1,6 +1,6 @@
 class TablesController < ApplicationController
   before_action :set_table, only: [:show, :edit, :update, :destroy]
-  before_filter :get_event, :get_session, :get_scenarios
+  before_action :get_event, :get_session, :get_scenarios
 
   def get_scenarios
     @scenarios = Scenario.all.order(:season).order(:scenario_number)
