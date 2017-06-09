@@ -7,12 +7,11 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     all = params[:all]
-    if all.nil? || all != true
-      @events = Event.where('end >= ?', Date.today)
-    else
-
+    # if all.nil? || all != true
+    #   @events = Event.where('end >= ?', Date.today)
+    # else
       @events = Event.all
-    end
+    # end
 
   end
 
