@@ -1,20 +1,25 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
   before_action :restrict_to_admin, except: [:show, :index]
-  before_action :get_my_events
+  before_action :get_events, :get_my_events
 
   # GET /events
   # GET /events.json
   def index
+    # get_events
+  end
+
+  def get_events
     all = params[:all]
     if all.nil? || all != true
-      @events = Event.where("rsvp_close >= :current", {current: Date.today} )
+      @events = Event.where("rsvp_close >= :current", {current: Date.today})
     else
       @events = Event.all
     end
     if @events.nil?
       @events = []
     end
+    @events
   end
 
   def prevent_non_admin
@@ -24,8 +29,15 @@ class EventsController < ApplicationController
   end
 
   def get_my_events
+    events         = get_events
+    current_events = []
+    events.each do |event|
+      current_events.push event.id
+    end
+    logger.info "current events => #{current_events}"
+
     @my_events  = []
-    user_events = UserEvent.where(user_id: current_user.id)
+    user_events = UserEvent.where(user_id: current_user.id, event_id: current_events)
     user_events.each do |user_event|
       @my_events.push user_event.event
     end
