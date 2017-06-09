@@ -7,12 +7,14 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     all = params[:all]
-    # if all.nil? || all != true
-    #   @events = Event.where('end >= ?', Date.today)
-    # else
+    if all.nil? || all != true
+      @events = Event.where("end >= :current", {current: Date.today} )
+    else
       @events = Event.all
-    # end
-
+    end
+    if @events.nil?
+      @events = []
+    end
   end
 
   def prevent_non_admin
