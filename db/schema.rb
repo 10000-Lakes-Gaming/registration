@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160914193615) do
+ActiveRecord::Schema.define(version: 20170609180405) do
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20160914193615) do
     t.boolean  "pregen_only"
     t.string   "tier"
     t.boolean  "retired",         default: false
+    t.string   "system",          default: "PFS"
   end
 
   create_table "sessions", force: :cascade do |t|

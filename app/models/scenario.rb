@@ -1,7 +1,9 @@
 class Scenario < ActiveRecord::Base
 
+  validates :system, :type, :season, :scenario_number, :name, :tier, :presence => true
+
   def long_name
-    "#{season}-#{"%02d" % scenario_number}: #{name}"
+    "#{system} #{season}-#{"%02d" % scenario_number}: #{name}"
   end
 
 
