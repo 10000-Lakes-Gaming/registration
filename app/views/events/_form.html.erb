@@ -1,39 +1,45 @@
 <%= form_for(@event) do |f| %>
-  <% if @event.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+    <% if @event.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
 
-      <ul>
-      <% @event.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @event.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :start %><br>
-    <%= f.datetime_select :start %>
-  </div>
-  <div class="field">
-    <%= f.label :end %><br>
-    <%= f.datetime_select :end %>
-  </div>
-  <div class="field">
-    <%= f.label :rsvp_close %><br>
-    <%= f.datetime_select :rsvp_close %>
-  </div>
-  <div class="field">
-    <%= f.label :location %><br>
-    <%= f.text_field :location %>
-  </div>
-    <%# TODO - Add field for free events %>
-    <%# TODO - Add field for event payment %>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="field">
+      <%= f.label :start %><br>
+      <%= f.datetime_select :start %>
+    </div>
+    <div class="field">
+      <%= f.label :end %><br>
+      <%= f.datetime_select :end %>
+    </div>
+    <div class="field">
+      <%= f.label :rsvp_close %><br>
+      <%= f.datetime_select :rsvp_close %>
+    </div>
+    <div class="field">
+      <%= f.label :location %><br>
+      <%= f.text_field :location %>
+    </div>
+    <div class="field">
+      <%= f.label :charity %><br>
+      <%= f.check_box :charity %>
+    </div>
+    <div class="field">
+      <%= f.label :price %><br>
+      <%= f.number_field :price %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
 <% end %>

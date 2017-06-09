@@ -24,6 +24,23 @@
     </div>
   </div>
   <div class="well">
+    <% if @event.charity? %>
+        <div class="row">
+          <div class="col-md-4 text-info">
+            <strong>This is a charity event.</strong>
+          </div>
+        </div>
+    <% end %>
+    <% if !@event.price.nil? && @event.price > 0 %>
+        <div class="row">
+          <div class="col-md-2">
+            <strong>Cost:</strong>
+          </div>
+          <div class="col-md-2">
+            <%= number_to_currency(@event.price) %>
+          </div>
+        </div>
+    <% end %>
     <div class="row">
       <div class="col-md-2">
         <b>Registered? </b>
@@ -59,10 +76,10 @@
                         // add this as a param somehow?
                         env: 'sandbox', // Or 'sandbox',
                         commit: true, // Show a 'Pay Now' button
-                        payment: function() {
+                        payment: function () {
                             // Set up the payment here
                         },
-                        onAuthorize: function(data, actions) {
+                        onAuthorize: function (data, actions) {
                             // Execute the payment here
                             // what does this do?
                         }
@@ -82,23 +99,27 @@
 
   <% if @event.closed? %>
       <div class="well">
-        <div class="bg-warning text-danger lead" style="margin-bottom: 0"><strong>Online registration is closed</strong>
+        <div class="bg-warning text-danger lead" style="margin-bottom: 0">
+          <strong>Online registration is closed</strong>
         </div>
-        <div class="bg-warning text-primary" style="margin-top: 0">In order to make any changes to your registrations
+        <div class="bg-warning text-primary" style="margin-top: 0">In order to make any changes to your
+          registrations
           and signups, you will need to see HQ at the event.
         </div>
       </div>
   <% else %>
       <div class="well">
         <div class="bg-warning text-danger lead" style="margin-bottom: 0"><strong>Attention GMs!</strong></div>
-        <div class="bg-warning text-primary" style="margin-top: 0">If you are planning on GMing in a slot, please do not
-          sign up to play in that slot. <br>The hosts of <%= @event.name %> will assign you to your GM slot once you
+        <div class="bg-warning text-primary" style="margin-top: 0">If you are planning on GMing in a slot,
+          please do not
+          sign up to play in that slot. <br>The hosts of <%= @event.name %> will assign you to your GM slot once
+          you
           have registered and paid for <%= @event.name %>.
         </div>
       </div>
   <% end %>
 
-  <% sessionList = @event.sessions.sort { |a, b| a.start <=> b.start } %>
+  <% sessionList = @event.sessions.sort {|a, b| a.start <=> b.start} %>
   <!-- header -->
   <div class="row list-group-item no-pad">
     <div class="col-md-4 no-pad">
@@ -132,7 +153,7 @@
         </div>
         <div class="col-md-8 no-pad">
           <!-- scenarios here -->
-          <% session.tables.sort { |a, b| a <=> b }.each do |table| %>
+          <% session.tables.sort {|a, b| a <=> b}.each do |table| %>
               <div class="row no-pad striped-inner">
                 <div class="col-md-5 no-pad ">
                   <% scenario = table.scenario %>
@@ -184,7 +205,8 @@
                           </div>
                           <div>
                             <% unless table.scenario.paizo_url.nil? %>
-                                <a href="<%= scenario.paizo_url %>" target="_blank">Click to see on Paizo's site</a>.
+                                <a href="<%= scenario.paizo_url %>" target="_blank">Click to see on Paizo's
+                                  site</a>.
                             <% end %>
                           </div>
                           <div class="modal-footer">
@@ -200,7 +222,8 @@
                   <% if !registrations_available %>
                       <span class="text-danger"><b>Full</b></span>
                   <% else %>
-                      <%= table.max_players - table.registration_tables.length %> of <%= table.max_players %> left
+                      <%= table.max_players - table.registration_tables.length %> of <%= table.max_players %>
+                      left
                   <% end %>
 
                 </div>
@@ -252,7 +275,8 @@
           <% end %>
           <%# this should be a different shading for the totals %>
           <div class="row no-pad totals">
-            <div class="col-md-1 col-md-offset-5"><span class="text-primary"><strong>Totals:</strong></span></div>
+            <div class="col-md-1 col-md-offset-5"><span class="text-primary"><strong>Totals:</strong></span>
+            </div>
             <div class="col-md-2 no-pad ">
               <span class="text-primary"><%= session.total_max_players - session.players_count %>
                 of <%= session.total_max_players %> left</span></div>
@@ -279,8 +303,8 @@
       <%= link_to raw("<span class='glyphicon glyphicon-warning-sign' aria-hidden='true'></span> Unregister for #{@registration.event.name}"),
                   [@event, @registration],
                   method: :delete,
-                  data: {confirm: 'Are you sure? Unregistering for the event will remove you from all tables, and will not refund your payment.'},
-                  :class => 'btn btn-danger' %>
+                  data:   {confirm: 'Are you sure? Unregistering for the event will remove you from all tables, and will not refund your payment.'},
+                  :class  => 'btn btn-danger' %>
 
       <% if @registration && @registration.paid? %>
           <em>Note: unregistering will not refund your payment.</em>

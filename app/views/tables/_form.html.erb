@@ -33,6 +33,23 @@
           <%= f.check_box :raffle %>
         </td>
       </tr>
+
+      <tr>
+        <td>
+          <%= f.label :premium, 'Is this a premium table?' %>
+          <div class="text-info">Premium tables are for fee only, at time of registration.</div>
+        </td>
+        <td>
+          <%= f.check_box :premium %>
+        </td>
+      </tr>
+      <!-- put a conditional here for javascript -->
+      <tr>
+        <td><%= f.label :price, 'What is the cost joining this table?' %></td>
+        <td><%= f.number_field :price %> </td>
+      </tr>
+
+
       <tr>
         <td><%= f.label :core, 'CORE table' %></td>
         <td><%= f.check_box :core %></td>

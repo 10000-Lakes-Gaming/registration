@@ -13,7 +13,9 @@
 <div class="well">
   <div style="white-space: pre-wrap"><%= @scenario.description %></div>
 
-  <div>by <%= @scenario.author %></div>
+  <% if @scenario.author.present? %>
+      <div>by <%= @scenario.author %></div>
+  <% end %>
 
   <% if @scenario.hard_mode %>
       <div class="text-danger">This scenario has a Hard Mode</div>
@@ -29,6 +31,10 @@
 
   <% if @table.core? %>
       <div class="text-warning">This is a Core Campaign table</div>
+  <% end %>
+
+  <% if @table.premium? %>
+      <div class="text-warning">This is a premium table, with a cost of <%= number_to_currency(@table.price) %></div>
   <% end %>
 </div>
 
@@ -100,7 +106,7 @@
 <hr>
 <% if admin? %>
     <%= button_to 'Edit this table', edit_event_session_table_path(@event, @session, @table), method: :get,
-                  :class => "btn btn-primary" %>
+                  :class                                                                              => "btn btn-primary" %>
     <%= button_to 'Back', event_session_tables_path, method: :get, :class => "btn btn-success" %>
 <% else %>
     <%= button_to 'Back', event_path, method: :get, :class => "btn btn-success" %>
