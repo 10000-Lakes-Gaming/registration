@@ -16,12 +16,7 @@
   <h3>Registration Details</h3>
 
   <div class="well">
-    <div class="bg-warning text-danger lead" style="margin-bottom: 0"><strong>Important Note on Payment</strong></div>
-    <div class="bg-warning text-primary" style="margin-top: 0">
-      Note that currently marking a person as paid is currently a manual process, so there may be a lag of a day or two
-      once your payment has processed.<br><br>
-      Thank you for your patience.
-    </div>
+    <div class="bg-warning text-primary" style="margin-top: 0"><%= @event.info %></div>
   </div>
   <div class="well">
     <% if @event.charity? %>
