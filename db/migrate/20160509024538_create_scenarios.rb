@@ -1,7 +1,7 @@
 class CreateScenarios < ActiveRecord::Migration
   def change
     create_table :scenarios do |t|
-      t.string :type
+      t.string :type_of
       t.integer :season
       t.integer :scenario_number
       t.string :name

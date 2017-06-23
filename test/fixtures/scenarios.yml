@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 scenario_one_five:
-  type: Scenario
+  type_of: Scenario
   season: 1
   scenario_number: 1
   name: Interesting delve into the Earth
@@ -12,7 +12,7 @@ scenario_one_five:
   tier: 1-5
 
 scenario_two_seven:
-  type: Scenario
+  type_of: Scenario
   season: 2
   scenario_number: 7
   name: Death to Pathfinders
@@ -23,7 +23,7 @@ scenario_two_seven:
   tier: 7-11
 
 scenario_two_twenty:
-  type: Scenario
+  type_of: Scenario
   season: 2
   scenario_number: 20
   name: Later In Season Story

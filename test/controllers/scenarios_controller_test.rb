@@ -19,7 +19,7 @@ class ScenariosControllerTest < ActionController::TestCase
 
   test "should create scenario" do
     assert_difference('Scenario.count') do
-      post :create, scenario: { author: @scenario.author, description: @scenario.description, hard_mode: @scenario.hard_mode, name: @scenario.name, paizo_url: @scenario.paizo_url, scenario_number: @scenario.scenario_number, season: @scenario.season, type: @scenario.type }
+      post :create, scenario: { author: @scenario.author, description: @scenario.description, hard_mode: @scenario.hard_mode, name: @scenario.name, paizo_url: @scenario.paizo_url, scenario_number: @scenario.scenario_number, season: @scenario.season, type_of: @scenario.type_of }
     end
 
     assert_redirected_to scenario_path(assigns(:scenario))
@@ -36,7 +36,7 @@ class ScenariosControllerTest < ActionController::TestCase
   end
 
   test "should update scenario" do
-    patch :update, id: @scenario, scenario: { author: @scenario.author, description: @scenario.description, hard_mode: @scenario.hard_mode, name: @scenario.name, paizo_url: @scenario.paizo_url, scenario_number: @scenario.scenario_number, season: @scenario.season, type: @scenario.type }
+    patch :update, id: @scenario, scenario: { author: @scenario.author, description: @scenario.description, hard_mode: @scenario.hard_mode, name: @scenario.name, paizo_url: @scenario.paizo_url, scenario_number: @scenario.scenario_number, season: @scenario.season, type_of: @scenario.type_of }
     assert_redirected_to scenario_path(assigns(:scenario))
   end
 
