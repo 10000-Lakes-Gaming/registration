@@ -48,6 +48,25 @@
         <% end %>
       </div>
     </div>
+    <% if @event.external_url %>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="bg-warning text-danger">Registering for this event here does NOT register you for the
+              convention. To do that, you will need to register at the URL below. You will not be able to play or GM
+              without a paid registration to the convention itself!
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            <strong>Register at:</strong>
+          </div>
+
+          <div class="col-md-2">
+            <a target="_blank" href="<%= @event.external_url %>"><%= @event.external_url %></a>
+          </div>
+        </div>
+    <% end %>
 
     <% if @registration && @registration.event.price&.nonzero? %>
         <div class="row">
