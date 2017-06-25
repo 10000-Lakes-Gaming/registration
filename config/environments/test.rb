@@ -39,4 +39,31 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.logger = ActiveSupport::TaggedLogging.new(logger)
+  end
+
+  # Do not dump schema after migrations.
+  config.active_record.dump_schema_after_migration = false
+
+  config.action_mailer.default_url_options = {:host => 'test-pfs-registration.herokuapp.com'}
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default :charset => "utf-8"
+
+  ActionMailer::Base.smtp_settings = {
+      :address => 'smtp.gmail.com',
+      :port => 587,
+      :domain => 'gmail.com',
+      :authentication => :plain,
+      :user_name => ENV['GMAIL_SMTP_USERNAME'],
+      :password => ENV['GMAIL_SMTP_PASSWORD'],
+      :enable_starttls_auto => true
+  }
+  ActionMailer::Base.delivery_method = :smtp
+  config.action_mailer.asset_host = 'https://test-pfs-registration.herokuapp.com/'
 end
