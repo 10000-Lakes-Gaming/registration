@@ -11,6 +11,11 @@ class UserEvent < ActiveRecord::Base
     self.user <=> other.user
   end
 
+  def payment_ok?
+    # @registration.event.price&.nonzero?
+    self.paid? || self.event.price.nil? || self.event.price <= 0
+  end
+
   def gamemaster?
     !game_masters.empty?
   end

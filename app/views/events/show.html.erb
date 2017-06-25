@@ -36,6 +36,7 @@
           </div>
         </div>
     <% end %>
+
     <div class="row">
       <div class="col-md-2">
         <b>Registered? </b>
@@ -48,7 +49,7 @@
         <% end %>
       </div>
     </div>
-    <% if @event.external_url %>
+    <% if !@event.external_url.blank? %>
         <div class="row">
           <div class="col-md-6">
             <div class="bg-warning text-danger">Registering for this event here does NOT register you for the
@@ -71,7 +72,7 @@
     <% if @registration && @registration.event.price&.nonzero? %>
         <div class="row">
           <div class="col-md-2"><b>Paid?</b></div>
-          <% if @registration.paid? %>
+          <% if @registration.payment_ok? %>
               <div class="col-md-2">
                 Yes
               </div>
@@ -116,19 +117,15 @@
         <div class="bg-warning text-danger lead" style="margin-bottom: 0">
           <strong>Online registration is closed</strong>
         </div>
-        <div class="bg-warning text-primary" style="margin-top: 0">In order to make any changes to your
-          registrations
-          and signups, you will need to see HQ at the event.
+        <div class="bg-warning text-primary" style="margin-top: 0">In order to make any changes to your registrations and signups, you will need to see HQ at the event.
         </div>
       </div>
   <% else %>
       <div class="well">
         <div class="bg-warning text-danger lead" style="margin-bottom: 0"><strong>Attention GMs!</strong></div>
         <div class="bg-warning text-primary" style="margin-top: 0">If you are planning on GMing in a slot,
-          please do not
-          sign up to play in that slot. <br>The hosts of <%= @event.name %> will assign you to your GM slot once
-          you
-          have registered and paid for <%= @event.name %>.
+          please do not sign up to play in that slot. <br>The hosts of <%= @event.name %> will assign you to your GM
+          slot once you have registered and paid for <%= @event.name %>.
         </div>
       </div>
   <% end %>
@@ -170,6 +167,7 @@
           <% session.tables.sort {|a, b| a <=> b}.each do |table| %>
               <div class="row no-pad striped-inner">
                 <div class="col-md-5 no-pad ">
+                  <%# TODO make this a reusable partial %>
                   <% scenario = table.scenario %>
                   <%= scenario.long_name %>
                   <span class="badge"><%= table.scenario.tier %></span>
@@ -189,6 +187,8 @@
                       <span class="badge badge-retired">Retired</span>
                   <% end %>
                 </div>
+
+                <%# TODO Make this a partial or helper %>
                 <div class="col-md-1 no-pad">
                   <button data-toggle="modal" title="<%= scenario.long_name %>" data-target="#scenario_<%= scenario.id %>" class="btn btn-xs btn-info">Details</button>
                   <div id="scenario_<%= scenario.id %>" class="modal fade" role="dialog">
@@ -264,7 +264,7 @@
                       <% end %>
 
                       <% registered_this_session = @sessions.include?(session) || @gm_sessions.include?(session) %>
-                      <% if !registered_this_session && registrations_available && @registration.paid? %>
+                      <% if !registered_this_session && registrations_available && @registration.payment_ok? %>
                           <% unless table.raffle? or @event.closed? %>
                               <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table), :class => "btn btn-xs btn-primary", :method => :get %>
                           <% end %>
