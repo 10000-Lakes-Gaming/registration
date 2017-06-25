@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170623214117) do
+ActiveRecord::Schema.define(version: 20170625154743) do
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20170623214117) do
     t.integer  "price"
     t.string   "info"
     t.string   "external_url"
+    t.integer  "event_number"
   end
 
   create_table "game_masters", force: :cascade do |t|

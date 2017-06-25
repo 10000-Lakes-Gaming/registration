@@ -1,16 +1,37 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= @event.name %></h1>
-<h2><%= @event.location %></h2>
-<h2><%= @event.start.to_formatted_s(:long) %> to <%= @event.end.to_formatted_s(:long) %></h2>
+<style type="text/css">
+  dt, dd {
+    font-size: 16px;
+  }
+</style>
 
-<% if @event.closed? %>
-    <div class="alert-danger lead">Online Registration is closed!</div>
-<% else %>
-    <% unless @event.rsvp_close.nil? %>
-        <div class="lead text-warning">Online Registation closes: <%= @event.rsvp_close.to_formatted_s(:long) %></div>
+<h1><strong><%= @event.name %></strong></h1>
+<div>
+  <h2>Event Details</h2>
+  <dl class="dl-horizontal">
+    <dt>Location:</dt>
+    <dd class=" text-info"><%= @event.location %></dd>
+    <dt>Dates:</dt>
+    <dd class=" text-info"><%= @event.start.to_formatted_s(:long) %> to <%= @event.end.to_formatted_s(:long) %></dd>
+    <% if @event.event_number? %>
+        <dt>Event Number:</dt>
+        <dd class=" text-info"><%= @event.event_number %></dd>
     <% end %>
-<% end %>
+  </dl>
+</div>
+
+
+<div>
+  <h2>Online Registration</h2>
+  <% if @event.closed? %>
+      <div class="alert-danger lead">Online Registration is closed!</div>
+  <% else %>
+      <% unless @event.rsvp_close.nil? %>
+          <div class="lead text-warning">Online Registation closes: <%= @event.rsvp_close.to_formatted_s(:long) %></div>
+      <% end %>
+  <% end %>
+</div>
 
 <div class="detailsBlock" style="border: solid thin black;">
   <h3>Registration Details</h3>
@@ -117,7 +138,8 @@
         <div class="bg-warning text-danger lead" style="margin-bottom: 0">
           <strong>Online registration is closed</strong>
         </div>
-        <div class="bg-warning text-primary" style="margin-top: 0">In order to make any changes to your registrations and signups, you will need to see HQ at the event.
+        <div class="bg-warning text-primary" style="margin-top: 0">In order to make any changes to your registrations
+          and signups, you will need to see HQ at the event.
         </div>
       </div>
   <% else %>
