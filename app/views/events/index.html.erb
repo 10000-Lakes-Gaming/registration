@@ -1,5 +1,4 @@
 <p id="notice"><%= notice %></p>
-
 <h1>All Events</h1>
 <div class="well">
   <div class="bg-warning">
@@ -18,6 +17,7 @@
     <div class="col-md-2 list"><b>Name</b></div>
     <div class="col-md-4"><b>Dates</b></div>
     <div class="col-md-2"><b>Location</b></div>
+    <div class="col-md-1"></div>
     <div class="col-md-1">
       <% unless @my_events.nil? %><b>Attending</b>
       <% end %></div>
@@ -30,6 +30,11 @@
           <small><%= event.start.to_formatted_s(:long) %> - <%= event.end.to_formatted_s(:long) %></small>
         </div>
         <div class="col-md-2"><%= event.location %></div>
+        <div class="col-md-1">
+          <% if !event.external_url.blank? %>
+              <span class="glyphicon glyphicon-duplicate"></span>
+          <% end %>
+        </div>
         <div class="col-md-1">
           <% if @my_events.include? event %>
               <%= link_to "Attending", event, :class => 'btn btn-sm btn-primary' %>
@@ -76,7 +81,7 @@
           <% else %>
               <ul class="list-group">
                 <li class="list-group-item list-group-item-heading">Player Tables</li>
-                <% sorted = registration.registration_tables.sort { |a, b| a.start <=> b.start } %>
+                <% sorted = registration.registration_tables.sort {|a, b| a.start <=> b.start} %>
                 <% sorted.each do |reg_table| %>
                     <li class="row list-group-item"><%= reg_table.table.session.name %>
                       : <%= link_to "#{reg_table.table.scenario.long_name}", reg_table.table.scenario %></li>
@@ -92,7 +97,7 @@
                       : <%= link_to "#{gm.table.scenario.long_name}", gm.table.scenario %></li>
                 <% end %>
               </ul>
-        <% end %>
+          <% end %>
         </div>
       </div>
   <% end %>

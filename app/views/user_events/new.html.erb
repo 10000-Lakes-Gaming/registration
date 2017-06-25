@@ -6,6 +6,32 @@
       <br> Also, make sure that you are registering the correct user for the correct event!</p>
 <% else %>
     <h2>Register for <%= @event.name %></h2>
+
+    <% if !@event.external_url.blank? %>
+
+        <div class="well">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="bg-warning text-danger">
+                Registering for this event here does NOT register you for the
+                convention. To do that, you will need to register at the URL below. You will not be able to play or GM
+                without a paid registration to the convention itself!
+              </div>
+
+              <div class="bg-warning text-info">However, registration for tables is handled here.</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <strong>Register for convention at:</strong>
+            </div>
+
+            <div class="col-md-4">
+              <a target="_blank" href="<%= @event.external_url %>"><%= @event.external_url %></a>
+            </div>
+          </div>
+        </div>
+    <% end %>
 <% end %>
 
 
