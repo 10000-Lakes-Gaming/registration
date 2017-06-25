@@ -36,10 +36,13 @@ class EventsController < ApplicationController
     end
     logger.info "current events => #{current_events}"
 
+    @my_registrations  = []
     @my_events  = []
+
     user_events = UserEvent.where(user_id: current_user.id, event_id: current_events)
     user_events.each do |user_event|
-      @my_events.push user_event
+      @my_registrations.push user_event
+      @my_events.push user_event.event
     end
   end
 
