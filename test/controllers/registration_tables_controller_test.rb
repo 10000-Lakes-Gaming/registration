@@ -19,7 +19,7 @@ class RegistrationTablesControllerTest < ActionController::TestCase
 
   test "should create registration_table" do
     assert_difference('RegistrationTable.count') do
-      post :create, registration_table: { registration: @registration_table.registration, table: @registration_table.table }
+      post :create, registration_table: {user_event: @registration_table.user_event, table: @registration_table.table }
     end
 
     assert_redirected_to registration_table_path(assigns(:registration_table))
@@ -36,7 +36,7 @@ class RegistrationTablesControllerTest < ActionController::TestCase
   end
 
   test "should update registration_table" do
-    patch :update, id: @registration_table, registration_table: { registration: @registration_table.registration, table: @registration_table.table }
+    patch :update, id: @registration_table, registration_table: {user_event: @registration_table.user_event, table: @registration_table.table }
     assert_redirected_to registration_table_path(assigns(:registration_table))
   end
 

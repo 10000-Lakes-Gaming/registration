@@ -69,7 +69,7 @@
                 to <%= registration.event.end.to_formatted_s(:short) %></a>
             </div>
             <div class="col-sm-2">
-              <%= button_to "Manage RSVP", registration.event, method: :get, :class => 'btn btn-primary' %>
+              <%= button_to "Manage RSVP", event_user_event_path(registration.event, registration), method: :get, :class => 'btn btn-primary' %>
             </div>
           </div>
 

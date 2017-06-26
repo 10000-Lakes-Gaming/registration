@@ -105,25 +105,7 @@
                 No:
               </div>
               <div class="col-md-6">
-                <!--<a href="http://www.skalcon.org/index.php/register/">Pay for SkålCon</a>-->
-                <!-- new development here -->
-                <script src="https://www.paypalobjects.com/api/checkout.js"></script>
-                <div id="paypal-button"></div>
-                <script>
-                    paypal.Button.render({
-                        // add this as a param somehow?
-                        env: 'sandbox', // Or 'sandbox',
-                        commit: true, // Show a 'Pay Now' button
-                        payment: function () {
-                            // Set up the payment here
-                        },
-                        onAuthorize: function (data, actions) {
-                            // Execute the payment here
-                            // what does this do?
-                        }
-
-                    }, '#paypal-button');
-                </script>
+                <%= button_to "Pay for event", event_user_event_path(@registration.event, @registration), method: :get, :class => 'btn btn-primary' %>
               </div>
           <% end %>
         </div>

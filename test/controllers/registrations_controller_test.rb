@@ -3,7 +3,7 @@ require 'test_helper'
 class RegistrationsControllerTest < ActionController::TestCase
   setup do
     skip("Not ready to test")
-    @registration = registrations(:one)
+    @user_event = registrations(:one)
   end
 
   test "should get index" do
@@ -19,30 +19,30 @@ class RegistrationsControllerTest < ActionController::TestCase
 
   test "should create registration" do
     assert_difference('Registration.count') do
-      post :create, registration: { event_id: @registration.event_id, paid: @registration.paid, user_id: @registration.user_id }
+      post :create, user_event: {event_id: @user_event.event_id, paid: @user_event.paid, user_id: @user_event.user_id }
     end
 
-    assert_redirected_to registration_path(assigns(:registration))
+    assert_redirected_to registration_path(assigns(:user_event))
   end
 
   test "should show registration" do
-    get :show, id: @registration
+    get :show, id: @user_event
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @registration
+    get :edit, id: @user_event
     assert_response :success
   end
 
   test "should update registration" do
-    patch :update, id: @registration, registration: { event_id: @registration.event_id, paid: @registration.paid, user_id: @registration.user_id }
-    assert_redirected_to registration_path(assigns(:registration))
+    patch :update, id: @user_event, user_event: {event_id: @user_event.event_id, paid: @user_event.paid, user_id: @user_event.user_id }
+    assert_redirected_to registration_path(assigns(:user_event))
   end
 
   test "should destroy registration" do
     assert_difference('Registration.count', -1) do
-      delete :destroy, id: @registration
+      delete :destroy, id: @user_event
     end
 
     assert_redirected_to registrations_path
