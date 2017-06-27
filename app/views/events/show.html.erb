@@ -96,7 +96,7 @@
         <div class="row">
           <div class="col-md-2"><b>Paid?</b></div>
           <% if @registration.payment_ok? %>
-              <div class="col-md-2">
+              <div class="col-md-6">
                 Yes
               </div>
           <% else %>
@@ -111,7 +111,18 @@
         </div>
     <% end %>
 
-  </div>
+    <% if @registration.paid? %>
+        <div class="row">
+          <div class="col-md-2"><b>Amount Paid:</b></div>
+          <div class="col-md-6>"><%= number_to_currency (@registration.payment_amount / 100) %></div>
+        </div>
+        <div class="row">
+          <div class="col-md-2"><b>Payment ID:</b></div>
+          <div class="col-md-6"><%= @registration.payment_id %></div>
+        </div>
+    <% end %>
+
+    </div>
 </div>
 
 <div class="sessionsOffered" style="border: solid thin black;">
@@ -122,7 +133,8 @@
         <div class="bg-warning text-danger lead" style="margin-bottom: 0">
           <strong>Online registration is closed</strong>
         </div>
-        <div class="bg-warning text-primary" style="margin-top: 0">In order to make any changes to your registrations
+        <div class="bg-warning text-primary" style="margin-top: 0">In order to make any changes to your
+          registrations
           and signups, you will need to see HQ at the event.
         </div>
       </div>

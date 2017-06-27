@@ -4,7 +4,7 @@
     <!-- this should pull the data-key fromenvironment -->
     <script
     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-    data-key="pk_test_nh94CaqZIeK1pCjEp8HdeIFs"
+    data-key="<%= ENV['PUBLISHABLE_KEY'] %>"
     data-amount="<%= event.price * 100 %>"
     data-name="<%= user_event.user.name %>"
     data-description="<%= event.name %> Payment"

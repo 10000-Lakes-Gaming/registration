@@ -13,7 +13,6 @@ class RegistrationPaymentController < ApplicationController
     # Amount in cents
     @amount = @event.price * 100
 
-
     customer = Stripe::Customer.create(
         :email  => params[:stripeEmail],
         :source => params[:stripeToken]
@@ -27,6 +26,12 @@ class RegistrationPaymentController < ApplicationController
     )
 
     logger.info "I have a charge #{charge}"
+    logger.info "The charge ID is #{charge.id} and it was in the amount of #{charge.amount / 100}"
+
+    @user_event.paid = true
+    @user_event.payment_amount = charge.amount # Will be in cents, not dollars!
+    @user_event.payment_id = charge.id
+    @user_event.save!
 
   rescue Stripe::CardError => e
     flash[:error] = e.message
