@@ -1,6 +1,11 @@
 class UserEventsController < ApplicationController
-  before_action :set_user_event, only: [:show, :edit, :update, :destroy]
+  before_action :get_user_event, only: [:show, :edit, :update, :destroy]
   before_action :get_event, :get_users, :get_all_events
+  before_action :get_stripe_public_key, only: [:show]
+
+  def get_stripe_public_key
+    @public_key = ENV["PUBLISHABLE_KEY"]
+  end
 
   def get_user
     @user = current_user
@@ -30,10 +35,10 @@ class UserEventsController < ApplicationController
       end
     end
     # sort the user events by email?
-    @user_events = @user_events.sort{ |a, b| a <=> b }
+    @user_events = @user_events.sort {|a, b| a <=> b}
 
     # how many have paid?
-    @paid = 0
+    @paid        = 0
     @user_events.each do |rsvp|
       if rsvp.paid?
         @paid = @paid + 1
@@ -44,6 +49,7 @@ class UserEventsController < ApplicationController
   # GET /user_events/1
   # GET /user_events/1.json
   def show
+     logger.info "Environment variable? #{@public_key}"
   end
 
   # GET /user_events/new
@@ -73,11 +79,11 @@ class UserEventsController < ApplicationController
     respond_to do |format|
       if @user_event.save
         # on the notice add the event name
-        format.html { redirect_to [@event, @user_event], notice: 'User was successfully registered.' }
-        format.json { render :show, status: :created, location: [@event, @user_event] }
+        format.html {redirect_to [@event, @user_event], notice: 'User was successfully registered.'}
+        format.json {render :show, status: :created, location: [@event, @user_event]}
       else
-        format.html { render :new }
-        format.json { render json: @user_event.errors, status: :unprocessable_entity }
+        format.html {render :new}
+        format.json {render json: @user_event.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -87,11 +93,11 @@ class UserEventsController < ApplicationController
   def update
     respond_to do |format|
       if @user_event.update(user_event_params)
-        format.html { redirect_to [@event, @user_event], notice: 'User event was successfully updated.' }
-        format.json { render :show, status: :ok, location: [@event, @user_event] }
+        format.html {redirect_to [@event, @user_event], notice: 'User event was successfully updated.'}
+        format.json {render :show, status: :ok, location: [@event, @user_event]}
       else
-        format.html { render :edit }
-        format.json { render json: @user_event.errors, status: :unprocessable_entity }
+        format.html {render :edit}
+        format.json {render json: @user_event.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -103,18 +109,12 @@ class UserEventsController < ApplicationController
     # TODO - if not admin, redirect to home.
     @user_event.destroy
     respond_to do |format|
-      format.html { redirect_to events_path, notice: 'User event was successfully unregistered.' }
-      format.json { head :no_content }
+      format.html {redirect_to events_path, notice: 'User event was successfully unregistered.'}
+      format.json {head :no_content}
     end
   end
 
-  private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_user_event
-    @user_event = UserEvent.find(params[:id])
-  end
-
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the white list through.def user_event_params
   def user_event_params
     params.require(:user_event).permit(:user_id, :event_id, :paid)
   end

@@ -15,7 +15,9 @@ Rails.application.routes.draw do
   resources :events do
     resources :gm_list
     resources :table_assignment
-    resources :user_events
+    resources :user_events do
+      resources :registration_payment, only: [:new, :create]
+    end
     resources :sessions do
       resources :tables do
         resources :registration_tables
@@ -27,6 +29,7 @@ Rails.application.routes.draw do
     resources :registration_reminder
     resources :attendee_email
   end
+
 
   # message stuffs
   get 'contact', to: 'contact#new', as: 'contact'

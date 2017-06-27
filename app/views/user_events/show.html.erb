@@ -20,21 +20,28 @@
   </div>
   <div class="row">
     <div class="col-md-2 col-sm-3"><strong>Paid:</strong></div>
-    <div class="col-md-6 col-sm-5"><%= @user_event.paid? %></div>
+    <div class="col-md-6 col-sm-5">
+      <% if @user_event.paid? %>
+          Yes
+      <% else %>
+          No
+          <%= render partial: "user_events/registration_payment", locals: {event: @event, user_event: @user_event} %>
+      <% end %>
+    </div>
   </div>
 </div>
 
 <hr>
 
 <% unless @user_event.registration_tables.empty? %>
-<h2>Player Sessions</h2>
-<div class="well">
-  <ul>
-    <% @user_event.registration_tables.each do |reg_table| %>
-        <li><%= "#{reg_table.table.session.name}: #{reg_table.table.scenario.long_name}" %></li>
-    <% end %>
-  </ul>
-</div>
+    <h2>Player Sessions</h2>
+    <div class="well">
+      <ul>
+        <% @user_event.registration_tables.each do |reg_table| %>
+            <li><%= "#{reg_table.table.session.name}: #{reg_table.table.scenario.long_name}" %></li>
+        <% end %>
+      </ul>
+    </div>
 <% end %>
 
 <% unless @user_event.game_masters.empty? %>
@@ -51,7 +58,7 @@
 
 <% if current_user.admin? %>
     <%= link_to 'Back to Registrations', event_user_events_path(@event), :class => 'btn btn-success' %>
-    <%= link_to 'Edit', edit_event_user_event_path(@event, @user_event) , :class => 'btn btn-primary'%>
+    <%= link_to 'Edit', edit_event_user_event_path(@event, @user_event), :class => 'btn btn-primary' %>
 <% else %>
     <%= link_to "Back to #{@event.name}", event_path(@event), :class => 'btn btn-success' %>
 <% end %>

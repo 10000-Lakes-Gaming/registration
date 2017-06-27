@@ -23,6 +23,7 @@ gem 'omniauth', '~> 1.3.1'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'autoprefixer-rails'
 
+gem 'stripe'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
