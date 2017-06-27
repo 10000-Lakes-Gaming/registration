@@ -105,7 +105,7 @@
                 No:
               </div>
               <div class="col-md-6">
-                <%= button_to "Pay for event", event_user_event_path(@registration.event, @registration), method: :get, :class => 'btn btn-primary' %>
+                <%= render partial: "user_events/registration_payment", locals: {event: @event, user_event: @registration} %>
               </div>
           <% end %>
         </div>

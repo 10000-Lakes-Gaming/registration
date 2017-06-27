@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     resources :gm_list
     resources :table_assignment
     resources :user_events do
-      resources :registration_payment, shallow: true
+      resources :registration_payment, only: [:new, :create]
     end
     resources :sessions do
       resources :tables do
@@ -30,9 +30,6 @@ Rails.application.routes.draw do
     resources :attendee_email
   end
 
-  # resources :user_events do
-  #   resources :registration_payment
-  # end
 
   # message stuffs
   get 'contact', to: 'contact#new', as: 'contact'

@@ -1,4 +1,5 @@
-<%= form_for ([@event, @user_event]), url: event_user_event_registration_payment_path do %>
+<%= form_for ([@event, @user_event]), url: event_user_event_registration_payment_index_path do |f|%>
+
     <article>
       <% if flash[:error].present? %>
           <div id="error_explanation">
