@@ -111,7 +111,7 @@
         </div>
     <% end %>
 
-    <% if @registration.paid? %>
+    <% if @registration && @registration.paid? %>
         <div class="row">
           <div class="col-md-2"><b>Amount Paid:</b></div>
           <div class="col-md-6>"><%= number_to_currency (@registration.payment_amount / 100) %></div>
