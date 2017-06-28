@@ -32,7 +32,7 @@
   <% if @user_event.paid? %>
       <div class="row">
         <div class="col-md-2 col-sm-3"><strong>Amount Paid:</strong></div>
-        <div class="col-md-6 col-sm-5"><%= number_to_currency @user_event.payment_amount %></div>
+        <div class="col-md-6 col-sm-5"><%= number_to_currency ( @user_event.payment_amount / 100 )%></div>
       </div>
       <div class="row">
         <div class="col-md-2 col-sm-3"><strong>Payment ID:</strong></div>
