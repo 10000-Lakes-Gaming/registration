@@ -20,27 +20,37 @@
               <%= f.hidden_field :user_id, :value => @user_event.user_id %>
               <%= "#{@user_event.user.name} (#{@user_event.user.email})" %>
           <% else %>
-              <%= f.select :user_id, options_for_select(@users.map { |user| ["#{user.name} (#{user.email})", user.id] }.to_h, @user_event.user_id), include_blank: 'Select User...' %>
+              <%= f.select :user_id, options_for_select(@users.map {|user| ["#{user.name} (#{user.email})", user.id]}.to_h, @user_event.user_id), include_blank: 'Select User...' %>
           <% end %>
         </div>
 
         <div>
           <%= f.label :event_id %>:
           <% unless @user_event.persisted? %>
-              <%= f.select :event_id, options_for_select(@events.map { |event| [event.name, event.id] }.to_h, @event.id) %>
+              <%= f.select :event_id, options_for_select(@events.map {|event| [event.name, event.id]}.to_h, @event.id) %>
           <% else %>
               <%= @event.name %>
           <% end %>
         </div>
 
-        <div>
+        <div id="admindiv">
           <% if @user_event.persisted?
                username = @user_event.user.name
-               else
+             else
                username = 'the player'
              end %>
-          <%= f.label :paid, "Check when #{username} has paid: " %>
-          <%= f.check_box :paid %>
+          <div>
+            <%= f.label :paid, "Check when #{username} has paid: " %>
+            <%= f.check_box :paid %>
+          </div>
+          <div>
+            <%= f.label :payment_amount %>
+            <%= f.number_field :payment_amount %>
+          </div>
+          <div>
+            <%= f.label :payment_id, "Payment ID, Manual, or Cash?"%>
+            <%= f.text_field :payment_id %>
+          </div>
         </div>
         <%# end admin section %>
     <% else %>
