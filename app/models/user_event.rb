@@ -5,6 +5,7 @@ class UserEvent < ActiveRecord::Base
   has_many :game_masters
   validates :event_id, :presence => true, :uniqueness => {:scope => :user_id}
   validates :user_id, :presence => true, :uniqueness => {:scope => :event_id}
+  validates :payment_id, :presence => true, :if => :payment_amount
   delegate :name, to: :event
 
   def <=> (other)
