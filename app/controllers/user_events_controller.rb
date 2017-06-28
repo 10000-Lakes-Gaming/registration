@@ -49,7 +49,7 @@ class UserEventsController < ApplicationController
   # GET /user_events/1
   # GET /user_events/1.json
   def show
-     logger.info "Environment variable? #{@public_key}"
+    logger.info "Environment variable? #{@public_key}"
   end
 
   # GET /user_events/new
@@ -116,6 +116,6 @@ class UserEventsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.def user_event_params
   def user_event_params
-    params.require(:user_event).permit(:user_id, :event_id, :paid)
+    params.require(:user_event).permit(:user_id, :event_id, :paid, :payment_amount, :payment_id)
   end
 end
