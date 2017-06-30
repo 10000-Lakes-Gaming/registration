@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   protected
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :pfs_number])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :pfs_number, :forum_username])
   end
 
   # Prevent CSRF attacks by raising an exception.
