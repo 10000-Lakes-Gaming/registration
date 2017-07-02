@@ -1,5 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
 $black: #000;
 $red: #f00;
 $blue: #008;
@@ -53,10 +54,30 @@ $success: #398439;
   color: $white;
 }
 
+
 .sidebar {
   background-color: $lightGreen;
   // TODO make this dynamic?
   height: 75%;
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 5px;
+    background-color: $lightGrey;
+    //height: 100%; /* Full height */
+    position: fixed; /* Make it stick, even on scroll */
+    overflow: auto; /* Enable scrolling if the sidenav has too much content */
+    li a {
+      display: block;
+      //background-color: $lightGrey;
+    }
+    /* Change the link color on hover */
+    li a:hover {
+      background-color: $maroon;
+      color: white;
+      text-decoration: none;
+    }
+  }
 }
 
 div.bottom {
@@ -74,26 +95,6 @@ div.bottom {
 .no-pad {
   padding: 0;
   margin: 0;
-}
-
-ul.sidebar {
-  list-style-type: none;
-  margin: 0;
-  padding: 5px;
-  background-color: $lightGrey;
-  //height: 100%; /* Full height */
-  position: fixed; /* Make it stick, even on scroll */
-  overflow: auto; /* Enable scrolling if the sidenav has too much content */
-  li a {
-    display: block;
-    //background-color: $lightGrey;
-  }
-  /* Change the link color on hover */
-  li a:hover {
-    background-color: $maroon;
-    color: white;
-    text-decoration: none;
-  }
 }
 
 .active {
@@ -118,7 +119,11 @@ ul.sidebar {
   border-bottom: solid black thin;
   //padding-left: 1em;
 }
-.row > div[class^="col-"]:first-child{padding-left:2px;}
+
+.row > div[class^="col-"]:first-child {
+  padding-left: 2px;
+}
+
 .striped-outer:nth-child(odd) {
   background: $white;
 }
@@ -143,7 +148,6 @@ ul.sidebar {
   background: oldlace;
   color: black;
 }
-
 
 .inline {
   display: inline-block;
@@ -188,21 +192,27 @@ ul.sidebar {
 .badge-core {
   background-color: $info;
 }
+
 .badge-raffle {
   background-color: $success;
 }
+
 .badge-pregen {
   background-color: $purple;
 }
+
 .badge-hardmode {
   background-color: $red;
 }
+
 .badge-retired {
   background-color: $black;
 }
+
 .badge-player {
   background-color: $maroon;
 }
+
 .badge-gm {
   background-color: $bright-green;
 }

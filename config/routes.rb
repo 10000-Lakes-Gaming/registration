@@ -24,10 +24,6 @@ Rails.application.routes.draw do
         resources :game_masters
       end
     end
-    resources :session_reminder
-    resources :payment_reminder
-    resources :registration_reminder
-    resources :attendee_email
   end
 
 
