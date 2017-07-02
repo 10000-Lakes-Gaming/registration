@@ -11,10 +11,14 @@ class RegistrationTable < ActiveRecord::Base
     errors.add :registration_tables, "Max Players Exceeded" if table.registration_tables.count > table.max_players
   end
 
+  def payment_ok?
+    self.paid? || self.table.price.nil? || self.table.price <= 0
+  end
+
   def <=> (other)
     # sort by user
     sorted = self.user_event <=> other.user_event
-    if  sorted == 0
+    if sorted == 0
       # then scenario number
       sorted = self.table.scenario <=> other.table.scenario
     end
