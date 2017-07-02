@@ -16,15 +16,17 @@ class ScenarioTest < ActiveSupport::TestCase
     assert_equal 2, @two_seven.season
   end
 
-  test "scenario 2-7 shoud have correct long_name" do
-    assert_equal '2-07: Death to Pathfinders', @two_seven.long_name
+  test "scenario 2-7 should have correct long_name" do
+    assert_equal 'PFS 2-07: Death to Pathfinders', @two_seven.long_name
   end
 
   test "scenario 1-5 comes after 2-7 (reverse sort seasons)" do
     assert_equal @sort_last, @one_five <=> @two_seven
   end
 
-  test "scenario 2-7 comes before 2-20 (natural sort in season)" do
-    assert_equal @sort_first, @two_seven <=> scenarios(:scenario_two_twenty)
+  test "scenario 2-07 comes before 2-20 (natural sort in season)" do
+    two_twenty = scenarios(:scenario_two_twenty)
+    assert @two_seven.scenario_number.to_i < two_twenty.scenario_number.to_i
+    assert_equal @sort_first, @two_seven <=> two_twenty
   end
 end

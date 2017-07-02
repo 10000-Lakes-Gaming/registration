@@ -44,9 +44,9 @@ class Scenario < ActiveRecord::Base
   def <=>(scenario)
     sorted = (self.season <=> scenario.season) * -1
     if sorted == 0
-      my_number    = self.scenario_number.to_s
-      other_number = scenario.scenario_number.to_s
-      sorted       = my_number <=> other_number
+      my_number    = self.scenario_number
+      other_number = scenario.scenario_number
+      sorted       = my_number.to_i <=> other_number.to_i
       if sorted == 0
         sorted = self.name <=> scenario.name
       end
