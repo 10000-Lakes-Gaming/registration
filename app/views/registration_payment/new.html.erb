@@ -1,0 +1,19 @@
+<%= form_for ([@event, @user_event]), url: event_user_event_registration_payment_index_path do |f|%>
+
+    <article>
+      <% if flash[:error].present? %>
+          <div id="error_explanation">
+            <p><%= flash[:error] %></p>
+          </div>
+      <% end %>
+      <label class="amount">
+        <span>Amount: <%= number_to_currency @event.price %></span>
+      </label>
+    </article>
+
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+            data-description="A month's subscription"
+            data-amount="<%= @event.price * 100 %>"
+            data-locale="auto"></script>
+<% end %>
