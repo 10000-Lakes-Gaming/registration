@@ -20,7 +20,9 @@ Rails.application.routes.draw do
     end
     resources :sessions do
       resources :tables do
-        resources :registration_tables
+        resources :registration_tables do
+          resources :table_payment, only: [:new, :create]
+        end
         resources :game_masters
       end
     end

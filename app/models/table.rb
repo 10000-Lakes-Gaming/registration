@@ -4,7 +4,6 @@ class Table < ActiveRecord::Base
   has_many :registration_tables
   has_many :game_masters
   delegate :name, to: :scenario
-  delegate :long_name, to: :scenario
   delegate :start, to: :session
   delegate :end, to: :session
   validates :scenario_id, :session_id, :max_players, :gms_needed, :presence => true
@@ -21,6 +20,10 @@ class Table < ActiveRecord::Base
       sort = self.scenario <=> tab.scenario
     end
     sort
+  end
+
+  def long_name
+    "#{scenario.name} (#{session.name})"
   end
 
   def check_player_count
