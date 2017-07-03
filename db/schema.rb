@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(version: 20170627154315) do
     t.integer  "user_event_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "payment_id"
+    t.integer  "payment_amount"
   end
 
   create_table "scenarios", force: :cascade do |t|
