@@ -1,13 +1,13 @@
 <div>
-  <form action="/events/<%= event.id %>/user_events/<%= user_event.id %>/registration_payment" method="post">
+  <form action="/events/<%= event.id %>/sessions/<%= registration_table.table.session.id %>/tables/<%= registration_table.table.id %>/registration_tables/<%= registration_table.id %>/table_payment" method="post">
     <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
     <!-- this should pull the data-key fromenvironment -->
     <script
     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
     data-key="<%= ENV['PUBLISHABLE_KEY'] %>"
-    data-amount="<%= event.price * 100 %>"
-    data-name="<%= user_event.user.name %>"
-    data-description="<%= event.name %> Payment"
+    data-amount="<%= registration_table.table.price * 100 %>"
+    data-name="<%= registration_table.user_event.user.name %>"
+    data-description="<%= registration_table.table.name %> Payment"
     data-zip-code="true"
     data-allow-remember-me="false"
     data-image="https://stripe.com/img/documentation/checkout/marketplace.png"

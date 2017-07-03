@@ -204,6 +204,9 @@
                   <% if table.scenario.retired? %>
                       <span class="badge badge-retired">Retired</span>
                   <% end %>
+                  <% if table.premium? %>
+                      <span class="badge badge-premium">Premium</span>
+                  <% end %>
                 </div>
 
                 <%# TODO Make this a partial or helper %>
@@ -261,6 +264,7 @@
                 </div>
                 <% if @registration %>
                     <%# Add in column to indicate if GMing. Or, have Yes changed to GMing? %>
+                    <%# TODO add in check for paid, if registered! %>
                     <div class="col-md-3 no-pad " style="padding-left: 1em;">
                       <% if @tables.include? table %>
                           <span class="badge badge-player">Player</span>
