@@ -56,9 +56,12 @@ class EventsController < ApplicationController
       @gm_tables   = []
       @gm_sessions = []
       @reg_tables  = @registration.registration_tables
+      @reg_tables_hash = {}
+
       @reg_tables.each do |reg_table|
         @tables << reg_table.table
         @sessions << reg_table.table.session
+        @reg_tables_hash[reg_table.table] = reg_table
       end
       @game_masters = @registration.game_masters
       @game_masters.each do |gm|
