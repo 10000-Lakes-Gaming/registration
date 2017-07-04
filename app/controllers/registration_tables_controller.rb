@@ -3,6 +3,8 @@ class RegistrationTablesController < ApplicationController
   before_action :get_event, :get_session, :get_table, :get_registration_tables, :get_possible_players
 
 
+  PREMIUM_MESSAGE = "This is a premium table. If payment isn't received within 1 hour, we will have to remove you from this table."
+
   def prevent_non_admin
     unless current_user.admin?
       redirect_to events_path
@@ -29,7 +31,7 @@ class RegistrationTablesController < ApplicationController
 
   def get_possible_players
     @possible_players = []
-    @not_available = []
+    @not_available    = []
 
     @event.user_events.each do |user_event|
       in_session = false
@@ -47,7 +49,7 @@ class RegistrationTablesController < ApplicationController
       end
       # need to sort the gms
       # @tables = @session.tables.sort {|a,b| a <=> b}
-      @possible_players = @possible_players.sort { |a, b| a <=> b }
+      @possible_players = @possible_players.sort {|a, b| a <=> b}
     end
   end
 
@@ -84,25 +86,42 @@ class RegistrationTablesController < ApplicationController
     @registration_table = RegistrationTable.new(registration_table_params)
     respond_to do |format|
       if @registration_table.save
-        format.html { redirect_to [@event], notice: 'Table was successfully added.' }
-        format.json { render :show, status: :created, location: [@event] }
+        if @registration_table.payment_ok?
+          format.html {redirect_to [@event], notice: 'Table was successfully added.'}
+        else
+          format.html {redirect_to new_event_session_table_registration_table_table_payment_path(@event, @session, @table, @registration_table), notice: PREMIUM_MESSAGE}
+        end
       else
-        format.html { render :new }
-        format.json { render json: @registration_table.errors, status: :unprocessable_entity }
+        format.html {render :new}
+        format.json {render json: @registration_table.errors, status: :unprocessable_entity}
       end
     end
   end
+
+  # def create
+  #   respond_to do |format|
+  #     if @registration_table.save
+  #       if @registration_table.payment_ok?
+  #         format.html {redirect_to [@event], notice: 'Table was successfully added.'}
+  #       else
+  #         format.html {redirect_to new_registration_table_table_payment_path(@registration_table), notice: PREMIUM_MESSAGE}
+  #       end
+  #     else
+  #       format.html {render :new}
+  #     end
+  #   end
+  # end
 
   # PATCH/PUT /registration_tables/1
   # PATCH/PUT /registration_tables/1.json
   def update
     respond_to do |format|
       if @registration_table.update(registration_table_params)
-        format.html { redirect_to [@event, @session, @table, @registration_table], notice: 'Registration table was successfully updated.' }
-        format.json { render :show, status: :ok, location: [@event, @session, @table, @registration_table] }
+        format.html {redirect_to [@event, @session, @table, @registration_table], notice: 'Registration table was successfully updated.'}
+        format.json {render :show, status: :ok, location: [@event, @session, @table, @registration_table]}
       else
-        format.html { render :edit }
-        format.json { render json: @registration_table.errors, status: :unprocessable_entity }
+        format.html {render :edit}
+        format.json {render json: @registration_table.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -112,8 +131,8 @@ class RegistrationTablesController < ApplicationController
   def destroy
     @registration_table.destroy
     respond_to do |format|
-      format.html { redirect_to [@event], notice: 'RSVP was removed from table.' }
-      format.json { head :no_content }
+      format.html {redirect_to [@event], notice: 'RSVP was removed from table.'}
+      format.json {head :no_content}
     end
   end
 
