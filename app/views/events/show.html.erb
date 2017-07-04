@@ -97,7 +97,7 @@
           <div class="col-md-2"><b>Paid?</b></div>
           <% if @registration.payment_ok? %>
               <div class="col-md-6">
-                Yes
+                Yes (<%= number_to_currency (@registration.payment_amount / 100) %>)
               </div>
           <% else %>
               <div class="col-md-2">
@@ -111,18 +111,7 @@
         </div>
     <% end %>
 
-    <% if @registration && @registration.paid? %>
-        <div class="row">
-          <div class="col-md-2"><b>Amount Paid:</b></div>
-          <div class="col-md-6>"><%= number_to_currency (@registration.payment_amount / 100) %></div>
-        </div>
-        <div class="row">
-          <div class="col-md-2"><b>Payment ID:</b></div>
-          <div class="col-md-6"><%= @registration.payment_id %></div>
-        </div>
-    <% end %>
-
-    </div>
+  </div>
 </div>
 
 <div class="sessionsOffered" style="border: solid thin black;">
@@ -267,7 +256,12 @@
                     <%# TODO add in check for paid, if registered! %>
                     <div class="col-md-3 no-pad " style="padding-left: 1em;">
                       <% if @tables.include? table %>
-                          <span class="badge badge-player">Player</span>
+                          <% registration_table = @reg_tables_hash[table] %>
+                          <% if registration_table.payment_ok? %>
+                              <span class="badge badge-player">Player</span>
+                          <% else %>
+                              <%= render partial: "table_payment/table_payment", locals: {event: @event, registration_table: registration_table, button_label: "Pay for Ticket"} %>
+                          <% end %>
                       <% elsif @gm_tables.include? table %>
                           <span class="badge badge-gm">GM</span>
                       <% else %>
@@ -279,7 +273,11 @@
                           <% table.registration_tables.each do |reg_table| %>
                               <% unless @event.closed? %>
                                   <% if @reg_tables.include?(reg_table) %>
-                                      <%= button_to 'Remove', [@event, session, table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove your signup for #{reg_table.name}: #{reg_table.table.scenario.long_name}?"}, :class => 'btn btn-xs btn-danger', method: :delete %>
+                                      <% unless reg_table.table.premium %>
+                                          <%= button_to 'Remove', [@event, session, table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove your signup for #{reg_table.table.long_name}?"}, :class => 'btn btn-xs btn-danger', method: :delete %>
+                                      <% else %>
+                                          <%= button_to 'Remove', [@event, session, table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove your signup for #{reg_table.table.long_name}? Canceling your RSVP will not refund your money."}, :class => 'btn btn-xs btn-danger', method: :delete %>
+                                      <% end %>
                                   <% end %>
                               <% end %>
                           <% end %>
@@ -343,7 +341,7 @@
                   :class  => 'btn btn-danger' %>
 
       <% if @registration && @registration.paid? %>
-          <em>Note: unregistering will not refund your payment.</em>
+          <em>Note: unregistering will not refund your payment(s).</em>
       <% end %>
     </div>
 <% else %>

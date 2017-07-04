@@ -3,13 +3,17 @@
     <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
     <!-- this should pull the data-key fromenvironment -->
     <script
-    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    src="https://checkout.stripe.com/checkout.js"
+    class="stripe-button"
     data-key="<%= ENV['PUBLISHABLE_KEY'] %>"
     data-amount="<%= registration_table.table.price * 100 %>"
     data-name="<%= registration_table.user_event.user.name %>"
-    data-description="<%= registration_table.table.name %> Payment"
+    data-description="<%= registration_table.table.long_name %> Payment"
     data-zip-code="true"
     data-allow-remember-me="false"
+    <% unless button_label.blank? %>
+    data-label="<%= button_label %>"
+    <% end %>
     data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
     data-locale="auto">
     </script>
