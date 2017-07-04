@@ -33,6 +33,9 @@ class TablePaymentController < ApplicationController
     @registration_table.payment_id     = charge.id
     @registration_table.save!
 
+
+    redirect_to @event, notice: "Thank you! Payment has been received for #{@table.long_name}"
+
   rescue Stripe::CardError => e
     flash[:error] = e.message
     # where do I really want this to go?
