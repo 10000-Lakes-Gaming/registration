@@ -2,11 +2,10 @@
 
 <div class="well">
   <div class="text-warning bg-warning">
-    <p><%= @registration_table.table.long_name %> is a Premium table. As such, there is a ticket price
-      of <%= number_to_currency @registration_table.table.price %> for this table (proceeds to go to charity). We will
-      hold your seat for one hour for your payment. If we do not receive payment for this in one hour, your RSVP to the
-      table will be canceled so that another person has the chance for this table. </p>
-    <p> Premium tables are typically GMed by VIPs, such as their author, Paizo developers, or the like.</p>
+    <p><%= @registration_table.table.long_name %> is a Premium table, GM'd by our convention VIPs. As such, there is a
+      ticket price of <%= number_to_currency @registration_table.table.price %>, with proceeds going to charity.</p>
+    <p>Your RSVP to this Premium table will be held for one hour while awaiting payment. If the payment is not received
+      within this timeframe, this table RSVP will be canceled. </p>
     <p class="text-danger lead">Payments made for Premium Tables are <strong>non-refundable.</strong> Please take this
       into consideration before you make your payment.</p>
     <p>If you would prefer to not pay for this table, please click 'Cancel RSVP' below.</p>
