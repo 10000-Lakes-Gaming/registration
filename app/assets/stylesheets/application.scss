@@ -17,6 +17,7 @@ $darkPink: #f99;
 $lightPink: #fdd;
 $orange: #fc9;
 $purple: #800080;
+$money: #99cc66;
 
 $main-background: #FFFFFF;
 $social-media-background: #555555;
@@ -219,6 +220,10 @@ div.bottom {
 
 .badge-premium {
   background-color: $blue;
+}
+.badge-cost {
+  background-color: $money;
+  color: black;
 }
 
 .badge-unpaid {

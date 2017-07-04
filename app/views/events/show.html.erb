@@ -195,6 +195,7 @@
                   <% end %>
                   <% if table.premium? %>
                       <span class="badge badge-premium">Premium</span>
+                      <span class="badge badge-cost"><%= number_to_currency table.price %></span>
                   <% end %>
                 </div>
 
@@ -286,7 +287,15 @@
                       <% registered_this_session = @sessions.include?(session) || @gm_sessions.include?(session) %>
                       <% if !registered_this_session && registrations_available && @registration.payment_ok? %>
                           <% unless table.raffle? or @event.closed? %>
-                              <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table), :class => "btn btn-xs btn-primary", :method => :get %>
+                              <% unless table.premium? %>
+                                  <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table), :class => "btn btn-xs btn-primary", :method => :get %>
+                              <% else %>
+                                  <%= button_to "Buy Ticket for #{number_to_currency table.price}", new_event_session_table_registration_table_path(@event, session, table),
+                                                :class => "btn btn-xs btn-success", :method => :get,
+                                                data:  {confirm: "This is a premium event with a price of #{number_to_currency table.price}. You will have 1 hour to pay for this ticket."}
+                                  %>
+                              <% end %>
+
                           <% end %>
 
                       <% end %>
