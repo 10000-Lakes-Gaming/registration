@@ -23,7 +23,7 @@
     <div class="col-md-6 col-sm-5">
       <% if @user_event.payment_ok? %>
           Yes
-          <% if @user_event.price %>
+          <% if @user_event.payment_amount %>
               (<%= number_to_currency (@user_event.payment_amount / 100) %>)
           <% end %>
       <% else %>
