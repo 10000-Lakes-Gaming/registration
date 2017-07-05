@@ -21,8 +21,11 @@
   <div class="row">
     <div class="col-md-2 col-sm-3"><strong>Paid:</strong></div>
     <div class="col-md-6 col-sm-5">
-      <% if @user_event.paid? %>
-          Yes (<%= number_to_currency ( @user_event.payment_amount / 100 )%>)
+      <% if @user_event.payment_ok? %>
+          Yes
+          <% if @user_event.price %>
+              (<%= number_to_currency (@user_event.payment_amount / 100) %>)
+          <% end %>
       <% else %>
           No
           <%= render partial: "user_events/registration_payment", locals: {event: @event, user_event: @user_event} %>
