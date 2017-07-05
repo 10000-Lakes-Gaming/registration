@@ -1,11 +1,6 @@
 class UserEventsController < ApplicationController
   before_action :get_user_event, only: [:show, :edit, :update, :destroy]
   before_action :get_event, :get_users, :get_all_events
-  before_action :get_stripe_public_key, only: [:show]
-
-  def get_stripe_public_key
-    @public_key = ENV["PUBLISHABLE_KEY"]
-  end
 
   def get_user
     @user = current_user
