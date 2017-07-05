@@ -24,7 +24,7 @@
       <% if @event.price && @user_event.payment_ok? %>
           Yes
           <% if @user_event.payment_amount %>
-              (<%= number_to_currency (@user_event.payment_amount / 100) %>)
+              (<%= number_to_currency (@user_event.payment_amount.to_i / 100) %>)
           <% end %>
       <% else %>
           No
