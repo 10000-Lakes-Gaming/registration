@@ -21,7 +21,7 @@
   <div class="row">
     <div class="col-md-2 col-sm-3"><strong>Paid:</strong></div>
     <div class="col-md-6 col-sm-5">
-      <% if @user_event.payment_ok? %>
+      <% if @event.price && @user_event.payment_ok? %>
           Yes
           <% if @user_event.payment_amount %>
               (<%= number_to_currency (@user_event.payment_amount / 100) %>)
