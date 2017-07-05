@@ -2,9 +2,6 @@ class RegistrationTablesController < ApplicationController
   before_action :set_registration_table, only: [:show, :edit, :update, :destroy]
   before_action :get_event, :get_session, :get_table, :get_registration_tables, :get_possible_players
 
-
-  PREMIUM_MESSAGE = "This is a premium table. If payment isn't received within 1 hour, we will have to remove you from this table."
-
   def prevent_non_admin
     unless current_user.admin?
       redirect_to events_path
@@ -89,7 +86,7 @@ class RegistrationTablesController < ApplicationController
         if @registration_table.payment_ok?
           format.html {redirect_to [@event], notice: 'Table was successfully added.'}
         else
-          format.html {redirect_to new_event_session_table_registration_table_table_payment_path(@event, @session, @table, @registration_table), notice: PREMIUM_MESSAGE}
+          format.html {redirect_to new_event_session_table_registration_table_table_payment_path(@event, @session, @table, @registration_table)}
         end
       else
         format.html {render :new}
