@@ -38,6 +38,7 @@
       <%= f.select :tier, %w(1 1-2 1-4 1-5 1-7 3 3-4 3-6 3-7 4 5-6 5-8 5-9 6 7 7-8 7-10 7-11 8 9-12 10-11 12 13 12-15 12-19 12+ 1-11 1-15 1-19 ACG) %>
     </div>
 
+
     <div class="field">
       <%= f.label :description %><br>
       <%= f.text_area :description, size: "70x15" %>
@@ -49,6 +50,11 @@
     <div class="field">
       <%= f.label :paizo_url %><br>
       <%= f.text_field :paizo_url %>
+    </div>
+
+    <div class="field">
+      <%= f.label :evergreen %>
+      <%= f.check_box :evergreen %>
     </div>
     <div class="field">
       <%= f.label :hard_mode %> <%= f.check_box :hard_mode %>

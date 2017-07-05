@@ -4,11 +4,17 @@
   <h4><%= @scenario.long_name %></h4>
   <div>
     <div><b>Type:</b>  <%= @scenario.type_of %></div>
-    <% if @scenario.pregen_only %>
-        <div class="bg-primary">This scenario is pregen-only.</div>
+    <% if @scenario.evergreen? %>
+        <div class="text-success">This scenario is an Evergreen.</div>
     <% end %>
-    <% if @scenario.hard_mode %>
-        <div class="bg-primary">This scenario has a hard mode.</div>
+    <% if @scenario.pregen_only? %>
+        <div class="text-primary">This scenario is pregen-only.</div>
+    <% end %>
+    <% if @scenario.hard_mode? %>
+        <div class="text-warning">This scenario has a hard mode.</div>
+    <% end %>
+    <% if @scenario.retired? %>
+        <div class="text-danger">This scenario is retired.</div>
     <% end %>
     <hr>
     <div style="white-space: pre-wrap;"><%= @scenario.description %></div>

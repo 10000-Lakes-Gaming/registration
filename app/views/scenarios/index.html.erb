@@ -18,6 +18,7 @@
     <th>Type</th>
     <th>Name</th>
     <th>Author</th>
+    <th>Evergreen</th>
     <th>Pregens Only</th>
     <th>Hard Mode</th>
     <th>Tier</th>
@@ -33,6 +34,11 @@
         <td><%= scenario.type_of %></td>
         <td><%= scenario.long_name %></td>
         <td><%= scenario.author %></td>
+        <td>
+          <% if scenario.evergreen? %>
+              <span class="badge badge-evergreen">Evergreen</span>
+          <% end %>
+        </td>
         <td>
           <% if scenario.pregen_only? %>
               <span class="badge badge-pregen">Pregen</span>

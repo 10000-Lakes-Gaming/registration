@@ -20,12 +20,24 @@
 
   <tbody>
   <%
-    @session.tables.sort { |a, b| a <=> b }.each do |table| %>
+    @session.tables.sort {|a, b| a <=> b}.each do |table| %>
       <tr>
         <td>
           <%# make this show the scenario data as a collapsable %>
           <%= table.scenario.long_name %>
           <span class="badge"><%= table.scenario.tier %></span>
+          <% if table.scenario.pregen_only? %>
+              <span class="badge badge-pregen">Pregen</span>
+          <% end %>
+          <% if table.scenario.evergreen? %>
+              <span class="badge badge-evergreen">Evergreen</span>
+          <% end %>
+          <% if table.scenario.hard_mode? %>
+              <span class="badge badge-hardmode"><small>Hard Mode</small></span>
+          <% end %>
+          <% if table.scenario.retired? %>
+              <span class="badge badge-retired">Retired</span>
+          <% end %>
           <% if table.core? %>
               <span class="badge badge-core">Core</span>
           <% end %>
@@ -35,15 +47,7 @@
           <% if table.raffle? %>
               <span class="badge badge-raffle">Raffle</span>
           <% end %>
-          <% if table.scenario.hard_mode? %>
-              <span class="badge badge-hardmode"><small>Hard Mode</small></span>
-          <% end %>
-          <% if table.scenario.pregen_only? %>
-              <span class="badge badge-pregen">Pregen</span>
-          <% end %>
-          <% if table.scenario.retired? %>
-              <span class="badge badge-retired">Retired</span>
-          <% end %>
+
         </td>
         <td>
           <% scenario = table.scenario %>
@@ -59,12 +63,6 @@
                 </div>
                 <div class="modal-body">
                   <div><b>Type:</b>  <%= scenario.type_of %></div>
-                  <% if scenario.pregen_only %>
-                      <div class="bg-primary">This scenario is pregen-only.</div>
-                  <% end %>
-                  <% if scenario.hard_mode %>
-                      <div class="bg-primary">This scenario has a hard mode.</div>
-                  <% end %>
                   <hr>
                   <div style="white-space: pre-wrap;"><%= scenario.description %></div>
                   <div><strong>Written by:</strong> <%= scenario.author %></div>
@@ -121,7 +119,7 @@
           <% klass = 'text-danger' %>
       <% end %>
 
-      <span class="<%= klass %>"><%= @session.gm_count %> / <%=@session.total_gms_needed %></span>
+      <span class="<%= klass %>"><%= @session.gm_count %> / <%= @session.total_gms_needed %></span>
     </td>
   </tr>
 

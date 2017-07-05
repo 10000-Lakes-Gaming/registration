@@ -17,12 +17,20 @@
       <div>by <%= @scenario.author %></div>
   <% end %>
 
+  <% if @scenario.evergreen? %>
+      <div class="text-success">This is an Evergreen scenario</div>
+  <% end %>
+
+  <% if @scenario.pregen_only? %>
+      <div class="text-primary">This is a Pregens Only scenario</div>
+  <% end %>
+
   <% if @scenario.hard_mode %>
       <div class="text-danger">This scenario has a Hard Mode</div>
   <% end %>
 
-  <% if @scenario.pregen_only? %>
-      <div class="text-warning">This is a Pregens Only scenario</div>
+  <% if @scenario.retired? %>
+      <div class="text-warning">This is a Retired scenario</div>
   <% end %>
 
   <% if @table.raffle? %>
