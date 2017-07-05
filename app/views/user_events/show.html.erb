@@ -18,20 +18,24 @@
     <div class="col-md-2 col-sm-3"><strong>Email:</strong></div>
     <div class="col-md-6 col-sm-5"><%= player.email %></div>
   </div>
-  <div class="row">
-    <div class="col-md-2 col-sm-3"><strong>Paid:</strong></div>
-    <div class="col-md-6 col-sm-5">
-      <% if @event.price && @user_event.payment_ok? %>
-          Yes
-          <% if @user_event.payment_amount %>
-              (<%= number_to_currency (@user_event.payment_amount.to_i / 100) %>)
+
+  <% if @event.price&.nonzero? %>
+      <div class="row">
+        <div class="col-md-2 col-sm-3"><strong>Paid:</strong></div>
+        <div class="col-md-6 col-sm-5">
+          <% if @user_event.payment_ok? %>
+              Yes
+              <% if @user_event.payment_amount %>
+                  (<%= number_to_currency (@user_event.payment_amount.to_i / 100) %>)
+              <% end %>
+          <% else %>
+              No
+              <%= render partial: "registration_payment/registration_payment", locals: {event: @event, user_event: @user_event} %>
           <% end %>
-      <% else %>
-          No
-          <%= render partial: "registration_payment/registration_payment", locals: {event: @event, user_event: @user_event} %>
-      <% end %>
-    </div>
-  </div>
+
+        </div>
+      </div>
+  <% end %>
 </div>
 
 <hr>
