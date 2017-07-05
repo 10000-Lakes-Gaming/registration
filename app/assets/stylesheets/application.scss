@@ -2,22 +2,24 @@
 @import "bootstrap";
 
 $black: #000;
-$red: #f00;
 $blue: #008;
 $bright-green: #32cd32;
-$maroon: #7a0019;
-$white: #fff;
-$lightGreen: #efe;
-$lightGrey: #eee;
-$inner-stripe-odd: #F5FFFA;
-$inner-stripe-even: #fffafa;
 $darkerGrey: #ccc;
 $darkestGrey: dimgrey;
 $darkPink: #f99;
+$evergreen: forestgreen;
+$lightGreen: #efe;
+$lightGrey: #eee;
 $lightPink: #fdd;
+$maroon: #7a0019;
+$money: #99cc66;
 $orange: #fc9;
 $purple: #800080;
-$money: #99cc66;
+$red: #f00;
+$white: #fff;
+
+$inner-stripe-even: #fffafa;
+$inner-stripe-odd: #F5FFFA;
 
 $main-background: #FFFFFF;
 $social-media-background: #555555;
@@ -25,6 +27,7 @@ $banner-background: #FFFFFF;
 $skal-gray: #555555;
 $info: #269abc;
 $success: #398439;
+$unpaid: #B00100;
 
 .header-main {
   background-color: $main-background;
@@ -227,8 +230,12 @@ div.bottom {
 }
 
 .badge-unpaid {
-  background-color: #B00100;
+  background-color: $unpaid;
   color: yellow;
+}
+
+.badge-evergreen {
+  background-color: $evergreen;
 }
 
 .bordered {
