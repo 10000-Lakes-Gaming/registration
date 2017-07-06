@@ -44,7 +44,6 @@ class UserEventsController < ApplicationController
   # GET /user_events/1
   # GET /user_events/1.json
   def show
-    logger.info "Environment variable? #{@public_key}"
   end
 
   # GET /user_events/new
