@@ -1,0 +1,65 @@
+[
+  {
+    "registration": {
+      "id": 6,
+      "paid": false,
+      "payment_amount": null,
+      "payment_id": null
+    },
+    "event": {
+      "id": 3,
+      "name": "Testing new stuff",
+      "charity": true,
+      "price": 20
+    },
+    "user": {
+      "id": 5,
+      "name": "Accounting Buyer",
+      "email": "accounting-buyer@10klakesgaming.org",
+      "pfs_number": 555555,
+      "forum_username": null
+    }
+  },
+  {
+    "registration": {
+      "id": 12,
+      "paid": true,
+      "payment_amount": 2000,
+      "payment_id": "ch_1AbWu1C8aOMg0AwBfGngbWV0"
+    },
+    "event": {
+      "id": 3,
+      "name": "Testing new stuff",
+      "charity": true,
+      "price": 20
+    },
+    "user": {
+      "id": 3,
+      "name": "Jack Brown",
+      "email": "silbeg@comcast.net",
+      "pfs_number": 123456,
+      "forum_username": null
+    }
+  },
+  {
+    "registration": {
+      "id": 9,
+      "paid": false,
+      "payment_amount": null,
+      "payment_id": null
+    },
+    "event": {
+      "id": 3,
+      "name": "Testing new stuff",
+      "charity": true,
+      "price": 20
+    },
+    "user": {
+      "id": 7,
+      "name": "Jack Buyer",
+      "email": "jack-buyer@10klakesgaming.org",
+      "pfs_number": 550055,
+      "forum_username": null
+    }
+  }
+]
