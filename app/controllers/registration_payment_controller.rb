@@ -36,7 +36,7 @@ class RegistrationPaymentController < ApplicationController
     # send email!
     ReceiptMailer.event_registration_payment_email(@user_event).deliver
 
-    redirect_to @event, notice: "Thank you! Payment has been received for #{event.name}"
+    redirect_to @event, notice: "Thank you! Payment has been received for #{@event.name}"
 
   rescue Stripe::CardError => e
     flash[:error] = e.message
