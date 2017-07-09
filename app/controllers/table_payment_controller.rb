@@ -33,6 +33,8 @@ class TablePaymentController < ApplicationController
     @registration_table.payment_id     = charge.id
     @registration_table.save!
 
+    # send email
+    ReceiptMailer.table_registration_payment_email(@registration_table).deliver
 
     redirect_to @event, notice: "Thank you! Payment has been received for #{@table.long_name}"
 
