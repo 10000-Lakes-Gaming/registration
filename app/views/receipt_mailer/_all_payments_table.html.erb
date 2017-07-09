@@ -1,0 +1,37 @@
+<p><strong>Your total payments so far to <%= @event.name %></strong></p>
+<table border="1" cellpadding="2" cellspacing="2">
+  <thead>
+  <tr>
+    <th>Payment For:</th>
+    <th>Payment Amount</th>
+    <th>Payment Date:</th>
+    <th>Payment ID:</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% if @user_event.payment_amount&.nonzero? %>
+      <tr>
+        <td><%= @event.name %></td>
+        <td><%= number_to_currency(@user_event.payment_amount.to_i / 100) %></td>
+        <td><%# TODO add payment date here %></td>
+        <td><%= @user_event.payment_id %></td>
+      </tr>
+  <% end %>
+  <% @user_event.registration_tables.each do |reg_table| %>
+      <% if reg_table.payment_amount&.nonzero? %>
+          <tr>
+            <td><%= reg_table.table.long_name %></td>
+            <td><%= number_to_currency(reg_table.payment_amount / 100) %></td>
+            <td><%# TODO add payment date here %></td>
+            <td><%= reg_table.payment_id %></td>
+          </tr>
+      <% end %>
+  <% end %>
+  <tr>
+    <td><strong>Totals:</strong></td>
+    <td><%= number_to_currency @user_event.total_paid %></td>
+    <td></td>
+    <td></td>
+  </tr>
+  </tbody>
+</table>
