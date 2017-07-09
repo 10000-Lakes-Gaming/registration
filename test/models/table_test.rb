@@ -48,6 +48,7 @@ class TableTest < ActiveSupport::TestCase
     table.session     = @morning
     table.scenario    = @scenario_one_five
     table.max_players = 6
+    table.gms_needed  = nil
     assert_not table.save
   end
 
@@ -82,8 +83,8 @@ class TableTest < ActiveSupport::TestCase
     assert_equal @scenario_one_five.name, @table_one.name
   end
 
-  test 'table long name is scenario long name' do
-    assert_equal @scenario_one_five.long_name, @table_one.long_name
+  test 'table long name is no longerscenario long name' do
+    assert_not_equal @scenario_one_five.long_name, @table_one.long_name
   end
 
   test 'core sorts after RPG' do
