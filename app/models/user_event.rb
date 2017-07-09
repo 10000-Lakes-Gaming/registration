@@ -24,4 +24,21 @@ class UserEvent < ActiveRecord::Base
   def current_gming_count
     game_masters.length
   end
+
+  def total_paid
+    total = self.payment_amount
+    registration_tables.each do |table|
+      total += table.payment_amount.to_i
+    end
+    # put in dollars
+    total / 100
+  end
+
+  def total_price
+    total = self.event.price
+    registration_tables.each do |table|
+      total += table.price
+    end
+    total
+  end
 end

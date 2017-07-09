@@ -1,0 +1,16 @@
+<div><%= @user.name %>,</div>
+<div>Thank you for your payment for
+  <strong><%= @event.name %></strong>
+</div>
+
+<table>
+  <thead>
+  <tr>
+    <th>Payment For:</th>
+    <th>Payment ID:</th>
+    <th>Payment Amount</th>
+  </tr>
+  </thead>
+</table>
+
+<div><strong>Total Payments for <%= @event.name %></strong>: <%= number_to_currency @total_paid %></div>

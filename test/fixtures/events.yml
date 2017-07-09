@@ -6,6 +6,7 @@ my_event:
   end: 2017-05-08 20:00:00
   location: This is a place
   rsvp_close: 2016-03-31 00:00:00
+  price: 20
 
 other:
   name: Other Event

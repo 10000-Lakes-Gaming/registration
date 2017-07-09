@@ -14,3 +14,15 @@ admin_other_event:
   user: admin
   event: other
   paid: true
+
+paid_user_event:
+  user: normal_guy
+  event: my_event
+  paid: true
+  payment_amount: 2000
+
+paid_event_unpaid_table:
+  user: normal_guy
+  event: my_event
+  paid: true
+  payment_amount: 2000

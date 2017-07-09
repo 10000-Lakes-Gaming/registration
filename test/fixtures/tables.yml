@@ -29,3 +29,11 @@ raffle:
   gms_needed: 1
   raffle: true
   core: false
+
+premium:
+  session: morniung
+  scenario: scenario_one_five
+  max_players: 6
+  gms_needed: 1
+  premium: true
+  price:  20
