@@ -5,9 +5,11 @@ class UserEventTest < ActiveSupport::TestCase
     @admin_my_event      = user_events(:admin_my_event)
     @normal_guy_my_event = user_events(:normal_guy_my_event)
     @admin_other_event   = user_events(:admin_other_event)
+    @paid_event          = user_events(:paid_user_event)
     @admin               = users(:admin)
     @normal_guy          = users(:normal_guy)
     @my_event            = events(:my_event)
+
   end
 
   test 'Admin has his events and not others' do
@@ -45,5 +47,20 @@ class UserEventTest < ActiveSupport::TestCase
   test 'Name of registration is that of the event' do
     assert_equal @my_event.name, @normal_guy_my_event.name
   end
+
+  test 'Total Payment for event with no premium tables equals event cost' do
+    skip
+    assert_equal @my_event.price, @paid_event.total_paid
+  end
+
+  test 'Total price equals price of event plus tables' do
+    assert_equal 40, @paid_event.total_price
+  end
+
+  test 'Paid event, unpaid table, paid not equal price' do
+    reg = user_events(:paid_event_unpaid_table)
+    assert_not_equal reg.total_price, reg.total_paid
+  end
+
 
 end

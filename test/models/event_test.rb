@@ -44,4 +44,8 @@ class EventTest < ActiveSupport::TestCase
 
   end
 
+  test 'Event price is as expected' do
+    assert_equal 20, @my_event.price
+  end
+
 end
