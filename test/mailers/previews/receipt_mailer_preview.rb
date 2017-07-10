@@ -25,6 +25,7 @@ class ReceiptMailerPreview < ActionMailer::Preview
     @user_event.payment_amount = 2000
     @user_event.paid           = true
     @user_event.payment_id     = 'Event_Payment_ID'
+    @user_event.payment_date   = 1.hour.ago
   end
 
   def add_table_to_event
@@ -46,8 +47,9 @@ class ReceiptMailerPreview < ActionMailer::Preview
     @registration_table                = @table.registration_tables.new
     @registration_table.user_event     = @user_event
     @registration_table.payment_amount = 2000
-    @registration_table.payment_id = 'tab_pay_id_1234asd'
-    @user_event.registration_tables << @registration_table
+    @registration_table.payment_id     = 'tab_pay_id_1234asd'
+    @registration_table.payment_date   = Time.now
+        @user_event.registration_tables << @registration_table
 
   end
 end
