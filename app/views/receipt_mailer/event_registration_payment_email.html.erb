@@ -1,6 +1,9 @@
 <div><%= @user.name %>,</div>
-<div>Thank you for your payment for
-  <strong><%= @event.name %></strong>
-</div>
+<div>Thank you for your payment for <strong><%= @event.name %></strong></div>
+
+<% if @user_event.total_price > @event.price %>
+    <p>Please note that payments made for Premium Tables are <strong>non-refundable.</strong> If your Premium Table
+      is canceled for any reason, you will be offered a spot at another Premium Table or the equivalent.</p>
+<% end %>
 
 <%= render 'all_payments_table' %>
