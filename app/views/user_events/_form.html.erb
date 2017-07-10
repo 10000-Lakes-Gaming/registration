@@ -51,6 +51,10 @@
             <%= f.label :payment_id, "Payment ID, Manual, or Cash?"%>
             <%= f.text_field :payment_id %>
           </div>
+          <div>
+            <%= f.label :payment_date%>
+            <%= f.datetime_select :payment_date %>
+          </div>
         </div>
         <%# end admin section %>
     <% else %>

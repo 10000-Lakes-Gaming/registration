@@ -13,7 +13,11 @@
       <tr>
         <td><%= @event.name %></td>
         <td><%= number_to_currency(@user_event.payment_amount.to_i / 100) %></td>
-        <td><%# TODO add payment date here %></td>
+        <td>
+          <% if @user_event.payment_date %>
+              <%= @user_event.payment_date.localtime.to_formatted_s(:long) %>
+          <% end %>
+        </td>
         <td><%= @user_event.payment_id %></td>
       </tr>
   <% end %>
@@ -22,7 +26,11 @@
           <tr>
             <td><%= reg_table.table.long_name %></td>
             <td><%= number_to_currency(reg_table.payment_amount / 100) %></td>
-            <td><%# TODO add payment date here %></td>
+            <td>
+              <% if @reg_table.payment_date %>
+                  <%= reg_table.payment_date.localtime.to_formatted_s(:long) %>
+              <% end %>
+            </td>
             <td><%= reg_table.payment_id %></td>
           </tr>
       <% end %>

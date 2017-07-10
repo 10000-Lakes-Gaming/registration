@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170705211007) do
+ActiveRecord::Schema.define(version: 20170710005330) do
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20170705211007) do
     t.boolean  "paid",           default: false
     t.integer  "payment_amount"
     t.string   "payment_id"
+    t.datetime "payment_date"
   end
 
   create_table "scenarios", force: :cascade do |t|
@@ -98,6 +99,7 @@ ActiveRecord::Schema.define(version: 20170705211007) do
     t.datetime "updated_at",     null: false
     t.string   "payment_id"
     t.integer  "payment_amount"
+    t.datetime "payment_date"
     t.index ["event_id"], name: "index_user_events_on_event_id"
     t.index ["user_id"], name: "index_user_events_on_user_id"
   end

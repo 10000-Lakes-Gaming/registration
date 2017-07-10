@@ -2,9 +2,9 @@ class TablePaymentController < ApplicationController
 
   before_action :get_registration_table,
 
-  def new
-    set_variables
-  end
+      def new
+        set_variables
+      end
 
   def set_variables
     @user_event = @registration_table.user_event
@@ -31,8 +31,10 @@ class TablePaymentController < ApplicationController
     @registration_table.paid           = true
     @registration_table.payment_amount = charge.amount # Will be in cents, not dollars!
     @registration_table.payment_id     = charge.id
+    @registration_table.payment_date   = Time.now
     @registration_table.save!
 
+    @user_event = @registration_table.user_event
     # send email
     ReceiptMailer.table_registration_payment_email(@registration_table).deliver
 
