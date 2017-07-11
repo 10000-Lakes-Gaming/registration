@@ -1,6 +1,6 @@
 class Scenario < ActiveRecord::Base
 
-  validates :system, :type_of, :name, :tier, :presence => true
+  validates :game_system, :type_of, :name, :tier, :presence => true
   validates :scenario_number, presence: true, if: :scenario_number_needed?
   validates :season, presence: true, if: :season_needed?
 
