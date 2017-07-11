@@ -8,13 +8,25 @@ class Scenario < ActiveRecord::Base
 
   def long_name
     if scenario?
-      "#{system} #{season}-#{"%02d" % scenario_number}: #{name}"
+      "#{game_system} #{season}-#{"%02d" % scenario_number}: #{name}"
     elsif quest?
-      "#{system} Season #{season} Quests: #{name}"
+      "#{game_system} Season #{season} Quests: #{name}"
     elsif AP?
-      "#{system} AP #{"%d" % scenario_number}: #{name}"
+      "#{game_system} AP #{"%d" % scenario_number}: #{name}"
     else
-      "#{system} #{name}"
+      "#{game_system} #{name}"
+    end
+  end
+
+  def short_name
+    if scenario?
+      "#{game_system} #{season}-#{"%02d" % scenario_number}"
+    elsif quest?
+      "#{name}"
+    elsif AP?
+      "#{game_system} AP #{"%d" % scenario_number}"
+    else
+      "#{game_system} #{name}"
     end
   end
 
@@ -42,15 +54,31 @@ class Scenario < ActiveRecord::Base
 
 
   def <=>(scenario)
-    sorted = (self.season <=> scenario.season) * -1
+    game       = self.game_system.to_s
+    other_game = scenario.game_system.to_s
+    sorted     = game <=> other_game
+
     if sorted == 0
-      my_number    = self.scenario_number
-      other_number = scenario.scenario_number
-      sorted       = my_number.to_i <=> other_number.to_i
+      season = self.season.to_s
+      other  = scenario.season.to_s
+      sorted = (season <=> other) * -1
       if sorted == 0
-        sorted = self.name <=> scenario.name
+        my_number    = self.scenario_number.to_i
+        other_number = scenario.scenario_number.to_i
+        sorted       = my_number <=> other_number
+        if sorted == 0
+          me  = self.tier.to_s
+          you = scenario.tier.to_s
+          sorted = me <=> you
+          if  sorted == 0
+            me = self.name.to_s
+            you = scenario.name.to_s
+            sorted = me <=> you
+          end
+        end
       end
     end
     sorted
   end
+
 end
