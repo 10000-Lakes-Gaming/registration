@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-PUBLISHABLE_KEY=[STRIPE PUBLIC KEY] SECRET_KEY=[STRIPE PRIVATE KEY] bundle exec rails s
