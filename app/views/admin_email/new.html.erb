@@ -3,8 +3,8 @@
 
 <%= form_for @message, url: admin_email_path do |f| %>
     <fieldset>
-      <%= f.hidden_field :name, :value => 'MSP Pathfinders and Skål Con' %>
-      <%= f.hidden_field :email, :value => 'mn.pfs.reg@gmail.com' %>
+      <%= f.hidden_field :name, :value => '10000 Lakes Gaming (Registration)' %>
+      <%= f.hidden_field :email, :value => "#{ENV['GMAIL_SMTP_USERNAME']}" %>
 
       <div class="field">
         <%= f.label :email_list, "List of email recipients:" %> <br>

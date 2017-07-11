@@ -9,9 +9,3 @@
   <p><%= link_to 'Manage Scenarios', scenarios_path, :class => 'btn btn-success' %></p>
   <p><%= link_to 'Manage Users', users_path, :class => 'btn btn-info' %></p>
 </div>
-
-
-
-<% if user_signed_in? && current_user.email == 'silbeg@gmail.com' && params['show-env'] %>
-    <%= debug ENV.to_h.to_yaml %>
-<% end %>
