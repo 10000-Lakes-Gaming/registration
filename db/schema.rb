@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170710005330) do
+ActiveRecord::Schema.define(version: 20170711190658) do
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 20170710005330) do
     t.boolean  "pregen_only"
     t.string   "tier"
     t.boolean  "retired",         default: false
-    t.string   "system",          default: "PFS"
+    t.string   "game_system",     default: "PFS"
     t.boolean  "evergreen"
   end
 
