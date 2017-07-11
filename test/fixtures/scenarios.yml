@@ -1,6 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 scenario_one_five:
+  game_system: PFS
   type_of: Scenario
   season: 1
   scenario_number: 1
@@ -12,6 +13,7 @@ scenario_one_five:
   tier: 1-5
 
 scenario_two_seven:
+  game_system: PFS
   type_of: Scenario
   season: 2
   scenario_number: 7
@@ -23,9 +25,42 @@ scenario_two_seven:
   tier: 7-11
 
 scenario_two_twenty:
+  game_system: PFS
   type_of: Scenario
   season: 2
   scenario_number: 20
   name: Later In Season Story
   tier: 3-7
-  
+
+starfinder_one_one:
+  game_system: SFS
+  type_of: Scenario
+  season: 1
+  scenario_number: 1
+  name: Starfinder 1-1
+  tier: 1-2
+
+special_one_two:
+  game_system: PFS
+  type_of: Scenario
+  season: 10
+  scenario_number: 00
+  name: What a special
+  tier: 1-2
+
+special_three_four:
+  game_system: PFS
+  type_of: Scenario
+  season: 10
+  scenario_number: 00
+  name: What a special
+  tier: 3-4
+
+starfinder_diff_name:
+  game_system: SFS
+  type_of: Scenario
+  season: 1
+  scenario_number: 1
+  name: Diff Name!
+  tier: 1-2
+

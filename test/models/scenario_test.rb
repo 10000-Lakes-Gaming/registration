@@ -26,7 +26,24 @@ class ScenarioTest < ActiveSupport::TestCase
 
   test "scenario 2-07 comes before 2-20 (natural sort in season)" do
     two_twenty = scenarios(:scenario_two_twenty)
-    assert @two_seven.scenario_number.to_i < two_twenty.scenario_number.to_i
     assert_equal @sort_first, @two_seven <=> two_twenty
   end
+
+  test "Pathfinder comes before Starfinder" do
+    sfs = scenarios(:starfinder_one_one)
+    assert_equal @sort_first, @one_five <=> sfs
+  end
+  test "Diff Name comes before Starfinder 1-1" do
+    diff = scenarios(:starfinder_diff_name)
+    sfs = scenarios(:starfinder_one_one)
+    assert_equal @sort_first, diff <=> sfs
+  end
+
+  test "Tier 1-2 comes before 3-4" do
+    onetwo = scenarios(:special_one_two)
+    threefour = scenarios(:special_three_four)
+    assert_equal @sort_first, onetwo <=> threefour
+  end
+
 end
+
