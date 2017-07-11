@@ -38,7 +38,7 @@
   </li>
   <li style="padding-top: 1em;">
     <% if current_user.nil? %>
-        <a href="mailto:mn.pfs.reg@gmail.com">Contact Us!</a>
+        <a href="mailto:<%= ENV['GMAIL_SMTP_USERNAME'] %>">Contact Us!</a>
     <% else %>
         <%= link_to('Contact Us!', contact_path) %>
 

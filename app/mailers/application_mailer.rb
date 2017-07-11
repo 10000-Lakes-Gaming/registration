@@ -1,7 +1,7 @@
 class ApplicationMailer < ActionMailer::Base
   add_template_helper(EmailHelper)
 
-  default from: "mn.pfs.reg@gmail.com", "Precedence" => "bulk"
-  default to: "mn.pfs.reg@gmail.com"
+  default from: "#{ENV['GMAIL_SMTP_USERNAME']}", "Precedence" => "bulk"
+  default to: "#{ENV['GMAIL_SMTP_USERNAME']}"
   # layout 'mailer'
 end

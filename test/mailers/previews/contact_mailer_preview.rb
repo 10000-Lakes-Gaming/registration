@@ -14,7 +14,7 @@ class ContactMailerPreview < ActionMailer::Preview
   def session_reminder_preview
     admins = User.where(admin: true)
     @message = Message.new
-    @message.email = "mn.pfs.reg@gmail.com"
+    @message.email = "#{ENV['GMAIL_SMTP_USERNAME']}"
     @message.subject = "Reminder Message"
     @message.content = "This is my content"
     @message.name = "SkålCon"

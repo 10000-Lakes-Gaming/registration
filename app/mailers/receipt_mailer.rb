@@ -1,6 +1,6 @@
 class ReceiptMailer < ApplicationMailer
 
-  default from: "mn.pfs.reg@gmail.com"
+  default from: "#{ENV['GMAIL_SMTP_USERNAME']}"
 
   def event_registration_payment_email(user_event)
     @user_event = user_event
