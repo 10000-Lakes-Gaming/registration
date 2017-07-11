@@ -18,12 +18,29 @@ _note, `RegistrationTable` was a holdout from before adding `Devise` for
 authentication... was easier to leave that, and rename/recreate the `UserEvents`
 instead of `Registrations`_
 
-## Email Settings
-To make emails work, you will need to set two environment variables (currently assumes
-you'll be using gmail). 
+## Settings
+ The application is a "12-factor" app, so is looking for some environment variables. 
+ When deployed to heroku, they will be part of the heroku setup, but for local development
+ servers, you will want to create a `config/app_environment_variables.rb`. **This file must not
+  be checked into git!** (as such, it is included in `.gitignore`)
 
+ All of the settings below should be added to this file, or loaded in another way, else the 
+ application will not work properly (you will get errors!).
+
+### Email settings
+The app currently assumes you'll be using gmail as your SMTP service, and that you have
+the appropriate account with the appropriate permissions. These should be added to `config/app_environment_variables.rb`.
 ```
-export  GMAIL_SMTP_USERNAME=[YOUR EMAIL ADDRESS]
-export GMAIL_SMTP_PASSWORD=[YOUR EMAIL PASSWORD]
+  ENV['GMAIL_SMTP_USERNAME']= '[YOUR GMAIL ACCOUNT]'
+  ENV['GMAIL_SMTP_PASSWORD']= '[YOUR GMAIL PASSWORD]'
 ```
- 
+
+### Stripe Payment Service settings. 
+The application uses [Stripe](https://stripe.com/) as its payment service. To use, you will need to set 
+up a user with Stripe (which is free), and get the test API keys. These keys will need to be added, as such:
+```
+  ENV['PUBLISHABLE_KEY']    = '[YOUR PUBLIC KEY]'
+  ENV['SECRET_KEY']         = '[YOUR SECRET KEY]'
+```
+
+### More configs to come?
