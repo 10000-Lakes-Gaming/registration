@@ -23,9 +23,9 @@ class User < ActiveRecord::Base
     star  = star.encode('utf-8')
     stars = ""
     (1..self.gm_stars.to_i).each do
-      stars = "#{stars} #{star}"
+      stars = "#{stars}#{star} "
     end
-    stars
+    stars.strip!
   end
 
   def <=> (user)
