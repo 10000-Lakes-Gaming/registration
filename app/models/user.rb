@@ -19,10 +19,10 @@ class User < ActiveRecord::Base
   STAR = "\u272F"
 
   def show_stars
-    star = STAR
-    star = star.encode('utf-8')
+    star  = STAR
+    star  = star.encode('utf-8')
     stars = ""
-    (1..self.gm_stars).each do
+    (1..self.gm_stars.to_i).each do
       stars = "#{stars} #{star}"
     end
     stars
