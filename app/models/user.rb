@@ -17,9 +17,9 @@ class User < ActiveRecord::Base
   end
   def formal_name_with_stars
     "#{self.title} #{self.name} #{self.show_stars}"
-  en
+  end
 
-  STAR = "\u272F"
+  STAR = "\u272f"
 
   def show_stars
     star  = STAR
