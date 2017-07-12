@@ -17,7 +17,7 @@ json.event do
           json.set! :gm_count, table.game_masters.count
           json.game_masters do
             json.array! table.game_masters do |gm|
-              json.extract! gm.user_event.user, :name, :pfs_number, :email, :forum_username
+              json.extract! gm.user_event.user, :name, :pfs_number, :email, :forum_username, :title, :gm_stars, :show_stars
             end
           end
         end
