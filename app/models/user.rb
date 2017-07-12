@@ -9,15 +9,15 @@ class User < ActiveRecord::Base
   validates :title, :presence => true, if: :venture_officer?
 
   def long_name
-    "#{self.name} (#{self.email})".strip!
+    "#{self.name} (#{self.email})"
   end
 
   def formal_name
-    "#{self.title} #{self.name}".strip!
+    "#{self.title} #{self.name}"
   end
   def formal_name_with_stars
-    "#{self.title} #{self.name} #{self.show_stars}".strip!
-  end
+    "#{self.title} #{self.name} #{self.show_stars}"
+  en
 
   STAR = "\u272F"
 
@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
     (1..self.gm_stars.to_i).each do
       stars = "#{stars}#{star}"
     end
-    stars.strip!
+    stars
   end
 
   def <=> (user)
