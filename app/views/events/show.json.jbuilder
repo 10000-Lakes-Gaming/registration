@@ -13,6 +13,8 @@ json.event do
           json.scenario do
             json.extract! table.scenario, :type_of, :game_system, :season, :scenario_number, :name, :long_name, :short_name
           end
+          json.set! :player_count, table.registration_tables.count
+          json.set! :gm_count, table.game_masters.count
           json.game_masters do
             json.array! table.game_masters do |gm|
               json.extract! gm.user_event.user, :name, :pfs_number, :email, :forum_username
