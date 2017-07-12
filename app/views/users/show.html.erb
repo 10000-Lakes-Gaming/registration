@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= @user.formal_name %></h1>
+<h1><%= @user.formal_name_with_stars %></h1>
 
 <p>
   <strong>Email address:</strong>
@@ -19,7 +19,7 @@
 
 <p><strong>GM Stars:</strong> <span class="lead text-warning"><%= @user.show_stars %></span></p>
 
-<% if @user.title? %>
+<% if @user.venture_officer? %>
     <p><strong>Title:</strong> <%= @user.title %></p>
 <% end %>
 
