@@ -49,7 +49,20 @@
         <td><%= f.label :forum_username, "Username used on Paizo Forums" %></td>
         <td><%= f.text_field :forum_username %></td>
       </tr>
+      <tr>
+        <td><%= f.label :gm_stars %></td>
+        <td><%= f.select :gm_stars, %w(0 1 2 3 4 5) %></td>
+      </tr>
       <% if admin? %>
+          <tr>
+            <td><%= f.label :venture_officer %></td>
+            <td><%= f.check_box :venture_officer %></td>
+          </tr>
+          <%# TODO Add JavaScript to suppress if not selected -%>
+          <tr>
+            <td><%= f.label :title %></td>
+            <td><%= f.select :title, ["", "Venture-Agent", "Venture-Lieutenant", "Venture-Captain"] %></td>
+          </tr>
           <tr>
             <td><%= f.label :admin %></td>
             <td><%= f.check_box :admin %></td>

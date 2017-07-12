@@ -6,9 +6,26 @@ class User < ActiveRecord::Base
   has_many :user_events
   validates_uniqueness_of :email, :pfs_number
   validates :name, :pfs_number, :email, :presence => true
+  validates :title, :presence => true, if: :venture_officer?
 
   def long_name
     "#{self.name} (#{self.email})"
+  end
+
+  def formal_name
+    "#{self.title} #{self.name} #{self.show_stars}"
+  end
+
+  STAR = "\u272F"
+
+  def show_stars
+    star = STAR
+    star = star.encode('utf-8')
+    stars = ""
+    (1..self.gm_stars).each do
+      stars = "#{stars} #{star}"
+    end
+    stars
   end
 
   def <=> (user)

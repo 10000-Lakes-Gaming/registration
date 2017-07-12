@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= @user.name %></h1>
+<h1><%= @user.formal_name %></h1>
 
 <p>
   <strong>Email address:</strong>
@@ -16,6 +16,12 @@
   <strong>Username for Paizo.com:</strong>
   <%= @user.forum_username %>
 </p>
+
+<p><strong>GM Stars:</strong> <span class="lead text-warning"><%= @user.show_stars %></span></p>
+
+<% if @user.title? %>
+    <p><strong>Title:</strong> <%= @user.title %></p>
+<% end %>
 
 <% if admin? %>
     <p>
