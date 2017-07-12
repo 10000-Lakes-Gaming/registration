@@ -23,7 +23,7 @@ class Table < ActiveRecord::Base
   end
 
   def long_name
-    "#{scenario.name} (#{session.name})"
+    "#{scenario.long_name} [#{session.name}]"
   end
 
   def check_player_count

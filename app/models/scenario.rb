@@ -22,7 +22,7 @@ class Scenario < ActiveRecord::Base
     if scenario?
       "#{game_system} #{season}-#{"%02d" % scenario_number}"
     elsif quest?
-      "#{name}"
+      "#{game_system} #{name}"
     elsif AP?
       "#{game_system} AP #{"%d" % scenario_number}"
     else
