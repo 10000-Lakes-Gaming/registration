@@ -13,6 +13,9 @@ class User < ActiveRecord::Base
   end
 
   def formal_name
+    "#{self.title} #{self.name}"
+  end
+  def formal_name_with_stars
     "#{self.title} #{self.name} #{self.show_stars}"
   end
 
