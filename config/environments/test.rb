@@ -89,7 +89,6 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.action_mailer.default_url_options = {:host => 'test-pfs-registration.herokuapp.com'}
-  config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default :charset => "utf-8"
@@ -104,7 +103,7 @@ Rails.application.configure do
       # :domain => ENV['MAILGUN_DOMAIN'],
       :domain => 'mg.10klakesgaming.org',
       # :user_name => ENV['MAILGUN_SMTP_LOGIN'],
-      :user_name => 'mg.10klakesgaming.org',
+      :user_name => 'postmaster@mg.10klakesgaming.org',
       :password => ENV['MAILGUN_PASSWORD']
   }
   config.action_mailer.asset_host = 'https://test-pfs-registration.herokuapp.com/'
