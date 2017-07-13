@@ -23,8 +23,10 @@
           <% end %>
 
           <li class="col-xs-offset-1"><%= link_to "Table Assignments", event_table_assignment_index_path(@event) %></li>
+          <li class="col-xs-offset-1"><%= link_to "GM List", event_gm_list_index_path(@event) %></li>
           <li><u>APIs</u></li>
           <li class="col-xs-offset-1"><%= link_to "Registrations (JSON)", event_user_events_path(@event, :format => :json) %></li>
+          <li class="col-xs-offset-1"><%= link_to "GM List (JSON)", event_gm_list_index_path(@event, :format => :json ) %></li>
           <li class="col-xs-offset-1"><%= link_to 'Event Tables (JSON)', event_path(@event, :format => :json) %></li>
 
       <% end %>
