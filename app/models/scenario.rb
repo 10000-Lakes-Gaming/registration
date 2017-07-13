@@ -7,16 +7,21 @@ class Scenario < ActiveRecord::Base
   # @type_list = ['Scenario', 'Quest', 'Module', 'Adventure Path', 'ACG']
 
   def long_name
-    if scenario?
-      "#{game_system} #{season}-#{"%02d" % scenario_number}: #{name}"
-    elsif quest?
-      "#{game_system} Season #{season} Quests: #{name}"
-    elsif AP?
-      "#{game_system} AP #{"%d" % scenario_number}: #{name}"
+    if game_system == 'Other'
+      name
     else
-      "#{game_system} #{name}"
+      if scenario?
+        "#{game_system} #{season}-#{"%02d" % scenario_number}: #{name}"
+      elsif quest?
+        "#{game_system} Season #{season} Quests: #{name}"
+      elsif AP?
+        "#{game_system} AP #{"%d" % scenario_number}: #{name}"
+      else
+        "#{game_system} #{name}"
+      end
     end
   end
+
 
   def short_name
     if scenario?
@@ -67,12 +72,12 @@ class Scenario < ActiveRecord::Base
         other_number = scenario.scenario_number.to_i
         sorted       = my_number <=> other_number
         if sorted == 0
-          me  = self.tier.to_s
-          you = scenario.tier.to_s
+          me     = self.tier.to_s
+          you    = scenario.tier.to_s
           sorted = me <=> you
-          if  sorted == 0
-            me = self.name.to_s
-            you = scenario.name.to_s
+          if sorted == 0
+            me     = self.name.to_s
+            you    = scenario.name.to_s
             sorted = me <=> you
           end
         end
