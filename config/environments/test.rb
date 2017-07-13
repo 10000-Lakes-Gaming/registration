@@ -96,14 +96,10 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
       :authentication => :plain,
-      # :address => ENV['MAILGUN_SMTP_SERVER'],
-      :address => "smtp.mailgun.org",
-      # :port => ENV['MAILGUN_SMTP_PORT'],
-      :port => 587,
-      # :domain => ENV['MAILGUN_DOMAIN'],
-      :domain => 'mg.10klakesgaming.org',
-      # :user_name => ENV['MAILGUN_SMTP_LOGIN'],
-      :user_name => 'postmaster@mg.10klakesgaming.org',
+      :address => ENV['MAILGUN_SMTP_SERVER'],
+      :port => ENV['MAILGUN_SMTP_PORT'],
+      :domain => ENV['MAILGUN_DOMAIN'],
+      :user_name => ENV['MAILGUN_SMTP_LOGIN'],
       :password => ENV['MAILGUN_PASSWORD']
   }
   config.action_mailer.asset_host = 'https://test-pfs-registration.herokuapp.com/'
