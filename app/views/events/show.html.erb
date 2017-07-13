@@ -97,7 +97,8 @@
           <div class="col-md-2"><b>Paid?</b></div>
           <% if @registration.payment_ok? %>
               <div class="col-md-6">
-                Yes (<%= number_to_currency (@registration.payment_amount / 100) %><% if @registration.payment_date %>
+                Yes (<%= number_to_currency (@registration.payment_amount / 100) %>
+                <% if @registration.payment_date %>
                     on <%= @registration.payment_date.to_formatted_s(:long) %>
                 <% end %>)
               </div>
@@ -179,6 +180,9 @@
                   <%# TODO make this a reusable partial %>
                   <% scenario = table.scenario %>
                   <%= scenario.long_name %>
+                  <% if table.premium? && !table.game_masters[0].nil? %>
+                  with <%= table.game_masters[0].user_event.user.formal_name %>
+                  <% end %>
                   <span class="badge"><%= table.scenario.tier %></span>
                   <% if table.scenario.pregen_only? %>
                       <span class="badge badge-pregen">Pregen</span>
