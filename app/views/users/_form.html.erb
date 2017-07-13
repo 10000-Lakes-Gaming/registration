@@ -61,7 +61,9 @@
           <%# TODO Add JavaScript to suppress if not selected -%>
           <tr>
             <td><%= f.label :title %></td>
-            <td><%= f.select :title, ["", "Venture-Agent", "Venture-Lieutenant", "Venture-Captain"] %></td>
+            <td><%= f.select :title, ["", "Venture-Agent", "Venture-Lieutenant", "Venture-Captain",
+                                      "Regional Venture-Coordinator", "Organized Play Coordinator",
+                                      "PFS Developer", "SFS Developer", "Paizo Developer"] %></td>
           </tr>
           <tr>
             <td><%= f.label :admin %></td>
