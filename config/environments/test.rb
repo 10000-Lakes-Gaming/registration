@@ -94,27 +94,13 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default :charset => "utf-8"
 
-  # ActionMailer::Base.smtp_settings = {
-  #     :address => 'smtp.gmail.com',
-  #     :port => 587,
-  #     :domain => '10klakesgaming.org',
-  #     :authentication => :plain,
-  #     :user_name => ENV['GMAIL_SMTP_USERNAME'],
-  #     :password => ENV['GMAIL_SMTP_PASSWORD'],
-  #     :enable_starttls_auto => true
-  # }
-  # config.action_mailer.delivery_method = :mailgun
-  # config.action_mailer.mailgun_settings = {
-  #     api_key: ENV['MAILGUN_API_KEY'],
-  #     domain: ENV['MAILGUN_DOMAIN'],
-  # }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
       :authentication => :plain,
-      :address => "smtp.mailgun.org",
-      :port => 587,
-      :domain => "sandbox626097aa33f249ed95c9a5a69be7cca8.mailgun.org",
-      :user_name => "postmaster@sandbox626097aa33f249ed95c9a5a69be7cca8.mailgun.org",
+      :address => ENV['MAILGUN_SMTP_SERVER'],
+      :port => ENV['MAILGUN_SMTP_PORT'],
+      :domain => ENV['MAILGUN_DOMAIN'],
+      :user_name => ENV['MAILGUN_SMTP_LOGIN'],
       :password => ENV['MAILGUN_PASSWORD']
   }
   config.action_mailer.asset_host = 'https://test-pfs-registration.herokuapp.com/'
