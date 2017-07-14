@@ -25,9 +25,6 @@
         <div class="col-md-6 col-sm-5">
           <% if @user_event.payment_ok? %>
               Yes
-              <% if @user_event.payment_amount %>
-                  (<%= number_to_currency (@user_event.payment_amount.to_i / 100) %>)
-              <% end %>
           <% else %>
               No
               <%= render partial: "registration_payment/registration_payment", locals: {event: @event, user_event: @user_event} %>
@@ -37,6 +34,13 @@
       </div>
   <% end %>
 </div>
+
+
+<% if @user_event.total_paid > 0 %>
+    <hr>
+    <%= render 'all_payments_table' %>
+<% end %>
+
 
 <hr>
 
