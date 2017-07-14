@@ -37,6 +37,13 @@
           <% if table.scenario.retired? %>
               <span class="badge badge-retired">Retired</span>
           <% end %>
+          <% if table.scenario.premium? %>
+              <span class="badge badge-premium">Premium</span>
+              <span class="badge badge-cost"><%= number_to_currency table.price %></span>
+          <% end %>
+          <% if table.scenario.evergreen? %>
+              <span class="badge badge-evergreen">Evergreen</span>
+          <% end %>
         </td>
         <td class="text-center"><%= table.registration_tables.size %>/<%= table.max_players %></td>
         <td class="text-center"><%= table.game_masters.size %>/<%= table.gms_needed %></td>
