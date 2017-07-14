@@ -31,7 +31,7 @@ class UserEvent < ActiveRecord::Base
       total += table.payment_amount.to_i
     end
     # put in dollars
-    total / 100
+    total.to_i / 100
   end
 
   def total_price
@@ -41,4 +41,9 @@ class UserEvent < ActiveRecord::Base
     end
     total
   end
+
+  def past
+    Time.now > self.event.end
+  end
+
 end
