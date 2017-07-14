@@ -8,7 +8,10 @@ class ReceiptMailer < ApplicationMailer
     @user       = @user_event.user
 
     @subject = "Payment Received for #{@event.name}"
-    mail(to: @user.email, subject: @subject)
+    mail(to: @user.email, subject: @subject) do |format|
+      format.html
+      format.text
+    end
   end
 
   def table_registration_payment_email(registration_table)
@@ -20,6 +23,9 @@ class ReceiptMailer < ApplicationMailer
 
 
     @subject = "Payment Received for #{@table.long_name} at #{@event.name}"
-    mail(to: @user.email, subject: @subject)
+    mail(to: @user.email, subject: @subject) do |format|
+      format.html
+      format.text
+    end
   end
 end

@@ -72,6 +72,7 @@ class Scenario < ActiveRecord::Base
         other_number = scenario.scenario_number.to_i
         sorted       = my_number <=> other_number
         if sorted == 0
+          # this may be an issue, as tiers are not easily sortable?
           me     = self.tier.to_s
           you    = scenario.tier.to_s
           sorted = me <=> you

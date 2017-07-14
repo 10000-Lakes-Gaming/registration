@@ -1,0 +1,9 @@
+<%= @user.name %>,
+Thank you for your payment for <%= @table.long_name %> at <%= @event.name %>
+
+<% if @user_event.total_price > @event.price %>
+Please note that payments made for Premium Tables are non-refundable. If your Premium Table
+is canceled for any reason, you will be offered a spot at another Premium Table or the equivalent.
+<% end %>
+
+<%= render 'all_payments_table_txt' %>

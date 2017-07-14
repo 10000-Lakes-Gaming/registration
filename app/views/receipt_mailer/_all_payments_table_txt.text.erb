@@ -1,0 +1,21 @@
+Your total payments so far to <%= @event.name %>
+------------------------------------------------------------
+
+<% if @user_event.payment_amount&.nonzero? %>
+Payment For:    <%= @event.name %>
+Payment Amount: <%= number_to_currency(@user_event.payment_amount.to_i / 100) %>
+Payment Date:   <% if @user_event.payment_date %><%= @user_event.payment_date.localtime.to_formatted_s(:long) %><% end %>
+Payment ID:     <%= @user_event.payment_id %>
+  <% end %>
+
+<% @user_event.registration_tables.each do |reg_table| %>
+   <% if reg_table.payment_amount&.nonzero? %>
+Payment For:    <%= reg_table.table.long_name %>
+Payment Amount: <%= number_to_currency(reg_table.payment_amount.to_i / 100) %>
+Payment Date:   <% unless reg_table.payment_date.nil? %><%= reg_table.payment_date.localtime.to_formatted_s(:long) %><% end %>
+Payment ID:     <%= reg_table.payment_id %>
+
+   <% end %>
+<% end %>
+----------
+Totals: <%= number_to_currency @user_event.total_paid.to_i %>

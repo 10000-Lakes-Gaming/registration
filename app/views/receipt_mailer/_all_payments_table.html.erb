@@ -25,9 +25,9 @@
       <% if reg_table.payment_amount&.nonzero? %>
           <tr>
             <td><%= reg_table.table.long_name %></td>
-            <td><%= number_to_currency(reg_table.payment_amount / 100) %></td>
+            <td><%= number_to_currency(reg_table.payment_amount.to_i / 100) %></td>
             <td>
-              <% if @reg_table.payment_date %>
+              <% if reg_table.payment_date %>
                   <%= reg_table.payment_date.localtime.to_formatted_s(:long) %>
               <% end %>
             </td>
