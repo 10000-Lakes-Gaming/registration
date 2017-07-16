@@ -5,12 +5,14 @@
   <% end %>
   <li><%= link_to 'Home', welcome_index_path %></li>
 
+<% if false %>
   <li style="padding-top: 1em;"><u>Registered Events</u></li>
   <% current_user.user_events.each do |registration| %>
       <% unless registration.past %>
           <li class="col-xs-offset-1"><%= link_to "#{registration.event.name}", event_user_event_path(registration.event, registration) %></li>
       <% end %>
   <% end %>
+<% end %>
 
   <% if user_signed_in? && current_user.admin? %>
       <li style="padding-top: 1em;"><u>Event Admin</u></li>
