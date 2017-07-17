@@ -10,18 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170712021156) do
+ActiveRecord::Schema.define(version: 20170717013518) do
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
     t.datetime "start"
     t.datetime "end"
     t.string   "location"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.datetime "rsvp_close"
     t.boolean  "charity"
-    t.integer  "price"
+    t.integer  "price",        default: 0
     t.string   "info"
     t.string   "external_url"
     t.integer  "event_number"
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 20170712021156) do
     t.boolean  "core",        default: false
     t.string   "location"
     t.boolean  "premium"
-    t.integer  "price"
+    t.integer  "price",       default: 0
     t.index ["scenario_id"], name: "index_tables_on_scenario_id"
     t.index ["session_id"], name: "index_tables_on_session_id"
   end
