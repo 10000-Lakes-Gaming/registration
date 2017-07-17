@@ -26,7 +26,7 @@ class UserEvent < ActiveRecord::Base
   end
 
   def total_paid
-    total = self.payment_amount
+    total = self.payment_amount.to_i
     registration_tables.each do |table|
       total += table.payment_amount.to_i
     end
@@ -35,9 +35,9 @@ class UserEvent < ActiveRecord::Base
   end
 
   def total_price
-    total = self.event.price
+    total = self.event.price.to_i
     registration_tables.each do |table|
-      total += table.price
+      total += table.price.to_i
     end
     total
   end
