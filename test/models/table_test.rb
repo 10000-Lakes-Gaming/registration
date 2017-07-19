@@ -10,6 +10,7 @@ class TableTest < ActiveSupport::TestCase
     @core              = tables(:core)
     @raffle            = tables(:raffle)
     @scenario_one_five = scenarios(:scenario_one_five)
+    @premium           = tables(:premium)
   end
 
   test 'table one is in morning session' do
@@ -106,5 +107,31 @@ class TableTest < ActiveSupport::TestCase
   test 'end time is session end time' do
     assert @morning.end == @table_one.end
   end
+
+  test 'pre-reg ends same as event' do
+    assert_equal @my_event.prereg_ends, @table_one.prereg_ends
+  end
+
+  test 'onsite price not same as premium' do
+    assert_not_equal @premium.prereg_price, @premium.onsite_price
+  end
+
+  test 'prereg passed, price should be onsite price' do
+    table = tables(:premium_pre)
+    event = events(:prereg_ended_event)
+    assert_equal event, table.session.event
+    assert_equal event.prereg_ends, table.prereg_ends
+    assert_equal event.prereg_closed?, table.prereg_closed?
+    assert_equal table.onsite_price, table.price
+  end
+
+  test 'prereg open, prices should be prereg price!' do
+    assert_equal @my_event, @premium.session.event
+    assert_equal @my_event.prereg_ends, @premium.prereg_ends
+    assert_equal @my_event.prereg_closed?, @premium.prereg_closed?
+    assert_equal @premium.prereg_price, @premium.price
+  end
+
+
 
 end

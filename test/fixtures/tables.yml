@@ -31,9 +31,28 @@ raffle:
   core: false
 
 premium:
-  session: morniung
+  session: morning
   scenario: scenario_one_five
   max_players: 6
   gms_needed: 1
   premium: true
-  price:  20
+  prereg_price:  20
+  onsite_price: 30
+
+premium_2:
+  session: evening
+  scenario: scenario_one_five
+  max_players: 6
+  gms_needed: 1
+  premium: true
+  prereg_price:  20
+  onsite_price: 30
+
+premium_pre:
+  session: evening_pre
+  scenario: scenario_one_five
+  max_players: 6
+  gms_needed: 1
+  premium: true
+  prereg_price:  20
+  onsite_price: 30
