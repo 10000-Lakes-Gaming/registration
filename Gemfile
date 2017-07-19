@@ -25,15 +25,6 @@ gem 'autoprefixer-rails'
 
 gem 'stripe'
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
 group :development do
   gem "capistrano", "~> 3.4"
 # Access an IRB console on exception pages or by using <%= console %> in views
@@ -50,9 +41,8 @@ group :development, :test do
   gem 'byebug'
   gem 'sqlite3'
   # Use SCSS for stylesheets
-  # gem 'rspec-rails', '~> 3.5', '>= 3.5.2'
-  gem 'rails-controller-testing'
   gem 'minitest-reporters'
+  gem 'minitest'
 
 end
 

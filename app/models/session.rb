@@ -1,6 +1,8 @@
 class Session < ActiveRecord::Base
   belongs_to :event
   has_many :tables
+  delegate :prereg_ends, to: :event
+  delegate :prereg_closed?, to: :event
 
   def long_name
     self.name + " " + self.timeslot

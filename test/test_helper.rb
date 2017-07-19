@@ -2,9 +2,13 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'minitest/mock'
-
 require "minitest/reporters"
-Minitest::Reporters.use! [Minitest::Reporters::HtmlReporter.new, Minitest::Reporters::SpecReporter.new, Minitest::Reporters::ProgressReporter.new]
+
+
+reporter_options = {color: true, slow_count: 5}
+Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new(reporter_options),
+                          Minitest::Reporters::HtmlReporter.new(reporter_options)]
+
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.

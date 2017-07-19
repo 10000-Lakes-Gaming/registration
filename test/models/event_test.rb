@@ -16,6 +16,7 @@ class EventTest < ActiveSupport::TestCase
   end
 
   test "RSVPs are closed on my event" do
+    @my_event.rsvp_close = 1.day.ago
     assert @my_event.closed?
   end
 
@@ -46,6 +47,30 @@ class EventTest < ActiveSupport::TestCase
 
   test 'Event price is as expected' do
     assert_equal 20, @my_event.price
+  end
+
+  test 'I have premium tables' do
+    assert_not_empty @my_event.premium_tables
+  end
+
+  test 'I have 2 premium tables' do
+    assert_equal 2, @my_event.premium_tables.length
+  end
+
+  test "premium table is in my_event" do
+    premium_table  = tables(:premium)
+    premium_tables = @my_event.premium_tables
+    assert premium_tables.include? premium_table
+  end
+
+  test 'prereg is closed' do
+    @my_event.prereg_ends = 5.days.ago
+    assert @my_event.prereg_closed?
+  end
+
+  test 'With prereg closed, price is onsite' do
+    @my_event.prereg_ends = 5.days.ago
+    assert_equal 30, @my_event.price
   end
 
 end

@@ -6,6 +6,8 @@ class Table < ActiveRecord::Base
   delegate :name, to: :scenario
   delegate :start, to: :session
   delegate :end, to: :session
+  delegate :prereg_ends, to: :session
+  delegate :prereg_closed?, to: :session
   validates :scenario_id, :session_id, :max_players, :gms_needed, :presence => true
   validates_numericality_of :gms_needed, :max_players, greater_than: 0
 
@@ -44,6 +46,11 @@ class Table < ActiveRecord::Base
 
   def current_gms
     self.game_masters.length
+  end
+
+
+  def price
+    session.event.prereg_closed? ? onsite_price : prereg_price
   end
 
 end
