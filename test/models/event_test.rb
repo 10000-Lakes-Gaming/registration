@@ -73,4 +73,11 @@ class EventTest < ActiveSupport::TestCase
     assert_equal 30, @my_event.price
   end
 
+  test 'This event has an early bird' do
+    assert @my_event.early_bird?
+  end
+  test 'This event doesn\'t have an early bird' do
+    assert @other_event.early_bird?
+  end
+
 end

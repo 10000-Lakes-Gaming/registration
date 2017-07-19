@@ -36,8 +36,8 @@ class EventsController < ApplicationController
     end
     logger.info "current events => #{current_events}"
 
-    @my_registrations  = []
-    @my_events  = []
+    @my_registrations = []
+    @my_events        = []
 
     user_events = UserEvent.where(user_id: current_user.id, event_id: current_events)
     user_events.each do |user_event|
@@ -51,11 +51,11 @@ class EventsController < ApplicationController
   def show
     @registration = @event.user_events.where(user_id: current_user.id).first
     if @registration
-      @sessions    = []
-      @tables      = []
-      @gm_tables   = []
-      @gm_sessions = []
-      @reg_tables  = @registration.registration_tables
+      @sessions        = []
+      @tables          = []
+      @gm_tables       = []
+      @gm_sessions     = []
+      @reg_tables      = @registration.registration_tables
       @reg_tables_hash = {}
 
       @reg_tables.each do |reg_table|
@@ -134,7 +134,7 @@ class EventsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def event_params
-    params.require(:event).permit(:name, :start, :end, :location, :rsvp_close, :charity, :price, :info, :external_url, :event_number)
+    params.require(:event).permit(:name, :start, :end, :location, :rsvp_close, :prereg_, :charity, :prereg_price, :onsite_price, :info, :external_url, :event_number)
   end
 
 end

@@ -21,14 +21,20 @@
   </dl>
 </div>
 
-
 <div>
   <h2>Online Registration</h2>
   <% if @event.closed? %>
       <div class="alert-danger lead">Online Registration is closed!</div>
   <% else %>
+      <% if @event.early_bird? %>
+          <% unless @event.prereg_closed? %>
+              <div class="text-warning">
+                <span class="lead">Early Bird Pre-registration closes: <%= @event.prereg_ends.to_formatted_s(:long_ordinal) %></span>
+              </div>
+          <% end %>
+      <% end %>
       <% unless @event.rsvp_close.nil? %>
-          <div class="lead text-warning">Online Registation closes: <%= @event.rsvp_close.to_formatted_s(:long) %></div>
+          <div class="lead text-warning">Registration closes: <%= @event.rsvp_close.to_formatted_s(:long_ordinal) %></div>
       <% end %>
   <% end %>
 </div>
@@ -53,7 +59,15 @@
             <strong>Cost:</strong>
           </div>
           <div class="col-md-2">
-            <%= number_to_currency(@event.price) %>
+            <% unless @event.prereg_closed? %>
+                <%= number_to_currency(@event.prereg_price) %>
+                <% unless @event.prereg_ends.nil? %>
+                    (after <%= @event.prereg_ends.localtime.to_formatted_s(:long_ordinal) %> it will
+                    be <%= number_to_currency @event.onsite_price %>)
+                <% end %>
+            <% else %>
+                <%= number_to_currency @event.onsite_price %>
+            <% end %>
           </div>
         </div>
     <% end %>
@@ -99,7 +113,7 @@
               <div class="col-md-6">
                 Yes (<%= number_to_currency (@registration.payment_amount / 100) %>
                 <% if @registration.payment_date %>
-                    on <%= @registration.payment_date.to_formatted_s(:long) %>
+                    on <%= @registration.payment_date.localtime.to_formatted_s(:long_ordinal) %>
                 <% end %>)
               </div>
           <% else %>
@@ -181,7 +195,7 @@
                   <% scenario = table.scenario %>
                   <%= scenario.long_name %>
                   <% if table.premium? && !table.game_masters[0].nil? %>
-                  with <%= table.game_masters[0].user_event.user.formal_name %>
+                      with <%= table.game_masters[0].user_event.user.formal_name %>
                   <% end %>
                   <span class="badge"><%= table.scenario.tier %></span>
                   <% if table.scenario.pregen_only? %>
