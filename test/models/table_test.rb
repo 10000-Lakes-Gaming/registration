@@ -132,6 +132,13 @@ class TableTest < ActiveSupport::TestCase
     assert_equal @premium.prereg_price, @premium.price
   end
 
+  test 'before end of prereg, table has an early-bird price' do
+    assert @premium.early_bird_discount?
+  end
 
+test 'after end of prereg, table does not have an early-bird price' do
+  table = tables(:premium_pre)
+  assert_not table.early_bird_discount?
+end
 
 end

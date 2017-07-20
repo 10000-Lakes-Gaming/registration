@@ -54,6 +54,6 @@ class Table < ActiveRecord::Base
   end
 
   def early_bird_discount?
-    self.prereg_price < self.onsite_price
+    self.price < self.onsite_price
   end
 end
