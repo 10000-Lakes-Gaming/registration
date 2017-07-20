@@ -76,8 +76,10 @@ class EventTest < ActiveSupport::TestCase
   test 'This event has an early bird' do
     assert @my_event.early_bird?
   end
+
+
   test 'This event doesn\'t have an early bird' do
-    assert @other_event.early_bird?
+    assert_not @other_event.early_bird?
   end
 
 end
