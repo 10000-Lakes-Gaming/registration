@@ -65,6 +65,7 @@ $unpaid: #B00100;
 
 .sidebar {
   background-color: $lightBlue;
+  height:100%;
   // TODO make this dynamic?
   ul {
     list-style-type: none;
@@ -72,9 +73,10 @@ $unpaid: #B00100;
     padding: 5px;
     overflow: auto; /* Enable scrolling if the sidenav has too much content */
     li {
-      background-color: $blue;
       text-align: center;
       color: $paleGray;
+      margin-bottom:5px;
+      padding: 1px;
     }
     li a {
       display: block;
