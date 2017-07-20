@@ -8,7 +8,6 @@ $darkerGrey: #ccc;
 $darkestGrey: dimgrey;
 $darkPink: #f99;
 $evergreen: forestgreen;
-$lightGreen: #efe;
 $lightGrey: #eee;
 $lightPink: #fdd;
 $maroon: #7a0019;
@@ -17,6 +16,12 @@ $orange: #fc9;
 $purple: #800080;
 $red: #f00;
 $white: #fff;
+
+$paleGray: #f2f2f2;
+$gray: #555555;
+$highlightGray: E0E0E0;
+$backgroundGray: #f1f1f1;
+$lightBlue: #0098D3;
 
 $inner-stripe-even: #fffafa;
 $inner-stripe-odd: #F5FFFA;
@@ -58,26 +63,30 @@ $unpaid: #B00100;
   color: $white;
 }
 
-
 .sidebar {
-  background-color: $lightGreen;
+  background-color: $lightBlue;
   // TODO make this dynamic?
-  height: 75%;
   ul {
     list-style-type: none;
     margin: 0;
     padding: 5px;
-    background-color: $lightGrey;
-    //height: 100%; /* Full height */
-    position: fixed; /* Make it stick, even on scroll */
     overflow: auto; /* Enable scrolling if the sidenav has too much content */
+    li {
+      background-color: $blue;
+      text-align: center;
+      color: $paleGray;
+    }
     li a {
       display: block;
-      //background-color: $lightGrey;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      -border-radius: 10px;
+      border-radius: 10px;
+      background-color: $paleGray;
     }
     /* Change the link color on hover */
     li a:hover {
-      background-color: $maroon;
+      background-color: $blue;
       color: white;
       text-decoration: none;
     }
