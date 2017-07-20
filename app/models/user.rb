@@ -50,4 +50,6 @@ class User < ActiveRecord::Base
     end
     sort
   end
+
+
 end
