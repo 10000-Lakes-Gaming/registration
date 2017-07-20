@@ -31,6 +31,16 @@ class User < ActiveRecord::Base
     stars
   end
 
+  def current_events
+    current_events = []
+    user_events.each do |reg|
+      if reg.event.end > Time.now
+        current_events << reg
+      end
+    end
+    current_events
+  end
+
   def <=> (user)
     sort = 0
     if user.nil?
