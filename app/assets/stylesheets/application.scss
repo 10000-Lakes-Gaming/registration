@@ -12,6 +12,7 @@ $lightGrey: #eee;
 $lightPink: #fdd;
 $maroon: #7a0019;
 $money: #99cc66;
+$cost-going-up: #f8a300;
 $orange: #fc9;
 $purple: #800080;
 $red: #f00;
@@ -66,8 +67,9 @@ $unpaid: #B00100;
 
 .sidebar {
   background-color: $lightBlue;
-  height:100%;
+  height: 100%;
   // TODO make this dynamic?
+
   ul {
     list-style-type: none;
     margin: 0;
@@ -79,6 +81,7 @@ $unpaid: #B00100;
       margin-bottom:5px;
       padding: 1px;
     }
+
     li a {
       display: block;
       -webkit-border-radius: 10px;
@@ -237,8 +240,14 @@ div.bottom {
 .badge-premium {
   background-color: $blue;
 }
+
 .badge-cost {
   background-color: $money;
+  color: black;
+}
+
+.badge-cost-increasing {
+  background-color: $cost-going-up;
   color: black;
 }
 
