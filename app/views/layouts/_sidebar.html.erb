@@ -5,6 +5,7 @@
   <% end %>
   <li><%= link_to 'Home', welcome_index_path %></li>
 
+  <!-- TODO - This should only display if a user has registered for events. The second part of this if statement doesn't work. -->
   <% if user_signed_in? && !current_user&.user_events&.blank? %>
     <li><u>Registered Events</u></li>
     <% current_user&.user_events&.each do |registration| %>
