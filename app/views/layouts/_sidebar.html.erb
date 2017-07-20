@@ -5,7 +5,7 @@
   <% end %>
   <li><%= link_to 'Home', welcome_index_path %></li>
 
-  <% if !current_user&.user_events&.empty? %>
+  <% if user_signed_in? && !current_user&.user_events&.blank? %>
     <li><u>Registered Events</u></li>
     <% current_user&.user_events&.each do |registration| %>
       <% unless registration.past %>
