@@ -222,7 +222,7 @@
                       <span class="badge badge-premium">Premium</span>
                       <span class="badge badge-cost"><%= number_to_currency table.price %></span>
                       <% if table.early_bird_discount? %>
-                          <span class="badge badge-cost-increasing"><span class='glyphicon glyphicon-warning-sign'></span> <%= number_to_currency table.onsite_price %></span>
+                          <span class="badge badge-cost-increasing"><span class='glyphicon glyphicon-warning-sign'></span> <%= number_to_currency table.onsite_price %> after <%= table.prereg_ends.localtime.to_formatted_s(:short)%></span>
                 <% end %>
                   <% end %>
                 </div>
