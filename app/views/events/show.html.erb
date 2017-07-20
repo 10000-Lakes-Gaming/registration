@@ -13,7 +13,8 @@
     <dt>Location:</dt>
     <dd class=" text-info"><%= @event.location %></dd>
     <dt>Dates:</dt>
-    <dd class=" text-info"><%= @event.start.to_formatted_s(:long) %> to <%= @event.end.to_formatted_s(:long) %></dd>
+    <dd class=" text-info"><%= @event.start.localtime.to_formatted_s(:long) %>
+      to <%= @event.end.localtime.to_formatted_s(:long) %></dd>
     <% if @event.event_number? %>
         <dt>Event Number:</dt>
         <dd class=" text-info"><%= @event.event_number %></dd>
@@ -29,12 +30,13 @@
       <% if @event.early_bird? %>
           <% unless @event.prereg_closed? %>
               <div class="text-warning">
-                <span class="lead">Early Bird Pre-registration closes: <%= @event.prereg_ends.to_formatted_s(:long_ordinal) %></span>
+                <span class="lead">Early Bird Pre-registration closes: <%= @event.prereg_ends.localtime.to_formatted_s(:long_ordinal) %></span>
               </div>
           <% end %>
       <% end %>
       <% unless @event.rsvp_close.nil? %>
-          <div class="lead text-warning">Registration closes: <%= @event.rsvp_close.to_formatted_s(:long_ordinal) %></div>
+          <div class="lead text-warning">Registration
+            closes: <%= @event.rsvp_close.localtime.to_formatted_s(:long_ordinal) %></div>
       <% end %>
   <% end %>
 </div>
@@ -219,6 +221,9 @@
                   <% if table.premium? %>
                       <span class="badge badge-premium">Premium</span>
                       <span class="badge badge-cost"><%= number_to_currency table.price %></span>
+                      <% if table.early_bird_discount? %>
+                          <span class="badge badge-cost-increasing"><span class='glyphicon glyphicon-warning-sign'></span> <%= number_to_currency table.onsite_price %></span>
+                <% end %>
                   <% end %>
                 </div>
 

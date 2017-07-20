@@ -40,4 +40,8 @@ class Event < ActiveRecord::Base
     prereg_closed? ? onsite_price : prereg_price
   end
 
+  def early_bird_discount?
+    self.prereg_price < self.onsite_price
+  end
+
 end

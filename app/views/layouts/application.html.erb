@@ -49,24 +49,38 @@
   <div class="divider"></div>
 </div>
 
+<div class="no-print">
+  <% if user_signed_in? %>
+      <% if current_user.forum_username.nil? or current_user.forum_username.empty? %>
+          <div class="well">
+            <div class="text-warning bg-warning">You have not entered your paizo.com forum username into your profile.
+              Please add yours by going to <%= link_to 'My Profile', edit_user_path(current_user) %> and adding your
+              primary forum username. This can be helpful when trying to get scenarios to GMs, or when troubleshooting
+              reporting.<br/>
+              Thank you.
+            </div>
+          </div>
+      <% end %>
+  <% end %>
+</div>
 <!--- Main Content --->
 <div id="main-content" class="container-fluid">
   <div class="no-print">
-    <div class="col-sm-2 col-md-2 sidebar">
+    <div class="col-sm-2 col-xs-12 col-md-2 sidebar">
       <%= render partial: "layouts/sidebar" %>
     </div>
   </div>
 
-  <div class="col-sm-10 col-md-10">
+  <div class="col-sm-10 col-md-10 col-xs-12">
     <div class="no-print">
       <% if user_signed_in? %>
           <% if current_user.forum_username.nil? or current_user.forum_username.empty? %>
               <div class="well">
-                <div class="text-warning bg-warning">You have not entered your paizo.com forum username into your profile.
+                <div class="text-warning bg-warning">You have not entered your paizo.com forum username into your
+                  profile.<br>
                   Please add yours by going to <%= link_to 'My Profile', edit_user_path(current_user) %> and adding your
-                  primary
-                  forum username. This can be helpful when trying to get scenarios to GMs, or when troubleshooting
-                  reporting.<br/>
+                  primary forum username. This can be helpful when trying to get scenarios to GMs, or when
+                  troubleshooting reporting.<br>
                   Thank you.
                 </div>
               </div>
