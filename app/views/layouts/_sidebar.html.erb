@@ -5,7 +5,7 @@
   <% end %>
   <li><%= link_to 'Home', welcome_index_path %></li>
 
-  <% if current_user&.user_events? %>
+  <% if current_user&.user_events&.present? %>
     <li><u>Registered Events</u></li>
     <% current_user&.user_events&.each do |registration| %>
       <% unless registration.past %>
