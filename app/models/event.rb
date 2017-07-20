@@ -43,5 +43,4 @@ class Event < ActiveRecord::Base
   def early_bird_discount?
     self.prereg_price < self.onsite_price
   end
-
 end

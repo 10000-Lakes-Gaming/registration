@@ -30,7 +30,7 @@
       <% if @event.early_bird? %>
           <% unless @event.prereg_closed? %>
               <div class="text-warning">
-                <span class="lead">Early Bird Pre-registration closes: <%= @event.prereg_ends.localtime.to_formatted_s(:long_ordinal) %></span>
+                <span class="lead">Early Bird/Pre-registration closes: <%= @event.prereg_ends.localtime.to_formatted_s(:long_ordinal) %></span>
               </div>
           <% end %>
       <% end %>
