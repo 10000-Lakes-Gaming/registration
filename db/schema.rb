@@ -10,23 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170718210724) do
+ActiveRecord::Schema.define(version: 20170721133817) do
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
     t.datetime "start"
     t.datetime "end"
     t.string   "location"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.datetime "rsvp_close"
     t.boolean  "charity"
-    t.integer  "prereg_price", default: 0
+    t.integer  "prereg_price",      default: 0
     t.string   "info"
     t.string   "external_url"
     t.integer  "event_number"
-    t.integer  "onsite_price", default: 0
+    t.integer  "onsite_price",      default: 0
     t.datetime "prereg_ends"
+    t.string   "gm_volunteer_link"
   end
 
   create_table "game_masters", force: :cascade do |t|

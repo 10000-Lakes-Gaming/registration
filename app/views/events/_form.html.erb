@@ -52,8 +52,12 @@
       <%= f.text_area :info %>
     </div>
     <div class="field">
+      <%= f.label :gm_volunteer_link %><br/>
+      <%= f.url_field :gm_volunteer_link %>
+    </div>
+    <div class="field">
       <%= f.label :external_url %><br>
-      <%= f.text_field :external_url %>
+      <%= f.url_field :external_url %>
     </div>
     <div class="field">
       <%= f.label :event_number %><br>
