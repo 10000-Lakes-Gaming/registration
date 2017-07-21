@@ -60,7 +60,7 @@
           <div class="col-md-2">
             <strong>Cost:</strong>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-6">
             <% unless @event.prereg_closed? %>
                 <%= number_to_currency(@event.prereg_price) %>
                 <% unless @event.prereg_ends.nil? %>
