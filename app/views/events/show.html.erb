@@ -133,6 +133,27 @@
   </div>
 </div>
 
+<div id="gm_info" style="border: solid thin black;">
+  <h3 class="text-danger">Attention GMs!</h3>
+
+  <div class="well">
+    <% unless @event.gm_volunteer_link.blank? %>
+        <div class="bg-info" style="margin-top: 1em;padding: 1em;">If you would like to GM for <%= @event.name %>
+          please do so at our:
+          <input type="button" class="btn btn-primary" value="GM Volunteer Form" formtarget="_blank"
+                 onclick="window.open('<%= @event.gm_volunteer_link %>',  '_blank');">
+        </div>
+    <% end %>
+    <div class="bg-warning text-warning" style="margin-top: 0">
+      <div style="display: inline-block; vertical-align: top; font-size: 1.5em;"><span class="text-danger glyphicon glyphicon-warning-sign"></span></div>
+      <div style="display: inline-block;">If you are planning on GMing in a slot, please do not sign up to play in that slot.
+        <br>The hosts of <%= @event.name %> will assign you to your GM slot once you have registered and paid
+        for <%= @event.name %>.
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="sessionsOffered" style="border: solid thin black;">
   <h3>Sessions/Scenarios Offered</h3>
 
@@ -142,16 +163,7 @@
           <strong>Online registration is closed</strong>
         </div>
         <div class="bg-warning text-primary" style="margin-top: 0">In order to make any changes to your
-          registrations
-          and signups, you will need to see HQ at the event.
-        </div>
-      </div>
-  <% else %>
-      <div class="well">
-        <div class="bg-warning text-danger lead" style="margin-bottom: 0"><strong>Attention GMs!</strong></div>
-        <div class="bg-warning text-primary" style="margin-top: 0">If you are planning on GMing in a slot,
-          please do not sign up to play in that slot. <br>The hosts of <%= @event.name %> will assign you to your GM
-          slot once you have registered and paid for <%= @event.name %>.
+          registrations and signups, you will need to see HQ at the event.
         </div>
       </div>
   <% end %>
@@ -222,8 +234,9 @@
                       <span class="badge badge-premium">Premium</span>
                       <span class="badge badge-cost"><%= number_to_currency table.price %></span>
                       <% if table.early_bird_discount? %>
-                          <span class="badge badge-cost-increasing"><span class='glyphicon glyphicon-warning-sign'></span> <%= number_to_currency table.onsite_price %> after <%= table.prereg_ends.localtime.to_formatted_s(:short)%></span>
-                <% end %>
+                          <span class="badge badge-cost-increasing"><span class='glyphicon glyphicon-warning-sign'></span> <%= number_to_currency table.onsite_price %>
+                            after <%= table.prereg_ends.localtime.to_formatted_s(:short) %></span>
+                      <% end %>
                   <% end %>
                 </div>
 
