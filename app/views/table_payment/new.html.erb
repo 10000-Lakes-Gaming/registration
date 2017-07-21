@@ -4,12 +4,12 @@
   <div class="text-warning bg-warning">
     <p><%= @registration_table.table.long_name %> is a Premium table, GM'd by our convention VIPs. As such, there is a
       ticket price of <%= number_to_currency @registration_table.table.price %>, with proceeds going to charity.</p>
-    <p>Your RSVP to this Premium table will be held for one hour while awaiting payment. If the payment is not received
-      within this timeframe, this table RSVP will be canceled. </p>
+    <p>Your sign up to this Premium table will be held for one hour while awaiting payment. If the payment is not received
+      within this timeframe, this table sign up will be canceled. </p>
     <p class="text-danger lead">Payments made for Premium Tables are <strong>non-refundable.</strong> Please take this
       into consideration before you make your payment.</p>
-    <p>If you would prefer to not pay for this table, please click 'Cancel RSVP' below.</p>
+    <p>If you would prefer to not pay for this table, please click 'Cancel Sign Up' below.</p>
   </div>
 </div>
 <%= render partial: "table_payment/table_payment", locals: {event: @event, registration_table: @registration_table, button_label: "Pay for #{@registration_table.table.long_name}"} %>
-<%= button_to 'Cancel RSVP', [@event, @registration_table.table.session, @registration_table.table, @registration_table], method: :delete, data: {confirm: "Are you sure you want to remove your RSVP for #{@registration_table.table.long_name}?"}, :class => 'btn btn-danger', method: :delete %>
+<%= button_to 'Cancel Sign Up', [@event, @registration_table.table.session, @registration_table.table, @registration_table], method: :delete, data: {confirm: "Are you sure you want to remove your RSVP for #{@registration_table.table.long_name}?"}, :class => 'btn btn-danger', method: :delete %>

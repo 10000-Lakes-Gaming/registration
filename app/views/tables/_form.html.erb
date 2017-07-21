@@ -25,6 +25,12 @@
         <td><%= f.label :location %></td>
         <td><%= f.text_field :location %></td>
       </tr>
+      
+      <tr>
+        <td><%= f.label :disabled, 'Disable RSVPs' %></td>
+        <td><%= f.check_box :disabled %></td>
+      </tr>
+
       <tr>
         <td>
           <%= f.label :raffle, 'The table is for a raffle?' %>
@@ -60,11 +66,6 @@
         <td><%= f.number_field :onsite_price %> </td>
       </tr>
 
-
-      <tr>
-        <td><%= f.label :disabled, 'Disable RSVPs' %></td>
-        <td><%= f.check_box :disabled %></td>
-      </tr>
 
       <tr>
         <td><%= f.label :core, 'CORE table' %></td>
