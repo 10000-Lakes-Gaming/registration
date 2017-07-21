@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170721145654) do
+ActiveRecord::Schema.define(version: 20170721152911) do
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 20170721145654) do
     t.boolean  "premium"
     t.integer  "prereg_price", default: 0
     t.integer  "onsite_price", default: 0
-    t.boolean  "disabled"
+    t.boolean  "disabled",     default: false
     t.index ["scenario_id"], name: "index_tables_on_scenario_id"
     t.index ["session_id"], name: "index_tables_on_session_id"
   end
