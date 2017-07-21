@@ -294,8 +294,6 @@
 
                 </div>
                 <% if @registration %>
-                    <%# Add in column to indicate if GMing. Or, have Yes changed to GMing? %>
-                    <%# TODO add in check for paid, if registered! %>
                     <div class="col-md-3 no-pad " style="padding-left: 1em;">
                       <% if @tables.include? table %>
                           <% registration_table = @reg_tables_hash[table] %>
@@ -329,10 +327,11 @@
                       <% if !registered_this_session && registrations_available && @registration.payment_ok? %>
                           <% unless table.raffle? or @event.closed? %>
                               <% unless table.premium? %>
-                                  <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table), :class => "btn btn-xs btn-primary", :method => :get %>
+                                  <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table),
+                                                :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.disabled?%>
                               <% else %>
                                   <%= button_to "Buy Ticket for #{number_to_currency table.price}", new_event_session_table_registration_table_path(@event, session, table),
-                                                :class => "btn btn-xs btn-success", :method => :get,
+                                                :class => "btn btn-xs btn-success", :method => :get, :disabled => table.disabled?,
                                                 data:  {confirm: "This is a premium event with a price of #{number_to_currency table.price}. You will have 1 hour to pay for this ticket."}
                                   %>
                               <% end %>
