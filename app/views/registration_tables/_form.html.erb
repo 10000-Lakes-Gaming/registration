@@ -37,7 +37,7 @@
     <% end %>
     <div class="actions">
       <% unless @table.premium? %>
-          <%= f.submit "RSVP for #{@table.long_name}", :class => 'btn btn-warning' %>
+          <%= f.submit "Sign Up for #{@table.long_name}", :class => 'btn btn-warning' %>
       <% else %>
           <%= f.submit "Continue to payment for #{@table.long_name}", :class => 'btn btn-warning' %>
       <% end %>
