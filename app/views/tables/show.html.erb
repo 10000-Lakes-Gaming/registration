@@ -17,6 +17,11 @@
       <div>by <%= @scenario.author %></div>
   <% end %>
 
+  <% if @table.disabled? %>
+      <div class="text-danger"><span class="glyphicon glyphicon-asterisk"></span>RSVPs are disabled for this table.</div>
+  <% end %>
+
+
   <% if @scenario.evergreen? %>
       <div class="text-success">This is an Evergreen scenario</div>
   <% end %>
