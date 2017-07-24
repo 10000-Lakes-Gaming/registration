@@ -11,6 +11,7 @@
     <th>GM Forum Name</th>
     <th>GM Email</th>
     <th>Scenario</th>
+    <th>Session/Time Slot</th>
   </tr>
   <% @game_masters.each do |gm| %>
       <tr>
@@ -18,6 +19,7 @@
         <td><%= gm.user_event.user.forum_username %></td>
         <td><%= gm.user_event.user.email %></td>
         <td><%= gm.table.scenario.long_name %></td>
+        <td><%= gm.table.session.name %></td>
       </tr>
   <% end %>
 </table>
