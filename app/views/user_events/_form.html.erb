@@ -44,7 +44,7 @@
             <%= f.check_box :paid %>
           </div>
           <div>
-            <%= f.label :payment_amount %>
+            <%= f.label :payment_amount, 'Amount paid. Note: this needs to be in cents (or dollars * 100)' %>
             <%= f.number_field :payment_amount %>
           </div>
           <div>
