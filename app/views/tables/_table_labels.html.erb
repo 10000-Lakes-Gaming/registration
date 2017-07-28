@@ -3,29 +3,29 @@
     <div class="text-danger"><span class="glyphicon glyphicon-asterisk"></span>Sign Ups are disabled for this table.</div>
 <% end %>
 <% if @scenario.evergreen? %>
-    <div class="text-success">This is an Evergreen scenario</div>
+    <div class="text-success">This is an evergreen scenario.</div>
 <% end %>
 <% if @scenario.pregen_only? %>
-    <div class="text-primary">This is a Pregens Only scenario</div>
+    <div class="text-primary">This is a pregenerated character only scenario.</div>
 <% end %>
 <% if @scenario.hard_mode %>
-    <div class="text-danger">This scenario has a Hard Mode</div>
+    <div class="text-danger">This scenario has an optional hard mode.</div>
 <% end %>
 <% if @scenario.retired? %>
-    <div class="text-warning">This is a Retired scenario</div>
+    <div class="text-warning">This is scenario has been retired.</div>
 <% end %>
 <% if @table.raffle? %>
-    <div class="text-warning">This is a Raffle Only table</div>
+    <div class="text-warning">This is a raffle table (no preregistration).</div>
 <% end %>
 <% if @table.core? %>
-    <div class="text-warning">This is a Core Campaign table</div>
+    <div class="text-warning">This is a Core Campaign table.</div>
 <% end %>
 <% if @table.non_pfs? %>
-    <div class="text-danger">This table is <strong>not</strong> being run for organized play credit</div>
+    <div class="text-danger">This table is <strong>not</strong> being run for organized play credit.</div>
 <% end %>
 <% if @table.premium? %>
     <div class="text-warning">This is a premium table, with a cost of <%= number_to_currency(@table.price) %><% if @table.early_bird_discount? %>,
           going up to <%= number_to_currency @table.onsite_price %> after <%= @table.prereg_ends.localtime.to_formatted_s(:short)%>
-      <% end %>
+      <% end %>.
     </div>
 <% end %>
