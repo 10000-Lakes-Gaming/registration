@@ -17,9 +17,20 @@
       <%= f.label :table_id %>: <%= @table.long_name %>
       <%= f.hidden_field :table_id, :value => @table.id %>
     </div>
+    <% @scenario = @table.scenario %>
+    <% unless @scenario.author.blank? %>
+        <div class="field">
+          <%= f.label :author, 'By' %>: <%= @scenario.author %>
+        </div>
+    <% end %>
+    <div class="field">
+      <%= f.label :description %>: <%= @scenario.description %>
+    </div>
+
+    <p><%= render 'tables/table_labels' %></p>
 
     <%# need the UserEvent for the current user %>
-    <% if false %>
+    <% if admin? %>
         <% if @registration_table.user_event
              player_id = @registration_table.user_event.user_id
            else
@@ -27,11 +38,14 @@
            end %>
         <div class="field">
 
-          <%= f.select :user_event_id, options_for_select(@possible_players.map {|user_event| [user_event.user.name, user_event.id]}.to_h, player_id), include_blank: 'Select User...' %>
+          <%= f.select :user_event_id,
+                       options_for_select(@possible_players.map {|user_event| [user_event.user.long_name, user_event.id]}.to_h,
+                                          player_id),
+                       include_blank: 'Select User...' %>
         </div>
     <% else %>
         <div class="field">
-          <%= f.label :user_event_id, 'Player'%>: <%= @user_event.user.name %> (<%= @user_event.user.pfs_number %>)
+          <%= f.label :user_event_id, 'Player' %>: <%= @user_event.user.name %> (<%= @user_event.user.pfs_number %>)
           <%= f.hidden_field :user_event_id, :value => @user_event.id %>
         </div>
     <% end %>
@@ -41,5 +55,6 @@
       <% else %>
           <%= f.submit "Continue to payment for #{@table.long_name}", :class => 'btn btn-warning' %>
       <% end %>
+      <%= link_to 'Back', event_path(@event), :class => 'btn btn-primary' %>
     </div>
 <% end %>
