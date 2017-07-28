@@ -25,28 +25,9 @@
         <td>
           <%# make this show the scenario data as a collapsable %>
           <%= table.scenario.long_name %>
-          <span class="badge"><%= table.scenario.tier %></span>
-          <% if table.scenario.pregen_only? %>
-              <span class="badge badge-pregen">Pregen</span>
-          <% end %>
-          <% if table.scenario.evergreen? %>
-              <span class="badge badge-evergreen">Evergreen</span>
-          <% end %>
-          <% if table.scenario.hard_mode? %>
-              <span class="badge badge-hardmode"><small>Hard Mode</small></span>
-          <% end %>
-          <% if table.scenario.retired? %>
-              <span class="badge badge-retired">Retired</span>
-          <% end %>
-          <% if table.core? %>
-              <span class="badge badge-core">Core</span>
-          <% end %>
-          <% if table.premium? %>
-              <span class="badge badge-premium">Premium</span>
-          <% end %>
-          <% if table.raffle? %>
-              <span class="badge badge-raffle">Raffle</span>
-          <% end %>
+
+
+          <%= render 'events/table_badges', table: table %></div>
 
         </td>
         <td>

@@ -211,34 +211,7 @@
                   <% if table.premium? && !table.game_masters[0].nil? %>
                       with <%= table.game_masters[0].user_event.user.formal_name %>
                   <% end %>
-                  <span class="badge"><%= table.scenario.tier %></span>
-                  <% if table.scenario.pregen_only? %>
-                      <span class="badge badge-pregen">Pregen</span>
-                  <% end %>
-                  <% if table.scenario.evergreen? %>
-                      <span class="badge badge-evergreen">Evergreen</span>
-                  <% end %>
-                  <% if table.scenario.hard_mode? %>
-                      <span class="badge badge-hardmode"><small>Hard Mode</small></span>
-                  <% end %>
-                  <% if table.scenario.retired? %>
-                      <span class="badge badge-retired">Retired</span>
-                  <% end %>
-                  <% if table.core? %>
-                      <span class="badge badge-core">Core</span>
-                  <% end %>
-                  <% if table.raffle? %>
-                      <span class="badge badge-raffle">Raffle</span>
-                  <% end %>
-                  <% if table.premium? %>
-                      <span class="badge badge-premium">Premium</span>
-                      <span class="badge badge-cost"><%= number_to_currency table.price %></span>
-                      <% if table.early_bird_discount? %>
-                          <span class="badge badge-cost-increasing"><span class='glyphicon glyphicon-warning-sign'></span> <%= number_to_currency table.onsite_price %>
-                            after <%= table.prereg_ends.localtime.to_formatted_s(:short) %></span>
-                      <% end %>
-                  <% end %>
-                </div>
+                  <%= render 'table_badges', table: table %></div>
 
                 <%# TODO Make this a partial or helper %>
                 <div class="col-md-1 no-pad">
