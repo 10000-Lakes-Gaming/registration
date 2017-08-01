@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170727131120) do
+ActiveRecord::Schema.define(version: 20170731192814) do
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20170727131120) do
     t.integer  "onsite_price", default: 0
     t.boolean  "disabled",     default: false
     t.boolean  "non_pfs"
+    t.string   "information"
     t.index ["scenario_id"], name: "index_tables_on_scenario_id"
     t.index ["session_id"], name: "index_tables_on_session_id"
   end

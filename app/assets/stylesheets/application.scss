@@ -32,7 +32,7 @@ $main-background: #FFFFFF;
 $social-media-background: #555555;
 $banner-background: #FFFFFF;
 $skal-gray: #555555;
-$info: #269abc;
+$info: #007294;
 $success: #398439;
 $unpaid: #B00100;
 
@@ -78,7 +78,7 @@ $unpaid: #B00100;
     li {
       text-align: center;
       color: $blue;
-      margin-bottom:5px;
+      margin-bottom: 5px;
       padding: 1px;
     }
 
@@ -209,27 +209,63 @@ div.bottom {
   }
 }
 
-.badge-core {
-  background-color: $info;
+.btn-tier {
+  @include button-variant($white, $gray, $gray);
+  font-weight: bold;
 }
+
+.badge-core {
+  background-color: magenta;
+}
+
+.btn-core {
+  @include button-variant($white, magenta, magenta);
+  font-weight: bold;
+}
+
 .badge-non-pfs {
   background-color: $red;
+}
+
+.btn-non-pfs {
+  @include button-variant($white, $red, $red);
+  font-weight: bold;
 }
 
 .badge-raffle {
   background-color: $success;
 }
 
+.btn-raffle {
+  @include button-variant($white, brown, brown);
+  font-weight: bold;
+}
+
 .badge-pregen {
   background-color: $purple;
 }
 
+.btn-pregen {
+  @include button-variant($white, $purple, $purple);
+  font-weight: bold;
+}
+
 .badge-hardmode {
-  background-color: $red;
+  background-color: $maroon;
+}
+
+.btn-hardmode {
+  @include button-variant($white, #560D00, #560D00);
+  font-weight: bold;
 }
 
 .badge-retired {
   background-color: $black;
+}
+
+.btn-retired {
+  @include button-variant($white, $black, $black);
+  font-weight: bold;
 }
 
 .badge-player {
@@ -244,14 +280,29 @@ div.bottom {
   background-color: $blue;
 }
 
+.btn-premium {
+  @include button-variant($white, $blue, $blue);
+  font-weight: bold;
+}
+
 .badge-cost {
   background-color: $money;
   color: black;
 }
 
+.btn-cost {
+  @include button-variant($black, $money, $money);
+  font-weight: bold;
+}
+
 .badge-cost-increasing {
   background-color: $cost-going-up;
   color: black;
+}
+
+.btn-cost-increasing {
+  @include button-variant($black, $cost-going-up, $cost-going-up);
+  font-weight: bold;
 }
 
 .badge-unpaid {
@@ -263,6 +314,37 @@ div.bottom {
   background-color: $evergreen;
 }
 
+.btn-evergreen {
+  @include button-variant($white, $evergreen, $evergreen);
+  font-weight: bold;
+}
+.btn-more-info {
+  @include button-variant($white, #007294, #007294);
+  font-weight: bold;
+}
+
 .bordered {
   border: 2px solid $red;
 }
+
+.btn-round-lg {
+  border-radius: 22.5px;
+}
+
+.btn-round {
+  border-radius: 17px;
+}
+
+.btn-round-sm {
+  border-radius: 15px;
+}
+
+.btn-round-xs {
+  border-radius: 11px;
+}
+.btn-info {
+  @include button-variant($white, #007294, #007294);
+}
+
+
+
