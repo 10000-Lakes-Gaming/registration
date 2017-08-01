@@ -25,7 +25,7 @@
         <td><%= f.label :location %></td>
         <td><%= f.text_field :location %></td>
       </tr>
-      
+
       <tr>
         <td><%= f.label :disabled, 'Disable RSVPs' %></td>
         <td><%= f.check_box :disabled %></td>
@@ -71,10 +71,14 @@
         <td><%= f.number_field :onsite_price %> </td>
       </tr>
 
-
       <tr>
         <td><%= f.label :core, 'CORE table' %></td>
         <td><%= f.check_box :core %></td>
+      </tr>
+
+      <tr>
+        <td><%= f.label :information, 'Additional information for players (such as using PFS characters, etc).' %></td>
+        <td><%= f.text_area :information %>
       </tr>
 
       <tr>

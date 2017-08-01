@@ -25,6 +25,11 @@
     <span class="badge"><%= @table.max_players %></span> players.
   </p>
   <button data-toggle="collapse" data-target="#players" class="btn btn-info">Current Players</button>
+  <% if admin? %>
+      <% if @table.game_masters.size < @table.gms_needed %>
+          <%= button_to "Add Player", new_event_session_table_registration_table_path(@event, @session, @table), method: :get, :class => "btn btn-warning" %>
+      <% end %>
+  <% end %>
   <div id="players" class="collapse">
     <%#  header row %>
     <div class="row">
@@ -55,8 +60,10 @@
   </p>
   <div>
     <button data-toggle="collapse" data-target="#gamemasters" class="btn btn-info">Current Game Masters</button>
-    <% if @table.game_masters.size < @table.gms_needed %>
-        <%= button_to "Add GM", new_event_session_table_game_master_path(@event, @session, @table), method: :get, :class => "btn btn-warning" %>
+    <% if admin? %>
+        <% if @table.game_masters.size < @table.gms_needed %>
+            <%= button_to "Add GM", new_event_session_table_game_master_path(@event, @session, @table), method: :get, :class => "btn btn-warning" %>
+        <% end %>
     <% end %>
   </div>
   <div id="gamemasters" class="collapse">
@@ -85,8 +92,8 @@
 
 <hr>
 <% if admin? %>
-    <%= button_to 'Edit this table', edit_event_session_table_path(@event, @session, @table), method: :get,
-                  :class                                                                              => "btn btn-primary" %>
+    <%= button_to 'Edit this table', edit_event_session_table_path(@event, @session, @table),
+                  method: :get, :class => "btn btn-primary" %>
     <%= button_to 'Back', event_session_tables_path, method: :get, :class => "btn btn-success" %>
 <% else %>
     <%= button_to 'Back', event_path, method: :get, :class => "btn btn-success" %>
