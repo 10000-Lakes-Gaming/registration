@@ -23,7 +23,8 @@ class ContactMailer < ApplicationMailer
     mail(subject: @message.subject, bcc: @emails)
   end
 
-  def payment_reminder(message, emails)
+  def payment_reminder(message, emails, event)
+    @event   = event
     @message = message
     @emails  = emails
     mail(subject: @message.subject, bcc: @emails)
