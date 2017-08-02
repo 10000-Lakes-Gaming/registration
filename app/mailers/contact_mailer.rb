@@ -23,11 +23,10 @@ class ContactMailer < ApplicationMailer
     mail(subject: @message.subject, bcc: @emails)
   end
 
-  def payment_reminder(message, emails, event)
+  def payment_reminder(message, email, event)
     @event   = event
     @message = message
-    @emails  = emails
-    mail(subject: @message.subject, bcc: @emails)
+    mail(subject: @message.subject, to: email)
   end
 
   def registration_reminder(message, email)
