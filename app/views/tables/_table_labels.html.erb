@@ -26,7 +26,7 @@
 <% if @table.premium? %>
     <div class="text-warning">This is a premium table, with a cost of <%= number_to_currency(@table.price) %>
       <% if @table.early_bird_discount? %>,
-          going up to <%= number_to_currency @table.onsite_price %>
+          rising to <%= number_to_currency @table.onsite_price %>
           after <%= @table.prereg_ends.localtime.to_formatted_s(:short) %>
       <% end %>.
     </div>
