@@ -32,15 +32,15 @@ end
 
 task :send_unpaid_event_message => :environment do
   puts "Sending unpaid registration emails"
-
   Event.where('"end" > ? AND ( prereg_price > 0 or onsite_price > 0)', Date.today).each do |event|
-    emails          = []
+    count = 0
     message         = Message.new
     message.subject ="Please submit your payment for #{event.name}"
     event.user_events.where(paid: false).each do |registration|
-      puts "adding #{event.name} for #{registration.user.name} (#{registration.user.email})"
-      emails << registration.user.email
+      puts "emailing #{event.name} for #{registration.user.name} (#{registration.user.email})"
+      ContactMailer.payment_reminder(message, registration.user.email, event).deliver
+      count += 1
     end
-    ContactMailer.payment_reminder(message, emails, event).deliver
+    puts "#{count} emails were sent"
   end
 end

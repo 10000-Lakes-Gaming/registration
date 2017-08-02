@@ -30,10 +30,9 @@ class ContactMailer < ApplicationMailer
     mail(subject: @message.subject, bcc: @emails)
   end
 
-  def registration_reminder(message, emails)
+  def registration_reminder(message, email)
     @message = message
-    @emails  = emails
-    mail(subject: @message.subject, bcc: @emails)
+    mail(subject: @message.subject, to: email)
   end
 
 end
