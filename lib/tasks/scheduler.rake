@@ -41,6 +41,6 @@ task :send_unpaid_event_message => :environment do
       puts "adding #{event.name} for #{registration.user.name} (#{registration.user.email})"
       emails << registration.user.email
     end
-    ContactMailer.payment_reminder(message, emails, event)
+    ContactMailer.payment_reminder(message, emails, event).deliver
   end
 end
