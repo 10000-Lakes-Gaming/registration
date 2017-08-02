@@ -19,7 +19,7 @@ task :clean_unpaid_premium_tables => :environment do
       created = registration_table.created_at
       puts "#{registration_table.id} => #{created}"
       if created <= max_time
-        puts "deleting registration table #{registration_table.id} as it is unpaid after 1 hour."
+        puts "deleting registrationhttps://docs.google.com/presentation/d/1xI1oJktq2yxgoTZ89ydG4GTdiALSVw4m9lBiz3Ihixs/edit#slide=id.g20220b44a6_1_0 table #{registration_table.id} as it is unpaid after 1 hour."
         registration_table.delete
         count += 1
       end
@@ -27,4 +27,20 @@ task :clean_unpaid_premium_tables => :environment do
   end
   puts "Deleted #{count} rows as being out of date."
 
+end
+
+
+task :send_unpaid_event_message => :environment do
+  puts "Sending unpaid registration emails"
+
+  Event.where('end > ? AND ( prereg_price > 0 or onsite_price > 0)', Date.today).each do |event|
+    emails          = []
+    message         = Message.new
+    message.subject ="Please submit your payment for #{event.name}"
+    event.user_events.where(paid: false).each do |registration|
+      puts "adding #{event.name} for #{registration.user.name} (#{registration.user.email})"
+      emails << registration.user.email
+    end
+    ContactMailer.payment_reminder(message, emails, event)
+  end
 end
