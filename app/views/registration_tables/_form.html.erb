@@ -18,16 +18,16 @@
       <%= f.hidden_field :table_id, :value => @table.id %>
     </div>
     <% @scenario = @table.scenario %>
-    <% unless @scenario.author.blank? %>
-        <div class="field">
-          <%= f.label :author, 'By' %>: <%= @scenario.author %>
-        </div>
-    <% end %>
-    <div class="field">
-      <%= f.label :description %>: <%= @scenario.description %>
-    </div>
 
-    <p><%= render 'tables/table_labels' %></p>
+    <div class="well">
+      <div class="field">
+        <%= f.label :description %>: <%= @scenario.description %>
+      </div>
+      <% if @table.scenario.author.present? %>
+          <div>by <%= @table.scenario.author %></div>
+      <% end %>
+      <%= render partial: 'events/table_badges', locals: {table: @table} %>
+    </div>
 
     <%# need the UserEvent for the current user %>
     <% if admin? %>

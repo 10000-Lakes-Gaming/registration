@@ -10,9 +10,10 @@
         <h4 class="modal-title">This is a tier <%= table.scenario.tier %> scenario.</h4>
       </div>
       <div class="modal-body">
-        <p>You must have a character that is within the levels of <%= table.scenario.tier %> to play.<br>
-          If this is an interactive special, you can play a character on subtier higher or lower, as they are ticketed
-          by sub-tier instead of full tier, though we recommend strongly remaining within your sub-tier.
+        <p>This scenario is for characters of level(s) <%= table.scenario.tier %>.
+          If this is an interactive special, characters can play on a subtier that is one higher or lower (assuming
+          there
+          is one); however, we strongly recommend signing up within the sub-tier.
         </p>
       </div>
       <div class="modal-footer">
@@ -35,8 +36,7 @@
             <h4 class="modal-title">Pregenerated Characters Only</h4>
           </div>
           <div class="modal-body">
-            <p>This scenario may only be played with pregenerated characters. You may not play this with your own
-              character.</p>
+            <p>This scenario is only played with provided pregenerated characters.</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -59,8 +59,8 @@
             <h4 class="modal-title">Evergreen Scenario</h4>
           </div>
           <div class="modal-body">
-            <p>This scenario may be replayed on multiple characters for credit. See the Pathfinder Society Roleplaying
-              Guild Guide (or similar document for Starfinder, etc)</p>
+            <p>You may replay this scenario with different characters. See the relevant Society RPG Guide for
+              details.</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -84,8 +84,8 @@
             <h4 class="modal-title">Hard Mode Exists</h4>
           </div>
           <div class="modal-body">
-            <p>This scenario may played in a special "Hard Mode" where the risk is increased, but for no extra reward.
-              The only extra reward is being able to say you did it in Hard Mode.</p>
+            <p>This scenario has an optional "Hard Mode" for extra challenge (but no additional reward other than
+              bragging rights).</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -106,8 +106,9 @@
             <h4 class="modal-title">Retired Scenario</h4>
           </div>
           <div class="modal-body">
-            <p>This scenario has been retired from organized play. It normally is not available to be played for credit,
-              but will be for this event, unless marked as for "No Society Credit".</p>
+            <p>This scenario has been retired from organized play. It normally is not available to be played for credit.
+              If this event is not additionally marked with "No Society Credit", you will receive credit for this
+              scenario as a bonus!</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -152,9 +153,8 @@
             <h4 class="modal-title">No Society Credit</h4>
           </div>
           <div class="modal-body">
-            <p>This scenario is not being run for organized play credit. You will not be receiving a chronicle for
-              playing. It may be pregen only, with Society characters, or otherwise. See "More Info!" for more
-              details.</p>
+            <p>This scenario is not being run for organized play credit &mdash; you will not receive a chronicle for playing.
+              See "More Info!" for details on if characters are provided, or if you should bring your own.</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -202,9 +202,9 @@
           <div class="modal-body">
             <p>This is a premium table, with a VIP Game Master!
               This table will cost an additional <%= number_to_currency table.price %> to play
-              at, with the proceeds going to our charity.
+              at, with the proceeds going <%= table.session.event.name %>'s charity.
               <% if table.early_bird_discount? %>
-                  After <%= table.prereg_ends.localtime.to_formatted_s(:short) %> the price will go up
+                  After <%= table.prereg_ends.localtime.to_formatted_s(:short) %> the price will rise
                   to  <%= number_to_currency table.onsite_price %>.
               <% end %>
             </p>
@@ -219,7 +219,8 @@
     <button type="button" class="btn btn-round-xs btn-cost btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_premium"><%= number_to_currency table.price %></button>
 
     <% if table.early_bird_discount? %>
-        <button type="button" class="btn btn-round-xs btn-cost-increasing btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_premium"><span class='glyphicon glyphicon-warning-sign'></span> <%= number_to_currency table.onsite_price %>
+        <button type="button" class="btn btn-round-xs btn-cost-increasing btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_premium">
+          <span class='glyphicon glyphicon-warning-sign'></span> <%= number_to_currency table.onsite_price %>
           after <%= table.prereg_ends.localtime.to_formatted_s(:short) %></button>
 
     <% end %>

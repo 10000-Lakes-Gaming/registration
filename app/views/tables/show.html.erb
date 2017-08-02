@@ -15,7 +15,7 @@
   <% if @scenario.author.present? %>
       <div>by <%= @scenario.author %></div>
   <% end %>
-  <%= render 'table_labels' %>
+  <%= render partial: 'events/table_badges', locals: {table: @table} %>
 </div>
 
 
