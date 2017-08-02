@@ -19,7 +19,7 @@ task :clean_unpaid_premium_tables => :environment do
       created = registration_table.created_at
       puts "#{registration_table.id} => #{created}"
       if created <= max_time
-        puts "deleting registrationhttps://docs.google.com/presentation/d/1xI1oJktq2yxgoTZ89ydG4GTdiALSVw4m9lBiz3Ihixs/edit#slide=id.g20220b44a6_1_0 table #{registration_table.id} as it is unpaid after 1 hour."
+        puts "deleting registration_table #{registration_table.id} as it is unpaid after 1 hour."
         registration_table.delete
         count += 1
       end
