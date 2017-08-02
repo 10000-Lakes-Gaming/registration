@@ -4,24 +4,23 @@
 </head>
 <body>
 <%= image_tag("skalbanner.png", size: "250x100", alt: "SkålCon") %>
-<p>It has come to our attention, that you have registered for <%= @event.name %>, but have not paid.</p>
+<p>You have registered for <%= @event.name %> - but have not yet paid! All participants, whether players, game masters,
+  or headquarters staff, are required to pay for their registration.</p>
 
-<p>Participation in <%= @event.name %>  costs <%= number_to_currency(@event.prereg_price) %><% if @event.early_bird_discount? %>,
-   but after <%= @event.prereg_ends.localtime.to_formatted_s(:long_ordinal) %>
-      the price will go up to <%= number_to_currency @event.onsite_price %><% end %>. Payment allows you to sign up for the
-  games you wish to play, as well as opens up the ability to purchase premium tickets if they exist. All participants,
-  whether players, game masters, or headquarters staff, are required to pay for their registration.</p>
+<p>There is a <%= number_to_currency(@event.prereg_price) %> registration cost for <%= @event.name %>
+  <% if @event.early_bird_discount? %>,
+      but after <%= @event.prereg_ends.localtime.to_formatted_s(:long_ordinal) %>
+      the price will go up to <%= number_to_currency @event.onsite_price %>
+  <% end %>. Payment allows you to sign up for games to play, including limited premium ticket tables with special
+  guests.</p>
 
-<p>
-  To pay for <%= @event.name %> and sign up for your games, please go to <%= link_to "#{@event.name}", @event %>, and
-  click on the "Pay With Card" button. If you are unable to pay with a credit card, please click on "Contact Us!" and
-  select "I cannot pay with a credit card" to ask for arrangements to be made for a cash payment. A representative of
-  <%= @event.name %> and 10,000 Lakes Gaming will be in touch with you.
-</p>
+<p>To pay for <%= @event.name %>, please go to <%= link_to "#{@event.name}", @event %> and click on the "Pay With Card" button.
+  If you are unable to pay with a credit card, please click on "Contact Us!" and select "I cannot pay with a credit card"
+  to ask for other payment arrangements. A representative of <%= @event.name %> will be in touch with you.
 
-<p>If you have already paid for your <%= @event.name %> registration, please feel free to ignore this message.</p>
+<p>If you have already paid for your <%= @event.name %> registration, please disregard this message.</p>
 
-<p>Thank you for making this convention a success!</p>
+<p>Thank you for making <%= @event.name %> a success!</p>
 
 <hr>
 <p><%= @event.name %>, Minneapolis-Saint Paul Pathfinder Lodge, and 10,000 Lakes Gaming</p>
