@@ -37,9 +37,9 @@ task :send_unpaid_event_message => :environment do
     message         = Message.new
     message.subject ="Please submit your payment for #{event.name}"
     event.user_events.where(paid: false).each do |registration|
-      puts "emailing #{event.name} for #{registration.user.name} (#{registration.user.email})"
       ContactMailer.payment_reminder(message, registration.user.email, event).deliver
       count += 1
+      puts "emailed #{event.name} reminder for #{registration.user.name} (#{registration.user.email})"
     end
     puts "#{count} emails were sent"
   end
