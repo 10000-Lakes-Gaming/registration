@@ -18,7 +18,7 @@
 <div class="text-info bg-info">Extract user registrations since a given date for <%= @event.name %></div>
 
 <%= form_tag("/events/#{@event.id}/user_events/show_since.json", method: "get") do %>
-    <p class="field>
+    <p class="field">
       <%= label :user_event, :since %>
       <%= date_select('range_start', 'date', :order => [:month, :day, :year]) %>
     </p>
