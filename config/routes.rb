@@ -16,6 +16,10 @@ Rails.application.routes.draw do
     resources :gm_list
     resources :table_assignment
     resources :user_events do
+      collection  do
+        get 'search'
+        get 'show_since'
+      end
       resources :registration_payment, only: [:new, :create]
     end
     resources :sessions do

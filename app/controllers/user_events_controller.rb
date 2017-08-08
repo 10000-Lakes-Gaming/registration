@@ -33,7 +33,7 @@ class UserEventsController < ApplicationController
     @user_events = @user_events.sort {|a, b| a <=> b}
 
     # how many have paid?
-    @paid        = 0
+    @paid = 0
     @user_events.each do |rsvp|
       if rsvp.paid?
         @paid = @paid + 1
@@ -108,8 +108,35 @@ class UserEventsController < ApplicationController
     end
   end
 
+  # New route/method - search by date
+  def search
+
+  end
+
+  def show_since
+
+    start_date = Time.zone.local(*params[:range_start].sort.map(&:last).map(&:to_i))
+    # user_event = *params[:user_event]
+    #
+    # date = Date.civil(*user_event[:since].sort.map(&:last).map(&:to_i))
+
+    @user_events = @event.user_events.where(["updated_at >= ?", start_date])
+    # remove all user_events that don't have an event or user
+    @user_events.each do |user_event|
+      if user_event.user.nil? || user_event.event.nil?
+        @user_events - [user_event]
+        user_event.destroy
+      end
+    end
+    # sort the user events by email?
+    @user_events = @user_events.sort {|a, b| a <=> b}
+
+    render :index
+  end
+
+
   # Never trust parameters from the scary internet, only allow the white list through.def user_event_params
   def user_event_params
-    params.require(:user_event).permit(:user_id, :event_id, :paid, :payment_amount, :payment_id, :payment_date)
+    params.require(:user_event).permit(:user_id, :event_id, :paid, :payment_amount, :payment_id, :payment_date, :since)
   end
 end
