@@ -36,7 +36,7 @@
           <li><%= link_to "Table Assignments", event_table_assignment_index_path(@event) %></li>
           <li><%= link_to "GM List", event_gm_list_index_path(@event) %></li>
           <li style="padding-top: 1em;"><u>Event APIs</u></li>
-          <li><%= link_to "Registrations (JSON)", event_user_events_path(@event, :format => :json) %></li>
+          <li><%= link_to "Registrations (JSON)", search_event_user_events_path(@event) %></li>
           <li><%= link_to "GM List (JSON)", event_gm_list_index_path(@event, :format => :json) %></li>
           <li><%= link_to 'Event Tables (JSON)', event_path(@event, :format => :json) %></li>
       <% end %>
