@@ -1,22 +1,21 @@
-class GmListController < ApplicationController
+class GmsByScenarioController < ApplicationController
   before_action :get_event, :get_unknown_user, :get_unknown_user_event
 
   def index
-    # need to collect in the stuff. Make it easier to consume
-    @game_masters = []
-
+    # have to put things in a hash, so that we can deal with it.
+    @tables_by_scenario = {}
     @event.sessions.each do |session|
       session.tables.each do |table|
-        pad_gms table
-        @game_masters = (@game_masters << table.game_masters).flatten!
+        scenario = table.scenario
+        unless @tables_by_scenario.key? scenario
+          @tables_by_scenario[scenario] = []
+        end
+        @tables_by_scenario[scenario] << table
       end
     end
 
     respond_to do |format|
-      format.html {
-        @game_masters = @game_masters.sort {|a, b| a <=> b}
-        render :index
-      }
+      format.html {render :index}
       format.json {render :index}
     end
   end

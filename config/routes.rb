@@ -14,9 +14,10 @@ Rails.application.routes.draw do
 
   resources :events do
     resources :gm_list
+    resources :gms_by_scenario
     resources :table_assignment
     resources :user_events do
-      collection  do
+      collection do
         get 'search'
         get 'show_since'
       end

@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @event.name %></h1>
+<h2><%= @event.location %></h2>
+<h2><%= @event.start.to_formatted_s(:long) %> to <%= @event.end.to_formatted_s(:long) %></h2>
+
+<!-- for now, first pass, list all the GMs -->
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Scenario</th>
+    <th>Number of tables</th>
+    <th>GMs Needed</th>
+    <th>GMs Assigned</th>
+    <th>GMs Remaining</th>
+    <th>Total Player Seats</th>
+    <th>Players Signed Up</th>
+    <th>Seats Remaining</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @tables_by_scenario.each do |scenario, tables| %>
+      <tr>
+        <td><%= scenario.long_name %></td>
+        <% table_count = 0; %>
+        <% gm_needed_count = 0; %>
+        <% gm_assigned_count = 0; %>
+        <% gm_remaining_count = 0; %>
+        <% player_needed_count = 0; %>
+        <% player_assigned_count = 0; %>
+        <% player_remaining_count = 0; %>
+        <% tables.each do |table| %>
+            <% table_count += table.gms_needed %>
+            <% gm_needed_count += table.gms_needed %>
+            <% gm_assigned_count += table.current_gms %>
+            <% gm_remaining_count += table.gms_short %>
+            <% player_needed_count += table.max_players %>
+            <% player_assigned_count += table.current_registrations %>
+            <% player_remaining_count += table.remaining_seats %>
+        <% end %>
+        <td><%= table_count %></td>
+        <td><%= gm_needed_count %></td>
+        <td><%= gm_assigned_count %></td>
+        <td><%= gm_remaining_count %></td>
+        <td><%= player_needed_count %></td>
+        <td><%= player_assigned_count %></td>
+        <td><%= player_remaining_count %></td>
+      </tr>
+  <% end %>
+  </tbody>
+
+</table>

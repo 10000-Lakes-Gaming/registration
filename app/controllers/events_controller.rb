@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :gms_by_scenario]
   before_action :restrict_to_admin, except: [:show, :index]
   before_action :get_events, :get_my_events
 
@@ -44,6 +44,13 @@ class EventsController < ApplicationController
       @my_registrations.push user_event
       @my_events.push user_event.event
     end
+  end
+
+
+
+  def gms_by_scenario
+
+
   end
 
   # GET /events/1
@@ -125,6 +132,8 @@ class EventsController < ApplicationController
       format.json {head :no_content}
     end
   end
+
+
 
   private
   # Use callbacks to share common setup or constraints between actions.
