@@ -34,13 +34,16 @@ task :send_session_reminder_message => :environment do
   puts "Sending session signup reminder message"
   # TODO - add in a check for no table registrations
   Event.where('prereg_ends > ?', Date.today).each do |event|
-    count = 0
-    message = Message.new
+    count           = 0
+    message         = Message.new
     message.subject = "Please signup for tables at #{event.name}!"
     event.user_events.each do |registration|
-      ContactMailer.session_reminder(message, registration.user.email, event).deliver
-      count += 1
-      puts "emailed #{event.name} session signup reminder to #{registration.user.name} (#{registration.user.email})"
+      # only send if they don't have a registration table
+      if registration.registration_tables.empty?
+        ContactMailer.session_reminder(message, registration.user.email, event).deliver
+        count += 1
+        puts "emailed #{event.name} session signup reminder to #{registration.user.name} (#{registration.user.email})"
+      end
     end
     puts "#{count} reminder emails were sent"
   end
