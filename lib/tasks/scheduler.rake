@@ -33,7 +33,7 @@ end
 task :send_session_reminder_message => :environment do
   puts "Sending session signup reminder message"
   # TODO - add in a check for no table registrations
-  Event.where('prereg_ends > ?').each do |event|
+  Event.where('prereg_ends > ?', Date.today).each do |event|
     count = 0
     message = Message.new
     message.subject = "Please signup for tables at #{event.name}!"
