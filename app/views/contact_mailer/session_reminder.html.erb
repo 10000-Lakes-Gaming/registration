@@ -3,27 +3,34 @@
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
 </head>
 <body>
-<%= image_tag("skalbanner.png", size: "250x100", alt: "SkålCon") %>
-<h1>SkålCon Food Drive!</h1>
-
-<p>New for this year is a food drive to support Tubman. PLease  bring non-perishable food items for donation. Desired items are things like canned fruits, vegetables, soup, and dry goods (pasta, rice, etc.). As always with food items, we can only accept unopened items in their original packaging. </p>
-
-<p>For every food item you bring, you will receive a bonus:</p>
-
-<p>1-5 food items equals a +1 to +5 on a re-roll once per session.</p>
-
-<p>Thus, if you bring in three cans of vegetables Friday night, you will receive a +3 to one re-roll every session you play all weekend.</p>
-
-<p>(note: This will not stack with yer GM Star bonus re-roll; use which ever is higher)</p>
-
-<p>If you bring in more than five food items, you will receive a bonus to the Aid Another action! If you bring in fifteen food items, the first five go to the re-roll, and the next ten go to the Aid Another bonus for a bonus of +10 to one Aid Another once per session. This is not in addition to, but substitutes for the normal +2. Again, for every food item over five, your Aid Another bonus equals the number of food items over five.
-</p>
-<p>Lets bring a lot of food, people! Tubman's Transitional Housing is full and their new Youth Center has been full since it opened this year. The need is great and we can make a real, positive difference in someone's life.
+<p>Thank you for registering to attend <%= @event.name %>! Your contribution goes a long way towards
+  making <%= @event.name %> the success it is and will continue to be!
 </p>
 
-<p>Thank you for making this convention a success!</p>
+<p>We're reminding you to please select tables you want to play at <%= @event.name %>. The sooner the better, for a
+  couple of reasons:
+</p>
+<p>This year we're expanding tables based on demand - and current sign-ups give us a better idea of what we need to add.
+  Now is the time for us to add extra tables of a given scenario, so that we can enlist additional
+  volunteer GMs in a timely manner!
+</p>
+
+<p>Speaking of a timely manner, our GMs need time to prep for the scenarios. Some GMs won't be assigned until we add
+  additional tables, so the sooner you pick your scenarios, the sooner GMs can start preparing.
+  Having time to properly prep makes the lives of our GMs easier, which makes for happy GMs. We are sure we can all
+  agree that a happy GM is a good GM, which allows for a great experience all around.</p>
+
+<p>So, please head over to <%= link_to "#{@event.name}", @event %> and sign up for some tables!</p>
+
+<p>If you have any questions, please ask. There is a handy "Contact Us!" button on the left sidebar to send us
+  questions,feedback, and so on. </p>
+
+<p>If you are interested, please volunteer to run a table or two! There is a handy button that will bring you to our
+  "GM Volunteer Form" to do so! We still need GMs!</p>
+
+<p>Thank you for making <%= @event.name %> a success!</p>
 
 <hr>
-<p>SkålCon and MSP Pathfinders</p>
+<p><%= @event.name %>, Minneapolis-Saint Paul Pathfinder Lodge, and 10,000 Lakes Gaming</p>
 </body>
 </html>

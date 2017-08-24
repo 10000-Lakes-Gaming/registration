@@ -23,4 +23,4 @@ json.scenario_assignments @tables_by_scenario do |scenario, tables|
   json.set! :player_needed_count, player_needed_count
   json.set! :player_assigned_count, player_assigned_count
   json.set! :player_remaining_count, player_remaining_count
-end
+x end

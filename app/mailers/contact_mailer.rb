@@ -17,7 +17,8 @@ class ContactMailer < ApplicationMailer
   end
 
 
-  def session_reminder(message, emails)
+  def session_reminder(message, emails, event)
+    @event = event
     @message = message
     @emails  = emails
     mail(subject: @message.subject, bcc: @emails)
