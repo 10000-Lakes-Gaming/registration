@@ -17,11 +17,10 @@ class ContactMailer < ApplicationMailer
   end
 
 
-  def session_reminder(message, emails, event)
+  def session_reminder(message, email, event)
     @event = event
     @message = message
-    @emails  = emails
-    mail(subject: @message.subject, bcc: @emails)
+    mail(subject: @message.subject, to: email)
   end
 
   def payment_reminder(message, email, event)
