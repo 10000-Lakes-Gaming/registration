@@ -39,7 +39,7 @@ task :send_session_reminder_message => :environment do
     message.subject = "Please signup for tables at #{event.name}!"
     event.user_events.each do |registration|
       ContactMailer.session_reminder(message, registration.user.email, event).deliver
-      counts += 1
+      count += 1
       puts "emailed #{event.name} session signup reminder to #{registration.user.name} (#{registration.user.email})"
     end
     puts "#{count} reminder emails were sent"
