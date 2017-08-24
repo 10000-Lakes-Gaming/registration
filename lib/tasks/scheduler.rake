@@ -30,16 +30,32 @@ task :clean_unpaid_premium_tables => :environment do
 end
 
 
+task :send_session_reminder_message => :environment do
+  puts "Sending session signup reminder message"
+  # TODO - add in a check for no table registrations
+  Event.where('prereg_ends > ?').each do |event|
+    count = 0
+    message = Message.new
+    message.subject = "Please signup for tables at #{event.name}!"
+    event.user_events.each do |registration|
+      ContactMailer.session_reminder(message, registration.user.email, event).deliver
+      counts += 1
+      puts "emailed #{event.name} session signup reminder to #{registration.user.name} (#{registration.user.email})"
+    end
+    puts "#{count} reminder emails were sent"
+  end
+end
+
 task :send_unpaid_event_message => :environment do
   puts "Sending unpaid registration emails"
-  Event.where('"end" > ? AND ( prereg_price > 0 or onsite_price > 0)', Date.today).each do |event|
-    count = 0
+  Event.where('end > ? AND ( prereg_price > 0 or onsite_price > 0)', Date.today).each do |event|
+    count           = 0
     message         = Message.new
     message.subject ="Please submit your payment for #{event.name}"
     event.user_events.where(paid: false).each do |registration|
       ContactMailer.payment_reminder(message, registration.user.email, event).deliver
       count += 1
-      puts "emailed #{event.name} reminder for #{registration.user.name} (#{registration.user.email})"
+      puts "emailed #{event.name} payment reminder for #{registration.user.name} (#{registration.user.email})"
     end
     puts "#{count} emails were sent"
   end

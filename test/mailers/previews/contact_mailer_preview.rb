@@ -9,16 +9,22 @@ class ContactMailerPreview < ActionMailer::Preview
   end
 
 
-  def session_reminder_preview
-    setup_admins
-    @message         = Message.new
-    @message.email   = "#{ENV['GMAIL_SMTP_USERNAME']}"
-    @message.subject = "Reminder Message"
-    @message.content = "This is my content"
-    @message.name    = "SkålCon"
-    ContactMailer.session_reminder(@message, @admins)
-  end
+  # def session_reminder_preview
+  #   setup_admins
+  #   @message         = Message.new
+  #   @message.email   = "#{ENV['GMAIL_SMTP_USERNAME']}"
+  #   @message.subject = "Reminder Message"
+  #   @message.content = "This is my content"
+  #   @message.name    = "SkålCon"
+  #   ContactMailer.session_reminder(@message, @admins)
+  # end
 
+  def session_reminder_preview
+    setup_user_event
+    setup_admins
+    setup_payment_message
+    ContactMailer.session_reminder(@message, @admins, @event)
+  end
 
   private
   def setup_user_event
