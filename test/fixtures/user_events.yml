@@ -26,3 +26,9 @@ paid_event_unpaid_table:
   event: my_event
   paid: true
   payment_amount: 2000
+
+empty_registration_tables:
+  user: dude1
+  event: my_event
+  paid: true
+  payment_amount: 2000

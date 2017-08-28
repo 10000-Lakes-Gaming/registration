@@ -46,4 +46,8 @@ class UserEvent < ActiveRecord::Base
     Time.now > self.event.end
   end
 
+  def no_signups?
+    self.registration_tables.empty?
+  end
+
 end
