@@ -33,14 +33,12 @@ class EventTest < ActiveSupport::TestCase
     assert_equal @my_event, event
   end
 
-  test "Events sort by name, and my event comes before other." do
-    assert (@my_event <=> @other_event) < 0
-  end
 
-  test "My event has 4 registrations, including the admin user's" do
+  # Note: If extra user events are added, this must be increased.
+  test "My event has 5 registrations, including the admin user's" do
     admin_user_event = user_events(:admin_my_event)
 
-    assert_equal 4, @my_event.user_events.size
+    assert_equal 5, @my_event.user_events.size
     assert_includes @my_event.user_events, admin_user_event
 
   end

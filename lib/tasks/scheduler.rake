@@ -39,7 +39,7 @@ task :send_session_reminder_message => :environment do
     message.subject = "Please signup for tables at #{event.name}!"
     event.user_events.each do |registration|
       # only send if they don't have a registration table
-      if registration.registration_tables.empty?
+      if registration.no_signups?
         ContactMailer.session_reminder(message, registration.user.email, event).deliver
         count += 1
         puts "emailed #{event.name} session signup reminder to #{registration.user.name} (#{registration.user.email})"

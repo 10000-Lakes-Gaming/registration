@@ -9,7 +9,27 @@ class UserEventTest < ActiveSupport::TestCase
     @admin               = users(:admin)
     @normal_guy          = users(:normal_guy)
     @my_event            = events(:my_event)
+    @empty_reg_tables    = user_events(:empty_registration_tables)
+  end
 
+
+  test "@empty_reg_tables  has no table signups!" do
+    assert @empty_reg_tables.no_signups?
+  end
+
+  test "@paid_event has  table signups!" do
+    assert_not @paid_event.no_signups?
+  end
+
+  test 'User event has no registrations' do
+    # puts "#{@empty_reg_tables.user.name} is signed up for: " + @empty_reg_tables.registration_tables
+    assert_empty @empty_reg_tables.registration_tables
+    assert @empty_reg_tables.registration_tables.empty?
+  end
+
+  test 'User event HAS registations'do
+    assert_not_empty @paid_event.registration_tables
+    assert_not @paid_event.registration_tables.empty?
   end
 
   test 'Admin has his events and not others' do

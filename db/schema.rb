@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170731192814) do
+ActiveRecord::Schema.define(version: 20170801232034) do
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
@@ -101,9 +101,9 @@ ActiveRecord::Schema.define(version: 20170731192814) do
   create_table "user_events", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "event_id"
-    t.boolean  "paid"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.boolean  "paid",           default: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.string   "payment_id"
     t.integer  "payment_amount"
     t.datetime "payment_date"
