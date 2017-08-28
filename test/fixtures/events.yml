@@ -2,28 +2,28 @@
 
 my_event:
   name: My Event
-  start: 2017-08-05 08:00:00
-  end: 2017-08-08 20:00:00
+  start: <%= 7.day.from_now.to_s(:db) %>
+  end: <%= 10.day.from_now.to_s(:db) %>
   location: This is a place
-  rsvp_close: 2017-08-08 20:00:00
+  rsvp_close: <%= 7.day.from_now.to_s(:db) %>
   prereg_price: 20
   onsite_price: 30
-  prereg_ends: 2017-08-04 23:59:59
+  prereg_ends: <%= 5.day.from_now.to_s(:db) %>
 
 prereg_ended_event:
   name: My Event
-  start: 2017-08-01 08:00:00
-  end: 2017-08-03 20:00:00
+  start: <%= 5.day.from_now.to_s(:db) %>
+  end: <%= 7.day.from_now.to_s(:db) %>
   location: This is a place
-  rsvp_close: 2017-08-02 20:00:00
+  rsvp_close: <%= 5.day.from_now.to_s(:db) %>
   prereg_price: 20
   onsite_price: 30
-  prereg_ends: 2017-07-14 23:59:59
+  prereg_ends: <%= 5.day.ago.to_s(:db) %>
 
 other:
   name: Other Event
-  start: 2017-06-24 09:00:00
-  end: 2017-06-24 15:00:00
+  start: <%= 5.day.from_now.to_s(:db) %>
+  end: <%= 5.day.from_now.to_s(:db) %>
   location: MyString
-  rsvp_close: 2116-05-31 00:00:00
-  prereg_ends: 2116-05-31 00:00:00
+  rsvp_close: <%= 5.day.from_now.to_s(:db) %>
+  prereg_ends: <%= 5.day.from_now.to_s(:db) %>
