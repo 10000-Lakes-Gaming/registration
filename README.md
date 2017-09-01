@@ -78,3 +78,5 @@ create a user in the application, and use `rails console` to update to be an adm
 A shell script, [rebuild-database.sh](rebuild-database.sh) has been provided to drop, create, and populate your
 local schema. Additionally, it will start up rails server by calling `bundle exec rails server`
 
+## Copying data from production to DEV or Staging using parity
+[Parity](https://robots.thoughtbot.com/how-to-back-up-a-heroku-production-database-to-staging)
