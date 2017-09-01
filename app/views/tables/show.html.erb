@@ -26,7 +26,7 @@
   </p>
   <button data-toggle="collapse" data-target="#players" class="btn btn-info">Current Players</button>
   <% if admin? %>
-      <% if @table.game_masters.size < @table.gms_needed %>
+      <% if @table.registration_tables.size < @table.max_players %>
           <%= button_to "Add Player", new_event_session_table_registration_table_path(@event, @session, @table), method: :get, :class => "btn btn-warning" %>
       <% end %>
   <% end %>
