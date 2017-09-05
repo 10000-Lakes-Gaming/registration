@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resources :gm_list
     resources :gms_by_scenario
     resources :table_assignment
+    resources :event_registration
     resources :user_events do
       collection do
         get 'search'
