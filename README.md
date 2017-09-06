@@ -56,6 +56,8 @@ up a user with Stripe (which is free), and get the test API keys. These keys wil
   ENV['SECRET_KEY']         = '[YOUR SECRET KEY]'
 ```
 
+For testing Stripe credit card payments, see [Test Card numbers](https://stripe.com/docs/testing#cards)
+
 ### More configs to come?
 
 ## Setting up your development environment
