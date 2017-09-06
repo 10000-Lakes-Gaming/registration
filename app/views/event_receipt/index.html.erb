@@ -1,0 +1,10 @@
+<% content_for :head do %>
+    <title><%= @event.name %> Registration</title>
+<% end %>
+
+<h2 class="hidden-print">All registrations, by user:</h2>
+
+<% @event.user_events.sort.each do |user_event| %>
+    <%= render partial:  'registration_receipt', locals: {event: @event, user_event: user_event}%>
+    <hr>
+<% end %>

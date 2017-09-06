@@ -1,0 +1,60 @@
+<h3>Registration for <%= event.name %></h3>
+<% player = user_event.user %>
+<% @user_event = user_event %>
+<div class="pageinate">
+  <div class="well">
+    <div class="row">
+      <div class="col-md-2 col-sm-3"><strong>Name:</strong></div>
+      <div class="col-md-6 col-sm-5"><%= player.name %></div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-sm-3"><strong>PFS Number:</strong></div>
+      <div class="col-md-6 col-sm-5"><%= player.pfs_number %></div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-sm-3"><strong>Email:</strong></div>
+      <div class="col-md-6 col-sm-5"><%= player.email %></div>
+    </div>
+    <% if @event.price&.nonzero? %>
+        <div class="row">
+          <div class="col-md-2 col-sm-3"><strong>Paid:</strong></div>
+          <div class="col-md-6 col-sm-5">
+            <% if user_event.payment_ok? %>
+                Yes
+            <% else %>
+                No
+            <% end %>
+
+          </div>
+        </div>
+    <% end %>
+  </div>
+
+  <% if user_event.total_paid > 0 %>
+      <hr>
+      <%= render 'user_events/all_payments_table' %>
+  <% end %>
+  <hr>
+
+  <% unless user_event.registration_tables.empty? %>
+      <h3>Player Sessions</h3>
+      <div class="well">
+        <ul>
+          <% user_event.registration_tables.each do |reg_table| %>
+              <li><%= "#{reg_table.table.session.name}: #{reg_table.table.scenario.long_name} at #{reg_table.table.location}" %></li>
+          <% end %>
+        </ul>
+      </div>
+  <% end %>
+
+  <% unless user_event.game_masters.empty? %>
+      <h3>GM Sessions</h3>
+      <div class="well">
+        <ul>
+          <% user_event.game_masters.each do |reg_table| %>
+              <li><%= "#{reg_table.table.session.name}: #{reg_table.table.scenario.long_name} at #{reg_table.table.location}" %></li>
+          <% end %>
+        </ul>
+      </div>
+  <% end %>
+</div>
