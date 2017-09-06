@@ -5,4 +5,8 @@ class EventReceiptController < ApplicationController
   def index
     render layout: "table-assignment"
   end
+
+  def show
+    render layout: "table-assignment"
+  end
 end
