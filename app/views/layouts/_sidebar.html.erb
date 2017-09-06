@@ -6,14 +6,26 @@
   <li><%= link_to 'Home', welcome_index_path %></li>
 
   <!-- TODO - This should only display if a user has registered for events. The second part of this if statement doesn't work. -->
-  <% if user_signed_in? && current_user&.current_events&.present? %>
-    <li><u>Registered Events</u></li>
-    <% current_user&.user_events&.each do |registration| %>
-      <% unless registration.past %>
-          <li><%= link_to "#{registration.event.name}", event_user_event_path(registration.event, registration) %></li>
+  <% if user_signed_in? %>
+      <% if current_user&.current_events&.present? %>
+          <li><u>Registered Events</u></li>
+          <% current_user&.user_events&.each do |registration| %>
+              <% unless registration.past %>
+                  <li><%= link_to "#{registration.event.name}", event_user_event_path(registration.event, registration) %></li>
+              <% end %>
+          <% end %>
+          <hr/>
       <% end %>
-    <% end %>
-    <hr/>
+      <%# TODO - add check for all user events being w/o cost %>
+      <% unless current_user.user_events.empty? %>
+          <li><u>Receipts</u></li>
+          <% current_user&.user_events&.each do |registration| %>
+              <% unless registration.total_paid == 0 %>
+                  <li><%= link_to "#{registration.event.name}", event_event_receipt_path(registration.event, registration) %></li>
+              <% end %>
+          <% end %>
+          <hr/>
+      <% end %>
   <% end %>
 
   <% if user_signed_in? && current_user.admin? %>
@@ -34,7 +46,7 @@
           <% end %>
 
           <li><%= link_to "Table Assignments", event_table_assignment_index_path(@event) %></li>
-          <li><%= link_to "User Registrations", event_event_registration_index_path(@event) %></li>
+          <li><%= link_to "All User Receipts", event_event_receipt_index_path(@event) %></li>
           <li><%= link_to "GM List", event_gm_list_index_path(@event) %></li>
           <li><%= link_to "GMs By Scenario", event_gms_by_scenario_index_path(@event) %></li>
           <li style="padding-top: 1em;"><u>Event APIs</u></li>

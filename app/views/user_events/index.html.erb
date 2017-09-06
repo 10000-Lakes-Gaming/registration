@@ -26,6 +26,7 @@
         </td>
         <td><%= link_to 'Show', event_user_event_path(@event, user_event), :class => 'btn btn-info' %>
           <%= link_to 'Edit', edit_event_user_event_path(@event, user_event), :class => 'btn btn-primary' %>
+          <%= link_to 'Print Receipt', event_user_event_path(@event, user_event), :class => 'btn btn-success' %>
           <%= link_to 'Unregister', [@event, user_event], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %>
         </td>
       </tr>

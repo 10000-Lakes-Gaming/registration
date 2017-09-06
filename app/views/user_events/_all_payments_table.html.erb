@@ -1,24 +1,21 @@
-<p><strong>Your total payments so far to <%= @event.name %></strong></p>
+<h3>Your total payments so far to <%= @event.name %></h3>
 
-<%# TODO add styles here... %>
 <div class="well">
   <div class="row">
-    <div class="col-md-3"><strong>Payment For</strong></div>
-    <div class="col-md-3"><strong>Payment Amount</strong></div>
-    <div class="col-md-3"><strong>Payment Date:</strong></div>
-    <div class="col-md-3"><strong>Payment ID:</strong></div>
+    <div class="col-md-4 col-sm-5"><strong>Payment For</strong></div>
+    <div class="col-md-3 col-sm-3"><strong>Payment Amount</strong></div>
+    <div class="col-md-3 col-sm-3"><strong>Payment Date:</strong></div>
   </div>
 
   <% if @user_event.payment_amount&.nonzero? %>
       <div class="row">
-        <div class="col-md-3"><%= @event.name %></div>
-        <div class="col-md-3"><%= number_to_currency(@user_event.payment_amount.to_i / 100) %></div>
-        <div class="col-md-3">
+        <div class="col-md-4 col-sm-5"><%= @event.name %></div>
+        <div class="col-md-3 col-sm-3"><%= number_to_currency(@user_event.payment_amount.to_i / 100) %></div>
+        <div class="col-md-3 col-sm-3">
           <% if @user_event.payment_date %>
               <%= @user_event.payment_date.localtime.to_formatted_s(:long) %>
           <% end %>
         </div>
-        <div class="col-md-3"><%= @user_event.payment_id %></div>
       </div>
   <% end %>
 
@@ -27,20 +24,19 @@
   <% @user_event.registration_tables.each do |reg_table| %>
       <% if reg_table.payment_amount&.nonzero? %>
           <div class="row">
-            <div class="col-md-3"><%= reg_table.table.long_name %></div>
-            <div class="col-md-3"><%= number_to_currency(reg_table.payment_amount.to_i / 100) %></div>
-            <div class="col-md-3">
+            <div class="col-md-4 col-sm-5"><%= reg_table.table.long_name %></div>
+            <div class="col-md-3 col-sm-3"><%= number_to_currency(reg_table.payment_amount.to_i / 100) %></div>
+            <div class="col-md-3 col-sm-3">
               <% if reg_table.payment_date %>
                   <%= reg_table.payment_date.localtime.to_formatted_s(:long) %>
               <% end %>
             </div>
-            <div class="col-md-3"><%= reg_table.payment_id %></div>
           </div>
       <% end %>
   <% end %>
 
   <div class="row">
-    <div class="col-md-3"><strong>Totals:</strong></div>
+    <div class="col-md-3"><strong>Totals for <%= @event.name %>:</strong></div>
     <div class="col-md-9"><%= number_to_currency @user_event.total_paid %></div>
   </div>
 
