@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170801232034) do
+ActiveRecord::Schema.define(version: 20170907202733) do
+
+  create_table "additional_payments", force: :cascade do |t|
+    t.string   "category"
+    t.string   "description"
+    t.boolean  "charitable_donation"
+    t.integer  "market_price"
+    t.integer  "payment_price"
+    t.integer  "payment_amount"
+    t.string   "payment_id"
+    t.datetime "payment_date"
+    t.integer  "user_event_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.index ["user_event_id"], name: "index_additional_payments_on_user_event_id"
+  end
 
   create_table "events", force: :cascade do |t|
     t.string   "name"

@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @additional_payment.category %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @additional_payment.description %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @additional_payment.price %>
+</p>
+
+<p>
+  <strong>Payment amount:</strong>
+  <%= @additional_payment.payment_amount %>
+</p>
+
+<p>
+  <strong>Payment:</strong>
+  <%= @additional_payment.payment_id %>
+</p>
+
+<p>
+  <strong>Payment date:</strong>
+  <%= @additional_payment.payment_date %>
+</p>
+
+<p>
+  <strong>User event:</strong>
+  <%= @additional_payment.user_event %>
+</p>
+
+<%= link_to 'Edit', edit_additional_payment_path(@additional_payment) %> |
+<%= link_to 'Back', additional_payments_path %>

@@ -32,3 +32,9 @@ empty_registration_tables:
   event: my_event
   paid: true
   payment_amount: 2000
+
+paid_user_event_unpaid_additional:
+  user: normal_guy
+  event: my_event
+  paid: true
+  payment_amount: 2000

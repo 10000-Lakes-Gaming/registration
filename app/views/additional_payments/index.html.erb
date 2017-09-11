@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Additional Payments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Payment amount</th>
+      <th>Payment</th>
+      <th>Payment date</th>
+      <th>User event</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @additional_payments.each do |additional_payment| %>
+      <tr>
+        <td><%= additional_payment.category %></td>
+        <td><%= additional_payment.description %></td>
+        <td><%= additional_payment.price %></td>
+        <td><%= additional_payment.payment_amount %></td>
+        <td><%= additional_payment.payment_id %></td>
+        <td><%= additional_payment.payment_date %></td>
+        <td><%= additional_payment.user_event %></td>
+        <td><%= link_to 'Show', additional_payment %></td>
+        <td><%= link_to 'Edit', edit_additional_payment_path(additional_payment) %></td>
+        <td><%= link_to 'Destroy', additional_payment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Additional Payment', new_additional_payment_path %>

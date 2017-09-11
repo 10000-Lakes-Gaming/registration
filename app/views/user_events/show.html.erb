@@ -35,6 +35,9 @@
   <% end %>
 </div>
 
+<% if @user_event.unpaid_additional_payments? %>
+<% end %>
+
 
 <% if @user_event.total_paid > 0 %>
     <hr>

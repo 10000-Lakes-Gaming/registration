@@ -82,5 +82,15 @@ class UserEventTest < ActiveSupport::TestCase
     assert_not_equal reg.total_price, reg.total_paid
   end
 
+  test 'Unpaid additional payment returns true' do
+    reg = user_events(:paid_user_event_unpaid_additional)
+    assert reg.unpaid_additional_payments?
+  end
+
+
+  test 'Paid additional payment returns false' do
+    reg = user_events(:normal_guy_my_event)
+    assert_not reg.unpaid_additional_payments?
+  end
 
 end
