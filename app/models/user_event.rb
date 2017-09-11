@@ -3,6 +3,7 @@ class UserEvent < ActiveRecord::Base
   belongs_to :event
   has_many :registration_tables
   has_many :game_masters
+  has_many :additional_payments
   validates :event_id, :presence => true, :uniqueness => {:scope => :user_id}
   validates :user_id, :presence => true, :uniqueness => {:scope => :event_id}
   validates :payment_id, :presence => true, :if => :payment_amount
@@ -25,10 +26,17 @@ class UserEvent < ActiveRecord::Base
     game_masters.length
   end
 
+  def unpaid_additional_payments?
+    additional_payments.any? {|payment| payment.payment_id.nil?}
+  end
+
   def total_paid
     total = self.payment_amount.to_i
     registration_tables.each do |table|
       total += table.payment_amount.to_i
+    end
+    additional_payments.each do |payment|
+      total += payment.payment_amount.to_i
     end
     # put in dollars
     total.to_i / 100
@@ -38,6 +46,9 @@ class UserEvent < ActiveRecord::Base
     total = self.event.price.to_i
     registration_tables.each do |table|
       total += table.price.to_i
+    end
+    additional_payments.each do |payment|
+      total += payment.price.to_i
     end
     total
   end

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
         get 'search'
         get 'show_since'
       end
+      resources :additional_payments,  shallow: true
       resources :registration_payment, only: [:new, :create]
     end
     resources :sessions do

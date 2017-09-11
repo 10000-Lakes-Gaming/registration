@@ -37,8 +37,7 @@ class EventTest < ActiveSupport::TestCase
   # Note: If extra user events are added, this must be increased.
   test "My event has 5 registrations, including the admin user's" do
     admin_user_event = user_events(:admin_my_event)
-
-    assert_equal 5, @my_event.user_events.size
+    assert_equal 6, @my_event.user_events.size
     assert_includes @my_event.user_events, admin_user_event
 
   end

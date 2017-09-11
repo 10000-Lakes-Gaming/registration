@@ -1,0 +1,2 @@
+module AdditionalPaymentsHelper
+end
