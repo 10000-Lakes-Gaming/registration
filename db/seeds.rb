@@ -38,3 +38,6 @@ userEvent = UserEvent.create!([{event_id: 1, user_id: 1}])
 
 registration_tables = RegistrationTable.create!([{user_event_id: 1, table_id: 1, paid: true, payment_amount: 1000, payment_id: 'PAYMENTID'},
                                                  {user_event_id: 1, table_id: 3}])
+
+additional_payments = AdditionalPayment.create!([user_event_id: 1, category: 'auction', description: 'A really neat thingie!',
+                                                charitable_donation: true, market_price: 2000, payment_price: 3000])
