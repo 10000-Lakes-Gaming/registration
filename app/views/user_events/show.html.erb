@@ -36,6 +36,33 @@
 </div>
 
 <% if @user_event.unpaid_additional_payments? %>
+    <h3>Unpaid Additional Payments:</h3>
+    <div class="well">
+      <div class="row">
+        <div class="col-md-2 col-sm-2">Category</div>
+        <div class="col-md-4 col-sm-4">Description</div>
+        <div class="col-md-2 col-sm-2">Donation?</div>
+        <div class="col-md-2 col-sm-2">Price</div>
+      </div>
+      <% @user_event.additional_payments.each do |payment| %>
+          <%# display the additional payment, with a button to pay %>
+          <div class="row">
+            <div class="col-md-2 col-sm-2"><%= payment.category %></div>
+            <div class="col-md-4 col-sm-4"><%= payment.description %></div>
+            <div class="col-md-2 col-sm-2">
+              <% if payment.charitable_donation? %>
+                  Yes
+              <% else %>
+                  No
+              <% end %>
+            </div>
+            <div class="col-md-2 col-sm-2"><%= number_to_currency(payment.price.to_i / 100) %></div>
+            <div class="col-md-2 col-sm-2">
+              <%= render partial: 'additional_payments/additional_payment', locals: {payment: payment, button_label: "Pay for #{payment.category}"} %>
+            </div>
+          </div>
+      <% end %>
+    </div>
 <% end %>
 
 

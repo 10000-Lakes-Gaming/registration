@@ -17,4 +17,8 @@ class AdditionalPayment < ApplicationRecord
     donation
   end
 
+  def long_description
+    "#{user_event.name} (#{category}): #{description}"
+  end
+
 end
