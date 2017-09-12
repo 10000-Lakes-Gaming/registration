@@ -58,7 +58,7 @@ class AdditionalPaymentsController < ApplicationController
   def destroy
     @additional_payment.destroy
     respond_to do |format|
-      format.html {redirect_to additional_payments_url, notice: 'Additional payment was successfully destroyed.'}
+      format.html {redirect_to [@event, @user_event], notice: 'Additional payment was successfully destroyed.'}
       format.json {head :no_content}
     end
   end
