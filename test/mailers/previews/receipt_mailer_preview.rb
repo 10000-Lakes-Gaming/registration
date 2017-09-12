@@ -13,11 +13,17 @@ class ReceiptMailerPreview < ActionMailer::Preview
     ReceiptMailer.table_registration_payment_email @registration_table
   end
 
+  def additional_payment_email
+    setup_user_event
+    add_payment_to_event
+    ReceiptMailer.additional_payment_email @payment
+  end
+
   private
   def setup_user_event
     @event                     = Event.new
     @event.name                = 'Receipt Test Event'
-    @event.price               = 20
+    @event.prereg_price        = 20
     @user                      = User.first
     @user_event                = UserEvent.new
     @user_event.user           = @user
@@ -26,6 +32,20 @@ class ReceiptMailerPreview < ActionMailer::Preview
     @user_event.paid           = true
     @user_event.payment_id     = 'Event_Payment_ID'
     @user_event.payment_date   = 1.hour.ago
+  end
+
+  def add_payment_to_event
+    @payment                = AdditionalPayment.new
+    @payment.category       = "Auction"
+    @payment.description    = "A napkin signed by Venture-Captain Jack Brown!"
+    @payment.market_price   = 100
+    @payment.charitable_donation = true
+    @payment.payment_price  = 10000
+    @payment.payment_amount = 10000
+    @payment.payment_date   = Time.now
+    @payment.payment_id     = 'An auction payment ID'
+    @payment.user_event     = @user_event
+    @user_event.additional_payments << @payment
   end
 
   def add_table_to_event
@@ -49,7 +69,7 @@ class ReceiptMailerPreview < ActionMailer::Preview
     @registration_table.payment_amount = 2000
     @registration_table.payment_id     = 'tab_pay_id_1234asd'
     @registration_table.payment_date   = Time.now
-        @user_event.registration_tables << @registration_table
+    @user_event.registration_tables << @registration_table
 
   end
 end

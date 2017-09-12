@@ -28,4 +28,17 @@ class ReceiptMailer < ApplicationMailer
       format.text
     end
   end
+
+  def additional_payment_email(payment)
+    @payment    = payment
+    @user_event = @payment.user_event
+    @event      = @user_event.event
+    @user       = @user_event.user
+
+    @subject = "Payment Received for #{payment.long_description} at #{@event.name}"
+    mail(to: @user.email, subject: @subject) do |format|
+      format.html
+      format.text
+    end
+  end
 end

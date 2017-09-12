@@ -54,7 +54,7 @@ class UserEvent < ActiveRecord::Base
   end
 
   def has_charitable_donation?
-    self.additional_payments.any? {|payment| payment.donation?}
+    self.additional_payments.any? {|payment| payment.charitable_donation?}
   end
 
   def past

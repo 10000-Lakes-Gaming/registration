@@ -31,9 +31,9 @@ class AdditionalPaymentPaymentController < ApplicationController
     @payment.save!
 
     # Need to create the email for this!
-    # @user_event = @registration_table.user_event
+    @user_event = payment.user_event
     # send email
-    # ReceiptMailer.table_registration_payment_email(@registration_table).deliver
+    ReceiptMailer.table_registration_payment_email(@registration_table).deliver
 
     redirect_to @payment.user_event.event, notice: "Thank you! Payment has been received for #{@payment.long_description}"
 
