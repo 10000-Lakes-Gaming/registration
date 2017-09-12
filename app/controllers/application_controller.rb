@@ -29,10 +29,7 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  # Use callbacks to share common setup or constraints between actions.
-  def get_user_event
-    @user_event = UserEvent.find(params[:id])
-  end
+
 
   def authenticate_user!
     super unless $disable_authentication

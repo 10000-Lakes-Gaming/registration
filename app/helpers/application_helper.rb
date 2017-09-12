@@ -4,4 +4,7 @@ module ApplicationHelper
     !current_user.nil? and current_user.admin?
   end
 
+  def yes_no (value)
+    value ? "Yes" : "No"
+  end
 end

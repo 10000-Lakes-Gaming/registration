@@ -1,39 +1,34 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Additional Payments</h1>
+<h2>Additional Payments for <%= @user_event.user.name %> from <%= @event.name %></h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>Category</th>
-      <th>Description</th>
-      <th>Price</th>
-      <th>Payment amount</th>
-      <th>Payment</th>
-      <th>Payment date</th>
-      <th>User event</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div class="well">
+  <div class="row striped-outer">
+    <div class="col-sm-2"><b>Category</b></div>
+    <div class="col-sm-4"><b>Description</b></div>
+    <div class="col-sm-1"><b>Price</b></div>
+    <div class="col-sm-1"><b>Paid?</b></div>
+  </div>
+  <% @additional_payments.each do |additional_payment| %>
+      <div class="row striped-outer">
+        <div class="col-sm-2"><%= additional_payment.category %></div>
+        <div class="col-sm-4"><%= additional_payment.description %></div>
+        <div class="col-sm-1"><%= additional_payment.price %></div>
+        <div class="col-sm-1"><%= yes_no !additional_payment.unpaid? %></div>
+        <div class="col-sm-2">
+          <%= link_to 'Show', [@event, @user_event, additional_payment], :class => 'btn btn-sm btn-info' %>
+          <%= link_to 'Edit', edit_event_user_event_additional_payment_path(@event, @user_event, additional_payment), :class => 'btn btn-sm btn-primary' %>
+          <%= link_to 'Destroy', [@event, @user_event, additional_payment], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-sm btn-danger' %>
+        </div>
+        <% if additional_payment.unpaid? %>
+            <div class="col-sm-2">
+              <%= render partial: 'additional_payment', locals: {payment: additional_payment, button_label: "Pay for #{additional_payment.category}"} %>
+            </div>
+        <% end %>
+      </div>
+  <% end %>
+</div>
 
-  <tbody>
-    <% @additional_payments.each do |additional_payment| %>
-      <tr>
-        <td><%= additional_payment.category %></td>
-        <td><%= additional_payment.description %></td>
-        <td><%= additional_payment.price %></td>
-        <td><%= additional_payment.payment_amount %></td>
-        <td><%= additional_payment.payment_id %></td>
-        <td><%= additional_payment.payment_date %></td>
-        <td><%= additional_payment.user_event %></td>
-        <td><%= link_to 'Show', additional_payment %></td>
-        <td><%= link_to 'Edit', edit_additional_payment_path(additional_payment) %></td>
-        <td><%= link_to 'Destroy', additional_payment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Additional Payment', new_additional_payment_path %>
+<% if admin? %>
+<%= link_to 'New Additional Payment', new_event_user_event_additional_payment_path(@event, @user_event), :class => 'btn btn-success' %>
+<% end %>

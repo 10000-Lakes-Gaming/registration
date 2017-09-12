@@ -1,7 +1,7 @@
 <div>
   <!-- /additional_payments/:additional_payment_id/additional_payment_payment -->
   <!--/events/:event_id/user_events/:user_event_id/additional_payments/:additional_payment_id/additional_payment_payment-->
-  <form action="/events/<%= payment.user_event.event.id %>/user_events/<%= payment.user_event.id %>/additional_payments/<%= payment.id %>/additional_payment_payment" method="post">
+  <form action="/additional_payments/<%= payment.user_event.id %>/additional_payments/<%= payment.id %>/additional_payment_payment" method="post">
     <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
     <!-- this should pull the data-key from environment -->
     <script

@@ -1,6 +1,6 @@
 <h1>Editing Additional Payment</h1>
 
-<%= render 'form', additional_payment: @additional_payment %>
+<%= render 'form' %>
 
-<%= link_to 'Show', @additional_payment %> |
-<%= link_to 'Back', additional_payments_path %>
+<%= link_to 'Show', [@event, @user_event, @additional_payment], :class => 'btn btn-info' %>
+<%= link_to 'Back', event_user_event_additional_payments_path(@event, @user_event), :class => 'btn btn-warning' %>

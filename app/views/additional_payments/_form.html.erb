@@ -1,52 +1,89 @@
-<%= form_for(additional_payment) do |f| %>
-  <% if additional_payment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(additional_payment.errors.count, "error") %> prohibited this additional_payment from being saved:</h2>
+<%= form_for([@event, @user_event, @additional_payment]) do |f| %>
+    <% if @additional_payment.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@additional_payment.errors.count, "error") %> prohibited this additional payment from being
+            saved:</h2>
 
-      <ul>
-      <% additional_payment.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @additional_payment.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :category %>
+
+      <%= f.select :category, ['Auction', 'Raffle', 'Donation', 'Dice', 'Other'] %>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :category %>
-    <%= f.text_field :category %>
-  </div>
+    <div class="field">
+      <%= f.label :description %>
+      <%= f.text_field :description, size: 100 %>
+    </div>
+    <br>
 
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_field :description %>
-  </div>
+    <% if admin? %>
+        <div class="bg-warning text-danger">
+          <bigger>
+            <strong>
+              Admins! Price below is in cents, not dollars (multiply dollars by 100)!!!
+            </strong>
+          </bigger>
+        </div>
+    <% end %>
+    <div class="field">
+      <%= f.label :market_price, "Market Price" %>
+      <% if admin? %>
+          <%= f.text_field :market_price %> cents
+      <% else %>
+          <%= number_to_currency(@additional_payment.market_price / 100) %>
+      <% end %>
+    </div>
 
-  <div class="field">
-    <%= f.label :price %>
-    <%= f.text_field :price %>
-  </div>
+    <% if admin? %>
+        <div class="bg-warning text-danger">
+          <bigger>
+            <strong>
+              Admins! Price below is in cents, not dollars (multiply dollars by 100)!!!
+            </strong>
+          </bigger>
+        </div>
+    <% end %>
 
-  <div class="field">
-    <%= f.label :payment_amount %>
-    <%= f.text_field :payment_amount %>
-  </div>
+    <div class="field">
+      <%= f.label :payment_price, "Payment Price" %>
+      <% if admin? %>
+          <%= f.text_field :payment_price %> cents
+      <% else %>
+          <%= number_to_currency(@additional_payment.payment_price / 100) %>
+      <% end %>
+    </div>
 
-  <div class="field">
-    <%= f.label :payment_id %>
-    <%= f.text_field :payment_id %>
-  </div>
+    <br>
 
-  <div class="field">
-    <%= f.label :payment_date %>
-    <%= f.datetime_select :payment_date %>
-  </div>
+    <div class="field">
+      <%= f.label :payment_id, "Payment ID" %>
+      <% if admin? %>
+          <%= f.text_field :payment_id %>
+      <% else %>
+          <%= number_to_currency(@additional_payment.payment_price / 100) %>
+      <% end %>
+    </div>
 
-  <div class="field">
-    <%= f.label :user_event_id %>
-    <%= f.text_field :user_event_id %>
-  </div>
+    <div class="field">
+      <%= f.label :payment_date %>
+      <% if admin? %>
+          <%= f.datetime_select :payment_date %>
+      <% elsif @additional_payment.payment_date.nil? %>
+          (unpaid)
+      <% else %>
+          <%= @additional_payment.payment_date.localtime.to_formatted_s(:long) %>
+      <% end %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="actions">
+      <%= f.submit "Save Additional Payment", :class => 'btn btn-success' %>
+    </div>
 <% end %>
