@@ -18,13 +18,22 @@
       <% end %>
       <%# TODO - add check for all user events being w/o cost %>
       <% unless current_user.user_events.empty? %>
-          <li><u>Receipts</u></li>
-          <% current_user&.user_events&.each do |registration| %>
-              <% unless registration.total_paid == 0 %>
-                  <li><%= link_to "#{registration.event.name}", event_event_receipt_path(registration.event, registration) %></li>
+          <% if receipts_exist? %>
+              <li><u>Receipts</u></li>
+              <% current_user&.user_events&.each do |registration| %>
+                  <% unless registration.total_paid == 0 %>
+                      <li><%= link_to "#{registration.event.name}", event_event_receipt_path(registration.event, registration) %></li>
+                  <% end %>
               <% end %>
+              <hr/>
           <% end %>
-          <hr/>
+          <% if unpaid_payments? %>
+              <li><u>Unpaid Additional Payments</u></li>
+              <% pending_payments.each do |payment| %>
+                  <li><%= link_to "#{payment.long_description}", [payment.user_event.event, payment.user_event, payment] %></li>
+              <% end %>
+              <hr>
+          <% end %>
       <% end %>
   <% end %>
 
