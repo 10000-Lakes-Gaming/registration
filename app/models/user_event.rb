@@ -53,6 +53,10 @@ class UserEvent < ActiveRecord::Base
     total
   end
 
+  def has_charitable_donation?
+    self.additional_payments.any? {|payment| payment.donation?}
+  end
+
   def past
     Time.now > self.event.end
   end

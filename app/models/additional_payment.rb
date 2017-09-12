@@ -9,6 +9,10 @@ class AdditionalPayment < ApplicationRecord
     payment_amount.nil?
   end
 
+  def donation?
+    charitable_donation? && donation_amount > 0
+  end
+
   def donation_amount
     donation = 0
     if charitable_donation? && market_price.to_i < payment_amount.to_i
