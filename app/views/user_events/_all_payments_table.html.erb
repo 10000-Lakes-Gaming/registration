@@ -1,17 +1,22 @@
 <h3>Your total payments so far to <%= @event.name %></h3>
 
 <div class="well">
-  <div class="row">
-    <div class="col-md-4 col-sm-5"><strong>Payment For</strong></div>
-    <div class="col-md-3 col-sm-3"><strong>Payment Amount</strong></div>
-    <div class="col-md-3 col-sm-3"><strong>Payment Date:</strong></div>
+  <div class="row striped-outer">
+    <div class="col-md-3 col-sm-3"><strong>Payment For</strong></div>
+    <div class="col-md-2 col-sm-2"><strong>Payment Amount</strong></div>
+    <div class="col-md-2 col-sm-2"><strong>Payment Date:</strong></div>
+    <!-- TODO - add explanation here -->
+    <% if @user_event.has_charitable_donation? %>
+        <div class="col-md-2 col-sm-2"><strong>Market Value:</strong></div>
+        <div class="col-md-2 col-sm-2"><strong>Charitable Amount:</strong></div>
+    <% end %>
   </div>
 
   <% if @user_event.payment_amount&.nonzero? %>
-      <div class="row">
-        <div class="col-md-4 col-sm-5"><%= @event.name %></div>
-        <div class="col-md-3 col-sm-3"><%= number_to_currency(@user_event.payment_amount.to_i / 100) %></div>
-        <div class="col-md-3 col-sm-3">
+      <div class="row striped-outer">
+        <div class="col-md-3 col-sm-3"><%= @event.name %></div>
+        <div class="col-md-2 col-sm-2"><%= number_to_currency(@user_event.payment_amount.to_i / 100) %></div>
+        <div class="col-md-2 col-sm-2">
           <% if @user_event.payment_date %>
               <%= @user_event.payment_date.localtime.to_formatted_s(:long) %>
           <% end %>
@@ -23,10 +28,10 @@
 
   <% @user_event.registration_tables.each do |reg_table| %>
       <% if reg_table.payment_amount&.nonzero? %>
-          <div class="row">
-            <div class="col-md-4 col-sm-5"><%= reg_table.table.long_name %></div>
-            <div class="col-md-3 col-sm-3"><%= number_to_currency(reg_table.payment_amount.to_i / 100) %></div>
-            <div class="col-md-3 col-sm-3">
+          <div class="row striped-outer">
+            <div class="col-md-3 col-sm-3"><%= reg_table.table.long_name %></div>
+            <div class="col-md-2 col-sm-2"><%= number_to_currency(reg_table.payment_amount.to_i / 100) %></div>
+            <div class="col-md-2 col-sm-2">
               <% if reg_table.payment_date %>
                   <%= reg_table.payment_date.localtime.to_formatted_s(:long) %>
               <% end %>
@@ -35,10 +40,43 @@
       <% end %>
   <% end %>
 
+  <% @user_event.additional_payments.each do |payment| %>
+      <% if payment.payment_amount&.nonzero? %>
+          <div class="row striped-outer">
+            <div class="col-md-3 col-sm-3"><%= payment.long_description %></div>
+            <div class="col-md-2 col-sm-2"><%= number_to_currency(payment.payment_amount.to_i / 100) %></div>
+            <div class="col-md-2 col-sm-2">
+              <% if payment.payment_date %>
+                  <%= payment.payment_date.localtime.to_formatted_s(:long) %>
+              <% end %>
+            </div>
+            <% if payment.market_price&.nonzero? %>
+                <div class="col-sm-2 col-md-2">
+                  <%= number_to_currency(payment.market_price.to_i / 100) %>
+                </div>
+            <% end %>
+            <% if payment.donation_amount&.nonzero? %>
+                <div class="col-sm-2 col-md-2">
+                  <%= number_to_currency(payment.donation_amount.to_i / 100) %>
+                </div>
+            <% end %>
+
+          </div>
+      <% end %>
+  <% end %>
+
   <div class="row">
     <div class="col-md-3"><strong>Totals for <%= @event.name %>:</strong></div>
     <div class="col-md-9"><%= number_to_currency @user_event.total_paid %></div>
   </div>
+
+
+  <% if @user_event.has_charitable_donation? %>
+      <div class="text-info bg-info">Note: The charitable donation amount is the amount paid for in an auction that
+        exceeds
+        the market value of the item.
+      </div>
+  <% end %>
 
 
 </div>

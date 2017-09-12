@@ -24,9 +24,13 @@
               <span class="glyphicon glyphicon-ok-circle"></span>
           <% end %>
         </td>
-        <td><%= link_to 'Show', event_user_event_path(@event, user_event), :class => 'btn btn-info' %>
+        <td>
+          <%= link_to 'Show', event_user_event_path(@event, user_event), :class => 'btn btn-info' %>
           <%= link_to 'Edit', edit_event_user_event_path(@event, user_event), :class => 'btn btn-primary' %>
           <%= link_to 'Print Receipt', event_user_event_path(@event, user_event), :class => 'btn btn-success' %>
+          <% if admin? %>
+            <%= link_to 'Add Additional Payment', new_event_user_event_additional_payment_path(@event, user_event), :class => 'btn btn-primary' %>
+          <% end %>
           <%= link_to 'Unregister', [@event, user_event], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %>
         </td>
       </tr>
