@@ -17,7 +17,7 @@
   <% if @user_event.payment_amount&.nonzero? %>
       <tr>
         <td><%= @event.name %></td>
-        <td><%= number_to_currency(@user_event.payment_amount.to_i / 100) %></td>
+        <td><%= number_to_currency(@user_event.payment_amount.to_f / 100) %></td>
         <td>
           <% if @user_event.payment_date %>
               <%= @user_event.payment_date.localtime.to_formatted_s(:long) %>
@@ -36,7 +36,7 @@
       <% if reg_table.payment_amount&.nonzero? %>
           <tr>
             <td><%= reg_table.table.long_name %></td>
-            <td><%= number_to_currency(reg_table.payment_amount.to_i / 100) %></td>
+            <td><%= number_to_currency(reg_table.payment_amount.to_f / 100) %></td>
             <td>
               <% if reg_table.payment_date %>
                   <%= reg_table.payment_date.localtime.to_formatted_s(:long) %>
@@ -55,7 +55,7 @@
       <% if payment.payment_amount&.nonzero? %>
           <tr>
             <td><%= payment.long_description %></td>
-            <td><%= number_to_currency(payment.payment_amount.to_i / 100) %></td>
+            <td><%= number_to_currency(payment.payment_amount.to_f / 100) %></td>
             <td>
               <% if payment.payment_date %>
                   <%= payment.payment_date.localtime.to_formatted_s(:long) %>
@@ -63,10 +63,10 @@
             </td>
             <td><%= payment.payment_id %></td>
             <% if payment.market_price&.nonzero? %>
-                <td><%= number_to_currency(payment.market_price.to_i / 100) %></td>
+                <td><%= number_to_currency(payment.market_price.to_f / 100) %></td>
             <% end %>
             <% if payment.donation_amount&.nonzero? %>
-                <td><%= number_to_currency(payment.donation_amount.to_i / 100) %></td>
+                <td><%= number_to_currency(payment.donation_amount.to_f / 100) %></td>
             <% end %>
           </tr>
       <% end %>
@@ -74,7 +74,7 @@
 
   <tr>
     <td><strong>Totals:</strong></td>
-    <td><%= number_to_currency @user_event.total_paid %></td>
+    <td><%= number_to_currency @user_event.total_paid.to_f %></td>
     <td></td>
     <td></td>
     <% if @user_event.has_charitable_donation? %>

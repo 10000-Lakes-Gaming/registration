@@ -39,11 +39,11 @@
   </div>
   <div class="row">
     <div class="col-md-2 col-sm-3"><strong>Market Value:</strong></div>
-    <div class="col-md-6 col-sm-5"><%= number_to_currency(@additional_payment.market_price / 100) %></div>
+    <div class="col-md-6 col-sm-5"><%= number_to_currency(@additional_payment.market_price.to_f / 100) %></div>
   </div>
   <div class="row">
     <div class="col-md-2 col-sm-3"><strong>Payment Price:</strong></div>
-    <div class="col-md-6 col-sm-5"><%= number_to_currency(@additional_payment.payment_price / 100) %></div>
+    <div class="col-md-6 col-sm-5"><%= number_to_currency(@additional_payment.payment_price.to_f / 100) %></div>
   </div>
   <div class="row">
     <div class="col-md-2 col-sm-3"><strong>Paid:</strong></div>

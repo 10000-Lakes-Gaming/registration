@@ -38,7 +38,7 @@
       <% if admin? %>
           <%= f.text_field :market_price %> cents
       <% else %>
-          <%= number_to_currency(@additional_payment.market_price / 100) %>
+          <%= number_to_currency(@additional_payment.market_price.to_f / 100) %>
       <% end %>
     </div>
 
@@ -57,18 +57,36 @@
       <% if admin? %>
           <%= f.text_field :payment_price %> cents
       <% else %>
-          <%= number_to_currency(@additional_payment.payment_price / 100) %>
+          <%= number_to_currency(@additional_payment.payment_price.to_f / 100) %>
       <% end %>
     </div>
 
     <br>
 
+
+    <div class="bg-info text-info">Payment ID is the value set by the payment service as the transaction identifier.
+      Do not set unless you are doing a cash/manual payment.
+    </div>
     <div class="field">
       <%= f.label :payment_id, "Payment ID" %>
       <% if admin? %>
           <%= f.text_field :payment_id %>
       <% else %>
-          <%= number_to_currency(@additional_payment.payment_price / 100) %>
+          <%= number_to_currency(@additional_payment.payment_price.to_f / 100) %>
+      <% end %>
+    </div>
+
+    <div class="bg-info text-info">Paid Amount is the value that was actually paid.
+      This is set by the payment service, so unless processing a manual payment (see above)
+      do not set!
+    </div>
+
+    <div class="field">
+      <%= f.label :payment_amount, "Paid Amount" %>
+      <% if admin? %>
+          <%= f.text_field :payment_amount %>
+      <% else %>
+          <%= number_to_currency(@additional_payment.payment_amount.to_f / 100) %>
       <% end %>
     </div>
 

@@ -1,5 +1,10 @@
 class AdditionalPayment < ApplicationRecord
   belongs_to :user_event
+  validates :category, presence: true
+  validates :description, presence: true
+  validates :market_price, presence: true
+  validates :payment_price, presence: true
+  validates :payment_id, :presence => true, :if => :payment_amount
 
   def price
     payment_price
