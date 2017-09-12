@@ -35,9 +35,12 @@
   <% end %>
 </div>
 
-<% if @user_event.unpaid_additional_payments? %>
-    <h3>Unpaid Additional Payments:</h3>
-    <div class="well">
+<hr>
+
+<h3>Additional Payments</h3>
+<div class="well">
+  <% if @user_event.unpaid_additional_payments? %>
+      <h4>Unpaid Additional Payments:</h4>
       <div class="row striped-outer">
         <div class="col-md-2 col-sm-2"><b>Category</b></div>
         <div class="col-md-4 col-sm-3"><b>Description</b></div>
@@ -61,21 +64,20 @@
             <% end %>
           </div>
       <% end %>
-      <% if admin? %>
-          <div>
-            <%= link_to 'View All Additional Payments', event_user_event_additional_payments_path(@event, @user_event), :class => 'btn btn-info' %>
-          </div>
-      <% end %>
 
-    </div>
-<% end %>
-
+  <% else %>
+      <div class="text-info">You have no pending additional payments</div>
+  <% end %>
+  <br>
+  <div>
+    <%= link_to 'View Additional Payments', event_user_event_additional_payments_path(@event, @user_event), :class => 'btn btn-sm btn-success' %>
+  </div>
+</div>  
 
 <% if @user_event.total_paid > 0 %>
     <hr>
     <%= render 'all_payments_table' %>
 <% end %>
-
 
 <hr>
 
