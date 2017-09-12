@@ -52,7 +52,7 @@
             <div class="col-md-1 col-sm-1">
               <%= yes_no payment.charitable_donation? %>
             </div>
-            <div class="col-md-2 col-sm-2"><%= number_to_currency(payment.price.to_i / 100) %></div>
+            <div class="col-md-2 col-sm-2"><%= number_to_currency(payment.price.to_f / 100) %></div>
             <div class="col-md-2 col-sm-2">
               <%= render partial: 'additional_payments/additional_payment', locals: {payment: payment, button_label: "Pay for #{payment.category}"} %>
             </div>

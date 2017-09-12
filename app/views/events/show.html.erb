@@ -113,7 +113,7 @@
           <div class="col-md-2"><b>Paid?</b></div>
           <% if @registration.payment_ok? %>
               <div class="col-md-6">
-                Yes (<%= number_to_currency (@registration.payment_amount / 100) %>
+                Yes (<%= number_to_currency (@registration.payment_amount.to_f / 100) %>
                 <% if @registration.payment_date %>
                     on <%= @registration.payment_date.localtime.to_formatted_s(:long_ordinal) %>
                 <% end %>)

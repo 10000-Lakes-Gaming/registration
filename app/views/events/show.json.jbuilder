@@ -2,7 +2,7 @@ json.event do
   json.extract! @event, :id, :name, :location, :charity
   json.set! :start, @event.start.localtime.to_formatted_s(:long)
   json.set! :end, @event.end.localtime.to_formatted_s(:long)
-  json.set! :price, number_to_currency(@event.price.to_i)
+  json.set! :price, number_to_currency(@event.price.to_f)
   json.session do
     json.array!(@event.sessions) do |session|
       json.extract! session, :id, :name, :start, :end
