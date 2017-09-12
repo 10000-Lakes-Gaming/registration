@@ -6,6 +6,11 @@
     <th>Payment Amount</th>
     <th>Payment Date:</th>
     <th>Payment ID:</th>
+    <% if @user_event.has_charitable_donation? %>
+        <th>Market Value:</th>
+        <th>Charitable Amount:</th>
+    <% end %>
+
   </tr>
   </thead>
   <tbody>
@@ -19,8 +24,14 @@
           <% end %>
         </td>
         <td><%= @user_event.payment_id %></td>
+
+        <% if @user_event.has_charitable_donation? %>
+            <td></td>
+            <td></td>
+        <% end %>
       </tr>
   <% end %>
+
   <% @user_event.registration_tables.each do |reg_table| %>
       <% if reg_table.payment_amount&.nonzero? %>
           <tr>
@@ -32,14 +43,44 @@
               <% end %>
             </td>
             <td><%= reg_table.payment_id %></td>
+            <% if @user_event.has_charitable_donation? %>
+                <td></td>
+                <td></td>
+            <% end %>
           </tr>
       <% end %>
   <% end %>
+
+  <% @user_event.additional_payments.each do |payment| %>
+      <% if payment.payment_amount&.nonzero? %>
+          <tr>
+            <td><%= payment.long_description %></td>
+            <td><%= number_to_currency(payment.payment_amount.to_i / 100) %></td>
+            <td>
+              <% if payment.payment_date %>
+                  <%= payment.payment_date.localtime.to_formatted_s(:long) %>
+              <% end %>
+            </td>
+            <td><%= payment.payment_id %></td>
+            <% if payment.market_price&.nonzero? %>
+                <td><%= number_to_currency(payment.market_price.to_i / 100) %></td>
+            <% end %>
+            <% if payment.donation_amount&.nonzero? %>
+                <td><%= number_to_currency(payment.donation_amount.to_i / 100) %></td>
+            <% end %>
+          </tr>
+      <% end %>
+  <% end %>
+
   <tr>
     <td><strong>Totals:</strong></td>
     <td><%= number_to_currency @user_event.total_paid %></td>
     <td></td>
     <td></td>
+    <% if @user_event.has_charitable_donation? %>
+        <td></td>
+        <td></td>
+    <% end %>
   </tr>
   </tbody>
 </table>
