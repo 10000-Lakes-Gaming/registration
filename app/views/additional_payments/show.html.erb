@@ -57,7 +57,7 @@
 </div>
 
 
-<% if !admin? %>
+<% if admin? %>
     <%= link_to 'Edit', edit_event_user_event_additional_payment_path(@user_event.event, @user_event, @additional_payment), :class => 'btn btn-primary' %>
 <% end %>
 <%= link_to 'Back', event_user_event_additional_payments_path(@user_event.event, @user_event), :class => 'btn btn-warning' %>
