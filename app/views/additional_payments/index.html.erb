@@ -17,8 +17,10 @@
         <div class="col-sm-1"><%= yes_no !additional_payment.unpaid? %></div>
         <div class="col-sm-2">
           <%= link_to 'Show', [@event, @user_event, additional_payment], :class => 'btn btn-sm btn-info' %>
-          <%= link_to 'Edit', edit_event_user_event_additional_payment_path(@event, @user_event, additional_payment), :class => 'btn btn-sm btn-primary' %>
-          <%= link_to 'Destroy', [@event, @user_event, additional_payment], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-sm btn-danger' %>
+          <% if admin? %>
+              <%= link_to 'Edit', edit_event_user_event_additional_payment_path(@event, @user_event, additional_payment), :class => 'btn btn-sm btn-primary' %>
+              <%= link_to 'Destroy', [@event, @user_event, additional_payment], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-sm btn-danger' %>
+          <% end %>
         </div>
         <% if additional_payment.unpaid? %>
             <div class="col-sm-2">
@@ -30,5 +32,5 @@
 </div>
 
 <% if admin? %>
-<%= link_to 'New Additional Payment', new_event_user_event_additional_payment_path(@event, @user_event), :class => 'btn btn-success' %>
+    <%= link_to 'New Additional Payment', new_event_user_event_additional_payment_path(@event, @user_event), :class => 'btn btn-success' %>
 <% end %>
