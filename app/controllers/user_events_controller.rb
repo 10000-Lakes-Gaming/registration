@@ -6,6 +6,10 @@ class UserEventsController < ApplicationController
     @user = current_user
   end
 
+  def get_user_event
+    @user_event = UserEvent.find(params[:id])
+  end
+
   def get_users
     @users = User.all.order(:name)
   end

@@ -38,30 +38,35 @@
 <% if @user_event.unpaid_additional_payments? %>
     <h3>Unpaid Additional Payments:</h3>
     <div class="well">
-      <div class="row">
-        <div class="col-md-2 col-sm-2">Category</div>
-        <div class="col-md-4 col-sm-4">Description</div>
-        <div class="col-md-2 col-sm-2">Donation?</div>
-        <div class="col-md-2 col-sm-2">Price</div>
+      <div class="row striped-outer">
+        <div class="col-md-2 col-sm-2"><b>Category</b></div>
+        <div class="col-md-4 col-sm-3"><b>Description</b></div>
+        <div class="col-md-1 col-sm-1"><b>Donation?</b></div>
+        <div class="col-md-2 col-sm-2"><b>Price</b></div>
       </div>
       <% @user_event.additional_payments.each do |payment| %>
           <%# display the additional payment, with a button to pay %>
-          <div class="row">
+          <div class="row striped-outer">
             <div class="col-md-2 col-sm-2"><%= payment.category %></div>
-            <div class="col-md-4 col-sm-4"><%= payment.description %></div>
-            <div class="col-md-2 col-sm-2">
-              <% if payment.charitable_donation? %>
-                  Yes
-              <% else %>
-                  No
-              <% end %>
+            <div class="col-md-4 col-sm-3"><%= payment.description %></div>
+            <div class="col-md-1 col-sm-1">
+              <%= yes_no payment.charitable_donation? %>
             </div>
             <div class="col-md-2 col-sm-2"><%= number_to_currency(payment.price.to_i / 100) %></div>
             <div class="col-md-2 col-sm-2">
               <%= render partial: 'additional_payments/additional_payment', locals: {payment: payment, button_label: "Pay for #{payment.category}"} %>
             </div>
+            <% if admin? %>
+                <div class="col-md-1 col-sm-1"><%= link_to 'View Payment', [@event, @user_event, payment], :class => 'btn btn-info' %></div>
+            <% end %>
           </div>
       <% end %>
+      <% if admin? %>
+          <div>
+            <%= link_to 'View All Additional Payments', event_user_event_additional_payments_path(@event, @user_event), :class => 'btn btn-info' %>
+          </div>
+      <% end %>
+
     </div>
 <% end %>
 

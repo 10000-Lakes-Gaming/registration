@@ -1,39 +1,62 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Category:</strong>
-  <%= @additional_payment.category %>
-</p>
+<h2><%= @additional_payment.user_event.event.name %> Additional Payment</h2>
+<h3>Player Information</h3>
+<% player = @additional_payment.user_event.user %>
+<div class="well">
+  <div class="row">
+    <div class="col-md-2 col-sm-3"><strong>Name:</strong></div>
+    <div class="col-md-6 col-sm-5"><%= player.name %></div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 col-sm-3"><strong>PFS Number:</strong></div>
+    <div class="col-md-6 col-sm-5"><%= player.pfs_number %></div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 col-sm-3"><strong>Email:</strong></div>
+    <div class="col-md-6 col-sm-5"><%= player.email %></div>
+  </div>
+</div>
 
-<p>
-  <strong>Description:</strong>
-  <%= @additional_payment.description %>
-</p>
+<h3>Payment Information</h3>
+<div class="well">
+  <div class="row">
+    <div class="col-md-2 col-sm-3"><strong>Category:</strong></div>
+    <div class="col-md-6 col-sm-5"><%= @additional_payment.category %></div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 col-sm-3"><strong>Description:</strong></div>
+    <div class="col-md-6 col-sm-5"><%= @additional_payment.description %></div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 col-sm-3"><strong>Charitable Donation?:</strong></div>
+    <div class="col-md-6 col-sm-5">
+      <% if @additional_payment.charitable_donation? %>
+          Yes
+      <% else %>
+          No
+      <% end %></div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 col-sm-3"><strong>Market Value:</strong></div>
+    <div class="col-md-6 col-sm-5"><%= number_to_currency(@additional_payment.market_price / 100) %></div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 col-sm-3"><strong>Payment Price:</strong></div>
+    <div class="col-md-6 col-sm-5"><%= number_to_currency(@additional_payment.payment_price / 100) %></div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 col-sm-3"><strong>Paid:</strong></div>
+    <div class="col-md-6 col-sm-5">
+      <% if @additional_payment.unpaid? %>No
+          <%= render partial: 'additional_payment', locals: {payment: @additional_payment, button_label: "Pay for #{@additional_payment.category}"} %>
+      <% else %>Yes
+      <% end %>
+    </div>
+  </div>
+</div>
 
-<p>
-  <strong>Price:</strong>
-  <%= @additional_payment.price %>
-</p>
 
-<p>
-  <strong>Payment amount:</strong>
-  <%= @additional_payment.payment_amount %>
-</p>
 
-<p>
-  <strong>Payment:</strong>
-  <%= @additional_payment.payment_id %>
-</p>
-
-<p>
-  <strong>Payment date:</strong>
-  <%= @additional_payment.payment_date %>
-</p>
-
-<p>
-  <strong>User event:</strong>
-  <%= @additional_payment.user_event %>
-</p>
-
-<%= link_to 'Edit', edit_additional_payment_path(@additional_payment) %> |
-<%= link_to 'Back', additional_payments_path %>
+<%= link_to 'Edit', edit_event_user_event_additional_payment_path(@user_event.event, @user_event, @additional_payment), :class => 'btn btn-primary' %>
+<%= link_to 'Back', event_user_event_additional_payments_path(@user_event.event, @user_event), :class => 'btn btn-warning' %>

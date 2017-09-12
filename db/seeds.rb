@@ -5,7 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-event = Event.create!({name: 'Initial Con!', start: '2018-06-10 12:00', end: '2018-06-12 17:00',
+event = Event.create!({name:       'Initial Con!', start: '2018-06-10 12:00', end: '2018-06-12 17:00',
                        rsvp_close: '2018-6-10 18:00', prereg_ends: '2018-06-09 17:00', location: 'Fantasy Realms'})
 
 sessions = Session.create!([{event_id: event.id, name: "FRI12-17", start: '2018-06-10 12:00', end: '2018-06-10 17:00'},
@@ -39,5 +39,9 @@ userEvent = UserEvent.create!([{event_id: 1, user_id: 1}])
 registration_tables = RegistrationTable.create!([{user_event_id: 1, table_id: 1, paid: true, payment_amount: 1000, payment_id: 'PAYMENTID'},
                                                  {user_event_id: 1, table_id: 3}])
 
-additional_payments = AdditionalPayment.create!([user_event_id: 1, category: 'auction', description: 'A really neat thingie!',
-                                                charitable_donation: true, market_price: 2000, payment_price: 3000])
+additional_payments = AdditionalPayment.create!([{user_event_id:       1, category: 'auction', description: 'A really neat thingie!',
+                                                  charitable_donation: true, market_price: 2000, payment_price: 3000},
+                                                 {user_event_id:       1, category: 'auction', description: 'Another really neat thingie!',
+                                                  charitable_donation: true, market_price: 2000, payment_price: 3000},
+                                                 {user_event_id:       1, category: 'auction', description: 'Yes, another really neat thingie!',
+                                                  charitable_donation: true, market_price: 2000, payment_price: 3000}])
