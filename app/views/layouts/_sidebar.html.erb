@@ -1,11 +1,9 @@
-<!-- TODO - add active class! -->
 <ul class="sidebar">
   <% if user_signed_in? %>
       <li><%= link_to 'My Profile', user_path(current_user) %></li>
   <% end %>
   <li><%= link_to 'Home', welcome_index_path %></li>
 
-  <!-- TODO - This should only display if a user has registered for events. The second part of this if statement doesn't work. -->
   <% if user_signed_in? %>
       <% if current_user&.current_events&.present? %>
           <li><u>Registered Events</u></li>
@@ -16,7 +14,6 @@
           <% end %>
           <hr/>
       <% end %>
-      <%# TODO - add check for all user events being w/o cost %>
       <% unless current_user.user_events.empty? %>
           <% if receipts_exist? %>
               <li><u>Receipts</u></li>
@@ -40,7 +37,6 @@
   <% if user_signed_in? && current_user.admin? %>
       <li><u>Event Admin</u></li>
       <li><%= link_to 'Events', events_path %></li>
-      <%# TODO - this would be better, I think, if it indented inside of the event? --%>
       <% if @event and @event.persisted? %>
           <li><%= link_to "#{@event.name}", @event %></li>
           <li><%= link_to 'Registrations', event_user_events_path(@event) %></li>
