@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :user_events
+  has_many :event_hosts
   validates_uniqueness_of :email, :pfs_number
   validates :name, :pfs_number, :email, :presence => true
   validates :title, :presence => true, if: :venture_officer?
