@@ -2,32 +2,35 @@
 
 <h1>Event Hosts</h1>
 
-<table>
+<table class="table">
   <thead>
-    <tr>
-      <th>Start date</th>
-      <th>End date</th>
-      <th>User</th>
-      <th>Event</th>
-      <th colspan="3"></th>
-    </tr>
+  <tr>
+    <th>Start date</th>
+    <th>End date</th>
+    <th>User</th>
+    <th>Event</th>
+    <th colspan="3"></th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @event_hosts.each do |event_host| %>
-      <tr>
-        <td><%= event_host.start_date %></td>
-        <td><%= event_host.end_date %></td>
-        <td><%= event_host.user %></td>
-        <td><%= event_host.event %></td>
-        <td><%= link_to 'Show', event_host %></td>
-        <td><%= link_to 'Edit', edit_event_host_path(event_host) %></td>
-        <td><%= link_to 'Destroy', event_host, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
+  <% @event_hosts.each do |event_host| %>
+    <tr>
+      <td><%= event_host.start_date %></td>
+      <td><%= event_host.end_date %></td>
+      <td><%= event_host.user.name %></td>
+      <td><%= event_host.event.name %></td>
+      <td>
+        <%= button_to 'Show', [@event, event_host], method: :get, :class => 'btn btn-info' %>
+      </td>
+      <td>
+        <%= button_to 'Edit', edit_event_event_host_path(@event, event_host), method: :get, :class => 'btn btn-primary' %></td>
+      <td><%= button_to 'Destroy', [@event, event_host], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %></td>
+    </tr>
+  <% end %>
   </tbody>
 </table>
 
 <br>
 
-<%= link_to 'New Event Host', new_event_host_path %>
+<%= link_to 'New Event Host', new_event_event_host_path(@event) %>

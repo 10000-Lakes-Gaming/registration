@@ -1,4 +1,4 @@
-<%= form_for(event_host) do |f| %>
+<%= form_for([@event,@event_host]) do |f| %>
   <% if event_host.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(event_host.errors.count, "error") %> prohibited this event_host from being saved:</h2>
