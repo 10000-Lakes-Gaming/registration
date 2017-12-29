@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :event_hosts
   devise_for :users
   # You can have the root of your site routed with "root"
   root 'welcome#index'
@@ -14,6 +13,7 @@ Rails.application.routes.draw do
   resources :admin
 
   resources :events do
+    resources :event_hosts
     resources :gm_list
     resources :gms_by_scenario
     resources :table_assignment

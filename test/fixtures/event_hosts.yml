@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_date: 2017-12-29
+  end_date: 2017-12-29
+  user: one
+  event: one
+
+two:
+  start_date: 2017-12-29
+  end_date: 2017-12-29
+  user: two
+  event: two

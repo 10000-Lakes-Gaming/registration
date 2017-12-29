@@ -63,4 +63,3 @@ group :assets do
 
 end
 
-
