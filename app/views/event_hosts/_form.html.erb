@@ -22,7 +22,6 @@
   </div>
 
   <div class="field">
-<<<<<<< HEAD
     <% f.label :user_id %>
     <% if @event_host.persisted? %>
       <%= f.hidden_field :user_id, :value => @event_host.user_id %>
@@ -30,10 +29,6 @@
     <% else %>
       <%= f.select :user_id, options_for_select(@users.map {|user| ["#{user.name} (#{user.email})", user.id]}.to_h, @event_host.user_id), include_blank: 'Select User...' %>
     <% end %>
-=======
-    <%= f.label :user_id %>
-    <%= f.text_field :user_id %>
->>>>>>> Remove `event_id` field from the `event_host` form.
   </div>
 
   <div class="actions">
