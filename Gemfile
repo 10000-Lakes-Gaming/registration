@@ -17,6 +17,9 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+# security problem in version 1.7.1
+gem 'nokogiri', '~> 1.8.1'
+
 # This is the authen gem
 gem 'devise', '~> 4.1.1'
 gem 'omniauth', '~> 1.3.1'
