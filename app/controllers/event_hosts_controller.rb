@@ -1,7 +1,7 @@
 class EventHostsController < ApplicationController
   before_action :set_event_host, only: [:show, :edit, :update, :destroy]
   before_action :get_event
-
+  before_action :get_users
 
   # GET /event_hosts
   # GET /event_hosts.json
@@ -66,6 +66,10 @@ class EventHostsController < ApplicationController
   end
 
   private
+
+  def get_users
+    @users = User.all.order(:name)
+  end
 
   def get_event
     @event = Event.find(params[:event_id])
