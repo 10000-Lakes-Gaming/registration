@@ -12,7 +12,21 @@ class Table < ActiveRecord::Base
   validates_numericality_of :gms_needed, :max_players, greater_than: 0
 
   def <=> (tab)
-    sort = self.location.to_s <=> tab.location.to_s
+    # Remove "Table"  and sort by number, if possible.
+    myloc  = self.location.to_s.downcase
+    tabloc = tab.location.to_s.downcase
+    if myloc.match /^table /
+      myloc = myloc[6..myloc.length]
+    end
+    if tabloc.match[/^table/]
+      tabloc[6..tabloc.length]
+    end
+
+    if (myloc.is_a? Numeric) && (tabloc.is_a? Numeric)
+      sort = myloc.to_d <=> tabloc.to_d
+    else
+      sort = myloc <=> tabloc
+    end
 
     if sort == 0
       sort = self.raffle.to_s <=> tab.raffle.to_s
