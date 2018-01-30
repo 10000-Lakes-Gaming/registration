@@ -18,8 +18,8 @@ class Table < ActiveRecord::Base
     if myloc.match /^table /
       myloc = myloc[6..myloc.length]
     end
-    if tabloc.match[/^table/]
-      tabloc[6..tabloc.length]
+    if tabloc.match /^table /
+      tabloc = tabloc[6..tabloc.length]
     end
 
     if (myloc.is_a? Numeric) && (tabloc.is_a? Numeric)
