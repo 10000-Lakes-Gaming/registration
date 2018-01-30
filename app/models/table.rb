@@ -12,8 +12,12 @@ class Table < ActiveRecord::Base
   validates_numericality_of :gms_needed, :max_players, greater_than: 0
 
   def <=> (tab)
-    sort = self.raffle.to_s <=> tab.raffle.to_s
+    sort = self.location.to_s <=> tab.location.to_s
 
+    if sort == 0
+      sort = self.raffle.to_s <=> tab.raffle.to_s
+
+    end
     if sort == 0
       sort = self.core.to_s <=> tab.core.to_s
     end
