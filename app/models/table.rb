@@ -13,21 +13,13 @@ class Table < ActiveRecord::Base
 
   def <=> (tab)
     # Remove "Table"  and sort by number, if possible.
-    myloc  = self.location.to_s.downcase
-    tabloc = tab.location.to_s.downcase
-    if myloc.match /^table /
-      myloc = myloc[6..myloc.length]
-    end
-    if tabloc.match /^table /
-      tabloc = tabloc[6..tabloc.length]
-    end
+    myloc  = self.location.to_s.downcase[/\d+/]
+    tabloc = tab.location.to_s.downcase[/\d+/]
+    sort = myloc.to_i <=> tabloc.to_i
 
-    if (myloc.is_a? Numeric) && (tabloc.is_a? Numeric)
-      sort = myloc.to_d <=> tabloc.to_d
-    else
-      sort = myloc <=> tabloc
+    if sort == 0
+      sort = self.location.to_s <=> tab.location.to_s
     end
-
     if sort == 0
       sort = self.raffle.to_s <=> tab.raffle.to_s
 
