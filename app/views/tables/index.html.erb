@@ -10,6 +10,7 @@
 <table class="table table-striped">
   <thead>
   <tr>
+    <th>Location</th>
     <th>Scenario</th>
     <th width="1%">Players</th>
     <th width="1%">GMs</th>
@@ -19,6 +20,7 @@
   <tbody>
   <% @tables.each do |table| %>
       <tr>
+        <td><%= table.location %></td>
         <td>
           <%= table.scenario.long_name %>
           <span class="badge"><%= table.scenario.tier %></span>
