@@ -4,6 +4,17 @@ module ApplicationHelper
     !current_user.nil? and current_user.admin?
   end
 
+  def event_host?
+    event_host = nil
+    unless admin?
+      else
+        event_host = EventHost.where("user_id = ? and event_id = ?", current_user.id, @event.id)
+      end
+    end
+    admin? || !event_host.nil?
+  end
+
+
   def yes_no (value)
     value ? "Yes" : "No"
   end
