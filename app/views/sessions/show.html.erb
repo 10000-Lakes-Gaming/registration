@@ -11,6 +11,7 @@
 <table class="table table-striped">
   <thead>
   <tr>
+    <th>Location</th>
     <th>Scenario</th>
     <th></th>
     <th width="1%">Players</th>
@@ -22,6 +23,9 @@
   <%
     @session.tables.sort {|a, b| a <=> b}.each do |table| %>
       <tr>
+        <td>
+          <%= table.location %>
+        </td>
         <td>
           <%# make this show the scenario data as a collapsable %>
           <%= table.scenario.long_name %>
@@ -86,7 +90,7 @@
       </tr>
   <% end %>
   <tr>
-    <td colspan="2" class="text-right"><strong>Totals (does not include raffles):</strong></td>
+    <td colspan="3" class="text-right"><strong>Totals (does not include raffles):</strong></td>
     <td>
       <%# TODO - maybe color code by percentage needed. %>
       <%# players %>
