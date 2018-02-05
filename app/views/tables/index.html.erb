@@ -54,7 +54,7 @@
       <td class="text-center"><%= table.registration_tables.size %>/<%= table.max_players %></td>
       <td class="text-center"><%= table.game_masters.size %>/<%= table.gms_needed %></td>
       <td>
-        <% @session.tables.game_masters.each do |gm| %>
+        <% table.game_masters.each do |gm| %>
           <div><%= gm.user_event.user.long_name %></div>
         <% end %>
       </td>
