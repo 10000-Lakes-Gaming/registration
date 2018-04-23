@@ -5,13 +5,16 @@ module ApplicationHelper
   end
 
   def event_host?
-    event_host = nil
+    host = false
     unless @event.nil?
-      unless admin?
-        event_host = EventHost.where("user_id = ? and event_id = ?", current_user.id, @event.id)
+      current_user.event_hosts.each do |hosted_event|
+        event = hosted_event.event
+        if hosted_event.active?
+          host = host || (event.id == @event.id)
+        end
       end
     end
-    !@event.nil? && (admin? || !event_host.nil?)
+    host
   end
 
 

@@ -46,8 +46,8 @@ class EventHostsController < ApplicationController
   def update
     respond_to do |format|
       if @event_host.update(event_host_params)
-        format.html {redirect_to @event_host, notice: 'Event host was successfully updated.'}
-        format.json {render :show, status: :ok, location: @event_host}
+        format.html {redirect_to [@event,@event_host], notice: 'Event host was successfully updated.'}
+        format.json {render :show, status: :ok, location: [@event,@event_host]}
       else
         format.html {render :edit}
         format.json {render json: @event_host.errors, status: :unprocessable_entity}
@@ -58,7 +58,10 @@ class EventHostsController < ApplicationController
   # DELETE /event_hosts/1
   # DELETE /event_hosts/1.json
   def destroy
-    @event_host.destroy
+    # Better is to set the date to be yesterday?
+    # @event_host.destroy
+
+
     respond_to do |format|
       format.html {redirect_to events_path, notice: 'Event host was successfully destroyed.'}
       format.json {head :no_content}
