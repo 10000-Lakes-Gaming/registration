@@ -6,12 +6,12 @@ module ApplicationHelper
 
   def event_host?
     event_host = nil
-    unless admin?
-      else
+    unless @event.nil?
+      unless admin?
         event_host = EventHost.where("user_id = ? and event_id = ?", current_user.id, @event.id)
       end
     end
-    admin? || !event_host.nil?
+    !@event.nil? && (admin? || !event_host.nil?)
   end
 
 
@@ -38,5 +38,5 @@ module ApplicationHelper
     end
     unpaid_payments
   end
-
 end
+
