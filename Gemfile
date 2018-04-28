@@ -5,8 +5,10 @@ gem 'rails_12factor'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~>  5.0'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+
+# Security hole updates
+gem 'rails-html-sanitizer', '~> 1.0.4'
+gem 'loofah', '~> 2.2.1 '
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -18,7 +20,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # security problem in version 1.7.1
-gem 'nokogiri', '~> 1.8.1'
+gem 'nokogiri', '~> 1.8.2'
 
 # This is the authen gem
 gem 'devise', '~> 4.1.1'
