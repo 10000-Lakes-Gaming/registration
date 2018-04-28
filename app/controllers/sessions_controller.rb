@@ -11,9 +11,8 @@ class SessionsController < ApplicationController
   # GET /sessions
   # GET /sessions.json
   def index
-    prevent_non_admin
+    return unless restrict_to_hosts
     @sessions = Session.where(event_id: @event.id)
-
   end
 
   # GET /sessions/1
