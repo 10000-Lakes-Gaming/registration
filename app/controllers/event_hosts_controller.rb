@@ -26,6 +26,7 @@ class EventHostsController < ApplicationController
   # POST /event_hosts
   # POST /event_hosts.json
   def create
+    return unless restrict_to_admin
     @event_host = @event.event_hosts.new(event_host_params)
 
     respond_to do |format|
@@ -42,6 +43,7 @@ class EventHostsController < ApplicationController
   # PATCH/PUT /event_hosts/1
   # PATCH/PUT /event_hosts/1.json
   def update
+    return unless restrict_to_admin
     respond_to do |format|
       if @event_host.update(event_host_params)
         format.html {redirect_to [@event, @event_host], notice: 'Event host was successfully updated.'}
@@ -56,6 +58,7 @@ class EventHostsController < ApplicationController
   # DELETE /event_hosts/1
   # DELETE /event_hosts/1.json
   def destroy
+    return unless restrict_to_admin
     # Better is to set the date to be yesterday?
     @event_host.end_date = Date.yesterday
     @event_host.save
