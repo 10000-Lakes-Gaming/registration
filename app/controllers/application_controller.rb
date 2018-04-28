@@ -25,6 +25,13 @@ class ApplicationController < ActionController::Base
     current_user.admin?
   end
 
+  def restrict_to_hosts
+    unless event_host?
+      redirect_to events_path
+    end
+    event_host?
+  end
+
   def force_to_current_user
     @user = current_user
   end

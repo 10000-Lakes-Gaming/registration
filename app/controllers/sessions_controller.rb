@@ -1,15 +1,10 @@
 class SessionsController < ApplicationController
+  include ApplicationHelper
   before_action :get_event
   before_action :set_session, only: [:show, :edit, :update, :destroy]
 
   def get_event
     @event = Event.find(params[:event_id])
-  end
-
-  def prevent_non_admin
-    unless current_user.admin?
-      redirect_to events_path
-    end
   end
 
 
