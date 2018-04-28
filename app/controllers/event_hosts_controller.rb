@@ -6,7 +6,7 @@ class EventHostsController < ApplicationController
   # GET /event_hosts
   # GET /event_hosts.json
   def index
-     @event_hosts = EventHost.where(event_id: @event.id)
+    @event_hosts = EventHost.where(event_id: @event.id)
   end
 
   # GET /event_hosts/1
@@ -26,14 +26,12 @@ class EventHostsController < ApplicationController
   # POST /event_hosts
   # POST /event_hosts.json
   def create
-    # @event_host = EventHost.new(event_host_params)
-
     @event_host = @event.event_hosts.new(event_host_params)
 
     respond_to do |format|
       if @event_host.save
-        format.html {redirect_to [@event,@event_host], notice: 'Event host was successfully created.'}
-        format.json {render :show, status: :created, location: [@event,@event_host]}
+        format.html {redirect_to [@event, @event_host], notice: 'Event host was successfully created.'}
+        format.json {render :show, status: :created, location: [@event, @event_host]}
       else
         format.html {render :new}
         format.json {render json: @event_host.errors, status: :unprocessable_entity}
@@ -46,8 +44,8 @@ class EventHostsController < ApplicationController
   def update
     respond_to do |format|
       if @event_host.update(event_host_params)
-        format.html {redirect_to [@event,@event_host], notice: 'Event host was successfully updated.'}
-        format.json {render :show, status: :ok, location: [@event,@event_host]}
+        format.html {redirect_to [@event, @event_host], notice: 'Event host was successfully updated.'}
+        format.json {render :show, status: :ok, location: [@event, @event_host]}
       else
         format.html {render :edit}
         format.json {render json: @event_host.errors, status: :unprocessable_entity}
@@ -59,11 +57,11 @@ class EventHostsController < ApplicationController
   # DELETE /event_hosts/1.json
   def destroy
     # Better is to set the date to be yesterday?
-    # @event_host.destroy
-
+    @event_host.end_date = Date.yesterday
+    @event_host.save
 
     respond_to do |format|
-      format.html {redirect_to events_path, notice: 'Event host was successfully destroyed.'}
+      format.html {redirect_to [@event, @event_host], notice: 'Event host\'s tenure was ended.'}
       format.json {head :no_content}
     end
   end
