@@ -22,6 +22,7 @@ class ApplicationController < ActionController::Base
     unless current_user.admin?
       redirect_to root_path
     end
+    current_user.admin?
   end
 
   def force_to_current_user
