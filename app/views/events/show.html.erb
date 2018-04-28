@@ -16,8 +16,8 @@
     <dd class=" text-info"><%= @event.start.localtime.to_formatted_s(:long) %>
       to <%= @event.end.localtime.to_formatted_s(:long) %></dd>
     <% if @event.event_number? %>
-        <dt>Event Number:</dt>
-        <dd class=" text-info"><%= @event.event_number %></dd>
+      <dt>Event Number:</dt>
+      <dd class=" text-info"><%= @event.event_number %></dd>
     <% end %>
   </dl>
 </div>
@@ -25,19 +25,19 @@
 <div>
   <h2>Online Registration</h2>
   <% if @event.closed? %>
-      <div class="alert-danger lead">Online Registration is closed!</div>
+    <div class="alert-danger lead">Online Registration is closed!</div>
   <% else %>
-      <% if @event.early_bird? %>
-          <% unless @event.prereg_closed? %>
-              <div class="text-warning">
-                <span class="lead">Early Bird/Pre-registration closes: <%= @event.prereg_ends.localtime.to_formatted_s(:long_ordinal) %></span>
-              </div>
-          <% end %>
+    <% if @event.early_bird? %>
+      <% unless @event.prereg_closed? %>
+        <div class="text-warning">
+          <span class="lead">Early Bird/Pre-registration closes: <%= @event.prereg_ends.localtime.to_formatted_s(:long_ordinal) %></span>
+        </div>
       <% end %>
-      <% unless @event.rsvp_close.nil? %>
-          <div class="lead text-warning">Registration
-            closes: <%= @event.rsvp_close.localtime.to_formatted_s(:long_ordinal) %></div>
-      <% end %>
+    <% end %>
+    <% unless @event.rsvp_close.nil? %>
+      <div class="lead text-warning">Registration
+        closes: <%= @event.rsvp_close.localtime.to_formatted_s(:long_ordinal) %></div>
+    <% end %>
   <% end %>
 </div>
 
@@ -49,29 +49,29 @@
   </div>
   <div class="well">
     <% if @event.charity? %>
-        <div class="row">
-          <div class="col-md-4 text-info">
-            <strong>This is a charity event.</strong>
-          </div>
+      <div class="row">
+        <div class="col-md-4 text-info">
+          <strong>This is a charity event.</strong>
         </div>
+      </div>
     <% end %>
     <% if !@event.price.nil? && @event.price > 0 %>
-        <div class="row">
-          <div class="col-md-2">
-            <strong>Cost:</strong>
-          </div>
-          <div class="col-md-6">
-            <% unless @event.prereg_closed? %>
-                <%= number_to_currency(@event.prereg_price) %>
-                <% unless @event.prereg_ends.nil? %>
-                    (after <%= @event.prereg_ends.localtime.to_formatted_s(:long_ordinal) %> it will
-                    be <%= number_to_currency @event.onsite_price %>)
-                <% end %>
-            <% else %>
-                <%= number_to_currency @event.onsite_price %>
-            <% end %>
-          </div>
+      <div class="row">
+        <div class="col-md-2">
+          <strong>Cost:</strong>
         </div>
+        <div class="col-md-6">
+          <% unless @event.prereg_closed? %>
+            <%= number_to_currency(@event.prereg_price) %>
+            <% unless @event.prereg_ends.nil? %>
+              (after <%= @event.prereg_ends.localtime.to_formatted_s(:long_ordinal) %> it will
+              be <%= number_to_currency @event.onsite_price %>)
+            <% end %>
+          <% else %>
+            <%= number_to_currency @event.onsite_price %>
+          <% end %>
+        </div>
+      </div>
     <% end %>
 
     <div class="row">
@@ -80,54 +80,54 @@
       </div>
       <div class="col-md-2">
         <% if @registration %>
-            Yes
+          Yes
         <% else %>
-            No
+          No
         <% end %>
       </div>
     </div>
     <% if !@event.external_url.blank? %>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="bg-warning text-danger">
-              Registering for this event here does NOT register you for the
-              convention. To do that, you will need to register at the URL below. You will not be able to play or GM
-              without a paid registration to the convention itself!
-            </div>
-            <div class="bg-warning text-info">However, registration for individual tables is handled here.</div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="bg-warning text-danger">
+            Registering for this event here does NOT register you for the
+            convention. To do that, you will need to register at the URL below. You will not be able to play or GM
+            without a paid registration to the convention itself!
           </div>
+          <div class="bg-warning text-info">However, registration for individual tables is handled here.</div>
         </div>
-        <div class="row">
-          <div class="col-md-2">
-            <strong>Register for convention at:</strong>
-          </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <strong>Register for convention at:</strong>
+        </div>
 
-          <div class="col-md-4">
-            <a target="_blank" href="<%= @event.external_url %>"><%= @event.external_url %></a>
-          </div>
+        <div class="col-md-4">
+          <a target="_blank" href="<%= @event.external_url %>"><%= @event.external_url %></a>
         </div>
+      </div>
     <% end %>
 
     <% if @registration && @registration.event.price&.nonzero? %>
-        <div class="row">
-          <div class="col-md-2"><b>Paid?</b></div>
-          <% if @registration.payment_ok? %>
-              <div class="col-md-6">
-                Yes (<%= number_to_currency (@registration.payment_amount.to_f / 100) %>
-                <% if @registration.payment_date %>
-                    on <%= @registration.payment_date.localtime.to_formatted_s(:long_ordinal) %>
-                <% end %>)
-              </div>
-          <% else %>
-              <div class="col-md-2">
-                <% # This has to be dynamic for future events. %>
-                No:
-              </div>
-              <div class="col-md-6">
-                <%= render partial: "registration_payment/registration_payment", locals: {event: @event, user_event: @registration} %>
-              </div>
-          <% end %>
-        </div>
+      <div class="row">
+        <div class="col-md-2"><b>Paid?</b></div>
+        <% if @registration.payment_ok? %>
+          <div class="col-md-6">
+            Yes (<%= number_to_currency (@registration.payment_amount.to_f / 100) %>
+            <% if @registration.payment_date %>
+              on <%= @registration.payment_date.localtime.to_formatted_s(:long_ordinal) %>
+            <% end %>)
+          </div>
+        <% else %>
+          <div class="col-md-2">
+            <% # This has to be dynamic for future events. %>
+            No:
+          </div>
+          <div class="col-md-6">
+            <%= render partial: "registration_payment/registration_payment", locals: {event: @event, user_event: @registration} %>
+          </div>
+        <% end %>
+      </div>
     <% end %>
 
   </div>
@@ -138,15 +138,17 @@
 
   <div class="well">
     <% unless @event.gm_volunteer_link.blank? %>
-        <div class="bg-info" style="margin-top: 1em;padding: 1em;">If you would like to GM for <%= @event.name %>
-          please do so at our:
-          <input type="button" class="btn btn-primary" value="GM Volunteer Form" formtarget="_blank"
-                 onclick="window.open('<%= @event.gm_volunteer_link %>',  '_blank');">
-        </div>
+      <div class="bg-info" style="margin-top: 1em;padding: 1em;">If you would like to GM for <%= @event.name %>
+        please do so at our:
+        <input type="button" class="btn btn-primary" value="GM Volunteer Form" formtarget="_blank"
+               onclick="window.open('<%= @event.gm_volunteer_link %>',  '_blank');">
+      </div>
     <% end %>
     <div class="bg-warning text-warning" style="margin-top: 0">
-      <div style="display: inline-block; vertical-align: top; font-size: 1.5em;"><span class="text-danger glyphicon glyphicon-warning-sign"></span></div>
-      <div style="display: inline-block;">If you are planning on GMing in a slot, please do not sign up to play in that slot.
+      <div style="display: inline-block; vertical-align: top; font-size: 1.5em;">
+        <span class="text-danger glyphicon glyphicon-warning-sign"></span></div>
+      <div style="display: inline-block;">If you are planning on GMing in a slot, please do not sign up to play in that
+        slot.
         <br>The hosts of <%= @event.name %> will assign you to your GM slot once you have registered and paid
         for <%= @event.name %>.
       </div>
@@ -158,14 +160,14 @@
   <h3>Sessions/Scenarios Offered</h3>
 
   <% if @event.closed? %>
-      <div class="well">
-        <div class="bg-warning text-danger lead" style="margin-bottom: 0">
-          <strong>Online registration is closed</strong>
-        </div>
-        <div class="bg-warning text-primary" style="margin-top: 0">In order to make any changes to your
-          registrations and signups, you will need to see HQ at the event.
-        </div>
+    <div class="well">
+      <div class="bg-warning text-danger lead" style="margin-bottom: 0">
+        <strong>Online registration is closed</strong>
       </div>
+      <div class="bg-warning text-primary" style="margin-top: 0">In order to make any changes to your
+        registrations and signups, you will need to see HQ at the event.
+      </div>
+    </div>
   <% end %>
 
   <% sessionList = @event.sessions.sort {|a, b| a.start <=> b.start} %>
@@ -341,7 +343,7 @@
           <% if session.gm_count == session.total_gms_needed %>
             <% klass = 'text-primary' %>
           <% else %>
-            <% klass = 'text-danger' %>
+            <% klass = 'text-danger' %>restrict_to_hosts
           <% end %>
           <div class="col-md-1 no-pad"><span class="<%= klass %>"><%= session.total_gms_needed - session.gm_count %>
             of <%= session.total_gms_needed %> needed</span>
