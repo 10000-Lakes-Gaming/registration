@@ -1,24 +1,32 @@
-<%= form_for([@event,@event_host]) do |f| %>
+<%= form_for([@event, @event_host]) do |f| %>
   <% if event_host.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(event_host.errors.count, "error") %> prohibited this event_host from being saved:</h2>
 
       <ul>
-      <% event_host.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% event_host.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
   <div class="field">
     <%= f.label :start_date %>
-    <%= f.date_select :start_date %>
+    <% if admin? %>
+      <%= f.date_select :start_date %>
+    <% else %>
+      <%= @event_host.start_date.to_s(:long) %>
+    <% end %>
   </div>
 
   <div class="field">
     <%= f.label :end_date %>
-    <%= f.date_select :end_date %>
+    <% if admin? %>
+      <%= f.date_select :end_date %>
+    <% else %>
+      <%= @event_host.end_date.to_s(:long) %>
+    <% end %>
   </div>
 
   <div class="field">
@@ -32,6 +40,8 @@
   </div>
 
   <div class="actions">
-    <%= f.submit %>
+    <% if admin? %>
+      <%= f.submit :class => 'btn btn-primary'  %>
+    <% end %>
   </div>
 <% end %>
