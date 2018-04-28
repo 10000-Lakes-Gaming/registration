@@ -26,8 +26,15 @@
         <%= button_to 'Show', [@event, event_host], method: :get, :class => 'btn btn-info' %>
       </td>
       <td>
-        <%= button_to 'Edit', edit_event_event_host_path(@event, event_host), method: :get, :class => 'btn btn-primary' %></td>
-      <td><%= button_to 'Destroy', [@event, event_host], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %></td>
+        <% if admin? %>
+          <%= button_to 'Edit', edit_event_event_host_path(@event, event_host), method: :get, :class => 'btn btn-primary' %>
+        <% end %>
+      </td>
+      <td>
+        <% if admin? %>  
+          <%= button_to 'Destroy', [@event, event_host], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %>
+        <% end %>
+      </td>
     </tr>
   <% end %>
   </tbody>
