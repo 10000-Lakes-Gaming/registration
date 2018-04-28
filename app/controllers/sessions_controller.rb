@@ -24,9 +24,9 @@ class SessionsController < ApplicationController
 
   def get_session_data (session)
     @registration_tables = {}
-    @gm_sessions = init_gm_sessions
-    @player_sessions = init_player_sessions
-    @rsvps = @event.user_events
+    @gm_sessions         = init_gm_sessions
+    @player_sessions     = init_player_sessions
+    @rsvps               = @event.user_events
 
 
     @rsvps.each do |rsvp|
@@ -35,7 +35,7 @@ class SessionsController < ApplicationController
         if reg_table.table.session == session
           players = @player_sessions[reg_table.table]
           if players.nil?
-            players = []
+            players                           = []
             @player_sessions[reg_table.table] = players
           end
           players.push reg_table.user_event.user
@@ -47,7 +47,7 @@ class SessionsController < ApplicationController
         if gm_table.table.session == session
           gms = @gm_sessions[gm_table.table]
           if gms.nil?
-            gms = []
+            gms                          = []
             @gm_sessions[gm_table.table] = gms
           end
           gms.push gm_table.user_event.user
@@ -75,28 +75,29 @@ class SessionsController < ApplicationController
 
   # GET /sessions/new
   def new
-    prevent_non_admin
+    return unless restrict_to_hosts
     @session = Session.new
   end
 
   # GET /sessions/1/edit
   def edit
-    prevent_non_admin
+
+    return unless restrict_to_hosts
   end
 
   # POST /sessions
   # POST /sessions.json
   def create
-    prevent_non_admin
+    return unless restrict_to_hosts
     @session = @event.sessions.new(session_params)
 
     respond_to do |format|
       if @session.save
-        format.html { redirect_to [@event, @session], notice: 'Session was successfully created.' }
-        format.json { render :show, status: :created, location: [@event, @session] }
+        format.html {redirect_to [@event, @session], notice: 'Session was successfully created.'}
+        format.json {render :show, status: :created, location: [@event, @session]}
       else
-        format.html { render :new }
-        format.json { render json: @session.errors, status: :unprocessable_entity }
+        format.html {render :new}
+        format.json {render json: @session.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -104,14 +105,14 @@ class SessionsController < ApplicationController
   # PATCH/PUT /sessions/1
   # PATCH/PUT /sessions/1.json
   def update
-    prevent_non_admin
+    return unless restrict_to_hosts
     respond_to do |format|
       if @session.update(session_params)
-        format.html { redirect_to [@event, @session], notice: 'Session was successfully updated.' }
-        format.json { render :show, status: :ok, location: [@event, @session] }
+        format.html {redirect_to [@event, @session], notice: 'Session was successfully updated.'}
+        format.json {render :show, status: :ok, location: [@event, @session]}
       else
-        format.html { render :edit }
-        format.json { render json: @session.errors, status: :unprocessable_entity }
+        format.html {render :edit}
+        format.json {render json: @session.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -119,11 +120,11 @@ class SessionsController < ApplicationController
   # DELETE /sessions/1
   # DELETE /sessions/1.json
   def destroy
-    prevent_non_admin
+    return unless restrict_to_hosts
     @session.destroy
     respond_to do |format|
-      format.html { redirect_to sessions_url, notice: 'Session was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html {redirect_to sessions_url, notice: 'Session was successfully destroyed.'}
+      format.json {head :no_content}
     end
   end
 
