@@ -65,7 +65,7 @@
             </div>
           </div>
         </td>
-        <% if admin? %>
+        <% if event_host? %>
             <td>
               <%= link_to "#{@player_sessions[table].size} / #{table.max_players}", event_session_table_registration_tables_path(@event, @session, table) %>
             </td>
@@ -81,7 +81,7 @@
             </td>
         <% end %>
         <td>
-          <% if admin? %>
+          <% if event_host? %>
               <%= button_to 'Show', [@event, @session, table], method: :get, :class => 'btn btn-info' %>
               <%= button_to 'Edit', edit_event_session_table_path(@event, @session, table), method: :get, :class => 'btn btn-primary' %>
               <%= button_to 'Remove', [@event, @session, table], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %>
@@ -112,7 +112,7 @@
 </table>
 
 
-<% if admin? %>
+<% if event_host? %>
     <%= button_to 'Add New Table', new_event_session_table_path(@event, @session), method: :get, :class => 'btn btn-warning' %>
     <%= button_to 'Edit', edit_event_session_path(@event, @session), method: :get, :class => 'btn btn-primary' %>
 <% end %>
