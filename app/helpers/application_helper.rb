@@ -14,7 +14,7 @@ module ApplicationHelper
         end
       end
     end
-    host
+    host || admin?
   end
 
 
