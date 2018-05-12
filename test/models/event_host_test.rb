@@ -3,9 +3,10 @@ require 'test_helper'
 class EventHostTest < ActiveSupport::TestCase
 
   setup do
-    @one    = event_hosts(:one)
-    @two    = event_hosts(:two)
-    @no_end = event_hosts(:no_end)
+    @one       = event_hosts(:one)
+    @two       = event_hosts(:two)
+    @no_end    = event_hosts(:no_end)
+    @bad_dates = event_hosts(:bad_dates)
   end
 
   test "host one has end date" do
@@ -44,4 +45,14 @@ class EventHostTest < ActiveSupport::TestCase
     assert @no_end.active? Date.today + 365
   end
 
+  test "Dates are bad for bad_dates" do
+    assert_equal ["must be after start date"], @bad_dates.end_date_after_start_date?
+  end
+
+  test "Dates are good for one" do
+    assert_nil @one.end_date_after_start_date?
+  end
+  test "Dates are good for no end" do
+    assert_nil @no_end.end_date_after_start_date?
+  end
 end
