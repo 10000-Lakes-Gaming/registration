@@ -343,7 +343,7 @@
           <% if session.gm_count == session.total_gms_needed %>
             <% klass = 'text-primary' %>
           <% else %>
-            <% klass = 'text-danger' %>restrict_to_hosts
+            <% klass = 'text-danger' %>
           <% end %>
           <div class="col-md-1 no-pad"><span class="<%= klass %>"><%= session.total_gms_needed - session.gm_count %>
             of <%= session.total_gms_needed %> needed</span>
