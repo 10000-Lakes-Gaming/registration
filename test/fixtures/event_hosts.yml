@@ -16,3 +16,9 @@ no_end:
   start_date:  <%= 7.day.ago.to_s(:db) %>
   user: two
   event: two
+
+bad_dates:
+  start_date:  <%= 7.day.from_now.to_s(:db) %>
+  end_date:  <%= 1.day.ago.to_s(:db) %>
+  user: two
+  event: two
