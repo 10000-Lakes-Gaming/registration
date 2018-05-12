@@ -1,13 +1,18 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
+# TODO make the dates dynamic for testing purposes
 one:
-  start_date: 2017-12-29
-  end_date: 2017-12-29
+  start_date: <%= 7.day.ago.to_s(:db) %>
+  end_date: <%= 7.day.from_now.to_s(:db) %>
   user: one
   event: one
 
 two:
-  start_date: 2017-12-29
-  end_date: 2017-12-29
+  start_date:  <%= 7.day.ago.to_s(:db) %>
+  end_date:  <%= 1.day.ago.to_s(:db) %>
+  user: two
+  event: two
+
+no_end:
+  start_date:  <%= 7.day.ago.to_s(:db) %>
   user: two
   event: two
