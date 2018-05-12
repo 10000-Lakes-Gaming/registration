@@ -17,10 +17,7 @@ class EventHost < ApplicationRecord
     !end_date.nil?
   end
 
-  def active? (date = nil)
-    if date.nil?
-      date = Date.today
-    end
+  def active? (date = Date.today)
     date_start = start_date.to_date
     if end_date?
       date_end = end_date.to_date
