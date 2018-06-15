@@ -20,31 +20,31 @@
 
   <tbody>
   <% @registration_tables.each do |registration_table| %>
-      <tr>
-        <% if registration_table.user_event.nil? %>
-            <% user = User.new %>
-        <% else %>
-            <% user = registration_table.user_event.user %>
-        <% end %>
-        <td>
-          <%= user.name %>
-        </td>
-        <td>
-          <%= user.email %>
-        </td>
-        <td>
-          <%= user.pfs_number %>
-        </td>
-        <td><%= link_to 'Show', [@event, @session, @table, registration_table] %></td>
-        <% if admin? %>
-            <td><%= link_to 'Edit', edit_event_session_table_registration_table_path(@event, @session, @table, registration_table) %></td>
-            <td><%= link_to 'Remove from Table', [@event, @session, @table, registration_table], method: :delete, data: {confirm: 'Are you sure?'} %></td>
-        <% end %>
-      </tr>
+    <tr>
+      <% if registration_table.user_event.nil? %>
+        <% user = User.new %>
+      <% else %>
+        <% user = registration_table.user_event.user %>
+      <% end %>
+      <td>
+        <%= user.name %>
+      </td>
+      <td>
+        <%= user.email %>
+      </td>
+      <td>
+        <%= user.pfs_number %>
+      </td>
+      <td><%= link_to 'Show', [@event, @session, @table, registration_table], :class => 'btn btn-info' %></td>
+      <td><%= link_to 'Edit', edit_event_session_table_registration_table_path(@event, @session, @table, registration_table), :class => 'btn btn-primary' %></td>
+      <% if event_host? %>
+        <td><%= link_to 'Remove from Table', [@event, @session, @table, registration_table], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger'  %></td>
+      <% end %>
+    </tr>
   <% end %>
   </tbody>
 </table>
 
 <br>
 
-<%= link_to 'New RSVP', new_event_session_table_registration_table_path(@event, @session, @table) %>
+<%= link_to 'New RSVP', new_event_session_table_registration_table_path(@event, @session, @table), :class => 'btn btn-success'  %>
