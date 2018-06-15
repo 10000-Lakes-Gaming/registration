@@ -15,18 +15,18 @@
   </thead>
 
   <tbody>
-  <% @sessions.sort { |a, b| a.start <=> b.start }.each do |session| %>
-      <tr>
-        <td><%= session.name %></td>
-        <td><%= session.start.to_s(:long) %></td>
-        <td><%= session.end.to_s(:long) %></td>
-        <td><%= link_to 'Show', [@event, session], :class => 'btn btn-info' %>
-        <% if admin? %>
-            <%= link_to 'Edit', edit_event_session_path(@event, session) , :class => 'btn btn-primary'%>
-            <%= link_to 'Delete', [@event, session], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %>
+  <% @sessions.sort {|a, b| a.start <=> b.start}.each do |session| %>
+    <tr>
+      <td><%= session.name %></td>
+      <td><%= session.start.to_s(:long) %></td>
+      <td><%= session.end.to_s(:long) %></td>
+      <td><%= link_to 'Show', [@event, session], :class => 'btn btn-info' %>
+        <% if event_host? %>
+          <%= link_to 'Edit', edit_event_session_path(@event, session), :class => 'btn btn-primary' %>
+          <%= link_to 'Delete', [@event, session], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %>
         <% end %>
-        </td>
-      </tr>
+      </td>
+    </tr>
   <% end %>
 
   </tbody>
@@ -34,4 +34,6 @@
 <br>
 
 <%= link_to "Back to #{@event.name}", event_path(@event), :class => 'btn btn-success' %>
-<%= link_to 'New Session', new_event_session_path(@event, @session), :class => 'btn btn-warning' %>
+<% if event_host? %>
+  <%= link_to 'New Session', new_event_session_path(@event, @session), :class => 'btn btn-warning' %>
+<% end %>

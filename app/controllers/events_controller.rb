@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  include ApplicationHelper
   before_action :set_event, only: [:show, :edit, :update, :destroy, :gms_by_scenario]
   before_action :restrict_to_admin, except: [:show, :index]
   before_action :get_events, :get_my_events
@@ -22,12 +23,6 @@ class EventsController < ApplicationController
     @events
   end
 
-  def prevent_non_admin
-    unless current_user.admin?
-      redirect_to events_path
-    end
-  end
-
   def get_my_events
     events         = get_events
     current_events = []
@@ -45,7 +40,6 @@ class EventsController < ApplicationController
       @my_events.push user_event.event
     end
   end
-
 
 
   def gms_by_scenario
@@ -80,20 +74,21 @@ class EventsController < ApplicationController
 
   # GET /events/new
   def new
-    prevent_non_admin
+    return unless restrict_to_admin
+
     @event      = Event.new
     @user_event = UserEvent.new
   end
 
   # GET /events/1/edit
   def edit
-    prevent_non_admin
+    return unless restrict_to_admin
   end
 
   # POST /events
   # POST /events.json
   def create
-    prevent_non_admin
+    return unless restrict_to_admin
     @event = Event.new(event_params)
 
     respond_to do |format|
@@ -110,7 +105,7 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1
   # PATCH/PUT /events/1.json
   def update
-    prevent_non_admin
+    return unless restrict_to_admin
     respond_to do |format|
       if @event.update(event_params)
         format.html {redirect_to @event, notice: 'Event was successfully updated.'}
@@ -125,14 +120,13 @@ class EventsController < ApplicationController
   # DELETE /events/1
   # DELETE /events/1.json
   def destroy
-    prevent_non_admin
+    return unless restrict_to_admin
     @event.destroy
     respond_to do |format|
       format.html {redirect_to events_url, notice: 'Event was successfully destroyed.'}
       format.json {head :no_content}
     end
   end
-
 
 
   private

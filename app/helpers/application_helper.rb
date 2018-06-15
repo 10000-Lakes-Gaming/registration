@@ -4,6 +4,20 @@ module ApplicationHelper
     !current_user.nil? and current_user.admin?
   end
 
+  def event_host?
+    host = false
+    unless @event.nil?
+      current_user.event_hosts.each do |hosted_event|
+        event = hosted_event.event
+        if hosted_event.active?
+          host = host || (event.id == @event.id)
+        end
+      end
+    end
+    host || admin?
+  end
+
+
   def yes_no (value)
     value ? "Yes" : "No"
   end
@@ -27,5 +41,5 @@ module ApplicationHelper
     end
     unpaid_payments
   end
-
 end
+

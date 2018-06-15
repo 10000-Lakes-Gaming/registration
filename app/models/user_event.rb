@@ -13,6 +13,17 @@ class UserEvent < ActiveRecord::Base
     self.user <=> other.user
   end
 
+  def all_tables
+    tables = []
+    registration_tables.each do |reg_table|
+      tables << reg_table.table
+    end
+    game_masters.each do |gm|
+      tables << gm.table
+    end
+    tables.sort {|a,b| a.session <=> b.session}
+  end
+
   def payment_ok?
     # @registration.event.price&.nonzero?
     self.paid? || self.event.price.nil? || self.event.price <= 0
