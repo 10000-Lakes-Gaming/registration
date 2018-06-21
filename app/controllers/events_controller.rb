@@ -1,5 +1,4 @@
 class EventsController < ApplicationController
-  # skips authentication only for "index" and "show"
   skip_before_action :authenticate_user!, only: %i[index show]
 
   before_action :set_event, only: [:show, :edit, :update, :destroy, :gms_by_scenario]
