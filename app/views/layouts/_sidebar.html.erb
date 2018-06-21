@@ -34,7 +34,7 @@
       <% end %>
   <% end %>
 
-  <% if user_signed_in? && admin? %>
+  <% if  admin? %>
       <li><u>Event Admin</u></li>
       <li><%= link_to 'Events', events_path %></li>
       <% if @event and @event.persisted? %>
