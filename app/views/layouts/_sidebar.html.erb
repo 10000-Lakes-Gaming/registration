@@ -73,7 +73,7 @@
     <% end %>
   </li>
   <li>
-    <% if current_user.nil? %>
+    <% unless user_signed_in? %>
         <a href="mailto:<%= ENV['GMAIL_SMTP_USERNAME'] %>">Contact Us!</a>
     <% else %>
         <%= link_to('Contact Us!', contact_path) %>
