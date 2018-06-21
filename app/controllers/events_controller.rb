@@ -8,7 +8,6 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    # get_events
   end
 
   def get_events
