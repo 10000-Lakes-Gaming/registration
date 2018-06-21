@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "2.4.2"
+ruby "2.5.1"
 
 gem 'rails_12factor'
 
@@ -23,7 +23,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'nokogiri', '~> 1.8.2'
 
 # This is the authen gem
-gem 'devise', '~> 4.1.1'
+gem 'devise', '~> 4.4.3'
 gem 'omniauth', '~> 1.3.1'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'autoprefixer-rails'
