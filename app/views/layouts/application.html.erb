@@ -54,7 +54,7 @@
     <% if user_signed_in? %>
         <div>
           Logged in as: <%= current_user.name %> (<%= current_user.email %>)
-          <% if current_user.admin? %>[ADMIN]
+          <% if admin? %>[ADMIN]
           <% end %>
           <% unless current_user.forum_username.nil? %>{<%= current_user.forum_username %>}
           <% end %>

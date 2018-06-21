@@ -104,7 +104,7 @@
 <% end %>
 
 
-<% if current_user.admin? %>
+<% if admin? %>
     <%= link_to 'Back to Registrations', event_user_events_path(@event), :class => 'btn btn-success' %>
     <%= link_to 'Edit', edit_event_user_event_path(@event, @user_event), :class => 'btn btn-primary' %>
 <% end %>

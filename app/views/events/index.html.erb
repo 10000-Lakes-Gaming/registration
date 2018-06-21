@@ -8,7 +8,7 @@
       attend.
       <br/><br/>
       This is done by clicking the <span class="btn btn-warning">Register</span> button next to the event on the events
-      listing.
+      listing<% unless user_signed_in? %>, once you have <%= link_to 'Logged in', new_user_session_path, :class => 'btn btn-info' %><% end %>.
     </div>
   </div>
 </div>
@@ -24,33 +24,37 @@
     <div class="col-md-2">&nbsp;</div>
   </li>
   <% @events.each do |event| %>
-      <li class="row list-group-item">
-        <div class="col-md-2"><%= link_to "#{event.name}", event, :class => 'btn btn-sm btn-info' %></div>
-        <div class="col-md-4">
-          <small><%= event.start.to_formatted_s(:long) %> - <%= event.end.to_formatted_s(:long) %></small>
-        </div>
-        <div class="col-md-2"><%= event.location %></div>
-        <div class="col-md-1">
-          <% if !event.external_url.blank? %>
-              <span class="glyphicon glyphicon-duplicate"></span>
-          <% end %>
-        </div>
-        <div class="col-md-1">
-          <% if @my_events.include? event %>
-              <%= link_to "Attending", event, :class => 'btn btn-sm btn-primary' %>
-          <% else %>
-              <% unless event.closed? %>
-                  <%= link_to "Register", new_event_user_event_path(event), :class => 'btn  btn-sm  btn-warning' %>
-              <% end %>
-          <% end %>
-        </div>
-        <% if current_user.admin? %>
-            <div class="col-md-2">
-              <%= link_to 'Edit', edit_event_path(event), :class => 'btn btn-sm  btn-primary' %>
-              <%= link_to 'Destroy', event, method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-sm btn-danger' %>
-            </div>
+    <li class="row list-group-item">
+      <div class="col-md-2"><%= link_to "#{event.name}", event, :class => 'btn btn-sm btn-info' %></div>
+      <div class="col-md-4">
+        <small><%= event.start.to_formatted_s(:long) %> - <%= event.end.to_formatted_s(:long) %></small>
+      </div>
+      <div class="col-md-2"><%= event.location %></div>
+      <div class="col-md-1">
+        <% if !event.external_url.blank? %>
+          <span class="glyphicon glyphicon-duplicate"></span>
         <% end %>
-      </li>
+      </div>
+      <div class="col-md-1">
+        <% if @my_events.include? event %>
+          <%= link_to "Attending", event, :class => 'btn btn-sm btn-primary' %>
+        <% else %>
+          <% if user_signed_in? %>
+            <% unless event.closed? %>
+              <%= link_to "Register", new_event_user_event_path(event), :class => 'btn  btn-sm  btn-warning' %>
+            <% end %>
+          <% else %>
+            <%= link_to 'Login to register!', new_user_session_path, :class => 'btn btn-info' %>
+          <% end %>
+        <% end %>
+      </div>
+      <% if admin? %>
+        <div class="col-md-2">
+          <%= link_to 'Edit', edit_event_path(event), :class => 'btn btn-sm  btn-primary' %>
+          <%= link_to 'Destroy', event, method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-sm btn-danger' %>
+        </div>
+      <% end %>
+    </li>
   <% end %>
 </ul>
 <hr>
@@ -61,51 +65,51 @@
 </div>
 <div class="panel-group" id="accordian">
   <% @my_registrations.each do |registration| %>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-sm-4">
-              <a data-toggle="collapse" data-parent="#accordian" href="#collapse<%= registration.event_id %>"><%= registration.event.name %> <%= registration.event.start.to_formatted_s(:short) %>
-                to <%= registration.event.end.to_formatted_s(:short) %></a>
-            </div>
-            <div class="col-sm-2">
-              <%= button_to "Manage RSVP", event_user_event_path(registration.event, registration), method: :get, :class => 'btn btn-primary' %>
-            </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-sm-4">
+            <a data-toggle="collapse" data-parent="#accordian" href="#collapse<%= registration.event_id %>"><%= registration.event.name %> <%= registration.event.start.to_formatted_s(:short) %>
+              to <%= registration.event.end.to_formatted_s(:short) %></a>
           </div>
-
+          <div class="col-sm-2">
+            <%= button_to "Manage RSVP", event_user_event_path(registration.event, registration), method: :get, :class => 'btn btn-primary' %>
+          </div>
         </div>
-        <% # Add in their tables %>
-        <div id="collapse<%= registration.event_id %>" class="panel-collapse collapse">
-          <% if registration.registration_tables.nil? or registration.registration_tables.empty? %>
-              <div class="bg-warning">You are not yet registered for any tables.</div>
-          <% else %>
-              <ul class="list-group">
-                <li class="list-group-item list-group-item-heading">Player Tables</li>
-                <% sorted = registration.registration_tables.sort {|a, b| a.start <=> b.start} %>
-                <% sorted.each do |reg_table| %>
-                    <li class="row list-group-item"><%= reg_table.table.session.name %>
-                      : <%= link_to "#{reg_table.table.scenario.long_name}", reg_table.table.scenario %></li>
-                <% end %>
-              </ul>
-          <% end %>
-          <% if registration.gamemaster? %>
-              <ul class="list-group">
-                <li class="list-group-item list-group-item-heading">Game Master Tables</li>
 
-                <% registration.game_masters.sort.each do |gm| %>
-                    <li class="row list-group-item"><%= gm.table.session.name %>
-                      : <%= link_to "#{gm.table.scenario.long_name}", gm.table.scenario %></li>
-                <% end %>
-              </ul>
-          <% end %>
-        </div>
       </div>
+      <% # Add in their tables %>
+      <div id="collapse<%= registration.event_id %>" class="panel-collapse collapse">
+        <% if registration.registration_tables.nil? or registration.registration_tables.empty? %>
+          <div class="bg-warning">You are not yet registered for any tables.</div>
+        <% else %>
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-heading">Player Tables</li>
+            <% sorted = registration.registration_tables.sort {|a, b| a.start <=> b.start} %>
+            <% sorted.each do |reg_table| %>
+              <li class="row list-group-item"><%= reg_table.table.session.name %>
+                : <%= link_to "#{reg_table.table.scenario.long_name}", reg_table.table.scenario %></li>
+            <% end %>
+          </ul>
+        <% end %>
+        <% if registration.gamemaster? %>
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-heading">Game Master Tables</li>
+
+            <% registration.game_masters.sort.each do |gm| %>
+              <li class="row list-group-item"><%= gm.table.session.name %>
+                : <%= link_to "#{gm.table.scenario.long_name}", gm.table.scenario %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </div>
   <% end %>
 </div>
 
 <hr>
 
-<% if current_user.admin? %>
-    <%= link_to 'New Event', new_event_path, :class => 'btn btn-warning' %>
-    <br>
+<% if admin? %>
+  <%= link_to 'New Event', new_event_path, :class => 'btn btn-warning' %>
+  <br>
 <% end %>

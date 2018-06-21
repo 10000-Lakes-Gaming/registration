@@ -57,7 +57,7 @@
         </td>
         <td nowrap="nowrap">
           <%= link_to 'Show', scenario, :class => 'btn btn-info' %>
-          <% if current_user.admin? %>
+          <% if admin? %>
               <%= link_to 'Edit', edit_scenario_path(scenario), :class => 'btn btn-primary' %>
               <%= link_to 'Destroy', scenario, method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %>
           <% end %>
