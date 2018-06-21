@@ -41,7 +41,7 @@ class EventsController < ApplicationController
     @my_registrations = []
     @my_events        = []
 
-    unless current_user.nil?
+    if user_signed_in?
       user_events = UserEvent.where(user_id: current_user.id, event_id: current_events)
       user_events.each do |user_event|
         @my_registrations.push user_event
@@ -59,7 +59,7 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    unless current_user.nil?
+    if user_signed_in?
       @registration = @event.user_events.where(user_id: current_user.id).first
       if @registration
         @sessions        = []

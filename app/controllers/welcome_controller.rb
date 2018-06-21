@@ -3,8 +3,7 @@ class WelcomeController < ApplicationController
 
 
   def index
-    admin = !current_user.nil? && current_user.admin?
-    if admin
+    if user_signed_in? && current_user.admin?
           redirect_to admin_index_path
     else
           redirect_to events_path
