@@ -34,22 +34,22 @@
     <% end %>
   <% end %>
 
-  <% if user_signed_in? && event_host? %>
-      <li><u>Event Admin</u></li>
-      <li><%= link_to 'Events', events_path %></li>
-      <% if @event and @event.persisted? %>
-          <li><%= link_to "#{@event.name}", @event %></li>
-          <li><%= link_to 'Event Hosts', event_event_hosts_path(@event) %></li>
-          <li><%= link_to 'Registrations', event_user_events_path(@event) %></li>
-          <li><%= link_to 'Sessions', event_sessions_path(@event) %></li>
-          <% if @session && @session.persisted? %>
-              <li><%= link_to 'Session', event_session_path(@event, @session) %></li>
-              <li><%= link_to 'Tables', event_session_tables_path(@event, @session) %></li>
-          <% end %>
-          <% if @table && @table.persisted? %>
-              <li><%= link_to 'Players', event_session_table_registration_tables_path(@event, @session, @table) %></li>
-              <li><%= link_to 'GMs', event_session_table_game_masters_path(@event, @session, @table) %></li>
-          <% end %>
+  <% if event_host? %>
+    <li><u>Event Admin</u></li>
+    <li><%= link_to 'Events', events_path %></li>
+    <% if @event and @event.persisted? %>
+      <li><%= link_to "#{@event.name}", @event %></li>
+      <li><%= link_to 'Event Hosts', event_event_hosts_path(@event) %></li>
+      <li><%= link_to 'Registrations', event_user_events_path(@event) %></li>
+      <li><%= link_to 'Sessions', event_sessions_path(@event) %></li>
+      <% if @session && @session.persisted? %>
+        <li><%= link_to 'Session', event_session_path(@event, @session) %></li>
+        <li><%= link_to 'Tables', event_session_tables_path(@event, @session) %></li>
+      <% end %>
+      <% if @table && @table.persisted? %>
+        <li><%= link_to 'Players', event_session_table_registration_tables_path(@event, @session, @table) %></li>
+        <li><%= link_to 'GMs', event_session_table_game_masters_path(@event, @session, @table) %></li>
+      <% end %>
       <% if event_host? %>
         <li><%= link_to "Table Assignments", event_table_assignment_index_path(@event) %></li>
         <li><%= link_to "All User Receipts", event_event_receipt_index_path(@event) %></li>
@@ -75,7 +75,7 @@
     <% end %>
   </li>
   <li>
-    <% if current_user.nil? %>
+    <% unless user_signed_in? %>
       <a href="mailto:<%= ENV['GMAIL_SMTP_USERNAME'] %>">Contact Us!</a>
     <% else %>
       <%= link_to('Contact Us!', contact_path) %>

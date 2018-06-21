@@ -1,16 +1,18 @@
 module ApplicationHelper
 
   def admin?
-    !current_user.nil? and current_user.admin?
+    user_signed_in? and current_user.admin?
   end
 
   def event_host?
     host = false
-    unless @event.nil?
-      current_user.event_hosts.each do |hosted_event|
-        event = hosted_event.event
-        if hosted_event.active?
-          host = host || (event.id == @event.id)
+    if user_signed_in?
+      unless @event.nil?
+        current_user.event_hosts.each do |hosted_event|
+          event = hosted_event.event
+          if hosted_event.active?
+            host = host || (event.id == @event.id)
+          end
         end
       end
     end

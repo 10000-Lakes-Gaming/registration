@@ -1,6 +1,6 @@
 <h1><%= @event.name %></h1>
 
-<% if current_user.admin? %>
+<% if admin? %>
     <h2>Admin register user for an event:</h2>
     <p>Note: currently there will be no notification sent to the user. (<em>This is a planned future enhancement.</em>)
       <br> Also, make sure that you are registering the correct user for the correct event!</p>

@@ -12,7 +12,7 @@
     <% end %>
 
 
-    <% if current_user.admin? %>
+    <% if admin? %>
         <%# admin section %>
         <div>
           <%= f.label :user_id %>:

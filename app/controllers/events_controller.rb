@@ -1,5 +1,7 @@
 class EventsController < ApplicationController
   include ApplicationHelper
+
+  skip_before_action :authenticate_user!, only: %i[index show]
   before_action :set_event, only: [:show, :edit, :update, :destroy, :gms_by_scenario]
   before_action :restrict_to_admin, except: [:show, :index]
   before_action :get_events, :get_my_events
@@ -7,7 +9,6 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    # get_events
   end
 
   def get_events
@@ -34,10 +35,12 @@ class EventsController < ApplicationController
     @my_registrations = []
     @my_events        = []
 
-    user_events = UserEvent.where(user_id: current_user.id, event_id: current_events)
-    user_events.each do |user_event|
-      @my_registrations.push user_event
-      @my_events.push user_event.event
+    if user_signed_in?
+      user_events = UserEvent.where(user_id: current_user.id, event_id: current_events)
+      user_events.each do |user_event|
+        @my_registrations.push user_event
+        @my_events.push user_event.event
+      end
     end
   end
 
@@ -50,24 +53,26 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    @registration = @event.user_events.where(user_id: current_user.id).first
-    if @registration
-      @sessions        = []
-      @tables          = []
-      @gm_tables       = []
-      @gm_sessions     = []
-      @reg_tables      = @registration.registration_tables
-      @reg_tables_hash = {}
+    if user_signed_in?
+      @registration = @event.user_events.where(user_id: current_user.id).first
+      if @registration
+        @sessions        = []
+        @tables          = []
+        @gm_tables       = []
+        @gm_sessions     = []
+        @reg_tables      = @registration.registration_tables
+        @reg_tables_hash = {}
 
-      @reg_tables.each do |reg_table|
-        @tables << reg_table.table
-        @sessions << reg_table.table.session
-        @reg_tables_hash[reg_table.table] = reg_table
-      end
-      @game_masters = @registration.game_masters
-      @game_masters.each do |gm|
-        @gm_tables << gm.table
-        @gm_sessions << gm.table.session
+        @reg_tables.each do |reg_table|
+          @tables << reg_table.table
+          @sessions << reg_table.table.session
+          @reg_tables_hash[reg_table.table] = reg_table
+        end
+        @game_masters = @registration.game_masters
+        @game_masters.each do |gm|
+          @gm_tables << gm.table
+          @gm_sessions << gm.table.session
+        end
       end
     end
   end
