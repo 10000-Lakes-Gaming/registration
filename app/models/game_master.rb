@@ -6,7 +6,7 @@ class GameMaster < ActiveRecord::Base
   validate :check_gm_count
 
   def check_gm_count
-    errors.add :game_masters, "Max GMs Exceeded" if table.game_masters.count > table.gms_needed
+    errors.add :game_masters, "Max GMs Exceeded" if table.game_masters.count >= table.gms_needed
   end
 
   def <=> (other)
@@ -17,6 +17,10 @@ class GameMaster < ActiveRecord::Base
       sorted = self.table.scenario <=> other.table.scenario
     end
     sorted
+  end
+
+  def self_register
+    # check the table for this.
   end
 
 end
