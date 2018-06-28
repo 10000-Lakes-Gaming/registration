@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170912192352) do
+ActiveRecord::Schema.define(version: 20180628022059) do
 
   create_table "additional_payments", force: :cascade do |t|
     t.string   "category"
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(version: 20170912192352) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.index ["user_event_id"], name: "index_additional_payments_on_user_event_id"
+  end
+
+  create_table "event_hosts", force: :cascade do |t|
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_event_hosts_on_event_id"
+    t.index ["user_id"], name: "index_event_hosts_on_user_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -97,18 +108,19 @@ ActiveRecord::Schema.define(version: 20170912192352) do
     t.integer  "session_id"
     t.integer  "scenario_id"
     t.integer  "max_players"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.integer  "gms_needed",   default: 1
-    t.boolean  "raffle",       default: false
-    t.boolean  "core",         default: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.integer  "gms_needed",     default: 1
+    t.boolean  "raffle",         default: false
+    t.boolean  "core",           default: false
     t.string   "location"
     t.boolean  "premium"
-    t.integer  "prereg_price", default: 0
-    t.integer  "onsite_price", default: 0
-    t.boolean  "disabled",     default: false
+    t.integer  "prereg_price",   default: 0
+    t.integer  "onsite_price",   default: 0
+    t.boolean  "disabled",       default: false
     t.boolean  "non_pfs"
     t.string   "information"
+    t.boolean  "gm_self_select", default: true
     t.index ["scenario_id"], name: "index_tables_on_scenario_id"
     t.index ["session_id"], name: "index_tables_on_session_id"
   end

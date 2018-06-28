@@ -1,98 +1,109 @@
 <%= form_for([@event, @session, @table]) do |f| %>
-    <% if @table.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@table.errors.count, "error") %> prohibited this table from being saved:</h2>
+  <% if @table.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@table.errors.count, "error") %> prohibited this table from being saved:</h2>
 
-          <ul>
-            <% @table.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
-
-    <table class="table formTable">
-      <tr>
-        <td>
-          <%= f.label :scenario_id %>
-        </td>
-        <td>
-          <%# add default row %>
-          <%= f.select :scenario_id, options_for_select(@scenarios.map {|scenario| [scenario.season.to_s + "-" +scenario.scenario_number.to_s.rjust(2, "0") + ": " + scenario.name, scenario.id]}, @table.scenario_id), {include_blank: true} %>
-        </td>
-      </tr>
-      <tr>
-        <td><%= f.label :location %></td>
-        <td><%= f.text_field :location %></td>
-      </tr>
-
-      <tr>
-        <td><%= f.label :disabled, 'Disable RSVPs' %></td>
-        <td><%= f.check_box :disabled %></td>
-      </tr>
-
-      <tr>
-        <td><%= f.label :non_pfs, 'This table is not for Society credit' %></td>
-        <td><%= f.check_box :non_pfs %></td>
-      </tr>
-
-      <tr>
-        <td>
-          <%= f.label :raffle, 'The table is for a raffle?' %>
-        </td>
-        <td>
-          <%= f.check_box :raffle %>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <%= f.label :premium, 'Is this a premium table?' %>
-          <div class="text-info">Premium tables are for fee only, at time of registration.</div>
-        </td>
-        <td>
-          <%= f.check_box :premium %>
-        </td>
-      </tr>
-      <!-- put a conditional here for javascript -->
-      <tr>
-        <td>
-          <%= f.label :prereg_price, 'What is the Early Bird or Prereg price for joining this table?' %>
-          <div>This will be used before <%= @event.prereg_ends.localtime.to_formatted_s(:long_ordinal) %></div>
-        </td>
-        <td><%= f.number_field :prereg_price %> </td>
-      </tr>
-
-      <tr>
-        <td>
-          <%= f.label :onsite_price, 'What is the Regular or Onsite price for joining this table?' %>
-          <div>This will be used after <%= @event.prereg_ends.localtime.to_formatted_s(:long_ordinal) %></div>
-        </td>
-        <td><%= f.number_field :onsite_price %> </td>
-      </tr>
-
-      <tr>
-        <td><%= f.label :core, 'CORE table' %></td>
-        <td><%= f.check_box :core %></td>
-      </tr>
-
-      <tr>
-        <td><%= f.label :information, 'Additional information for players (character requirements, etc).' %></td>
-        <td><%= f.text_area :information %>
-      </tr>
-
-      <tr>
-        <td><%= f.label :max_players %></td>
-        <td><%= f.number_field :max_players %></td>
-      </tr>
-
-      <tr>
-        <td><%= f.label :gms_needed %></td>
-        <td><%= f.number_field :gms_needed %></td>
-      </tr>
-    </table>
-
-    <div class="actions">
-      <%= f.submit 'Save Changes', :class => 'btn btn-primary' %>
+      <ul>
+        <% @table.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
     </div>
+  <% end %>
+
+  <table class="table formTable">
+    <tr>
+      <td>
+        <%= f.label :scenario_id %>
+      </td>
+      <td>
+        <%# add default row %>
+        <%= f.select :scenario_id, options_for_select(@scenarios.map {|scenario| [scenario.season.to_s + "-" + scenario.scenario_number.to_s.rjust(2, "0") + ": " + scenario.name, scenario.id]}, @table.scenario_id), {include_blank: true} %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= f.label :location %></td>
+      <td><%= f.text_field :location %></td>
+    </tr>
+
+    <tr>
+      <td><%= f.label :disabled, 'Disable RSVPs' %></td>
+      <td><%= f.check_box :disabled %></td>
+    </tr>
+
+    <tr>
+      <td><%= f.label :non_pfs, 'This table is not for Society credit' %></td>
+      <td><%= f.check_box :non_pfs %></td>
+    </tr>
+
+    <tr>
+      <td>
+        <%= f.label :raffle, 'The table is for a raffle?' %>
+      </td>
+      <td>
+        <%= f.check_box :raffle %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <%= f.label :premium, 'Is this a premium table?' %>
+        <div class="text-info">Premium tables are for fee only, at time of registration.</div>
+      </td>
+      <td>
+        <%= f.check_box :premium %>
+      </td>
+    </tr>
+    <!-- put a conditional here for javascript -->
+    <tr>
+      <td>
+        <%= f.label :prereg_price, 'What is the Early Bird or Prereg price for joining this table?' %>
+        <div>This will be used before <%= @event.prereg_ends.localtime.to_formatted_s(:long_ordinal) %></div>
+      </td>
+      <td><%= f.number_field :prereg_price %> </td>
+    </tr>
+
+    <tr>
+      <td>
+        <%= f.label :onsite_price, 'What is the Regular or Onsite price for joining this table?' %>
+        <div>This will be used after <%= @event.prereg_ends.localtime.to_formatted_s(:long_ordinal) %></div>
+      </td>
+      <td><%= f.number_field :onsite_price %> </td>
+    </tr>
+
+    <tr>
+      <td><%= f.label :core, 'CORE table' %></td>
+      <td><%= f.check_box :core %></td>
+    </tr>
+
+    <tr>
+      <td><%= f.label :information, 'Additional information for players (character requirements, etc).' %></td>
+      <td><%= f.text_area :information %>
+    </tr>
+
+    <tr>
+      <td>
+        <%= f.label :max_players, 'What is the maximum number of players?' %>
+        <div><em>(Typically 6 per physical table)</em></div>
+      </td>
+      <td><%= f.number_field :max_players %></td>
+    </tr>
+
+    <tr>
+      <td>
+        <%= f.label :gms_needed, 'How many GMs are needed for this table' %>
+        <div><em>(suggested 1 GM per 6 players)</em></div>
+      </td>
+      <td><%= f.number_field :gms_needed %></td>
+    </tr>
+
+    <tr>
+      <td><%= f.label :gm_self_select, 'Can GMs select this table for themselves?' %></td>
+      <td><%= f.check_box :gm_self_select %></td>
+    </tr>
+  </table>
+
+  <div class="actions">
+    <%= f.submit 'Save Changes', :class => 'btn btn-primary' %>
+  </div>
 <% end %>

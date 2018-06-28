@@ -50,6 +50,10 @@ class Table < ActiveRecord::Base
     self.registration_tables.length
   end
 
+  def need_gms?
+    gms_short > 0
+  end
+
   def gms_short
     self.gms_needed - current_gms
   end
