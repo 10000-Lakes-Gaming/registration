@@ -18,8 +18,13 @@ class GameMastersController < ApplicationController
 
   # GET /game_masters/new
   def new
-    prevent_non_admin
     @game_master = GameMaster.new
+    # @user_event
+    # current_user.user_events.each do |gm|
+    #   if gm.event == @event
+    #     @user_event = gm
+    #   end
+    # end
   end
 
   def get_possible_gms
@@ -60,8 +65,6 @@ class GameMastersController < ApplicationController
   end
 
   def get_user_event
-    # this only works in non-admin mode -- we'll need to figure this out later.
-    # UserEvent.where(user_id: == current_user.id AND event_id: == @event.id)
     @user_event = UserEvent.find_by_event_id_and_user_id(params[:event_id], current_user.id)
   end
 
@@ -82,12 +85,21 @@ class GameMastersController < ApplicationController
   # POST /game_masters.json
   # TODO - can only admins add GMs?
   def create
-    prevent_non_admin
     # TODO - do something if already regisered for table/session
     @game_master = GameMaster.new(game_master_params)
+    unless current_user.admin?
+      # for the user event to the current user's
+      @user_event = get_user_event
+      @game_master.user_event = @user_event
+    end
+
     respond_to do |format|
       if @game_master.save
+        if current_user.admin?
         format.html { redirect_to [@event, @session, @table], notice: 'Game master was successfully added.' }
+        else
+          format.html {redirect_to [@event], notice: "You are now a GM for #{@table.long_name}"}
+        end
         format.json { render :show, status: :created, location: @game_master }
       else
         format.html { render :new }

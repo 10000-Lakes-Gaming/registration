@@ -82,6 +82,7 @@ class RegistrationTablesController < ApplicationController
   def create
     @registration_table = RegistrationTable.new(registration_table_params)
     respond_to do |format|
+      # this needs to be tweaked for admin users.
       if @registration_table.save
         if @registration_table.payment_ok?
           format.html {redirect_to [@event], notice: 'Table was successfully added.'}
@@ -94,20 +95,6 @@ class RegistrationTablesController < ApplicationController
       end
     end
   end
-
-  # def create
-  #   respond_to do |format|
-  #     if @registration_table.save
-  #       if @registration_table.payment_ok?
-  #         format.html {redirect_to [@event], notice: 'Table was successfully added.'}
-  #       else
-  #         format.html {redirect_to new_registration_table_table_payment_path(@registration_table), notice: PREMIUM_MESSAGE}
-  #       end
-  #     else
-  #       format.html {render :new}
-  #     end
-  #   end
-  # end
 
   # PATCH/PUT /registration_tables/1
   # PATCH/PUT /registration_tables/1.json
