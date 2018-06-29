@@ -1,0 +1,21 @@
+<% unless user_event.registration_tables.empty? %>
+  <h3>Player Sessions</h3>
+  <div class="well">
+    <ul>
+      <% user_event.registration_tables.each do |reg_table| %>
+        <li><%= "#{reg_table.table.session.name}: #{reg_table.table.scenario.long_name} at #{reg_table.table.location}" %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<% unless user_event.game_masters.empty? %>
+  <h3>GM Sessions</h3>
+  <div class="well">
+    <ul>
+      <% user_event.game_masters.each do |reg_table| %>
+        <li><%= "#{reg_table.table.session.name}: #{reg_table.table.scenario.long_name} at #{reg_table.table.location}" %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
