@@ -34,12 +34,13 @@ class ContactMailer < ApplicationMailer
     mail(subject: @message.subject, to: email)
   end
 
-  def game_master(message, email, event, game_master)
+  def game_master(message, email, event, game_master, adding)
+    @adding = adding
     @message = message
     @event = event
     @game_master = game_master
     # add cc for registration
-    mail(subject: @message.subject, to: email)
+    mail(subject: @message.subject, to: email, bcc:  ENV["GMAIL_SMTP_USERNAME"])
   end
 
 end
