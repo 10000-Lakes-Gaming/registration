@@ -18,6 +18,11 @@
 </div>
 <%= render 'form' %>
 
+<div class="alert-info">Once you have volunteered to GM a table, you will need to contact the hosts of the event (either
+  by replying to your confirmation email, or through <a href="email:<%= ENV['GMAIL_SMTP_USERNAME'] %>?Subject=I%20can%20no%20longer%20GM%20something">our contact email</a>
+
+</div>
+
 <% if admin? %>
 <h4>Current Players in session.</h4>
 <div class="well">
