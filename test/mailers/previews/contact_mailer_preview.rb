@@ -26,10 +26,25 @@ class ContactMailerPreview < ActionMailer::Preview
     ContactMailer.session_reminder(@message, @admins, @event)
   end
 
+  #   def game_master(message, email, event, game_master)
+  def game_master_preview
+    @event = Event.first
+    @user = User.first
+    user_event = @user.user_events.first
+    # byebug
+    game_master = user_event.game_masters.first
+    message = Message.new
+    message.subject = "Change in GM assignments for #{@event.name}"
+
+    email = @user.email
+
+    ContactMailer.game_master(message, email, @event, game_master)
+  end
+
   private
   def setup_user_event
     @event              = Event.new
-    @event.name         = 'SkålCon 2017'
+    @event.name         = 'SkålCon 2018'
     @event.prereg_price = 20
     @event.onsite_price = 25
     @event.prereg_ends  = 5.days.from_now
@@ -45,4 +60,5 @@ class ContactMailerPreview < ActionMailer::Preview
   def setup_admins
     @admins = User.where(admin: true)
   end
+
 end

@@ -1,0 +1,148 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+        integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+          integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+          crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+          integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+          crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container-fluid">
+  <h1 class="alert-success">Confirmation of Table GM Assignment</h1>
+  <h2><%= @game_master.user_event.user.formal_name %>,</h2>
+  Thank you for volunteering to be the GM for: <%= @game_master.table.long_name %> at <%= @event.name %>!
+
+  <hr>
+
+  <h2 class="alert-primary">Your schedule at <%= @event.name %></h2>
+
+  <%
+    @sessions = @event.sessions
+    @table_sessions = {}
+
+    @sessions.each do |session|
+      @table_sessions[session] = nil
+    end
+
+    user_event = @game_master.user_event
+
+    user_event.registration_tables.each do |reg_table|
+      session                  = reg_table.table.session
+      @table_sessions[session] = reg_table
+    end
+    user_event.game_masters.each do |game_master|
+      session                  = game_master.table.session
+      @table_sessions[session] = game_master
+    end
+  %>
+  <div class="well">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Session</th>
+        <th scope="col">Time</th>
+        <th scope="col">Scenario</th>
+        <th scope="col">Location</th>
+        <th scope="col">Signup Type</th>
+        <th scope="col">Payment Due?</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @sessions.each do |session| %>
+        <% selection = @table_sessions[session] %>
+        <tr>
+          <td><%= session.name %></td>
+          <td><%= session.timeslot %></td>
+          <% if selection.nil? %>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          <% else %>
+            <td><%= selection.table.scenario.long_name %></td>
+            <td><%= selection.table.location %></td>
+            <% if selection.is_a? RegistrationTable %>
+              <td>Player</td>
+              <td>
+                <% unless selection.payment_ok? %>
+                  <%= number_to_currency(selection.table.price) %>
+                <% end %>
+              </td>
+            <% elsif selection.is_a? GameMaster %>
+              <td>GM</td>
+              <td></td>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert-warning">If you need to drop a table that you have volunteered to GM, you will need to reply to this email,
+    requesting to be removed. We apologize if this causes any proplems, but it is to make sure as many tables have their GMs
+     as possible.
+  </div>
+
+
+  <hr>
+
+  <h2>Volunteer Information</h2>
+  <ul>
+    <li>If you have volunteered before, much of what is presented below will not be new to you, but please read through
+      it anyway as some things have changed. If this is your first time, these guidelines will help answer your
+      questions and direct you through this important part of Paizo Organized Play.
+    </li>
+    <li>As a volunteer, you are the eyes, ears, face, and voice of Paizo. We expect each of you to maintain a positive
+      attitude, professional behavior, and good hygiene.
+    </li>
+    <li>The Player Boon token rolls remain the same. 10% chance per token turned in, 5 tokens max per roll. Winners roll
+      randomly on which boon received. GM boons can be claimed when turning in your first session reporting sheet.
+    </li>
+  </ul>
+  <hr>
+
+
+  <h2>Logistics:</h2>
+  <ul>
+    <li>Each GM is responsible to provide their own maps, miniatures, handouts, and PC pre-gen characters, if your
+      scenario requires them (i.e. Serpent's Ire).
+    </li>
+    <li>If for any reason, your assigned table does not run, please report to HQ for additional duty assignments.</li>
+    <li>GM’s are also responsible for having a reliable copy of the scenario they are running – power outlets are scarce
+      in the room so have another backup option if your tablet runs out of power.
+    </li>
+    <li>Chronicles and Session reporting sheets are provided.</li>
+    <li>The HQ has a supply of New Player Packets and pre-generated characters (note: if the scenario has unique
+      pregens,
+      then you will need to provide these)
+    </li>
+    <li>No personal items may be left in the HQ area.</li>
+    <li>The convention room will be closed to all players 30 minutes prior to the the running of interactive specials
+      for
+      the GM pre-special meeting. All GM’s running the specials are expected to be at this meeting, and should report at
+      least 30 minutes prior to the session start time. Please be on time, as we will be discussing signaling and the
+      like.
+    </li>
+  </ul>
+  <hr>
+
+  <p>Thank you for making <%= @event.name %> a success!</p>
+
+  <hr>
+  <p><%= @event.name %>, Minnesota Paizo Organized Play, and 10,000 Lakes Gaming</p>
+</div>
+</body>
+</html>
