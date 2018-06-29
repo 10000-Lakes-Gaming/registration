@@ -28,7 +28,7 @@ class GameMastersController < ApplicationController
   end
 
   def get_possible_gms
-    @possible_gms = []
+    @possible_gms  = []
     @not_available = []
 
     @event.user_events.each do |user_event|
@@ -47,7 +47,7 @@ class GameMastersController < ApplicationController
       end
       # need to sort the gms
       # @tables = @session.tables.sort {|a,b| a <=> b}
-      @possible_gms = @possible_gms.sort { |a, b| a <=> b }
+      @possible_gms = @possible_gms.sort {|a, b| a <=> b}
     end
   end
 
@@ -85,25 +85,34 @@ class GameMastersController < ApplicationController
   # POST /game_masters.json
   # TODO - can only admins add GMs?
   def create
-    # TODO - do something if already regisered for table/session
+    # TODO - do something if already registered for table/session
     @game_master = GameMaster.new(game_master_params)
-    unless current_user.admin?
+    user         = nil
+    if current_user.admin?
+      @user_event = @game_master.user_event
+      puts @user_event
+      user = @user_event.user
+    else
       # for the user event to the current user's
-      @user_event = get_user_event
+      @user_event             = get_user_event
+      user                    = @user_event.user
       @game_master.user_event = @user_event
     end
+    email = user.email
 
     respond_to do |format|
       if @game_master.save
+        ContactMailer.game_master(get_email_message, email, @event, @game_master, true).deliver
+
         if current_user.admin?
-        format.html { redirect_to [@event, @session, @table], notice: 'Game master was successfully added.' }
+          format.html {redirect_to [@event, @session, @table], notice: 'Game master was successfully added.'}
         else
           format.html {redirect_to [@event], notice: "You are now a GM for #{@table.long_name}"}
         end
-        format.json { render :show, status: :created, location: @game_master }
+        format.json {render :show, status: :created, location: @game_master}
       else
-        format.html { render :new }
-        format.json { render json: @game_master.errors, status: :unprocessable_entity }
+        format.html {render :new}
+        format.json {render json: @game_master.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -114,11 +123,11 @@ class GameMastersController < ApplicationController
     prevent_non_admin
     respond_to do |format|
       if @game_master.update(game_master_params)
-        format.html { redirect_to @game_master, notice: 'Game master was successfully updated.' }
-        format.json { render :show, status: :ok, location: @game_master }
+        format.html {redirect_to @game_master, notice: 'Game master was successfully updated.'}
+        format.json {render :show, status: :ok, location: @game_master}
       else
-        format.html { render :edit }
-        format.json { render json: @game_master.errors, status: :unprocessable_entity }
+        format.html {render :edit}
+        format.json {render json: @game_master.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -128,13 +137,17 @@ class GameMastersController < ApplicationController
   def destroy
     prevent_non_admin
     @game_master.destroy
+
+    gm_name = "<UNKNOWN>"
+    unless @game_master.user_event.nil?
+      user_event = @game_master.user_event
+      email      = user_event.user.email
+      gm_name    = user_event.user.name
+      ContactMailer.game_master(get_email_message, email, @event, @game_master, false).deliver
+    end
     respond_to do |format|
-      gm_name = "<UNKNOWN>"
-      unless @game_master.user_event.nil?
-        gm_name = @game_master.user_event.user.long_name
-      end
-      format.html { redirect_to [@event], notice: "#{gm_name} was removed as a Game Master from table." }
-      format.json { head :no_content }
+      format.html {redirect_to [@event], notice: "#{gm_name} was removed as a Game Master from table."}
+      format.json {head :no_content}
     end
   end
 
@@ -145,8 +158,15 @@ class GameMastersController < ApplicationController
     @game_master = GameMaster.find(params[:id])
   end
 
+  def get_email_message
+    message         = Message.new
+    message.subject = "Change in GM assignments for #{@event.name}"
+    message
+  end
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def game_master_params
     params.require(:game_master).permit(:table_id, :user_event_id)
   end
+
 end

@@ -20,10 +20,13 @@
 <body>
 
 <div class="container-fluid">
-  <h1 class="alert-success">Confirmation of Table GM Assignment</h1>
+  <h1 class="alert-success">Confirmation of Table GM Assignment Change</h1>
   <h2><%= @game_master.user_event.user.formal_name %>,</h2>
-  Thank you for volunteering to be the GM for: <%= @game_master.table.long_name %> at <%= @event.name %>!
-
+  <% if @adding %>
+    Thank you for volunteering to be the GM for: <%= @game_master.table.long_name %> at <%= @event.name %>!
+  <% else %>
+    You are no longer assigned to GM:  <%= @game_master.table.long_name %> at <%= @event.name %>.
+  <% end %>
   <hr>
 
   <h2 class="alert-primary">Your schedule at <%= @event.name %></h2>
@@ -91,9 +94,11 @@
     </table>
   </div>
 
-  <div class="alert-warning">If you need to drop a table that you have volunteered to GM, you will need to reply to this email,
-    requesting to be removed. We apologize if this causes any proplems, but it is to make sure as many tables have their GMs
-     as possible.
+  <div class="alert-warning">If you need to drop a table that you have volunteered to GM, you will need to reply to this
+    email,
+    requesting to be removed. We apologize if this causes any proplems, but it is to make sure as many tables have their
+    GMs
+    as possible.
   </div>
 
 

@@ -27,7 +27,7 @@ class ContactMailerPreview < ActionMailer::Preview
   end
 
   #   def game_master(message, email, event, game_master)
-  def game_master_preview
+  def game_master_add_preview
     @event = Event.first
     @user = User.first
     user_event = @user.user_events.first
@@ -38,7 +38,23 @@ class ContactMailerPreview < ActionMailer::Preview
 
     email = @user.email
 
-    ContactMailer.game_master(message, email, @event, game_master)
+    ContactMailer.game_master(message, email, @event, game_master, true)
+  end
+
+
+  #   def game_master(message, email, event, game_master)
+  def game_master_delete_preview
+    @event = Event.first
+    @user = User.first
+    user_event = @user.user_events.first
+    # byebug
+    game_master = user_event.game_masters.first
+    message = Message.new
+    message.subject = "Change in GM assignments for #{@event.name}"
+
+    email = @user.email
+
+    ContactMailer.game_master(message, email, @event, game_master, false)
   end
 
   private
