@@ -18,9 +18,4 @@ class GameMaster < ActiveRecord::Base
     end
     sorted
   end
-
-  def self_register
-    # check the table for this.
-  end
-
 end
