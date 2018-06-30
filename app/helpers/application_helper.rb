@@ -27,25 +27,4 @@ module ApplicationHelper
     end
     unpaid_payments
   end
-
-  def sorted_user_tables (user_event)
-    # sort the sessions by start time.
-    @sessions       = user_event.event.sessions
-    @table_sessions = {}
-
-    @sessions.each do |session|
-      @table_sessions[session] = nil
-    end
-
-    user_event.registration_tables.each do |reg_table|
-      session                  = reg_table.table.session
-      @table_sessions[session] = reg_table
-    end
-    user_event.game_masters.each do |game_master|
-      session                  = game_master.table.session
-      @table_sessions[session] = game_master
-    end
-  end
-
-
 end
