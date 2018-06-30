@@ -11,7 +11,8 @@ class ScenariosController < ApplicationController
   # GET /scenarios
   # GET /scenarios.json
   def index
-    @scenarios = Scenario.all.order(:type_of).order('season DESC').order('scenario_number ASC')
+    @scenarios = Scenario.all
+    @scenarios.sort
   end
 
   # GET /scenarios/1
