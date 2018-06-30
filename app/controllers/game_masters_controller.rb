@@ -19,12 +19,6 @@ class GameMastersController < ApplicationController
   # GET /game_masters/new
   def new
     @game_master = GameMaster.new
-    # @user_event
-    # current_user.user_events.each do |gm|
-    #   if gm.event == @event
-    #     @user_event = gm
-    #   end
-    # end
   end
 
   def get_possible_gms
@@ -87,7 +81,6 @@ class GameMastersController < ApplicationController
   def create
     # TODO - do something if already registered for table/session
     @game_master = GameMaster.new(game_master_params)
-    user         = nil
     if current_user.admin?
       @user_event = @game_master.user_event
       puts @user_event

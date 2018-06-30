@@ -26,12 +26,10 @@ class ContactMailerPreview < ActionMailer::Preview
     ContactMailer.session_reminder(@message, @admins, @event)
   end
 
-  #   def game_master(message, email, event, game_master)
   def game_master_add_preview
     @event = Event.first
     @user = User.first
     user_event = @user.user_events.first
-    # byebug
     game_master = user_event.game_masters.first
     message = Message.new
     message.subject = "Change in GM assignments for #{@event.name}"
@@ -42,12 +40,10 @@ class ContactMailerPreview < ActionMailer::Preview
   end
 
 
-  #   def game_master(message, email, event, game_master)
   def game_master_delete_preview
     @event = Event.first
     @user = User.first
     user_event = @user.user_events.first
-    # byebug
     game_master = user_event.game_masters.first
     message = Message.new
     message.subject = "Change in GM assignments for #{@event.name}"
