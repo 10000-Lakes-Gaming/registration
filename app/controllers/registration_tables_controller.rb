@@ -44,8 +44,6 @@ class RegistrationTablesController < ApplicationController
       else
         @possible_players.push user_event
       end
-      # need to sort the gms
-      # @tables = @session.tables.sort {|a,b| a <=> b}
       @possible_players = @possible_players.sort {|a, b| a <=> b}
     end
   end
