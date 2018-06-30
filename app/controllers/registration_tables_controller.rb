@@ -80,7 +80,6 @@ class RegistrationTablesController < ApplicationController
   def create
     @registration_table = RegistrationTable.new(registration_table_params)
     respond_to do |format|
-      # this needs to be tweaked for admin users.
       if @registration_table.save
         if @registration_table.payment_ok?
           format.html {redirect_to [@event], notice: 'Table was successfully added.'}
