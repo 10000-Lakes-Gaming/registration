@@ -135,6 +135,8 @@
   </div>
 </div>
 
+<%# TODO - for future, maybe make this a little more dynamic - and have a custom message %>
+<% unless self_select_allowed? %>
 <div id="gm_info" style="border: solid thin black;">
   <h3 class="text-danger">Attention GMs!</h3>
 
@@ -157,6 +159,7 @@
     </div>
   </div>
 </div>
+  <% end %>
 
 <div class="sessionsOffered" style="border: solid thin black;">
   <h3>Sessions/Scenarios Offered</h3>
