@@ -45,9 +45,11 @@ class RegistrationTablesController < ApplicationController
         @possible_players.push user_event
       end
       # admin fix.
-      if current_user.admin? && !@registration_table.user_event.nil?
-        @possible_players.push @registration_table.user_event
-        @not_available.delete @registration_table.user_event
+      if current_user.admin?
+        unless @registration_table.nil?
+          @possible_players.push @registration_table.user_event
+          @not_available.delete @registration_table.user_event
+        end
       end
 
       @possible_players = @possible_players.sort {|a, b| a <=> b}
