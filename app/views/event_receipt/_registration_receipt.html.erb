@@ -32,9 +32,9 @@
 
   <% if user_event.total_paid > 0 %>
       <hr>
-      <%= render 'user_events/all_payments_table', locals: {event: @event, user_event: @user_event} %>
+      <%= render partial: 'user_events/all_payments_table', locals: {event: @event, user_event: @user_event} %>
   <% end %>
   <hr>
 
-  <%= render 'event_tables', locals: {event: @event, user_event: @user_event} %>
+  <%= render  partial: 'event_tables', locals: {event: @event, user_event: @user_event} %>
 </div>
