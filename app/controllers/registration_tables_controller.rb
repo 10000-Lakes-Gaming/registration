@@ -44,6 +44,12 @@ class RegistrationTablesController < ApplicationController
       else
         @possible_players.push user_event
       end
+      # admin fix.
+      if current_user.admin? && !@registration_table.user_event.nil?
+        @possible_players.push @registration_table.user_event
+        @not_available.delete @registration_table.user_event
+      end
+
       @possible_players = @possible_players.sort {|a, b| a <=> b}
     end
   end
@@ -125,6 +131,6 @@ class RegistrationTablesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def registration_table_params
-    params.require(:registration_table).permit(:table_id, :user_event_id)
+    params.require(:registration_table).permit(:table_id, :user_event_id, :paid, :payment_amount, :payment_id, :payment_date)
   end
 end

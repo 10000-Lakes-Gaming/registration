@@ -1,60 +1,85 @@
 <%= form_for([@event, @session, @table, @registration_table]) do |f| %>
-    <% if @registration_table.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@registration_table.errors.count, "error") %> prohibited this registration_table from being
-            saved:</h2>
+  <% if @registration_table.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@registration_table.errors.count, "error") %> prohibited this registration_table from being
+        saved:</h2>
 
-          <ul>
-            <% @registration_table.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
+      <ul>
+        <% @registration_table.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <!-- if not admin then they can just confirm -->
+
+  <div class="field">
+    <%= f.label :table_id %>: <%= @table.long_name %>
+    <%= f.hidden_field :table_id, :value => @table.id %>
+  </div>
+  <% @scenario = @table.scenario %>
+
+  <div class="well">
+    <div class="field">
+      <%= f.label :description %>: <%= @scenario.description %>
+    </div>
+    <% if @table.scenario.author.present? %>
+      <div>by <%= @table.scenario.author %></div>
     <% end %>
-    <!-- if not admin then they can just confirm -->
+    <%= render partial: 'events/table_badges', locals: {table: @table} %>
+  </div>
+
+  <% if admin? %>
+    <% if @registration_table.user_event
+         player_id = @registration_table.user_event.user_id
+       else
+         player_id = current_user.id
+       end %>
+    <div class="field">
+
+      <%= f.select :user_event_id,
+                   options_for_select(@possible_players.map {|user_event| [user_event.user.long_name, user_event.id]}.to_h,
+                                      player_id),
+                   include_blank: 'Select User...',
+                   :selected      => @registration_table.user_event %>
+    </div>
 
     <div class="field">
-      <%= f.label :table_id %>: <%= @table.long_name %>
-      <%= f.hidden_field :table_id, :value => @table.id %>
-    </div>
-    <% @scenario = @table.scenario %>
-
-    <div class="well">
-      <div class="field">
-        <%= f.label :description %>: <%= @scenario.description %>
-      </div>
-      <% if @table.scenario.author.present? %>
-          <div>by <%= @table.scenario.author %></div>
-      <% end %>
-      <%= render partial: 'events/table_badges', locals: {table: @table} %>
+      <%= f.label :paid %>
+      <%= f.check_box :paid %>
     </div>
 
-    <%# need the UserEvent for the current user %>
-    <% if admin? %>
-        <% if @registration_table.user_event
-             player_id = @registration_table.user_event.user_id
-           else
-             player_id = current_user.id
-           end %>
-        <div class="field">
+    <div>
+      <%= f.label :payment_amount, 'Amount paid. Note: this needs to be in cents (or dollars * 100)' %>
+      <%= f.number_field :payment_amount %>
+    </div>
 
-          <%= f.select :user_event_id,
-                       options_for_select(@possible_players.map {|user_event| [user_event.user.long_name, user_event.id]}.to_h,
-                                          player_id),
-                       include_blank: 'Select User...' %>
-        </div>
-    <% else %>
-        <div class="field">
-          <%= f.label :user_event_id, 'Player' %>: <%= @user_event.user.name %> (<%= @user_event.user.pfs_number %>)
-          <%= f.hidden_field :user_event_id, :value => @user_event.id %>
-        </div>
-    <% end %>
-    <div class="actions">
+    <div>
+      <%= f.label :payment_id, "Payment ID, Manual, or Cash?" %>
+      <%= f.text_field :payment_id %>
+    </div>
+    <div>
+      <%= f.label :payment_date %>
+      <%= f.datetime_select :payment_date %>
+    </div>
+  <% else %>
+    <div class="field">
+      <%= f.label :user_event_id, 'Player' %>: <%= @user_event.user.name %> (<%= @user_event.user.pfs_number %>)
+      <%= f.hidden_field :user_event_id, :value => @user_event.id %>
+    </div>
+  <% end %>
+  <hr>
+
+  <div class="actions">
+    <% unless admin? %>
       <% unless @table.premium? %>
-          <%= f.submit "Sign Up for #{@table.long_name}", :class => 'btn btn-warning' %>
+        <%= f.submit "Sign Up for #{@table.long_name}", :class => 'btn btn-warning' %>
       <% else %>
-          <%= f.submit "Continue to payment for #{@table.long_name}", :class => 'btn btn-warning' %>
+        <%= f.submit "Continue to payment for #{@table.long_name}", :class => 'btn btn-warning' %>
       <% end %>
-      <%= link_to 'Back', event_path(@event), :class => 'btn btn-primary' %>
-    </div>
+    <% else %>
+      <%= f.submit "Save", :class => 'btn btn-warning' %>
+    <% end %>
+    <%= link_to 'Back', event_path(@event), :class => 'btn btn-primary' %>
+  </div>
 <% end %>

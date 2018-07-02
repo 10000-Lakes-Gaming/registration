@@ -10,5 +10,35 @@
   <%= @registration_table.user_event.event.name %>
 </p>
 
+<p>
+  <strong>User:</strong>
+  <%= @registration_table.user_event.user.name %>
+</p>
+
+<p>
+  <strong>Payment Ok?:</strong>
+  <%= @registration_table.payment_ok? %>
+</p>
+
+<% if @registration_table.paid? %>
+  <p>
+    <strong>Paid Amount:</strong>
+    <%= number_to_currency(@registration_table.payment_amount.to_f / 100) %>
+  </p>
+
+
+
+  <p>
+    <strong>Payment ID:</strong>
+    <%= @registration_table.payment_id %>
+  </p>
+  <p>
+    <strong>Payment Date:</strong>
+    <%= @registration_table.payment_date.localtime.to_formatted_s(:long) %>
+  </p>
+
+<% end %>
+
+
 <%= link_to 'Edit', edit_event_session_table_registration_table_path(@event, @session, @table, @registration_table) %> |
-<%= link_to 'Back', registration_tables_path %>
+<%= link_to 'Back', event_session_table_registration_tables_path(@event, @session, @table) %>
