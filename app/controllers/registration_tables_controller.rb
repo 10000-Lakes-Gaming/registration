@@ -86,7 +86,18 @@ class RegistrationTablesController < ApplicationController
   # POST /registration_tables
   # POST /registration_tables.json
   def create
+
     @registration_table = RegistrationTable.new(registration_table_params)
+
+    # TODO - is there a better way to do this?
+    seat = RegistrationTable.where(table_id: @table.id).maximum('seat')
+    if seat.nil?
+      seat = 1
+    else
+      seat = seat + 1
+    end
+    @registration_table.seat = seat
+
     respond_to do |format|
       if @registration_table.save
         if @registration_table.payment_ok?

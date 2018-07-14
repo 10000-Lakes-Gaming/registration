@@ -18,6 +18,10 @@ class Event < ActiveRecord::Base
     closed
   end
 
+  def date_range
+    "#{start.localtime.to_formatted_s(:long)} to #{self.end.localtime.to_formatted_s(:long)}"
+  end
+
   def premium_tables
     premium_tables = []
     sessions.each do |session|
