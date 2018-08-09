@@ -18,6 +18,10 @@
     <div class="col-md-2 col-sm-3"><strong>Email:</strong></div>
     <div class="col-md-6 col-sm-5"><%= player.email %></div>
   </div>
+  <div class="row">
+    <div class="col-md-2 col-sm-3"><strong>GM/HQ Only:</strong></div>
+    <div class="col-md-6 col-sm-5"><%= yes_no @user_event.vip? %></div>
+  </div>
 
   <% if @event.price&.nonzero? %>
       <div class="row">

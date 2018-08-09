@@ -39,7 +39,7 @@ task :send_session_reminder_message => :environment do
     message.subject = "Please signup for tables at #{event.name}!"
     event.user_events.each do |registration|
       # only send if they don't have a registration table
-      if registration.no_signups?
+      if ! registration.vip? && registration.no_signups?
         # extra check, just to be safe.
         signups = registration.registration_tables.length
         if signups == 0
