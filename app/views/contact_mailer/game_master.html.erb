@@ -29,7 +29,9 @@
   <% end %>
   <hr>
 
-  <h2 class="alert-primary">Your schedule at <%= @event.name %></h2>
+  <h2 class="alert-primary">Your schedule at <%= @event.name %> as of <%= DateTime.now.localtime.to_formatted_s(:long) %></h2>
+  <%# http://pfs-registration.herokuapp.com/events/8/user_events/433 %>
+  <div>Please see <%= link_to "Your Registration", [@event, @game_master.user_event] %> for your up to the minute assignments.</div>
 
   <%
     @sessions = @event.sessions
