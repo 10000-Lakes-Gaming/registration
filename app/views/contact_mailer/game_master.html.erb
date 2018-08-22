@@ -35,6 +35,8 @@
 
   <%
     @sessions = @event.sessions
+    @sessions = @sessions.sort
+
     @table_sessions = {}
 
     @sessions.each do |session|
