@@ -9,7 +9,7 @@ class Session < ActiveRecord::Base
   end
 
   def timeslot
-    self.start.strftime("%a %H:%M to ") + self.end.strftime("%a %H:%M")
+    self.start.strftime("%a %H:%M") + " to " + self.end.strftime("%a %H:%M")
   end
 
   def players
