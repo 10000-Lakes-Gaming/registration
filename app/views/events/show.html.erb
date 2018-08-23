@@ -137,29 +137,30 @@
 
 <%# TODO - for future, maybe make this a little more dynamic - and have a custom message %>
 <% unless self_select_allowed? %>
-<div id="gm_info" style="border: solid thin black;">
-  <h3 class="text-danger">Attention GMs!</h3>
+  <div id="gm_info" style="border: solid thin black;">
+    <h3 class="text-danger">Attention GMs!</h3>
 
-  <div class="well">
-    <% unless @event.gm_volunteer_link.blank? %>
-      <div class="bg-info" style="margin-top: 1em;padding: 1em;">If you would like to GM for <%= @event.name %>
-        please do so at our:
-        <input type="button" class="btn btn-primary" value="GM Volunteer Form" formtarget="_blank"
-               onclick="window.open('<%= @event.gm_volunteer_link %>',  '_blank');">
-      </div>
-    <% end %>
-    <div class="bg-warning text-warning" style="margin-top: 0">
-      <div style="display: inline-block; vertical-align: top; font-size: 1.5em;">
-        <span class="text-danger glyphicon glyphicon-warning-sign"></span></div>
-      <div style="display: inline-block;">If you are planning on GMing in a slot, please do not sign up to play in that
-        slot.
-        <br>The hosts of <%= @event.name %> will assign you to your GM slot once you have registered and paid
-        for <%= @event.name %>.
+    <div class="well">
+      <% unless @event.gm_volunteer_link.blank? %>
+        <div class="bg-info" style="margin-top: 1em;padding: 1em;">If you would like to GM for <%= @event.name %>
+          please do so at our:
+          <input type="button" class="btn btn-primary" value="GM Volunteer Form" formtarget="_blank"
+                 onclick="window.open('<%= @event.gm_volunteer_link %>',  '_blank');">
+        </div>
+      <% end %>
+      <div class="bg-warning text-warning" style="margin-top: 0">
+        <div style="display: inline-block; vertical-align: top; font-size: 1.5em;">
+          <span class="text-danger glyphicon glyphicon-warning-sign"></span></div>
+        <div style="display: inline-block;">If you are planning on GMing in a slot, please do not sign up to play in
+          that
+          slot.
+          <br>The hosts of <%= @event.name %> will assign you to your GM slot once you have registered and paid
+          for <%= @event.name %>.
+        </div>
       </div>
     </div>
   </div>
-</div>
-  <% end %>
+<% end %>
 
 <div class="sessionsOffered" style="border: solid thin black;">
   <h3>Sessions/Scenarios Offered</h3>
@@ -216,7 +217,8 @@
               <% scenario = table.scenario %>
               <%= scenario.long_name %>
               <% if table.premium? && !table.game_masters[0].nil? %>
-                with <%= table.game_masters[0].user_event.user.formal_name %>
+                with <% authors = table.game_masters.map{|gm| gm.user_event.user.formal_name}.join(" & ") %>
+                <%= authors %>
               <% end %>
               <%= render 'table_badges', table: table %></div>
 
@@ -321,68 +323,68 @@
                 <% if !registered_this_session && table.gm_self_select? && table.need_gms? %>
                   <%= button_to 'I will GM!', new_event_session_table_game_master_path(@event, session, table),
                                 :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.disabled? %>
-                  <% end %>
-
-
-                  </div>
-
-                <% else %>
-                    <div class="col-md-3 no-pad">&nbsp;</div>
                 <% end %>
-                <!-- end of is registered -->
-                <div class="col-md-1 no-pad ">
-                  <% if table.game_masters.nil? %>
-                    <%= table.gms_needed %>
-                  <% else %>
-                    <%= table.gms_needed - table.game_masters.size %>
-                  <% end %> of <%= table.gms_needed %>
-                </div>
-                </div> <%# end of the scenario list %>
 
-            <% end %>
-            <%# this should be a different shading for the totals %>
-            <div class="row no-pad totals">
-              <div class="col-md-1 col-md-offset-5"><span class="text-primary"><strong>Totals:</strong></span>
+
               </div>
-              <div class="col-md-2 no-pad ">
+
+            <% else %>
+              <div class="col-md-3 no-pad">&nbsp;</div>
+            <% end %>
+            <!-- end of is registered -->
+            <div class="col-md-1 no-pad ">
+              <% if table.game_masters.nil? %>
+                <%= table.gms_needed %>
+              <% else %>
+                <%= table.gms_needed - table.game_masters.size %>
+              <% end %> of <%= table.gms_needed %>
+            </div>
+          </div> <%# end of the scenario list %>
+
+        <% end %>
+        <%# this should be a different shading for the totals %>
+        <div class="row no-pad totals">
+          <div class="col-md-1 col-md-offset-5"><span class="text-primary"><strong>Totals:</strong></span>
+          </div>
+          <div class="col-md-2 no-pad ">
               <span class="text-primary"><%= session.total_max_players - session.players_count %>
                 of <%= session.total_max_players %> left</span></div>
-              <div class="col-md-3 no-pad ">&nbsp;</div>
+          <div class="col-md-3 no-pad ">&nbsp;</div>
 
-              <% if session.gm_count == session.total_gms_needed %>
-                <% klass = 'text-primary' %>
-              <% else %>
-                <% klass = 'text-danger' %>
-              <% end %>
-              <div class="col-md-1 no-pad"><span class="<%= klass %>"><%= session.total_gms_needed - session.gm_count %>
-                of <%= session.total_gms_needed %> needed</span>
-              </div>
-            </div>
-            </div>
-            </div>
-        <% end %>
-        </div>
-
-
-        <hr>
-        <% if @registration %>
-          <div>
-            <%= link_to raw("<span class='glyphicon glyphicon-warning-sign' aria-hidden='true'></span> Unregister for #{@registration.event.name}"),
-                        [@event, @registration],
-                        method: :delete,
-                        data:   {confirm: 'Are you sure? Unregistering for the event will remove you from all tables, and will not refund your payment.'},
-                        :class  => 'btn btn-danger' %>
-
-            <% if @registration && @registration.paid? %>
-              <em>Note: unregistering will not refund your payment(s).</em>
-            <% end %>
+          <% if session.gm_count == session.total_gms_needed %>
+            <% klass = 'text-primary' %>
+          <% else %>
+            <% klass = 'text-danger' %>
+          <% end %>
+          <div class="col-md-1 no-pad"><span class="<%= klass %>"><%= session.total_gms_needed - session.gm_count %>
+            of <%= session.total_gms_needed %> needed</span>
           </div>
-        <% else %>
-          <div><%= button_to "Register for #{@event.name}?", new_event_user_event_path(@event), :class => 'btn btn-warning', method: :get %></div>
-        <% end %>
-        <hr>
-        <% if admin? %>
-          <%= button_to 'Add Session', new_event_session_path(@event), :class => 'btn btn-warning', :method => :get %>
-          <%= button_to 'Edit', edit_event_path(@event), :class => 'btn btn-primary', :method => :get %>
-        <% end %>
-        <%= button_to 'Back', events_path, :class => 'btn btn-success', :method => :get %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+
+<hr>
+<% if @registration %>
+  <div>
+    <%= link_to raw("<span class='glyphicon glyphicon-warning-sign' aria-hidden='true'></span> Unregister for #{@registration.event.name}"),
+                [@event, @registration],
+                method: :delete,
+                data:   {confirm: 'Are you sure? Unregistering for the event will remove you from all tables, and will not refund your payment.'},
+                :class  => 'btn btn-danger' %>
+
+    <% if @registration && @registration.paid? %>
+      <em>Note: unregistering will not refund your payment(s).</em>
+    <% end %>
+  </div>
+<% else %>
+  <div><%= button_to "Register for #{@event.name}?", new_event_user_event_path(@event), :class => 'btn btn-warning', method: :get %></div>
+<% end %>
+<hr>
+<% if admin? %>
+  <%= button_to 'Add Session', new_event_session_path(@event), :class => 'btn btn-warning', :method => :get %>
+  <%= button_to 'Edit', edit_event_path(@event), :class => 'btn btn-primary', :method => :get %>
+<% end %>
+<%= button_to 'Back', events_path, :class => 'btn btn-success', :method => :get %>
