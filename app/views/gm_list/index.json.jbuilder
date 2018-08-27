@@ -10,5 +10,8 @@ json.gm_list do
     json.set! :gm_email, gm.user_event.user.email
     json.set! :gm_forum_username, gm.user_event.user.forum_username
     json.set! :gm_title, gm.user_event.user.title
+    unless gm.table_number.blank?
+      json.set! :table_assignment, gm.table_number
+    end
   end
 end

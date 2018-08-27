@@ -21,7 +21,12 @@
   <tbody>
   <% @tables.each do |table| %>
     <tr>
-      <td><%= table.location %></td>
+      <td>
+        <%= table.location %>
+        <% unless table.gm_table_assignments.blank? %>
+          (<%= table.gm_table_assignments %>)
+        <% end %>
+      </td>
       <td>
         <%= table.scenario.long_name %>
         <span class="badge"><%= table.scenario.tier %></span>

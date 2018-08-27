@@ -73,6 +73,7 @@ class GameMastersController < ApplicationController
   # GET /game_masters/1/edit
   def edit
     prevent_non_admin
+    @possible_gms << @game_master.user_event
   end
 
   # POST /game_masters
@@ -116,8 +117,8 @@ class GameMastersController < ApplicationController
     prevent_non_admin
     respond_to do |format|
       if @game_master.update(game_master_params)
-        format.html {redirect_to @game_master, notice: 'Game master was successfully updated.'}
-        format.json {render :show, status: :ok, location: @game_master}
+        format.html {redirect_to [@event, @session, @table, @game_master], notice: 'Game master was successfully updated.'}
+        format.json {render :show, status: :ok, location: [@event, @session, @table, @game_master]}
       else
         format.html {render :edit}
         format.json {render json: @game_master.errors, status: :unprocessable_entity}
@@ -159,7 +160,7 @@ class GameMastersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def game_master_params
-    params.require(:game_master).permit(:table_id, :user_event_id)
+    params.require(:game_master).permit(:table_id, :user_event_id, :table_number)
   end
 
 end

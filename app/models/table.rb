@@ -15,7 +15,7 @@ class Table < ActiveRecord::Base
     # Remove "Table"  and sort by number, if possible.
     myloc  = self.location.to_s.downcase[/\d+/]
     tabloc = tab.location.to_s.downcase[/\d+/]
-    sort = myloc.to_i <=> tabloc.to_i
+    sort   = myloc.to_i <=> tabloc.to_i
 
     if sort == 0
       sort = self.location.to_s <=> tab.location.to_s
@@ -70,4 +70,30 @@ class Table < ActiveRecord::Base
   def early_bird_discount?
     self.price < self.onsite_price
   end
+
+  def gm_table_assignments
+    tabs        = []
+    assignments = ""
+    game_masters.collect {|gm|
+      unless gm.table_number.blank?
+        tabs << gm.table_number.strip
+      end
+    }
+    unless tabs.empty?
+      tabs = tabs.sort
+      tabs.each do |tab|
+        if tabs.first == tab
+          assignments = tab
+        else
+          assignments = "#{assignments} #{tab}"
+        end
+        unless tabs.last == tab
+          assignments = assignments + ", "
+        end
+      end
+      assignments
+    end
+  end
+
+
 end
