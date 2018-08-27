@@ -42,7 +42,14 @@
           <td></td>
         <% else %>
           <td><%= selection.table.scenario.long_name %></td>
-          <td><%= selection.table.location %></td>
+          <td>
+            <%= selection.table.location %>
+            <% if selection.is_a? GameMaster %>
+              <% unless selection.table_number.blank? %>
+              (<%= selection.table_number.strip %>)
+              <% end %>
+            <% end %>
+          </td>
           <% if selection.is_a? RegistrationTable %>
             <td>Player</td>
             <td>

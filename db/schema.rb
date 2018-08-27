@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180809141506) do
+ActiveRecord::Schema.define(version: 20180824173719) do
 
   create_table "additional_payments", force: :cascade do |t|
     t.string   "category"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20180809141506) do
     t.integer  "user_event_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "table_number"
     t.index ["table_id"], name: "index_game_masters_on_table_id"
     t.index ["user_event_id"], name: "index_game_masters_on_user_event_id"
   end

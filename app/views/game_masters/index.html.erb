@@ -5,7 +5,8 @@
 <table width="100%">
   <thead>
   <tr>
-    <th>User event</th>
+    <th>GM</th>
+    <th>Table</th>
     <th colspan="3"></th>
   </tr>
   </thead>
@@ -18,7 +19,9 @@
               <%= game_master.user_event.user.name %>
           <% end %>
         </td>
-        <td><%= link_to 'Show', [@event, @session, @table, game_master] %></td>
+        <td><%= game_master.table_number %></td>
+        <td><%= link_to 'Show', [@event, @session, @table, game_master], :class => 'btn btn-success' %></td>
+        <td><%= link_to 'Edit', edit_event_session_table_game_master_path(@event, @session, @table, game_master), :class => 'btn btn-primary' %></td>
         <td><%= button_to 'Remove', [@event, @session, @table, game_master], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %></td>
       </tr>
   <% end %>
