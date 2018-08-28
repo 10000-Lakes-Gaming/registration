@@ -73,26 +73,12 @@ class Table < ActiveRecord::Base
 
   def gm_table_assignments
     tabs        = []
-    assignments = ""
     game_masters.collect {|gm|
       unless gm.table_number.blank?
         tabs << gm.table_number.strip
       end
     }
-    unless tabs.empty?
-      tabs = tabs.sort
-      tabs.each do |tab|
-        if tabs.first == tab
-          assignments = tab
-        else
-          assignments = "#{assignments} #{tab}"
-        end
-        unless tabs.last == tab
-          assignments = assignments + ", "
-        end
-      end
-      assignments
-    end
+    tabs.sort.join(", ")
   end
 
 
