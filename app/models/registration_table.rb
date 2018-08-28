@@ -9,7 +9,9 @@ class RegistrationTable < ActiveRecord::Base
   validate :check_player_count
 
   def check_player_count
-    errors.add :registration_tables, "Max Players Exceeded" if table.registration_tables.count > table.max_players
+    unless table.registration_tables.include? (self)
+      errors.add :registration_tables, "Max Players Exceeded" if table.registration_tables.count >= table.max_players
+    end
   end
 
   def payment_ok?
