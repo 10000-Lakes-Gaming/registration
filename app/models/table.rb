@@ -78,7 +78,8 @@ class Table < ActiveRecord::Base
         tabs << gm.table_number.strip
       end
     }
-    tabs.sort.join(", ")
+    # sort by the number...
+    tabs.sort_by{|x| x[/\d+/].to_i}.join(", ")
   end
 
 
