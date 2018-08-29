@@ -8,20 +8,9 @@ class ContactMailerPreview < ActionMailer::Preview
     ContactMailer.payment_reminder(@message, @admins, @event)
   end
 
-
-  # def session_reminder_preview
-  #   setup_admins
-  #   @message         = Message.new
-  #   @message.email   = "#{ENV['GMAIL_SMTP_USERNAME']}"
-  #   @message.subject = "Reminder Message"
-  #   @message.content = "This is my content"
-  #   @message.name    = "SkålCon"
-  #   ContactMailer.session_reminder(@message, @admins)
-  # end
-
   def session_reminder_preview
-    setup_user_event
-    setup_admins
+    @event = Event.first
+    @user = User.first
     setup_payment_message
     ContactMailer.session_reminder(@message, @admins, @event)
   end
@@ -51,6 +40,27 @@ class ContactMailerPreview < ActionMailer::Preview
     email = @user.email
 
     ContactMailer.game_master(message, email, @event, game_master, false)
+  end
+
+  def donation_drive_preview
+    @event = Event.first
+    @user = User.first
+    message = Message.new
+    message.subject = "#{@event.name} Donation Drive!"
+
+    ContactMailer.donation_drive(message, @user.email, @event)
+  end
+
+  def registration_update_preview
+    @event  = Event.first
+    @user = User.first
+    @user_event = @user.user_events.first
+
+    message = Message.new
+    message.subject = "Stuff for #{@event.name}"
+
+    ContactMailer.registration_update(message, @user.email, @event, @user_event)
+
   end
 
   private

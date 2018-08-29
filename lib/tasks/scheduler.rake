@@ -39,7 +39,7 @@ task :send_session_reminder_message => :environment do
     message.subject = "Please signup for tables at #{event.name}!"
     event.user_events.each do |registration|
       # only send if they don't have a registration table
-      if ! registration.vip? && registration.no_signups?
+      if !registration.vip? && registration.no_signups?
         # extra check, just to be safe.
         signups = registration.registration_tables.length
         if signups == 0
@@ -60,12 +60,31 @@ task :send_unpaid_event_message => :environment do
   Event.where('end > ? AND ( prereg_price > 0 or onsite_price > 0)', Date.today).each do |event|
     count           = 0
     message         = Message.new
-    message.subject ="Please submit your payment for #{event.name}"
+    message.subject = "Please submit your payment for #{event.name}"
     event.user_events.where(paid: false).each do |registration|
       ContactMailer.payment_reminder(message, registration.user.email, event).deliver
       count += 1
       puts "emailed #{event.name} payment reminder for #{registration.user.name} (#{registration.user.email})"
     end
     puts "#{count} emails were sent"
+  end
+end
+
+task :send_donation_drive_message => :environment do
+  trigger = Date.new(2018, 9, 30)
+  if Date.today == trigger
+    puts "Sending donation drive message"
+    # this is currently hardcoded for SkålCon 2018
+    event           = Event.find(8)
+    message         = Message.new
+    message.subject = "#{event.name} Donation Drive!"
+    count           = 0
+    event.user_events.each do |registration|
+      ContactMailer.create_donation_drive(message, registration.user.email, event)
+      count += 1
+    end
+    puts "#{count} donation drive emails were sent."
+  else
+    puts "Not the trigger date of #{trigger}"
   end
 end

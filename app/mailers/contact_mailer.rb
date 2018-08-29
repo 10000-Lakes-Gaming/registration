@@ -18,7 +18,7 @@ class ContactMailer < ApplicationMailer
 
 
   def session_reminder(message, email, event)
-    @event = event
+    @event   = event
     @message = message
     mail(subject: @message.subject, to: email)
   end
@@ -34,13 +34,27 @@ class ContactMailer < ApplicationMailer
     mail(subject: @message.subject, to: email)
   end
 
-  def game_master(message, email, event, game_master, adding)
-    @adding = adding
-    @message = message
+  def registration_update(message, email, event, user_event)
     @event = event
+    @user_event = user_event
+    @message = message
+    mail(subject: @message.subject, to: email)
+  end
+
+  def game_master(message, email, event, game_master, adding)
+    @adding      = adding
+    @message     = message
+    @event       = event
     @game_master = game_master
     # add cc for registration
-    mail(subject: @message.subject, to: email, bcc:  ENV["GMAIL_SMTP_USERNAME"])
+    mail(subject: @message.subject, to: email, bcc: ENV["GMAIL_SMTP_USERNAME"])
+  end
+
+  def donation_drive(message, email, event)
+    @message = message
+    @event = event
+
+    mail(subject: @message.subject  , to: email)
   end
 
 end

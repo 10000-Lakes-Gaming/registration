@@ -130,10 +130,13 @@
           <td></td>
         <% else %>
           <td><%= selection.table.scenario.long_name %></td>
+
           <td>
             <%= selection.table.location %>
-            <% if selection.is_a? GameMaster and !selection.table_number.nil? %>
-            ( <%= selection.table_number %> )
+            <% if selection.is_a? GameMaster %>
+              <% unless selection.table_number.blank? %>
+                (<%= selection.table_number.strip %>)
+              <% end %>
             <% end %>
           </td>
           <% if selection.is_a? RegistrationTable %>
