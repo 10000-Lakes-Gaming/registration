@@ -1,88 +1,89 @@
 <ul class="sidebar">
   <% if user_signed_in? %>
-      <li><%= link_to 'My Profile', user_path(current_user) %></li>
+    <li><%= link_to 'My Profile', user_path(current_user) %></li>
   <% end %>
   <li><%= link_to 'Home', welcome_index_path %></li>
 
   <% if user_signed_in? %>
-      <% if current_user&.current_events&.present? %>
-          <li><u>Registered Events</u></li>
-          <% current_user&.user_events&.each do |registration| %>
-              <% unless registration.past %>
-                  <li><%= link_to "#{registration.event.name}", event_user_event_path(registration.event, registration) %></li>
-              <% end %>
-          <% end %>
-          <hr/>
+    <% if current_user&.current_events&.present? %>
+      <li><u>Registered Events</u></li>
+      <% current_user&.user_events&.each do |registration| %>
+        <% unless registration.past %>
+          <li><%= link_to "#{registration.event.name}", event_user_event_path(registration.event, registration) %></li>
+        <% end %>
       <% end %>
-      <% unless current_user.user_events.empty? %>
-          <% if receipts_exist? %>
-              <li><u>Receipts</u></li>
-              <% current_user&.user_events&.each do |registration| %>
-                  <% unless registration.total_paid == 0 %>
-                      <li><%= link_to "#{registration.event.name}", event_event_receipt_path(registration.event, registration) %></li>
-                  <% end %>
-              <% end %>
-              <hr/>
+      <hr/>
+    <% end %>
+    <% unless current_user.user_events.empty? %>
+      <% if receipts_exist? %>
+        <li><u>Receipts</u></li>
+        <% current_user&.user_events&.each do |registration| %>
+          <% unless registration.total_paid == 0 %>
+            <li><%= link_to "#{registration.event.name}", event_event_receipt_path(registration.event, registration) %></li>
           <% end %>
-          <% if unpaid_payments? %>
-              <li><u>Unpaid Additional Payments</u></li>
-              <% pending_payments.each do |payment| %>
-                  <li><%= link_to "#{payment.long_description}", [payment.user_event.event, payment.user_event, payment] %></li>
-              <% end %>
-              <hr>
-          <% end %>
+        <% end %>
+        <hr/>
       <% end %>
+      <% if unpaid_payments? %>
+        <li><u>Unpaid Additional Payments</u></li>
+        <% pending_payments.each do |payment| %>
+          <li><%= link_to "#{payment.long_description}", [payment.user_event.event, payment.user_event, payment] %></li>
+        <% end %>
+        <hr>
+      <% end %>
+    <% end %>
   <% end %>
 
-  <% if  admin? %>
-      <li><u>Event Admin</u></li>
-      <li><%= link_to 'Events', events_path %></li>
-      <% if @event and @event.persisted? %>
-          <li><%= link_to "#{@event.name}", @event %></li>
-          <li><%= link_to 'Registrations', event_user_events_path(@event) %></li>
-          <li><%= link_to 'Sessions', event_sessions_path(@event) %></li>
-          <% if @session && @session.persisted? %>
-              <li><%= link_to 'Session', event_session_path(@event, @session) %></li>
-              <li><%= link_to 'Tables', event_session_tables_path(@event, @session) %></li>
-          <% end %>
-          <% if @table && @table.persisted? %>
-              <li><%= link_to 'Players', event_session_table_registration_tables_path(@event, @session, @table) %></li>
-              <li><%= link_to 'GMs', event_session_table_game_masters_path(@event, @session, @table) %></li>
-          <% end %>
-
-          <li><%= link_to "Table Assignments", event_table_assignment_index_path(@event) %></li>
-          <li><%= link_to "All User Receipts", event_event_receipt_index_path(@event) %></li>
-          <li><%= link_to "GM List", event_gm_list_index_path(@event) %></li>
-          <li><%= link_to "GMs By Scenario", event_gms_by_scenario_index_path(@event) %></li>
-          <li style="padding-top: 1em;"><u>Event APIs</u></li>
-          <li><%= link_to "Registrations (JSON)", search_event_user_events_path(@event) %></li>
-          <li><%= link_to "GM List (JSON)", event_gm_list_index_path(@event, :format => :json) %></li>
-          <li><%= link_to 'Event Tables (JSON)', event_path(@event, :format => :json) %></li>
-          <li><%= link_to "GMs By Scenario (JSON)", event_gms_by_scenario_index_path(@event, :format => :json) %></li>
+  <% if admin? %>
+    <li><u>Event Admin</u></li>
+    <li><%= link_to 'Events', events_path %></li>
+    <% if @event and @event.persisted? %>
+      <li><%= link_to "#{@event.name}", @event %></li>
+      <li><%= link_to 'Registrations', event_user_events_path(@event) %></li>
+      <li><%= link_to 'Sessions', event_sessions_path(@event) %></li>
+      <% if @session && @session.persisted? %>
+        <li><%= link_to 'Session', event_session_path(@event, @session) %></li>
+        <li><%= link_to 'Tables', event_session_tables_path(@event, @session) %></li>
       <% end %>
-      <li style="padding-top: 1em;"><u>Other</u></li>
-      <li><%= link_to 'Scenarios', scenarios_path %></li>
-      <li><%= link_to 'Users', users_path %></li>
-      <li><%= link_to 'Users (JSON)', users_path(:format => :json) %></li>
+      <% if @table && @table.persisted? %>
+        <li><%= link_to 'Players', event_session_table_registration_tables_path(@event, @session, @table) %></li>
+        <li><%= link_to 'GMs', event_session_table_game_masters_path(@event, @session, @table) %></li>
+      <% end %>
+
+      <li><%= link_to "Table Assignments", event_table_assignment_index_path(@event) %></li>
+      <li><%= link_to "All User Receipts", event_event_receipt_index_path(@event) %></li>
+      <li><%= link_to "GM List", event_gm_list_index_path(@event) %></li>
+      <li><%= link_to "GMs by Table", event_tables_by_session_index_path(@event) %></li>
+      <li><%= link_to "Ticket Counts", event_gms_by_scenario_index_path(@event) %></li>
+      <li style="padding-top: 1em;"><u>Event APIs</u></li>
+      <li><%= link_to "Registrations (JSON)", search_event_user_events_path(@event) %></li>
+      <li><%= link_to "GM List (JSON)", event_gm_list_index_path(@event, :format => :json) %></li>
+      <li><%= link_to 'Event Tables (JSON)', event_path(@event, :format => :json) %></li>
+      <li><%= link_to "GMs By Scenario (JSON)", event_gms_by_scenario_index_path(@event, :format => :json) %></li>
+    <% end %>
+    <li style="padding-top: 1em;"><u>Other</u></li>
+    <li><%= link_to 'Scenarios', scenarios_path %></li>
+    <li><%= link_to 'Users', users_path %></li>
+    <li><%= link_to 'Users (JSON)', users_path(:format => :json) %></li>
   <% end %>
   <li>
     <% if user_signed_in? %>
-        <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+      <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
     <% else %>
-        <%= link_to('Login', new_user_session_path) %>
+      <%= link_to('Login', new_user_session_path) %>
     <% end %>
   </li>
   <li>
     <% unless user_signed_in? %>
-        <a href="mailto:<%= ENV['GMAIL_SMTP_USERNAME'] %>">Contact Us!</a>
+      <a href="mailto:<%= ENV['GMAIL_SMTP_USERNAME'] %>">Contact Us!</a>
     <% else %>
-        <%= link_to('Contact Us!', contact_path) %>
+      <%= link_to('Contact Us!', contact_path) %>
 
     <% end %>
   </li>
   <% if admin? %>
-      <li>
-        <%= link_to('Admin Send Email', admin_email_path) %>
-      </li>
+    <li>
+      <%= link_to('Admin Send Email', admin_email_path) %>
+    </li>
   <% end %>
 </ul>

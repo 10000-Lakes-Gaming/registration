@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :events do
     resources :gm_list
     resources :gms_by_scenario
+    resources :tables_by_session
     resources :table_assignment
     resources :event_receipt
     resources :user_events do
