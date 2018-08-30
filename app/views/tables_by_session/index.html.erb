@@ -11,10 +11,10 @@
 <!-- for now, first pass, list all the GMs -->
 <h3 class="hidden-print">Table Schedule</h3>
 
-<% @tables.each_slice(4) do |slice| %>
+<% @tables.each_slice(3) do |slice| %>
   <div class="row pageinate">
     <% slice.each do |table_number| %>
-      <div class="col-sm-3" style="padding:2px">
+      <div class="col-sm-4" style="padding:2px">
         <div>
           <b><%= table_number %></b>
         </div>
@@ -23,6 +23,7 @@
           <tr>
             <th>Session</th>
             <th>Game Master</th>
+            <th>Scenario</th>
           </tr>
           </thead>
           <tbody>
@@ -30,6 +31,7 @@
             <tr>
               <td><%= session.name %></td>
               <td><%= @tableSessionMap[table_number][session].user_event.user.formal_name %></td>
+              <td><%= @tableSessionMap[table_number][session].table.scenario.long_name %></td>
             </tr>
           <% end %>
           </tbody>

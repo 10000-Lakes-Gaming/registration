@@ -35,11 +35,17 @@ class TablesBySessionController < ApplicationController
     unknown_user_event = UserEvent.new
     unknown_user_event.event = @event
     unknown_user_event.user = unknown_user
+    unknown_table = Table.new
+    scenario = Scenario.new
+    scenario.game_system = ""
+    scenario.name = ""
+    unknown_table.scenario = scenario
     @tables.each do |table_number|
       @sessions.each do |session|
         unless @tableSessionMap[table_number].include? session
           unknown_gm = GameMaster.new
           unknown_gm.table_number = table_number
+          unknown_gm.table = unknown_table
           unknown_gm.user_event = unknown_user_event
           @tableSessionMap[table_number][session] = unknown_gm
          end
