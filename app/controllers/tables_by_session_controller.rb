@@ -16,7 +16,7 @@ class TablesBySessionController < ApplicationController
     @sessions        = @event.sessions.sort { |a, b| a.start <=> b.start }
     @sessions.sort.each do |session|
       session.tables.each do |table|
-        unless "HQ" == table.location
+        unless ["HQ","Overseer"].include? table.location
           table.game_masters.each do |gm|
             table_number = gm.table_number.presence || "Unknown"
             table_number = table_number.strip
