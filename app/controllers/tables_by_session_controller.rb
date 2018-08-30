@@ -16,15 +16,17 @@ class TablesBySessionController < ApplicationController
     @sessions        = @event.sessions.sort { |a, b| a.start <=> b.start }
     @sessions.sort.each do |session|
       session.tables.each do |table|
-        table.game_masters.each do |gm|
-          table_number = gm.table_number.presence || "Unknown"
-          table_number = table_number.strip
-          table_hash   = @tableSessionMap[table_number]
-          if table_hash.nil?
-            table_hash = {}
+        unless "HQ" == table.location
+          table.game_masters.each do |gm|
+            table_number = gm.table_number.presence || "Unknown"
+            table_number = table_number.strip
+            table_hash   = @tableSessionMap[table_number]
+            if table_hash.nil?
+              table_hash = {}
+            end
+            table_hash[session]            = gm
+            @tableSessionMap[table_number] = table_hash
           end
-          table_hash[session]            = gm
-          @tableSessionMap[table_number] = table_hash
         end
       end
     end
