@@ -71,8 +71,6 @@ task :send_unpaid_event_message => :environment do
 end
 
 task :send_donation_drive_message => :environment do
-  trigger = Date.new(2018, 9, 30)
-  if Date.today == trigger
     puts "Sending donation drive message"
     # this is currently hardcoded for SkålCon 2018
     event           = Event.find(8)
@@ -84,7 +82,4 @@ task :send_donation_drive_message => :environment do
       count += 1
     end
     puts "#{count} donation drive emails were sent."
-  else
-    puts "Not the trigger date of #{trigger}"
-  end
 end
