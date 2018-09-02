@@ -78,7 +78,7 @@ task :send_donation_drive_message => :environment do
     message.subject = "#{event.name} Donation Drive!"
     count           = 0
     event.user_events.each do |registration|
-      ContactMailer.donation_drive(message, registration.user.email, event)
+      ContactMailer.donation_drive(message, registration.user.email, event).deliver
       count += 1
     end
     puts "#{count} donation drive emails were sent."

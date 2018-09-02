@@ -53,8 +53,7 @@ class ContactMailer < ApplicationMailer
   def donation_drive(message, email, event)
     @message = message
     @event = event
-
-    mail(subject: @message.subject  , to: email)
+    mail(subject: @message.subject  , to: email, bcc: ENV["GMAIL_SMTP_USERNAME"])
   end
 
 end
