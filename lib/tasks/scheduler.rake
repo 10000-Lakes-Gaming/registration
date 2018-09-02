@@ -75,7 +75,7 @@ task :send_donation_drive_message => :environment do
     # this is currently hardcoded for SkålCon 2018
     event           = Event.find(8)
     message         = Message.new
-    message.subject = "#{event.name} Donation Drive!"
+    message.subject = "#{event.name} Physical Goods Donation Drive!"
     count           = 0
     event.user_events.each do |registration|
       ContactMailer.donation_drive(message, registration.user.email, event).deliver
