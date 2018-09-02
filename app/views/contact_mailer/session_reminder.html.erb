@@ -3,22 +3,15 @@
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
 </head>
 <body>
+
+<%= image_tag("skalbanner.png", size: "250x100", alt: "SkålCon") %>
 <p>Thank you for registering to attend <%= @event.name %>! Your contribution goes a long way towards
   making <%= @event.name %> the success it is and will continue to be!
 </p>
 
-<p>We're reminding you to please select tables you want to play at <%= @event.name %>. The sooner the better, for a
-  couple of reasons:
-</p>
-<p>This year we're expanding tables based on demand - and current sign-ups give us a better idea of what we need to add.
-  Now is the time for us to add extra tables of a given scenario, so that we can enlist additional
-  volunteer GMs in a timely manner!
-</p>
-
-<p>Speaking of a timely manner, our GMs need time to prep for the scenarios. Some GMs won't be assigned until we add
-  additional tables, so the sooner you pick your scenarios, the sooner GMs can start preparing.
-  Having time to properly prep makes the lives of our GMs easier, which makes for happy GMs. We are sure we can all
-  agree that a happy GM is a good GM, which allows for a great experience all around.</p>
+<p>Currently, it appears that you have not signed up for any games! Seats are limited, and are filling fast, so please
+  take the time to sign up for some games before all of tables you are interested are filled! This goes doubly so for
+  our premium tables!</p>
 
 <p>So, please head over to <%= link_to "#{@event.name}", @event %> and sign up for some tables!</p>
 
@@ -31,6 +24,6 @@
 <p>Thank you for making <%= @event.name %> a success!</p>
 
 <hr>
-<p><%= @event.name %>, Minneapolis-Saint Paul Pathfinder Lodge, and 10,000 Lakes Gaming</p>
+<p><%= @event.name %>, 10,000 Lakes Gaming, and Minnesota Paizo Organized Play</p>
 </body>
 </html>

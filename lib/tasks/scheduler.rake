@@ -39,7 +39,7 @@ task :send_session_reminder_message => :environment do
     message.subject = "Please signup for tables at #{event.name}!"
     event.user_events.each do |registration|
       # only send if they don't have a registration table
-      if ! registration.vip? && registration.no_signups?
+      if !registration.vip? && registration.no_signups?
         # extra check, just to be safe.
         signups = registration.registration_tables.length
         if signups == 0
@@ -60,7 +60,7 @@ task :send_unpaid_event_message => :environment do
   Event.where('end > ? AND ( prereg_price > 0 or onsite_price > 0)', Date.today).each do |event|
     count           = 0
     message         = Message.new
-    message.subject ="Please submit your payment for #{event.name}"
+    message.subject = "Please submit your payment for #{event.name}"
     event.user_events.where(paid: false).each do |registration|
       ContactMailer.payment_reminder(message, registration.user.email, event).deliver
       count += 1
