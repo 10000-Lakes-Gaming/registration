@@ -60,6 +60,7 @@
       <li><%= link_to "GM List (JSON)", event_gm_list_index_path(@event, :format => :json) %></li>
       <li><%= link_to 'Event Tables (JSON)', event_path(@event, :format => :json) %></li>
       <li><%= link_to "GMs By Scenario (JSON)", event_gms_by_scenario_index_path(@event, :format => :json) %></li>
+      <li><%= link_to "Tickets (CSV)", event_tickets_path(@event, :format => :csv) %></li>
     <% end %>
     <li style="padding-top: 1em;"><u>Other</u></li>
     <li><%= link_to 'Scenarios', scenarios_path %></li>

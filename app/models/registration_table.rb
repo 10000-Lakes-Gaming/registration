@@ -27,4 +27,46 @@ class RegistrationTable < ActiveRecord::Base
     end
     sorted
   end
+
+
+  def self.to_csv
+    attributes = %w{ticket_number event session start_time scenario player pfs_number event_ticket_id}
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+      all.each do |ticket|
+        csv << [ticket.id, ticket.event, ticket.session, ticket.session_start_time, ticket.scenario, ticket.player, ticket.pfs_number, ticket.registration_number]
+      end
+    end
+  end
+
+  def event
+    user_event.name
+  end
+
+  def session
+    table.session.name
+  end
+
+  def session_start_time
+    table.session.start.to_s(:long)
+  end
+
+  def scenario
+    table.scenario.long_name
+  end
+
+  def player
+     user_event.user.formal_name
+  end
+
+  def pfs_number
+    user_event.user.pfs_number
+  end
+
+  def registration_number
+    user_event.id
+  end
 end
+
+

@@ -13,11 +13,12 @@ Rails.application.routes.draw do
   resources :admin
 
   resources :events do
-    resources :gm_list
-    resources :gms_by_scenario
-    resources :tables_by_session
-    resources :table_assignment
     resources :event_receipt
+    resources :gm_list, only: :index
+    resources :gms_by_scenario, only: :index
+    resources :tables_by_session, only: :index
+    resources :table_assignment, only: :index
+    resources :tickets, only: :index
     resources :user_events do
       collection do
         get 'search'

@@ -1,6 +1,9 @@
 class Event < ActiveRecord::Base
   has_many :sessions, dependent: :destroy
   has_many :user_events, dependent: :destroy
+  has_many :tables, through: :sessions
+  has_many :game_masters, through: :tables
+  has_many :registration_tables, through: :tables
 
   def <=> (event)
     self.name <=> event.name
