@@ -69,17 +69,3 @@ task :send_unpaid_event_message => :environment do
     puts "#{count} emails were sent"
   end
 end
-
-task :send_donation_drive_message => :environment do
-    puts "Sending donation drive message"
-    # this is currently hardcoded for SkålCon 2018
-    event           = Event.find(8)
-    message         = Message.new
-    message.subject = "#{event.name} Physical Goods Donation Drive!"
-    count           = 0
-    event.user_events.each do |registration|
-      ContactMailer.donation_drive(message, registration.user.email, event).deliver
-      count += 1
-    end
-    puts "#{count} donation drive emails were sent."
-end
