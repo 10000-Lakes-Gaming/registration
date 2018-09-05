@@ -30,16 +30,16 @@ class RegistrationTable < ActiveRecord::Base
 
 
   def self.to_csv (empty_tickets = nil)
-    attributes = %w{ticket_number event session start_time scenario player pfs_number event_ticket_id}
+    attributes = %w{ticket_number total_seats event session start_time scenario player pfs_number event_ticket_id, price}
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
       all.each do |ticket|
-        csv << [ticket.ticket_number, ticket.event, ticket.session, ticket.session_start_time, ticket.scenario, ticket.player, ticket.pfs_number, ticket.registration_number]
+        csv << [ticket.seat, ticket.table.max_players, ticket.event, ticket.session, ticket.session_start_time, ticket.scenario, ticket.player, ticket.pfs_number, ticket.seat, ticket.ticket_price]
       end
       unless empty_tickets.blank?
         empty_tickets.each do |ticket|
-          csv << [ticket.ticket_number, ticket.event, ticket.session, ticket.session_start_time, ticket.scenario, ticket.player, ticket.pfs_number, ticket.registration_number]
+          csv << [ticket.seat, ticket.table.max_players, ticket.event, ticket.session, ticket.session_start_time, ticket.scenario, ticket.player, ticket.pfs_number, ticket.registration_number, ticket.ticket_price]
         end
       end
     end
@@ -73,15 +73,12 @@ class RegistrationTable < ActiveRecord::Base
     user_event.id
   end
 
-  def ticket_number
-    # TODO - use the seat value once it is being populated
-    if seat.nil?
-      number = id
+  def ticket_price
+    if price == 0
+      nil
     else
-      number = seat
+      ActionController::Base.helpers.number_to_currency price
     end
-
-    "#{number} of #{table.max_players}"
   end
 end
 
