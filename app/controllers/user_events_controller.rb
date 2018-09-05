@@ -32,17 +32,29 @@ class UserEventsController < ApplicationController
         @user_events - [user_event]
         user_event.destroy
       end
-    end
-    # sort the user events by email?
-    @user_events = @user_events.sort {|a, b| a <=> b}
 
-    # how many have paid?
-    @paid = 0
-    @user_events.each do |rsvp|
-      if rsvp.paid?
-        @paid = @paid + 1
+      # how many have paid?
+      @paid = 0
+      @user_events.each do |rsvp|
+        if rsvp.paid?
+          @paid = @paid + 1
+        end
       end
     end
+    respond_to do |format|
+      format.html {
+        @user_events = @user_events.sort {|a, b| a <=> b}
+        render :index
+      }
+      format.json {
+        @user_events = @user_events.sort {|a, b| a <=> b}
+        render :index
+      }
+      format.csv {
+        send_data @user_events.to_csv, filename: "#{@event.name}_badges.csv"
+      }
+    end
+    # sort the user events by email?
   end
 
   # GET /user_events/1
@@ -118,12 +130,7 @@ class UserEventsController < ApplicationController
   end
 
   def show_since
-
-    start_date = Time.zone.local(*params[:range_start].sort.map(&:last).map(&:to_i))
-    # user_event = *params[:user_event]
-    #
-    # date = Date.civil(*user_event[:since].sort.map(&:last).map(&:to_i))
-
+    start_date   = Time.zone.local(*params[:range_start].sort.map(&:last).map(&:to_i))
     @user_events = @event.user_events.where(["updated_at >= ?", start_date])
     # remove all user_events that don't have an event or user
     @user_events.each do |user_event|
@@ -132,10 +139,20 @@ class UserEventsController < ApplicationController
         user_event.destroy
       end
     end
-    # sort the user events by email?
-    @user_events = @user_events.sort {|a, b| a <=> b}
 
-    render :index
+    respond_to do |format|
+      format.html {
+        @user_events = @user_events.sort {|a, b| a <=> b}
+        render :index
+      }
+      format.json {
+        @user_events = @user_events.sort {|a, b| a <=> b}
+        render :index
+      }
+      format.csv {
+        send_data @user_events.to_csv, filename: "#{@event.name}_badges.csv"
+      }
+    end
   end
 
 

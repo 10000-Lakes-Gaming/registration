@@ -65,4 +65,14 @@ class UserEvent < ActiveRecord::Base
     self.registration_tables.empty?
   end
 
+  def self.to_csv
+    attributes = %w{event event_id player_formal player_name pfs_number registration_number}
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+      all.each do |ticket|
+        csv << [ticket.event.name, ticket.event.id, ticket.user.formal_name, ticket.user.name, ticket.user.pfs_number, ticket.id]
+      end
+    end
+  end
 end
