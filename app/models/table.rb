@@ -62,6 +62,9 @@ class Table < ActiveRecord::Base
     self.game_masters.length
   end
 
+  def closed?
+    disabled? || session.event.online_sales_closed?
+  end
 
   def price
     session.event.prereg_closed? ? onsite_price : prereg_price
@@ -72,14 +75,14 @@ class Table < ActiveRecord::Base
   end
 
   def gm_table_assignments
-    tabs        = []
+    tabs = []
     game_masters.collect {|gm|
       unless gm.table_number.blank?
         tabs << gm.table_number.strip
       end
     }
     # sort by the number...
-    tabs.sort_by{|x| x[/\d+/].to_i}.join(", ")
+    tabs.sort_by {|x| x[/\d+/].to_i}.join(", ")
   end
 
 

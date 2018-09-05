@@ -39,6 +39,15 @@ class Event < ActiveRecord::Base
     closed
   end
 
+  def online_sales_closed?
+    closed = false
+    unless self.online_sales_end.nil?
+      now    = DateTime.now
+      closed = self.online_sales_end <= now
+    end
+    closed
+  end
+
   def early_bird?
     self.prereg_ends != self.rsvp_close
   end

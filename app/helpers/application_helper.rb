@@ -37,4 +37,8 @@ module ApplicationHelper
     end
     allowed
   end
+
+  def online_sales_closed?
+    @event.online_sales_closed?
+  end
 end

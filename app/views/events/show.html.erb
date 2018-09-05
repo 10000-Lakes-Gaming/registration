@@ -36,9 +36,13 @@
         </div>
       <% end %>
     <% end %>
+    <% unless @event.online_sales_end.nil? %>
+      <div class="text-warning"><span class="lead">Online table selection and ticket sales
+        closes: <%= @event.online_sales_end.localtime.to_formatted_s(:long_ordinal) %></span></div>
+    <% end %>
     <% unless @event.rsvp_close.nil? %>
-      <div class="lead text-warning">Registration
-        closes: <%= @event.rsvp_close.localtime.to_formatted_s(:long_ordinal) %></div>
+      <div class="text-warning"><span class="lead">Registration
+        closes: <%= @event.rsvp_close.localtime.to_formatted_s(:long_ordinal) %></span></div>
     <% end %>
   <% end %>
 </div>
@@ -217,7 +221,8 @@
               <% scenario = table.scenario %>
               <%= scenario.long_name %>
               <% if table.premium? && !table.game_masters[0].nil? %>
-                with <% authors = table.game_masters.map{|gm| gm.user_event.user.formal_name}.join(" & ") %>
+                with
+                <% authors = table.game_masters.map {|gm| gm.user_event.user.formal_name}.join(" & ") %>
                 <%= authors %>
               <% end %>
               <%= render 'table_badges', table: table %></div>
@@ -307,13 +312,13 @@
 
                 <% registered_this_session = @sessions.include?(session) || @gm_sessions.include?(session) %>
                 <% if !registered_this_session && registrations_available && @registration.payment_ok? %>
-                  <% unless table.raffle? or @event.closed? %>
+                  <% unless table.raffle? or @event.closed? or online_sales_closed?%>
                     <% unless table.premium? %>
                       <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table),
-                                    :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.disabled? %>
+                                    :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.closed? %>
                     <% else %>
                       <%= button_to "Buy Ticket for #{number_to_currency table.price}", new_event_session_table_registration_table_path(@event, session, table),
-                                    :class => "btn btn-xs btn-success", :method => :get, :disabled => table.disabled?,
+                                    :class => "btn btn-xs btn-success", :method => :get, :disabled => table.closed?,
                                     data:  {confirm: "This is a premium event with a price of #{number_to_currency table.price}. You will have 1 hour to pay for this ticket."}
                       %>
                     <% end %>
@@ -322,7 +327,7 @@
 
                 <% if !registered_this_session && table.gm_self_select? && table.need_gms? %>
                   <%= button_to 'I will GM!', new_event_session_table_game_master_path(@event, session, table),
-                                :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.disabled? %>
+                                :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.closed? %>
                 <% end %>
 
 
