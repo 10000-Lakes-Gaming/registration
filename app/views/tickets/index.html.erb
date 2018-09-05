@@ -15,17 +15,19 @@
     <th>Scenario</th>
     <th>Player</th>
     <th>OPF #</th>
+    <th>Price</th>
   </tr>
   <% @tickets.each do |ticket| %>
       <tr>
         <td><%= ticket.event %></td>
         <td><%= ticket.registration_number %></td>
-        <td><%= ticket.ticket_number %></td>
+        <td><%= ticket.seat %> of <%= ticket.table.max_players %></td>
         <td><%= ticket.session %></td>
         <td><%= ticket.session_start_time %></td>
         <td><%= ticket.scenario %></td>
         <td><%= ticket.player %></td>
         <td><%= ticket.pfs_number %></td>
+        <td><%= ticket.ticket_price %></td>
       </tr>
   <% end %>
 </table>

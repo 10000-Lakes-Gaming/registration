@@ -3,7 +3,7 @@ json.event do
   json.set! :event_date, @event.date_range
 end
 json.ticket do
-  json.set! :ticket_number, @registration_table.id
+  json.set! :ticket_number, @registration_table.seat
   json.set! :session, @session.name
   json.set! :session_start_time, @session.start.localtime.to_formatted_s(:long)
   json.set! :table, @table.name
