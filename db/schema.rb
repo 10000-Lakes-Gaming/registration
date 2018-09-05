@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180905021659) do
+ActiveRecord::Schema.define(version: 20180905214046) do
 
   create_table "additional_payments", force: :cascade do |t|
     t.string   "category"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20180905021659) do
     t.integer  "onsite_price",      default: 0
     t.datetime "prereg_ends"
     t.string   "gm_volunteer_link"
+    t.datetime "online_sales_end"
   end
 
   create_table "game_masters", force: :cascade do |t|
