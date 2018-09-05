@@ -56,7 +56,7 @@
       <li><%= link_to "GMs by Table", event_tables_by_session_index_path(@event) %></li>
       <li><%= link_to "Ticket Counts", event_gms_by_scenario_index_path(@event) %></li>
       <li style="padding-top: 1em;"><u>Event APIs</u></li>
-      <li><%= link_to "Registrations (JSON)", search_event_user_events_path(@event) %></li>
+      <li><%= link_to "Registrations (APIs)", search_event_user_events_path(@event) %></li>
       <li><%= link_to "GM List (JSON)", event_gm_list_index_path(@event, :format => :json) %></li>
       <li><%= link_to 'Event Tables (JSON)', event_path(@event, :format => :json) %></li>
       <li><%= link_to "GMs By Scenario (JSON)", event_gms_by_scenario_index_path(@event, :format => :json) %></li>
