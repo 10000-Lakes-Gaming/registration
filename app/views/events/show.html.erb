@@ -156,8 +156,7 @@
         <div style="display: inline-block; vertical-align: top; font-size: 1.5em;">
           <span class="text-danger glyphicon glyphicon-warning-sign"></span></div>
         <div style="display: inline-block;">If you are planning on GMing in a slot, please do not sign up to play in
-          that
-          slot.
+          that slot.
           <br>The hosts of <%= @event.name %> will assign you to your GM slot once you have registered and paid
           for <%= @event.name %>.
         </div>
@@ -176,6 +175,18 @@
       </div>
       <div class="bg-warning text-primary" style="margin-top: 0">In order to make any changes to your
         registrations and signups, you will need to see HQ at the event.
+      </div>
+    </div>
+  <% end %>
+  <% if @event.online_sales_closed? %>
+    <div class="well">
+      <div class="bg-warning text-danger lead" style="margin-bottom: 0">
+        <strong>Online ticket sales are closed</strong>
+      </div>
+      <div class="bg-warning text-danger" style="margin-top: 0">
+        At this time, in order select or exchange any session tickets, you will need to see HQ at the event.<br>
+        This is to enable the convetion time to print physical tickets for the event.<br>
+        Thank you for understanding.
       </div>
     </div>
   <% end %>
@@ -312,7 +323,7 @@
 
                 <% registered_this_session = @sessions.include?(session) || @gm_sessions.include?(session) %>
                 <% if !registered_this_session && registrations_available && @registration.payment_ok? %>
-                  <% unless table.raffle? or @event.closed? or online_sales_closed?%>
+                  <% unless table.raffle? or @event.closed? or online_sales_closed? %>
                     <% unless table.premium? %>
                       <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table),
                                     :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.closed? %>
