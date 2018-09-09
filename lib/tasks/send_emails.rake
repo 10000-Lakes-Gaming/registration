@@ -22,7 +22,7 @@ task :send_registration_update_message => :environment do
   message.subject = "Are you ready for #{event.name}?"
   count           = 0
   event.user_events.each do |registration|
-    ContactMailer.registration_update(message, registration.email, event, registration).deliver
+    ContactMailer.registration_update(message, registration.user.email, event, registration).deliver
     count += 1
   end
   puts "#{count} Registration Update emails were sent."
