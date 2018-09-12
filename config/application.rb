@@ -13,5 +13,7 @@ module PfsRegistration
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.active_record.raise_in_transactional_callbacks = true
+    config.time_zone = 'Central Time (US & Canada)'
+    config.active_record.default_timezone = :local
   end
 end
