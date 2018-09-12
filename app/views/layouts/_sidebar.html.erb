@@ -39,6 +39,7 @@
     <li><%= link_to 'Events', events_path %></li>
     <% if @event and @event.persisted? %>
       <li><%= link_to "#{@event.name}", @event %></li>
+      <li><%= link_to "Register Player", new_event_user_event_path(@event) %></li>
       <li><%= link_to 'Registrations', event_user_events_path(@event) %></li>
       <li><%= link_to 'Sessions', event_sessions_path(@event) %></li>
       <% if @session && @session.persisted? %>
