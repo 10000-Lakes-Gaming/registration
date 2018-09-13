@@ -30,16 +30,16 @@ class RegistrationTable < ActiveRecord::Base
 
 
   def self.to_csv (empty_tickets = nil)
-    attributes = %w{ticket_number total_seats event session start_time scenario player pfs_number event_ticket_id, price}
+    attributes = %w{ticket_number total_seats event session start_time scenario name formal_name pfs_number event_ticket_id, price}
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
       all.each do |ticket|
-        csv << [ticket.seat, ticket.table.max_players, ticket.event, ticket.session, ticket.session_start_time, ticket.scenario, ticket.player, ticket.pfs_number, ticket.seat, ticket.ticket_price]
+        csv << [ticket.seat, ticket.table.max_players, ticket.event, ticket.session, ticket.session_start_time, ticket.scenario, ticket.player, ticket.formal_name, ticket.pfs_number, ticket.seat, ticket.ticket_price]
       end
       unless empty_tickets.blank?
         empty_tickets.each do |ticket|
-          csv << [ticket.seat, ticket.table.max_players, ticket.event, ticket.session, ticket.session_start_time, ticket.scenario, ticket.player, ticket.pfs_number, ticket.registration_number, ticket.ticket_price]
+          csv << [ticket.seat, ticket.table.max_players, ticket.event, ticket.session, ticket.session_start_time, ticket.scenario, ticket.player, ticket.formal_name, ticket.pfs_number, ticket.registration_number, ticket.ticket_price]
         end
       end
     end
@@ -61,8 +61,12 @@ class RegistrationTable < ActiveRecord::Base
     table.scenario.long_name
   end
 
-  def player
+  def formal_name
     user_event.user.formal_name
+  end
+
+  def player
+    user_event.user.name
   end
 
   def pfs_number
