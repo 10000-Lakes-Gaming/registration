@@ -20,7 +20,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # security problem in version 1.7.1
-gem 'nokogiri', '~> 1.8.2'
+gem 'nokogiri', '~> 1.10.3'
 
 # This is the authen gem
 gem 'devise', '~> 4.4.3'
@@ -38,13 +38,16 @@ group :development do
   gem 'spring'
 # This probably belons in development
   gem 'thin'
+end
 
+group :test do
+  gem 'simplecov', require: false
 end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-  gem 'sqlite3'
+  gem 'sqlite3', '~> 1.3.13'
   # Use SCSS for stylesheets
   gem 'minitest-reporters'
   gem 'minitest'
