@@ -41,12 +41,12 @@ class EventsControllerTest < ActionController::TestCase
   end
 
   test "should show event" do
-    get :show, id: @event
+    get :show,  params: { id: @event.id }
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @event
+    get :edit,  params: { id: @event.id }
     assert_response :success
   end
 

@@ -1,10 +1,18 @@
+def next?
+  File.basename(__FILE__) == "Gemfile.next"
+end
+
 source 'https://rubygems.org'
-ruby "2.5.1"
+ruby "2.6.2"
 
 gem 'rails_12factor'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~>  5.0'
+# if next?
+  gem 'rails', '~> 5.2.3'
+# else
+#   gem 'rails', '~>  5.0'
+# end
 
 # Security hole updates
 gem 'rails-html-sanitizer', '~> 1.0.4'
@@ -38,6 +46,9 @@ group :development do
   gem 'spring'
 # This probably belons in development
   gem 'thin'
+  # DUAL boots
+  gem "ten_years_rails",
+      git: "https://github.com/fastruby/ten_years_rails_conf_2018.git"
 end
 
 group :test do
@@ -63,8 +74,8 @@ group :assets do
 # Use Uglifier as compressor for JavaScript assets
   gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
-  gem 'coffee-rails', '~> 4.1.0'
-  gem 'sass-rails', '~> 5.0'
+  gem 'coffee-rails', '~> 5.0.0'
+  gem 'sass-rails', '~> 5.0.7'
 
 end
 
