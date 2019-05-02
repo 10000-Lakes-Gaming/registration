@@ -23,7 +23,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'nokogiri', '~> 1.10.3'
 
 # This is the authen gem
-gem 'devise', '~> 4.4.3'
+gem 'devise', '~> 4.6.2'
 gem 'omniauth', '~> 1.3.1'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'autoprefixer-rails'
