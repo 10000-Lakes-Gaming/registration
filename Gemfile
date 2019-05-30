@@ -32,11 +32,12 @@ gem 'nokogiri', '~> 1.10.3'
 
 # This is the authen gem
 gem 'devise', '~> 4.6.2'
-gem 'omniauth', '~> 1.3.1'
-gem 'bootstrap-sass', '~> 3.3.3'
+gem 'omniauth', '~> 1.9.0'
+gem 'bootstrap-sass', '~> 3.4.1'
 gem 'autoprefixer-rails'
 
 gem 'stripe'
+gem 'bundler-audit'
 
 group :development do
   gem "capistrano", "~> 3.4"
@@ -47,8 +48,8 @@ group :development do
 # This probably belons in development
   gem 'thin'
   # DUAL boots
-  gem "ten_years_rails",
-      git: "https://github.com/fastruby/ten_years_rails_conf_2018.git"
+  # gem "ten_years_rails",
+  #     git: "https://github.com/fastruby/ten_years_rails_conf_2018.git"
 end
 
 group :test do
@@ -62,7 +63,6 @@ group :development, :test do
   # Use SCSS for stylesheets
   gem 'minitest-reporters'
   gem 'minitest'
-
 end
 
 
