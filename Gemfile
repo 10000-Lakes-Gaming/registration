@@ -25,7 +25,7 @@ gem 'nokogiri', '~> 1.8.2'
 # This is the authen gem
 gem 'devise', '~> 4.4.3'
 gem 'omniauth', '~> 1.3.1'
-gem 'bootstrap-sass', '~> 3.3.3'
+gem 'bootstrap-sass', '~> 3.4.1'
 gem 'autoprefixer-rails'
 
 gem 'stripe'
