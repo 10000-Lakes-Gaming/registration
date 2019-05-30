@@ -32,6 +32,8 @@ puts("Seeding users!")
 users = User.create!([{name:     "Jack Brown", pfs_number: 74294, admin: true, email: "silbeg@gmail.com",
                        password: 'password', password_confirmation: 'password'},
                       {name:     "Keith Apperson", pfs_number: 124235, admin: true, email: "ziegrauros@gmail.com",
+                       password: 'password', password_confirmation: 'password'},
+                      {name:     "Ryan Blomquist", pfs_number: 8769, admin: true, email: "blomquistr@gmail.com",
                        password: 'password', password_confirmation: 'password'}])
 
 userEvent = UserEvent.create!([{event_id: 1, user_id: 1}])

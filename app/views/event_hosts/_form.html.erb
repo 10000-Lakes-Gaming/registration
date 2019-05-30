@@ -1,0 +1,47 @@
+<%= form_for([@event, @event_host]) do |f| %>
+  <% if event_host.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(event_host.errors.count, "error") %> prohibited this event_host from being saved:</h2>
+
+      <ul>
+        <% event_host.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :start_date %>
+    <% if admin? %>
+      <%= f.date_select :start_date %>
+    <% else %>
+      <%= @event_host.start_date.to_s(:long) %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :end_date %>
+    <% if admin? %>
+      <%= f.date_select :end_date %>
+    <% else %>
+      <%= @event_host.end_date.to_s(:long) %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <% f.label :user_id %>
+    <% if @event_host.persisted? %>
+      <%= f.hidden_field :user_id, :value => @event_host.user_id %>
+      <%= "#{@event_host.user.name} (#{@event_host.user.email})" %>
+    <% else %>
+      <%= f.select :user_id, options_for_select(@users.map {|user| ["#{user.name} (#{user.email})", user.id]}.to_h, @event_host.user_id), include_blank: 'Select User...' %>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <% if admin? %>
+      <%= f.submit :class => 'btn btn-primary'  %>
+    <% end %>
+  </div>
+<% end %>

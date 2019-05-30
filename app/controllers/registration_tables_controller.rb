@@ -1,6 +1,6 @@
 class RegistrationTablesController < ApplicationController
   before_action :set_registration_table, only: [:show, :edit, :update, :destroy]
-  before_action :get_event, :get_session, :get_table, :get_registration_tables, :get_possible_players
+  before_action :get_event, :get_session, :get_table, :get_registration_tables, :get_possible_players, :get_possible_tables
 
   def prevent_non_admin
     unless current_user.admin?
@@ -53,6 +53,15 @@ class RegistrationTablesController < ApplicationController
       end
 
       @possible_players = @possible_players.sort {|a, b| a <=> b}
+    end
+  end
+
+  def get_possible_tables
+    @possible_tables = []
+    @session.tables.each do |table|
+      unless table.full?
+        @possible_tables.push table
+      end
     end
   end
 

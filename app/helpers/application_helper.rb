@@ -4,6 +4,22 @@ module ApplicationHelper
     user_signed_in? and current_user.admin?
   end
 
+  def event_host?
+    host = false
+    if user_signed_in?
+      unless @event.nil?
+        current_user.event_hosts.each do |hosted_event|
+          event = hosted_event.event
+          if hosted_event.active?
+            host = host || (event.id == @event.id)
+          end
+        end
+      end
+    end
+    host || admin?
+  end
+
+
   def yes_no (value)
     value ? "Yes" : "No"
   end
@@ -42,3 +58,4 @@ module ApplicationHelper
     @event.online_sales_closed?
   end
 end
+

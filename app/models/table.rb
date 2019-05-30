@@ -42,6 +42,10 @@ class Table < ActiveRecord::Base
     errors.add :registration_tables
   end
 
+  def full?
+    self.remaining_seats <= 0
+  end
+
   def remaining_seats
     self.max_players - current_registrations
   end
