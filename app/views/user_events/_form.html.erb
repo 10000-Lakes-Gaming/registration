@@ -33,6 +33,12 @@
           <% end %>
         </div>
 
+    <div class="field">
+      <%= f.label :vip, "GM/HQ Only" %>
+      <%= f.check_box :vip %>
+      <div class="text-info">This would be a person who is not be playing in any sessions, so suppress any emails for reminders to RSVP for table sessions.</div>
+    </div>
+
         <div id="admindiv">
           <% if @user_event.persisted?
                username = @user_event.user.name

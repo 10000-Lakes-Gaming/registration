@@ -14,7 +14,7 @@
   <!-- if not admin then they can just confirm -->
 
   <div class="field">
-    <%= f.label :table_id , 'Current Table' %>: <%= @table.long_name %> ????
+    <%= f.label :table_id , 'Current Table' %>: <%= @table.long_name %>
     <%= f.hidden_field :table_id, :value => @table.id %>
   </div>
   <% @scenario = @table.scenario %>

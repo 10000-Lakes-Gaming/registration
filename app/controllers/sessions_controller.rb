@@ -65,6 +65,7 @@ class SessionsController < ApplicationController
   end
 
   def init_gm_sessions
+    #TODO - add stub GameMaster for each GM of the table
     @gm_sessions = {}
     @session.tables.each do |table|
       @gm_sessions[table] = []

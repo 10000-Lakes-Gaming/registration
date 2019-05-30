@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171229195712) do
+ActiveRecord::Schema.define(version: 20180905214046) do
 
   create_table "additional_payments", force: :cascade do |t|
     t.string   "category"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20171229195712) do
     t.integer  "onsite_price",      default: 0
     t.datetime "prereg_ends"
     t.string   "gm_volunteer_link"
+    t.datetime "online_sales_end"
   end
 
   create_table "game_masters", force: :cascade do |t|
@@ -61,6 +62,7 @@ ActiveRecord::Schema.define(version: 20171229195712) do
     t.integer  "user_event_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "table_number"
     t.index ["table_id"], name: "index_game_masters_on_table_id"
     t.index ["user_event_id"], name: "index_game_masters_on_user_event_id"
   end
@@ -74,6 +76,7 @@ ActiveRecord::Schema.define(version: 20171229195712) do
     t.integer  "payment_amount"
     t.string   "payment_id"
     t.datetime "payment_date"
+    t.integer  "seat"
   end
 
   create_table "scenarios", force: :cascade do |t|
@@ -108,18 +111,19 @@ ActiveRecord::Schema.define(version: 20171229195712) do
     t.integer  "session_id"
     t.integer  "scenario_id"
     t.integer  "max_players"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.integer  "gms_needed",   default: 1
-    t.boolean  "raffle",       default: false
-    t.boolean  "core",         default: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.integer  "gms_needed",     default: 1
+    t.boolean  "raffle",         default: false
+    t.boolean  "core",           default: false
     t.string   "location"
     t.boolean  "premium"
-    t.integer  "prereg_price", default: 0
-    t.integer  "onsite_price", default: 0
-    t.boolean  "disabled",     default: false
+    t.integer  "prereg_price",   default: 0
+    t.integer  "onsite_price",   default: 0
+    t.boolean  "disabled",       default: false
     t.boolean  "non_pfs"
     t.string   "information"
+    t.boolean  "gm_self_select", default: true
     t.index ["scenario_id"], name: "index_tables_on_scenario_id"
     t.index ["session_id"], name: "index_tables_on_session_id"
   end
@@ -133,6 +137,7 @@ ActiveRecord::Schema.define(version: 20171229195712) do
     t.string   "payment_id"
     t.integer  "payment_amount"
     t.datetime "payment_date"
+    t.boolean  "vip"
     t.index ["event_id"], name: "index_user_events_on_event_id"
     t.index ["user_id"], name: "index_user_events_on_user_id"
   end

@@ -6,14 +6,14 @@
   </h2>
   <h3><%= @table.long_name %></h3>
   <% unless @table.location.nil? %>
-      <h4>Table Location(s): <%= @table.location %></h4>
+    <h4>Table Location(s): <%= @table.location %></h4>
   <% end %>
 </div>
 
 <div class="well">
   <div style="white-space: pre-wrap"><%= @scenario.description %></div>
   <% if @scenario.author.present? %>
-      <div>by <%= @scenario.author %></div>
+    <div>by <%= @scenario.author %></div>
   <% end %>
   <%= render partial: 'events/table_badges', locals: {table: @table} %>
 </div>
@@ -55,6 +55,13 @@
 </div>
 <h4>GM Information</h4>
 <div class="well">
+
+  <% if @table.gm_self_select? %>
+    <p>GMs can sign up for themselves!</p>
+  <% else %>
+    <p>A host must assign GMs.</p>
+  <% end %>
+
   <p>This table current has <span class="badge"><%= @table.game_masters.size %></span> out of
     <span class="badge"><%= @table.gms_needed %></span> game masters.
   </p>
@@ -96,6 +103,6 @@
                   method: :get, :class => "btn btn-primary" %>
     <%= button_to 'Back', event_session_tables_path, method: :get, :class => "btn btn-success" %>
 <% else %>
-    <%= button_to 'Back', event_path, method: :get, :class => "btn btn-success" %>
+  <%= button_to 'Back', event_path, method: :get, :class => "btn btn-success" %>
 <% end %>
 <hr>

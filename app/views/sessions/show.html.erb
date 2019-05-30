@@ -25,6 +25,9 @@
       <tr>
         <td>
           <%= table.location %>
+          <% unless table.gm_table_assignments.blank? %>
+            (<%= table.gm_table_assignments %>)
+          <% end %>
         </td>
         <td>
           <%# make this show the scenario data as a collapsable %>

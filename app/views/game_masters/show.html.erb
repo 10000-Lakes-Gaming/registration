@@ -6,9 +6,17 @@
 </p>
 
 <p>
-  <strong>User event:</strong>
+  <strong>GM:</strong>
   <%= @game_master.user_event.user.name %>
 </p>
+
+
+<p>
+  <strong>Table Number:</strong>
+  <%= @game_master.table_number %>
+</p>
+
+
 
 <%= link_to 'Edit', edit_event_session_table_game_master_path(@event, @session, @table, @game_master) %> |
 <%= link_to 'Back', event_session_table_game_masters_path %>

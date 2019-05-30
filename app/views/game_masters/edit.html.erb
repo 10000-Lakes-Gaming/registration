@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @game_master %> |
-<%= link_to 'Back', game_masters_path %>
+<%= link_to 'Show', [@event, @session, @table, @game_master], :class => 'btn btn-info'%> |
+<%= link_to 'Back', event_session_table_game_masters_path, :class => 'btn btn-success' %>

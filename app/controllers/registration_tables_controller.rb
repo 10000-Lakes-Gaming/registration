@@ -44,8 +44,14 @@ class RegistrationTablesController < ApplicationController
       else
         @possible_players.push user_event
       end
-      # need to sort the gms
-      # @tables = @session.tables.sort {|a,b| a <=> b}
+      # admin fix.
+      if current_user.admin?
+        unless @registration_table.nil?
+          @possible_players.push @registration_table.user_event
+          @not_available.delete @registration_table.user_event
+        end
+      end
+
       @possible_players = @possible_players.sort {|a, b| a <=> b}
     end
   end
@@ -89,7 +95,18 @@ class RegistrationTablesController < ApplicationController
   # POST /registration_tables
   # POST /registration_tables.json
   def create
+
     @registration_table = RegistrationTable.new(registration_table_params)
+
+    # TODO - is there a better way to do this?
+    seat = RegistrationTable.where(table_id: @table.id).maximum('seat')
+    if seat.nil?
+      seat = 1
+    else
+      seat = seat + 1
+    end
+    @registration_table.seat = seat
+
     respond_to do |format|
       if @registration_table.save
         if @registration_table.payment_ok?
@@ -103,20 +120,6 @@ class RegistrationTablesController < ApplicationController
       end
     end
   end
-
-  # def create
-  #   respond_to do |format|
-  #     if @registration_table.save
-  #       if @registration_table.payment_ok?
-  #         format.html {redirect_to [@event], notice: 'Table was successfully added.'}
-  #       else
-  #         format.html {redirect_to new_registration_table_table_payment_path(@registration_table), notice: PREMIUM_MESSAGE}
-  #       end
-  #     else
-  #       format.html {render :new}
-  #     end
-  #   end
-  # end
 
   # PATCH/PUT /registration_tables/1
   # PATCH/PUT /registration_tables/1.json
@@ -150,6 +153,6 @@ class RegistrationTablesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def registration_table_params
-    params.require(:registration_table).permit(:table_id, :user_event_id)
+    params.require(:registration_table).permit(:table_id, :user_event_id, :paid, :payment_amount, :payment_id, :payment_date)
   end
 end

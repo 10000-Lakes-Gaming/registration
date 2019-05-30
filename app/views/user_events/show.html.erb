@@ -18,20 +18,24 @@
     <div class="col-md-2 col-sm-3"><strong>Email:</strong></div>
     <div class="col-md-6 col-sm-5"><%= player.email %></div>
   </div>
+  <div class="row">
+    <div class="col-md-2 col-sm-3"><strong>GM/HQ Only:</strong></div>
+    <div class="col-md-6 col-sm-5"><%= yes_no @user_event.vip? %></div>
+  </div>
 
   <% if @event.price&.nonzero? %>
-      <div class="row">
-        <div class="col-md-2 col-sm-3"><strong>Paid:</strong></div>
-        <div class="col-md-6 col-sm-5">
-          <% if @user_event.payment_ok? %>
-              Yes
-          <% else %>
-              No
-              <%= render partial: "registration_payment/registration_payment", locals: {event: @event, user_event: @user_event} %>
-          <% end %>
+    <div class="row">
+      <div class="col-md-2 col-sm-3"><strong>Paid:</strong></div>
+      <div class="col-md-6 col-sm-5">
+        <% if @user_event.payment_ok? %>
+          Yes
+        <% else %>
+          No
+          <%= render partial: "registration_payment/registration_payment", locals: {event: @event, user_event: @user_event} %>
+        <% end %>
 
-        </div>
       </div>
+    </div>
   <% end %>
 </div>
 
@@ -40,72 +44,147 @@
 <h3>Additional Payments</h3>
 <div class="well">
   <% if @user_event.unpaid_additional_payments? %>
-      <h4>Unpaid Additional Payments:</h4>
+    <h4>Unpaid Additional Payments:</h4>
+    <div class="row striped-outer">
+      <div class="col-md-2 col-sm-2"><b>Category</b></div>
+      <div class="col-md-4 col-sm-3"><b>Description</b></div>
+      <div class="col-md-1 col-sm-1"><b>Donation?</b></div>
+      <div class="col-md-2 col-sm-2"><b>Price</b></div>
+    </div>
+    <% @user_event.additional_payments.each do |payment| %>
+      <%# display the additional payment, with a button to pay %>
       <div class="row striped-outer">
-        <div class="col-md-2 col-sm-2"><b>Category</b></div>
-        <div class="col-md-4 col-sm-3"><b>Description</b></div>
-        <div class="col-md-1 col-sm-1"><b>Donation?</b></div>
-        <div class="col-md-2 col-sm-2"><b>Price</b></div>
+        <div class="col-md-2 col-sm-2"><%= payment.category %></div>
+        <div class="col-md-4 col-sm-3"><%= payment.description %></div>
+        <div class="col-md-1 col-sm-1">
+          <%= yes_no payment.charitable_donation? %>
+        </div>
+        <div class="col-md-2 col-sm-2"><%= number_to_currency(payment.price.to_f / 100) %></div>
+        <div class="col-md-2 col-sm-2">
+          <%= render partial: 'additional_payments/additional_payment', locals: {payment: payment, button_label: "Pay for #{payment.category}"} %>
+        </div>
+        <% if admin? %>
+          <div class="col-md-1 col-sm-1"><%= link_to 'View Payment', [@event, @user_event, payment], :class => 'btn btn-info' %></div>
+        <% end %>
       </div>
-      <% @user_event.additional_payments.each do |payment| %>
-          <%# display the additional payment, with a button to pay %>
-          <div class="row striped-outer">
-            <div class="col-md-2 col-sm-2"><%= payment.category %></div>
-            <div class="col-md-4 col-sm-3"><%= payment.description %></div>
-            <div class="col-md-1 col-sm-1">
-              <%= yes_no payment.charitable_donation? %>
-            </div>
-            <div class="col-md-2 col-sm-2"><%= number_to_currency(payment.price.to_f / 100) %></div>
-            <div class="col-md-2 col-sm-2">
-              <%= render partial: 'additional_payments/additional_payment', locals: {payment: payment, button_label: "Pay for #{payment.category}"} %>
-            </div>
-            <% if admin? %>
-                <div class="col-md-1 col-sm-1"><%= link_to 'View Payment', [@event, @user_event, payment], :class => 'btn btn-info' %></div>
-            <% end %>
-          </div>
-      <% end %>
+    <% end %>
 
   <% else %>
-      <div class="text-info">You have no pending additional payments</div>
+    <div class="text-info">You have no pending additional payments</div>
   <% end %>
   <br>
   <div>
     <%= link_to 'View Additional Payments', event_user_event_additional_payments_path(@event, @user_event), :class => 'btn btn-sm btn-success' %>
   </div>
-</div>  
+</div>
 
 <% if @user_event.total_paid > 0 %>
-    <hr>
-    <%= render 'all_payments_table' %>
+  <hr>
+  <%= render 'all_payments_table' %>
 <% end %>
 
 <hr>
 
-<% unless @user_event.registration_tables.empty? %>
-    <h2>Player Sessions</h2>
-    <div class="well">
-      <ul>
-        <% @user_event.registration_tables.each do |reg_table| %>
-            <li><%= "#{reg_table.table.session.name}: #{reg_table.table.scenario.long_name}" %></li>
+
+<%
+  @sessions = @event.sessions
+  @sessions = @sessions.sort
+  @table_sessions = {}
+
+  @sessions.each do |session|
+    @table_sessions[session] = nil
+  end
+
+
+  @user_event.registration_tables.each do |reg_table|
+    session                  = reg_table.table.session
+    @table_sessions[session] = reg_table
+  end
+  @user_event.game_masters.each do |game_master|
+    session                  = game_master.table.session
+    @table_sessions[session] = game_master
+  end
+%>
+<div class="well">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Session</th>
+      <th scope="col">Time</th>
+      <th scope="col">Scenario</th>
+      <th scope="col">Location</th>
+      <th scope="col">Signup Type</th>
+      <th scope="col">Payment Due?</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @sessions.each do |session| %>
+      <% selection = @table_sessions[session] %>
+      <tr>
+        <td><%= session.name %></td>
+        <td><%= session.timeslot %></td>
+        <% if selection.nil? %>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        <% else %>
+          <td><%= selection.table.scenario.long_name %></td>
+
+          <td>
+            <%= selection.table.location %>
+            <% if selection.is_a? GameMaster %>
+              <% unless selection.table_number.blank? %>
+                (<%= selection.table_number.strip %>)
+              <% end %>
+            <% end %>
+          </td>
+          <% if selection.is_a? RegistrationTable %>
+            <td>Player</td>
+            <td>
+              <% unless selection.payment_ok? %>
+                <%= number_to_currency(selection.table.price) %>
+              <% end %>
+            </td>
+          <% elsif selection.is_a? GameMaster %>
+            <td>GM</td>
+            <td></td>
+          <% end %>
         <% end %>
-      </ul>
-    </div>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<hr>
+
+
+<% unless @user_event.registration_tables.empty? %>
+  <h2>Player Sessions</h2>
+  <div class="well">
+    <ul>
+      <% @user_event.registration_tables.each do |reg_table| %>
+        <li><%= "#{reg_table.table.session.name}: #{reg_table.table.scenario.long_name}" %></li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
 
 <% unless @user_event.game_masters.empty? %>
-    <h2>GM Sessions</h2>
-    <div class="well">
-      <ul>
-        <% @user_event.game_masters.each do |reg_table| %>
-            <li><%= "#{reg_table.table.session.name}: #{reg_table.table.scenario.long_name}" %></li>
-        <% end %>
-      </ul>
-    </div>
+  <h2>GM Sessions</h2>
+  <div class="well">
+    <ul>
+      <% @user_event.game_masters.each do |reg_table| %>
+        <li><%= "#{reg_table.table.session.name}: #{reg_table.table.scenario.long_name}" %></li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
 
 
 <% if admin? %>
-    <%= link_to 'Back to Registrations', event_user_events_path(@event), :class => 'btn btn-success' %>
-    <%= link_to 'Edit', edit_event_user_event_path(@event, @user_event), :class => 'btn btn-primary' %>
+  <%= link_to 'Back to Registrations', event_user_events_path(@event), :class => 'btn btn-success' %>
+  <%= link_to 'Edit', edit_event_user_event_path(@event, @user_event), :class => 'btn btn-primary' %>
 <% end %>
 <%= link_to "Back to #{@event.name}", event_path(@event), :class => 'btn btn-success' %>

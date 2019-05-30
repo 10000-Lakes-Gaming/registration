@@ -1,4 +1,6 @@
-<p id="notice"><%= notice %></p>
+<% unless notice.nil? %>
+  <p id="notice" class="alert alert-success"><%= notice %></p>
+<% end %>
 
 <style type="text/css">
   dt, dd {
@@ -34,9 +36,13 @@
         </div>
       <% end %>
     <% end %>
+    <% unless @event.online_sales_end.nil? %>
+      <div class="text-warning"><span class="lead">Online table selection and ticket sales
+        closes: <%= @event.online_sales_end.localtime.to_formatted_s(:long_ordinal) %></span></div>
+    <% end %>
     <% unless @event.rsvp_close.nil? %>
-      <div class="lead text-warning">Registration
-        closes: <%= @event.rsvp_close.localtime.to_formatted_s(:long_ordinal) %></div>
+      <div class="text-warning"><span class="lead">Registration
+        closes: <%= @event.rsvp_close.localtime.to_formatted_s(:long_ordinal) %></span></div>
     <% end %>
   <% end %>
 </div>
@@ -90,11 +96,11 @@
       <div class="row">
         <div class="col-md-12">
           <div class="bg-warning text-danger">
-            Registering for this event here does NOT register you for the
-            convention. To do that, you will need to register at the URL below. You will not be able to play or GM
+            Registering for this event here does NOT register you for the convention.
+            To do that, you will need to register at the URL below. You will not be able to play or GM
             without a paid registration to the convention itself!
           </div>
-          <div class="bg-warning text-info">However, registration for individual tables is handled here.</div>
+          <div class="bg-warning text-info">Sign-up for individual tables is handled here.</div>
         </div>
       </div>
       <div class="row">
@@ -133,28 +139,31 @@
   </div>
 </div>
 
-<div id="gm_info" style="border: solid thin black;">
-  <h3 class="text-danger">Attention GMs!</h3>
+<%# TODO - for future, maybe make this a little more dynamic - and have a custom message %>
+<% unless self_select_allowed? %>
+  <div id="gm_info" style="border: solid thin black;">
+    <h3 class="text-danger">Attention GMs!</h3>
 
-  <div class="well">
-    <% unless @event.gm_volunteer_link.blank? %>
-      <div class="bg-info" style="margin-top: 1em;padding: 1em;">If you would like to GM for <%= @event.name %>
-        please do so at our:
-        <input type="button" class="btn btn-primary" value="GM Volunteer Form" formtarget="_blank"
-               onclick="window.open('<%= @event.gm_volunteer_link %>',  '_blank');">
-      </div>
-    <% end %>
-    <div class="bg-warning text-warning" style="margin-top: 0">
-      <div style="display: inline-block; vertical-align: top; font-size: 1.5em;">
-        <span class="text-danger glyphicon glyphicon-warning-sign"></span></div>
-      <div style="display: inline-block;">If you are planning on GMing in a slot, please do not sign up to play in that
-        slot.
-        <br>The hosts of <%= @event.name %> will assign you to your GM slot once you have registered and paid
-        for <%= @event.name %>.
+    <div class="well">
+      <% unless @event.gm_volunteer_link.blank? %>
+        <div class="bg-info" style="margin-top: 1em;padding: 1em;">If you would like to GM for <%= @event.name %>
+          please do so at our:
+          <input type="button" class="btn btn-primary" value="GM Volunteer Form" formtarget="_blank"
+                 onclick="window.open('<%= @event.gm_volunteer_link %>',  '_blank');">
+        </div>
+      <% end %>
+      <div class="bg-warning text-warning" style="margin-top: 0">
+        <div style="display: inline-block; vertical-align: top; font-size: 1.5em;">
+          <span class="text-danger glyphicon glyphicon-warning-sign"></span></div>
+        <div style="display: inline-block;">If you are planning on GMing in a slot, please do not sign up to play in
+          that slot.
+          <br>The hosts of <%= @event.name %> will assign you to your GM slot once you have registered and paid
+          for <%= @event.name %>.
+        </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>
 
 <div class="sessionsOffered" style="border: solid thin black;">
   <h3>Sessions/Scenarios Offered</h3>
@@ -166,6 +175,18 @@
       </div>
       <div class="bg-warning text-primary" style="margin-top: 0">In order to make any changes to your
         registrations and signups, you will need to see HQ at the event.
+      </div>
+    </div>
+  <% end %>
+  <% if @event.online_sales_closed? %>
+    <div class="well">
+      <div class="bg-warning text-danger lead" style="margin-bottom: 0">
+        <strong>Online ticket sales are closed</strong>
+      </div>
+      <div class="bg-warning text-danger" style="margin-top: 0">
+        At this time, in order select or exchange any session tickets, you will need to see HQ at the event.<br>
+        This is to enable the convetion time to print physical tickets for the event.<br>
+        Thank you for understanding.
       </div>
     </div>
   <% end %>
@@ -211,7 +232,9 @@
               <% scenario = table.scenario %>
               <%= scenario.long_name %>
               <% if table.premium? && !table.game_masters[0].nil? %>
-                with <%= table.game_masters[0].user_event.user.formal_name %>
+                with
+                <% authors = table.game_masters.map {|gm| gm.user_event.user.formal_name}.join(" & ") %>
+                <%= authors %>
               <% end %>
               <%= render 'table_badges', table: table %></div>
 
@@ -289,9 +312,9 @@
                     <% unless @event.closed? %>
                       <% if @reg_tables.include?(reg_table) %>
                         <% unless reg_table.table.premium %>
-                          <%= button_to 'Remove', [@event, session, table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove your RSVP for #{reg_table.table.long_name}?"}, :class => 'btn btn-xs btn-danger', method: :delete %>
+                          <%= button_to 'Remove', [@event, session, table, reg_table], data: {confirm: "Are you sure you want to remove your RSVP for #{reg_table.table.long_name}?"}, :class => 'btn btn-xs btn-danger', method: :delete %>
                         <% else %>
-                          <%= button_to 'Remove', [@event, session, table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove your RSVP for #{reg_table.table.long_name}? Canceling your RSVP will not refund your money."}, :class => 'btn btn-xs btn-danger', method: :delete %>
+                          <%= button_to 'Remove', [@event, session, table, reg_table], data: {confirm: "Are you sure you want to remove your RSVP for #{reg_table.table.long_name}? Canceling your RSVP will not refund your money."}, :class => 'btn btn-xs btn-danger', method: :delete %>
                         <% end %>
                       <% end %>
                     <% end %>
@@ -300,23 +323,27 @@
 
                 <% registered_this_session = @sessions.include?(session) || @gm_sessions.include?(session) %>
                 <% if !registered_this_session && registrations_available && @registration.payment_ok? %>
-                  <% unless table.raffle? or @event.closed? %>
+                  <% unless table.raffle? or @event.closed? or online_sales_closed? %>
                     <% unless table.premium? %>
                       <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table),
-                                    :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.disabled? %>
+                                    :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.closed? %>
                     <% else %>
                       <%= button_to "Buy Ticket for #{number_to_currency table.price}", new_event_session_table_registration_table_path(@event, session, table),
-                                    :class => "btn btn-xs btn-success", :method => :get, :disabled => table.disabled?,
+                                    :class => "btn btn-xs btn-success", :method => :get, :disabled => table.closed?,
                                     data:  {confirm: "This is a premium event with a price of #{number_to_currency table.price}. You will have 1 hour to pay for this ticket."}
                       %>
                     <% end %>
-
                   <% end %>
+                <% end %>
 
+                <% if !registered_this_session && table.gm_self_select? && table.need_gms? %>
+                  <%= button_to 'I will GM!', new_event_session_table_game_master_path(@event, session, table),
+                                :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.closed? %>
                 <% end %>
 
 
               </div>
+
             <% else %>
               <div class="col-md-3 no-pad">&nbsp;</div>
             <% end %>
@@ -376,6 +403,7 @@
   <%= button_to 'Add Session', new_event_session_path(@event), :class => 'btn btn-warning', :method => :get %>
 <% end %>
 <% if admin? %>
+  <%= button_to 'Add Session', new_event_session_path(@event), :class => 'btn btn-warning', :method => :get %>
   <%= button_to 'Edit', edit_event_path(@event), :class => 'btn btn-primary', :method => :get %>
 <% end %>
 <%= button_to 'Back', events_path, :class => 'btn btn-success', :method => :get %>

@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<div class="h1"><%= @event.name %></div>
+<div class="h2"><%= @event.location %></div>
+<div class="h2"><%= @event.start.to_formatted_s(:long) %> to <%= @event.end.to_formatted_s(:long) %></div>
+<hr>
+<div class="h2">Tickets!</div>
+<table class="table table-striped">
+  <tr>
+    <th>Event</th>
+    <th>Event Ticket #</th>
+    <th>Session Ticket #</th>
+    <th>Session</th>
+    <th>Session Start Time</th>
+    <th>Scenario</th>
+    <th>Player</th>
+    <th>OPF #</th>
+    <th>Price</th>
+  </tr>
+  <% @tickets.each do |ticket| %>
+      <tr>
+        <td><%= ticket.event %></td>
+        <td><%= ticket.registration_number %></td>
+        <td><%= ticket.seat %> of <%= ticket.table.max_players %></td>
+        <td><%= ticket.session %></td>
+        <td><%= ticket.session_start_time %></td>
+        <td><%= ticket.scenario %></td>
+        <td><%= ticket.player %></td>
+        <td><%= ticket.pfs_number %></td>
+        <td><%= ticket.ticket_price %></td>
+      </tr>
+  <% end %>
+</table>

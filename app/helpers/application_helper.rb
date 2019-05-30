@@ -43,5 +43,19 @@ module ApplicationHelper
     end
     unpaid_payments
   end
+
+  def self_select_allowed?
+    allowed = false
+    @event.sessions.each do |session|
+      session.tables.each do |table|
+        allowed |= table.gm_self_select?
+      end
+    end
+    allowed
+  end
+
+  def online_sales_closed?
+    @event.online_sales_closed?
+  end
 end
 

@@ -1,0 +1,61 @@
+<html>
+<head>
+  <title>PFS Registration</title>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'screen, projection', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'print-application', media: 'print' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
+</head>
+<body>
+
+
+<!--- Header info --->
+<div class="header-main hidden-print">
+  <div class="social-media">
+    <div style="padding: 5px;" href="https://www.facebook.com/pfsskalcon/">
+      <%= image_tag("FB-f-Logo__blue_58.png", alt: "SkalCon Facebook", height: "40") %>
+    </div>
+    <div class="twitter" style="padding: 5px; flex-grow: 1;" href="https://twitter.com/SkalConMN">
+      <%= image_tag("TwitterLogo_55acee.png", alt: "SkalCon Twitter", height: "40") %>
+    </div>
+    <div style="padding: 5px; flex-grow: 2"></div>
+  </div>
+  <div class="banner">
+    <div class="bannerimg">
+      <%= image_tag("skalbanner.png", size: "250x100", alt: "SkålCon") %>
+    </div>
+  </div>
+  <div class="divider">
+    <% if user_signed_in? %>
+        <div>
+          Logged in as: <%= current_user.name %> (<%= current_user.email %>)
+          <% if admin? %>[ADMIN]
+          <% end %>
+          <% unless current_user.forum_username.nil? %>{<%= current_user.forum_username %>}
+          <% end %>
+        </div>
+    <% else %>
+        <div>
+          <%= link_to('Login', new_user_session_path) %>
+        </div>
+    <% end %>
+  </div>
+</div>
+<!-- navigation back home -- don't want to use our sidebar -->
+<div class="hidden-print divider"><%= link_to "Back to #{@event.name}", @event, :class => 'btn btn-primary'%></div>
+
+
+<!--- Main Content --->
+<div id="main-content" class="container-fluid">
+  <%= yield %>
+</div>
+</body>
+</html>

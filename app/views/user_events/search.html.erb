@@ -1,4 +1,4 @@
-<div class="text-info bg-info">This form is to select the date of extraction for the registration list JSON.</div>
+<div class="text-info bg-info">This form is to select the date of extraction for the registration list CSV.</div>
 
 <div>
   <h2>Event Details</h2>
@@ -9,19 +9,29 @@
     <dd class=" text-info"><%= @event.start.localtime.to_formatted_s(:long) %>
       to <%= @event.end.localtime.to_formatted_s(:long) %></dd>
     <% if @event.event_number? %>
-        <dt>Event Number:</dt>
-        <dd class=" text-info"><%= @event.event_number %></dd>
+      <dt>Event Number:</dt>
+      <dd class=" text-info"><%= @event.event_number %></dd>
     <% end %>
   </dl>
 </div>
+<hr>
+<div class="h3 text-info bg-info">Extract user registrations since a given date for <%= @event.name %></div>
 
-<div class="text-info bg-info">Extract user registrations since a given date for <%= @event.name %></div>
-
-<%= form_tag("/events/#{@event.id}/user_events/show_since.json", method: "get") do %>
-    <p class="field">
-      <%= label :user_event, :since %>
-      <%= date_select('range_start', 'date', :order => [:month, :day, :year]) %>
-    </p>
-    <p><%= submit_tag "Search", class: "btn btn-info btn-sm" %></p>
+<%= form_tag("/events/#{@event.id}/user_events/show_since.csv", method: "get") do %>
+  <p class="field">
+    <%= label :user_event, :since %>
+    <%= date_select('range_start', 'date', :order => [:month, :day, :year]) %>
+  </p>
+  <p><%= submit_tag "Search", class: "btn btn-info btn-sm" %></p>
 
 <% end %>
+
+<hr>
+<div class="h3 text-info bg-info">Show all user registrations for <%= @event.name %></div>
+
+<ul class="list-group">
+  <li class="list-group-item"><%= link_to 'All Registrations', event_user_events_path(@event) %></li>
+  <li class="list-group-item"><%= link_to 'All Registrations (CSV)', event_user_events_path(@event, :format => :csv) %></li>
+  <li class="list-group-item"><%= link_to 'All Registrations (JSON)', event_user_events_path(@event, :format => :json) %></li>
+</ul>
+

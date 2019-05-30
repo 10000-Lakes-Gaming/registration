@@ -32,29 +32,9 @@
 
   <% if user_event.total_paid > 0 %>
       <hr>
-      <%= render 'user_events/all_payments_table' %>
+      <%= render partial: 'user_events/all_payments_table', locals: {event: @event, user_event: @user_event} %>
   <% end %>
   <hr>
 
-  <% unless user_event.registration_tables.empty? %>
-      <h3>Player Sessions</h3>
-      <div class="well">
-        <ul>
-          <% user_event.registration_tables.each do |reg_table| %>
-              <li><%= "#{reg_table.table.session.name}: #{reg_table.table.scenario.long_name} at #{reg_table.table.location}" %></li>
-          <% end %>
-        </ul>
-      </div>
-  <% end %>
-
-  <% unless user_event.game_masters.empty? %>
-      <h3>GM Sessions</h3>
-      <div class="well">
-        <ul>
-          <% user_event.game_masters.each do |reg_table| %>
-              <li><%= "#{reg_table.table.session.name}: #{reg_table.table.scenario.long_name} at #{reg_table.table.location}" %></li>
-          <% end %>
-        </ul>
-      </div>
-  <% end %>
+  <%= render  partial: 'event_tables', locals: {event: @event, user_event: @user_event} %>
 </div>

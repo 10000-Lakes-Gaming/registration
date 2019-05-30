@@ -1,0 +1,162 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+        integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+          integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+          crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+          integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+          crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container-fluid">
+  <h1 class="alert-success">Confirmation of Table GM Assignment Change</h1>
+  <h2><%= @game_master.user_event.user.formal_name %>,</h2>
+  <% if @adding %>
+    Thank you for volunteering to be the GM for: <%= @game_master.table.long_name %> at <%= @event.name %>!
+  <% else %>
+    You are no longer assigned to GM:  <%= @game_master.table.long_name %> at <%= @event.name %>.
+  <% end %>
+  <hr>
+
+  <h2 class="alert-primary">Your schedule at <%= @event.name %> as of <%= DateTime.now.localtime.to_formatted_s(:long) %></h2>
+  <%# http://pfs-registration.herokuapp.com/events/8/user_events/433 %>
+  <div>Please see <%= link_to "Your Registration", [@event, @game_master.user_event] %> for your up to the minute assignments.</div>
+
+  <%
+    @sessions = @event.sessions
+    @sessions = @sessions.sort
+
+    @table_sessions = {}
+
+    @sessions.each do |session|
+      @table_sessions[session] = nil
+    end
+
+    user_event = @game_master.user_event
+
+    user_event.registration_tables.each do |reg_table|
+      session                  = reg_table.table.session
+      @table_sessions[session] = reg_table
+    end
+    user_event.game_masters.each do |game_master|
+      session                  = game_master.table.session
+      @table_sessions[session] = game_master
+    end
+  %>
+  <div class="well">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Session</th>
+        <th scope="col">Time</th>
+        <th scope="col">Scenario</th>
+        <th scope="col">Location</th>
+        <th scope="col">Signup Type</th>
+        <th scope="col">Payment Due?</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @sessions.each do |session| %>
+        <% selection = @table_sessions[session] %>
+        <tr>
+          <td><%= session.name %></td>
+          <td><%= session.timeslot %></td>
+          <% if selection.nil? %>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          <% else %>
+            <td><%= selection.table.scenario.long_name %></td>
+            <td>
+              <%= selection.table.location %>
+              <% if selection.is_a? GameMaster %>
+                <% unless selection.table_number.blank? %>
+                  (<%= selection.table_number.strip %>)
+                <% end %>
+              <% end %>
+            </td>
+            <% if selection.is_a? RegistrationTable %>
+              <td>Player</td>
+              <td>
+                <% unless selection.payment_ok? %>
+                  <%= number_to_currency(selection.table.price) %>
+                <% end %>
+              </td>
+            <% elsif selection.is_a? GameMaster %>
+              <td>GM</td>
+              <td></td>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert-warning">If you need to drop a table that you have volunteered to GM, please reply to this email
+    requesting to be removed. Convention organizers will attempt to find a replacement for you. We apologize for any
+    inconvenience this may cause.
+  </div>
+
+
+  <hr>
+
+  <h2>Volunteer Information</h2>
+  <ul>
+    <li>Even if you have volunteered previously, please read through this section thoroughly as instructions may have
+      changed some from previous conventions. it anyway as some things have changed. If this is your first time
+      volunteering, these guidelines will help answer your questions and guide you through this important part of Paizo
+      Organized Play.
+    </li>
+    <li>As a volunteer, you are the eyes, ears, face, and voice of Paizo. We expect each of you to maintain a positive
+      attitude, professional behavior, and good hygiene.
+    </li>
+    <li>The Player Boon token rolls remain the same. 10% chance per token turned in, 5 tokens max per roll. Winners roll
+      randomly on which boon received. GM boons can be claimed when turning in your first session reporting sheet.
+    </li>
+  </ul>
+  <hr>
+
+
+  <h2>Logistics:</h2>
+  <ul>
+    <li>Each GM is responsible to provide their own maps, miniatures, handouts, and scenario-specific pre-generated
+      characters (if your scenario requires them such as in Serpent's Ire).
+    </li>
+    <li>Each GM is responsible for having a reliable copy of the scenario they are running. Power outlets are scarce
+      in the room so GMs must have a backup option in case their computer or tablet runs out of power.
+      For safety reasons, we cannot allow extension cords to be run across the room.
+    </li>
+    <li>Chronicles and session reporting sheets will be provided.</li>
+    <li>The HQ has a supply of New Player Packets and pre-generated iconic characters (this does not include scenario-specific
+      pre-generated characters, such as in Serpent's Ire).
+    </li>
+    <li>Do not leave your assigned table until HQ has released or reassigned you. HQ may assign you to additional tasks.</li>
+    <li>No personal items may be left in the HQ area.</li>
+    <li>The convention room will be closed to all players 30 minutes prior to the the running of interactive specials
+      for the GM pre-special meeting. All GM’s running the specials are expected to be at this meeting, and should
+      report at least 30 minutes prior to the session start time. Please be on time, as we will be discussing signaling
+      and the like.
+    </li>
+  </ul>
+  <hr>
+
+  <p>Thank you for making <%= @event.name %> a success!</p>
+
+  <hr>
+  <p><%= @event.name %>, Minnesota Paizo Organized Play, and 10,000 Lakes Gaming</p>
+</div>
+</body>
+</html>

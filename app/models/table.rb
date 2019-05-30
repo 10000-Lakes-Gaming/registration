@@ -15,7 +15,7 @@ class Table < ActiveRecord::Base
     # Remove "Table"  and sort by number, if possible.
     myloc  = self.location.to_s.downcase[/\d+/]
     tabloc = tab.location.to_s.downcase[/\d+/]
-    sort = myloc.to_i <=> tabloc.to_i
+    sort   = myloc.to_i <=> tabloc.to_i
 
     if sort == 0
       sort = self.location.to_s <=> tab.location.to_s
@@ -54,6 +54,10 @@ class Table < ActiveRecord::Base
     self.registration_tables.length
   end
 
+  def need_gms?
+    gms_short > 0
+  end
+
   def gms_short
     self.gms_needed - current_gms
   end
@@ -62,6 +66,9 @@ class Table < ActiveRecord::Base
     self.game_masters.length
   end
 
+  def closed?
+    disabled? || session.event.online_sales_closed?
+  end
 
   def price
     session.event.prereg_closed? ? onsite_price : prereg_price
@@ -70,4 +77,17 @@ class Table < ActiveRecord::Base
   def early_bird_discount?
     self.price < self.onsite_price
   end
+
+  def gm_table_assignments
+    tabs = []
+    game_masters.collect {|gm|
+      unless gm.table_number.blank?
+        tabs << gm.table_number.strip
+      end
+    }
+    # sort by the number...
+    tabs.sort_by {|x| x[/\d+/].to_i}.join(", ")
+  end
+
+
 end

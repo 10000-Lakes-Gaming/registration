@@ -8,28 +8,65 @@ class ContactMailerPreview < ActionMailer::Preview
     ContactMailer.payment_reminder(@message, @admins, @event)
   end
 
-
-  # def session_reminder_preview
-  #   setup_admins
-  #   @message         = Message.new
-  #   @message.email   = "#{ENV['GMAIL_SMTP_USERNAME']}"
-  #   @message.subject = "Reminder Message"
-  #   @message.content = "This is my content"
-  #   @message.name    = "SkålCon"
-  #   ContactMailer.session_reminder(@message, @admins)
-  # end
-
   def session_reminder_preview
-    setup_user_event
-    setup_admins
+    @event = Event.first
+    @user = User.first
     setup_payment_message
     ContactMailer.session_reminder(@message, @admins, @event)
+  end
+
+  def game_master_add_preview
+    @event = Event.first
+    @user = User.first
+    user_event = @user.user_events.first
+    game_master = user_event.game_masters.first
+    message = Message.new
+    message.subject = "Change in GM assignments for #{@event.name}"
+
+    email = @user.email
+
+    ContactMailer.game_master(message, email, @event, game_master, true)
+  end
+
+
+  def game_master_delete_preview
+    @event = Event.first
+    @user = User.first
+    user_event = @user.user_events.first
+    game_master = user_event.game_masters.first
+    message = Message.new
+    message.subject = "Change in GM assignments for #{@event.name}"
+
+    email = @user.email
+
+    ContactMailer.game_master(message, email, @event, game_master, false)
+  end
+
+  def donation_drive_preview
+    @event = Event.first
+    @user = User.first
+    message = Message.new
+    message.subject = "#{@event.name} Donation Drive!"
+
+    ContactMailer.donation_drive(message, @user.email, @event)
+  end
+
+  def registration_update_preview
+    @event  = Event.first
+    @user = User.first
+    @user_event = @user.user_events.first
+
+    message = Message.new
+    message.subject = "Stuff for #{@event.name}"
+
+    ContactMailer.registration_update(message, @user.email, @event, @user_event)
+
   end
 
   private
   def setup_user_event
     @event              = Event.new
-    @event.name         = 'SkålCon 2017'
+    @event.name         = 'SkålCon 2018'
     @event.prereg_price = 20
     @event.onsite_price = 25
     @event.prereg_ends  = 5.days.from_now
@@ -45,4 +82,5 @@ class ContactMailerPreview < ActionMailer::Preview
   def setup_admins
     @admins = User.where(admin: true)
   end
+
 end

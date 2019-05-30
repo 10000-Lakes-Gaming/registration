@@ -1,0 +1,69 @@
+<%
+  @sessions = @event.sessions
+  @sessions = @sessions.sort
+  @table_sessions = {}
+
+  @sessions.each do |session|
+    @table_sessions[session] = nil
+  end
+
+
+  user_event.registration_tables.each do |reg_table|
+    session                  = reg_table.table.session
+    @table_sessions[session] = reg_table
+  end
+  user_event.game_masters.each do |game_master|
+    session                  = game_master.table.session
+    @table_sessions[session] = game_master
+  end
+%>
+<div class="well">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Session</th>
+      <th scope="col">Time</th>
+      <th scope="col">Scenario</th>
+      <th scope="col">Location</th>
+      <th scope="col">Signup Type</th>
+      <th scope="col">Payment Due?</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @sessions.each do |session| %>
+      <% selection = @table_sessions[session] %>
+      <tr>
+        <td><%= session.name %></td>
+        <td><%= session.timeslot %></td>
+        <% if selection.nil? %>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        <% else %>
+          <td><%= selection.table.scenario.long_name %></td>
+          <td>
+            <%= selection.table.location %>
+            <% if selection.is_a? GameMaster %>
+              <% unless selection.table_number.blank? %>
+              (<%= selection.table_number.strip %>)
+              <% end %>
+            <% end %>
+          </td>
+          <% if selection.is_a? RegistrationTable %>
+            <td>Player</td>
+            <td>
+              <% unless selection.payment_ok? %>
+                <%= number_to_currency(selection.table.price) %>
+              <% end %>
+            </td>
+          <% elsif selection.is_a? GameMaster %>
+            <td>GM</td>
+            <td></td>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

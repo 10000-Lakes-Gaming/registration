@@ -2,6 +2,9 @@ class Event < ActiveRecord::Base
   has_many :sessions, dependent: :destroy
   has_many :user_events, dependent: :destroy
   has_many :event_hosts, dependent: :destroy
+  has_many :tables, through: :sessions
+  has_many :game_masters, through: :tables
+  has_many :registration_tables, through: :tables
 
   def <=> (event)
     self.name <=> event.name
@@ -14,6 +17,10 @@ class Event < ActiveRecord::Base
       closed = self.rsvp_close <= now
     end
     closed
+  end
+
+  def date_range
+    "#{start.localtime.to_formatted_s(:long)} to #{self.end.localtime.to_formatted_s(:long)}"
   end
 
   def premium_tables
@@ -29,6 +36,15 @@ class Event < ActiveRecord::Base
     unless self.prereg_ends.nil?
       now    = DateTime.now
       closed = self.prereg_ends <= now
+    end
+    closed
+  end
+
+  def online_sales_closed?
+    closed = false
+    unless self.online_sales_end.nil?
+      now    = DateTime.now
+      closed = self.online_sales_end <= now
     end
     closed
   end
