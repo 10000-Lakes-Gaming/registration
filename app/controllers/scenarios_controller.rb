@@ -12,6 +12,19 @@ class ScenariosController < ApplicationController
   # GET /scenarios.json
   def index
     @scenarios = Scenario.all.order('type_of desc, game_system, season desc, scenario_number, tier')
+    respond_to do |format|
+      format.html {
+        render :index
+      }
+      format.json {
+        render :index
+      }
+      format.csv {
+        send_data @scenarios.to_csv, filename: "all_scenarios.csv"
+      }
+    end
+
+
   end
 
   # GET /scenarios/1

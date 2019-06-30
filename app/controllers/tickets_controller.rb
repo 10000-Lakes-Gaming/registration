@@ -2,7 +2,6 @@ class TicketsController < ApplicationController
   before_action :get_event, :get_unknown_user, :get_unknown_user_event, :get_real_tickets, :get_empty_tickets
 
   def index
-    # TODO add the empty tickets for JSON
     respond_to do |format|
       format.html {
         @tickets = @tickets.sort {|a, b| a <=> b}
