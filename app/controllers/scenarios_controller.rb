@@ -1,6 +1,6 @@
 class ScenariosController < ApplicationController
   helper ApplicationHelper
-  before_action :set_scenario, only: [:show, :edit, :update, :destroy]
+  before_action :set_scenario, only: [:show, :edit, :update, :destroy, :clone]
 
   def prevent_non_admin
     unless current_user.admin?
@@ -23,15 +23,17 @@ class ScenariosController < ApplicationController
         send_data @scenarios.to_csv, filename: "all_scenarios.csv"
       }
     end
+  end
 
-
+  def clone
+    prevent_non_admin
+    @scenario = @scenario.copy
+    render :new
   end
 
   # GET /scenarios/1
   # GET /scenarios/1.json
   def show
-
-
   end
 
   # GET /scenarios/new
@@ -92,7 +94,8 @@ class ScenariosController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_scenario
-    @scenario = Scenario.find(params[:id])
+    scenario_id = params[:id] || params[:scenario_id]
+    @scenario = Scenario.find(scenario_id)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

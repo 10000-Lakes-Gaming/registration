@@ -59,6 +59,7 @@
           <%= link_to 'Show', scenario, :class => 'btn btn-info' %>
           <% if admin? %>
               <%= link_to 'Edit', edit_scenario_path(scenario), :class => 'btn btn-primary' %>
+              <%= link_to 'Clone', scenario_clone_path(scenario), :class => 'btn btn-warning' %>
               <%= link_to 'Destroy', scenario, method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %>
           <% end %>
         </td>

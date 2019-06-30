@@ -6,7 +6,9 @@ Rails.application.routes.draw do
 
 
   resources :users
-  resources :scenarios
+  resources :scenarios  do
+    get 'clone'
+  end
 
   get 'welcome/index'
   get 'admin/index'

@@ -66,6 +66,24 @@ class Scenario < ActiveRecord::Base
     end
   end
 
+  def copy ()
+    copy = Scenario.new
+    copy.type_of = type_of
+    copy.season = season
+    copy.scenario_number = scenario_number
+    copy.name = name
+    copy.description = description
+    copy.author = author
+    copy.paizo_url = paizo_url
+    copy.hard_mode = hard_mode
+    copy.pregen_only = pregen_only
+    copy.tier = tier
+    copy.retired = retired
+    copy.game_system = game_system
+    copy.evergreen = evergreen
+    copy
+  end
+
   def <=>(scenario)
     game = self.game_system.to_s
     other_game = scenario.game_system.to_s
