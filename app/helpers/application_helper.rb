@@ -46,11 +46,11 @@ module ApplicationHelper
 
   def self_select_allowed?
     allowed = false
-    @event.sessions.each do |session|
-      session.tables.each do |table|
-        allowed |= table.gm_self_select?
-      end
-    end
+    # @event.sessions.each do |session|
+    #   session.tables.each do |table|
+    #     allowed |= table.gm_self_select?
+    #   end
+    # end
     allowed
   end
 
