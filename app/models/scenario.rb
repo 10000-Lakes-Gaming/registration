@@ -1,8 +1,9 @@
 class Scenario < ActiveRecord::Base
 
-  validates :game_system, :type_of, :name, :tier, :presence => true
+  validates :game_system, :type_of, :name, :presence => true
   validates :scenario_number, presence: true, if: :scenario_number_needed?
   validates :season, presence: true, if: :season_needed?
+  validates :tier, presence: true, if: :tier_needed?
 
   # @type_list = ['Scenario', 'Quest', 'Module', 'Adventure Path', 'ACG']
 
@@ -53,6 +54,10 @@ class Scenario < ActiveRecord::Base
 
   def scenario_number_needed?
     self.scenario? || self.AP?
+  end
+
+  def tier_needed?
+    !['ACG', 'Other'].include? self.game_system
   end
 
   def replayable_display
