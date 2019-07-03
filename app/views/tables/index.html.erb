@@ -53,7 +53,7 @@
           <span class="badge badge-cost"><%= number_to_currency table.price %></span>
         <% end %>
         <% if table.scenario.evergreen? %>
-          <span class="badge badge-evergreen">Evergreen</span>
+          <span class="badge badge-evergreen"><%= table.scenario.replayable_display %></span>
         <% end %>
       </td>
       <td class="text-center"><%= table.registration_tables.size %>/<%= table.max_players %></td>

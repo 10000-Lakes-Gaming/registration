@@ -5,7 +5,7 @@
   <div>
     <div><b>Type:</b>  <%= @scenario.type_of %></div>
     <% if @scenario.evergreen? %>
-        <div class="text-success">This scenario is an Evergreen.</div>
+        <div class="text-success">This scenario is <%= @scenario.replayable_display %>.</div>
     <% end %>
     <% if @scenario.pregen_only? %>
         <div class="text-primary">This scenario is pregen-only.</div>

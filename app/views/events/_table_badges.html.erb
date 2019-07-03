@@ -48,7 +48,7 @@
 
 <% end %>
 <% if table.scenario.evergreen? %>
-    <button type="button" class="btn btn-round-xs btn-evergreen btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_evergreen">Evergreen</button>
+    <button type="button" class="btn btn-round-xs btn-evergreen btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_evergreen"><%= table.scenario.replayable_display %></button>
     <!-- Modal -->
     <div id="table_<%= table.id %>_evergreen" class="modal fade" role="dialog">
       <div class="modal-dialog">
@@ -56,7 +56,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Evergreen Scenario</h4>
+            <h4 class="modal-title"><%= table.scenario.replayable_display %> Scenario</h4>
           </div>
           <div class="modal-body">
             <p>You may replay this scenario with different characters. See the relevant Society RPG Guide for

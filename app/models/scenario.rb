@@ -55,6 +55,16 @@ class Scenario < ActiveRecord::Base
     self.scenario? || self.AP?
   end
 
+  def replayable_display
+    if self.evergreen?
+      if "PFS".eql? self.game_system
+        "Evergreen"
+      else
+        "Replayable"
+      end
+    end
+  end
+
   def self.to_csv ()
     attributes = %w{game_system season number name tier description author type hard_mode pregen_only retired replayable url}
 

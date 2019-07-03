@@ -36,7 +36,7 @@
         <td><%= scenario.author %></td>
         <td>
           <% if scenario.evergreen? %>
-              <span class="badge badge-evergreen">Evergreen</span>
+              <span class="badge badge-evergreen"><%= scenario.replayable_display %></span>
           <% end %>
         </td>
         <td>
