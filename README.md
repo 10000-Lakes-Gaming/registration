@@ -85,4 +85,5 @@ local schema. Additionally, it will start up rails server by calling `bundle exe
 
 ## Repository Best Practices
 Have an idea for the application? Create an issue! https://github.com/10000-Lakes-Gaming/registration/issues
+
 Solving an existing issue? Don't forget to link your commit and update the issue appropriately! https://help.github.com/en/articles/closing-issues-using-keywords
