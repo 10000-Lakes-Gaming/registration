@@ -165,6 +165,7 @@
   </div>
 <% end %>
 
+
 <div class="sessionsOffered" style="border: solid thin black;">
   <h3>Sessions/Scenarios Offered</h3>
 
@@ -225,7 +226,7 @@
       </div>
       <div class="col-md-8 no-pad">
         <!-- scenarios here -->
-        <% session.tables.sort {|a, b| a.name <=> b.name}.each do |table| %>
+        <% session.tables.sort_by {|table| [table.scenario.game_system, table.scenario.season, table.scenario.scenario_number]}.each do |table| %>
           <div class="row no-pad striped-inner">
             <div class="col-md-5 no-pad ">
               <%# TODO make this a reusable partial %>
