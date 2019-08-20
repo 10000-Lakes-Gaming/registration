@@ -227,7 +227,7 @@
       <div class="col-md-8 no-pad">
         <!-- scenarios here -->
         <% tables = session.tables %>
-        <% tables = tables.sort_by! { |table| [table.scenario] } %>
+        <% tables = tables.sort_by { |table| [table.scenario] } %>
         <% tables.each do |table| %>
         <div class="row no-pad striped-inner">
           <div class="col-md-5 no-pad ">
