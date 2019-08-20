@@ -20,77 +20,79 @@
   </thead>
 
   <tbody>
-  <%
-    @session.tables.sort {|a, b| a <=> b}.each do |table| %>
-      <tr>
-        <td>
-          <%= table.location %>
-          <% unless table.gm_table_assignments.blank? %>
-            (<%= table.gm_table_assignments %>)
-          <% end %>
-        </td>
-        <td>
-          <%# make this show the scenario data as a collapsable %>
-          <%= table.scenario.long_name %>
+
+  <% tables = @session.tables %>
+  <% tables = tables.sort_by { |table| [table.scenario] } %>
+  <% tables.each do |table| %>
+    <tr>
+      <td>
+        <%= table.location %>
+        <% unless table.gm_table_assignments.blank? %>
+          (<%= table.gm_table_assignments %>)
+        <% end %>
+      </td>
+      <td>
+        <%# make this show the scenario data as a collapsable %>
+        <%= table.scenario.long_name %>
 
 
-          <%= render 'events/table_badges', table: table %></div>
+        <%= render 'events/table_badges', table: table %></div>
 
-        </td>
-        <td>
-          <% scenario = table.scenario %>
-          <button data-toggle="modal" data-target="#scenario_<%= scenario.id %>" class="btn btn-info">Scenario
-            Details
-          </button>
-          <div id="scenario_<%= scenario.id %>" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-header"><%= scenario.long_name %></h4>
+      </td>
+      <td>
+        <% scenario = table.scenario %>
+        <button data-toggle="modal" data-target="#scenario_<%= scenario.id %>" class="btn btn-info">Scenario
+          Details
+        </button>
+        <div id="scenario_<%= scenario.id %>" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-header"><%= scenario.long_name %></h4>
+              </div>
+              <div class="modal-body">
+                <div><b>Type:</b>  <%= scenario.type_of %></div>
+                <hr>
+                <div style="white-space: pre-wrap;"><%= scenario.description %></div>
+                <div><strong>Written by:</strong> <%= scenario.author %></div>
+                <div><a href="<%= scenario.paizo_url %>" target="_blank">Click to see on Paizo's site</a>.</div>
+                <div>
+                  <% if table.scenario.paizo_url.nil? %>
+                    <a href="<%= scenario.paizo_url %>" target="_blank">Click to see on Paizo's site</a>.
+                  <% end %>
                 </div>
-                <div class="modal-body">
-                  <div><b>Type:</b>  <%= scenario.type_of %></div>
-                  <hr>
-                  <div style="white-space: pre-wrap;"><%= scenario.description %></div>
-                  <div><strong>Written by:</strong> <%= scenario.author %></div>
-                  <div><a href="<%= scenario.paizo_url %>" target="_blank">Click to see on Paizo's site</a>.</div>
-                  <div>
-                    <% if table.scenario.paizo_url.nil? %>
-                        <a href="<%= scenario.paizo_url %>" target="_blank">Click to see on Paizo's site</a>.
-                    <% end %>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
-        </td>
-        <% if event_host? %>
-            <td>
-              <%= link_to "#{@player_sessions[table].size} / #{table.max_players}", event_session_table_registration_tables_path(@event, @session, table) %>
-            </td>
-            <td>
-              <%= link_to "#{@gm_sessions[table].size} / #{table.gms_needed}", event_session_table_game_masters_path(@event, @session, table) %>
-            </td>
-        <% else %>
-            <td>
-              <%= @player_sessions[table].size %>/ <%= table.max_players %>
-            </td>
-            <td>
-              <%= @gm_sessions.size[table] %>/ <%= table.gms_needed %>
-            </td>
-        <% end %>
+        </div>
+      </td>
+      <% if event_host? %>
         <td>
-          <% if event_host? %>
-              <%= button_to 'Show', [@event, @session, table], method: :get, :class => 'btn btn-info' %>
-              <%= button_to 'Edit', edit_event_session_table_path(@event, @session, table), method: :get, :class => 'btn btn-primary' %>
-              <%= button_to 'Remove', [@event, @session, table], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %>
-          <% end %>
+          <%= link_to "#{@player_sessions[table].size} / #{table.max_players}", event_session_table_registration_tables_path(@event, @session, table) %>
         </td>
-      </tr>
+        <td>
+          <%= link_to "#{@gm_sessions[table].size} / #{table.gms_needed}", event_session_table_game_masters_path(@event, @session, table) %>
+        </td>
+      <% else %>
+        <td>
+          <%= @player_sessions[table].size %>/ <%= table.max_players %>
+        </td>
+        <td>
+          <%= @gm_sessions.size[table] %>/ <%= table.gms_needed %>
+        </td>
+      <% end %>
+      <td>
+        <% if event_host? %>
+          <%= button_to 'Show', [@event, @session, table], method: :get, :class => 'btn btn-info' %>
+          <%= button_to 'Edit', edit_event_session_table_path(@event, @session, table), method: :get, :class => 'btn btn-primary' %>
+          <%= button_to 'Remove', [@event, @session, table], method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %>
+        <% end %>
+      </td>
+    </tr>
   <% end %>
   <tr>
     <td colspan="3" class="text-right"><strong>Totals (does not include raffles):</strong></td>
@@ -102,9 +104,9 @@
     <td colspan="2">
       <%# GMs %>
       <% if @session.gm_count == @session.total_gms_needed %>
-          <% klass = 'text-success' %>
+        <% klass = 'text-success' %>
       <% else %>
-          <% klass = 'text-danger' %>
+        <% klass = 'text-danger' %>
       <% end %>
 
       <span class="<%= klass %>"><%= @session.gm_count %> / <%= @session.total_gms_needed %></span>
@@ -116,8 +118,8 @@
 
 
 <% if event_host? %>
-    <%= button_to 'Add New Table', new_event_session_table_path(@event, @session), method: :get, :class => 'btn btn-warning' %>
-    <%= button_to 'Edit', edit_event_session_path(@event, @session), method: :get, :class => 'btn btn-primary' %>
+  <%= button_to 'Add New Table', new_event_session_table_path(@event, @session), method: :get, :class => 'btn btn-warning' %>
+  <%= button_to 'Edit', edit_event_session_path(@event, @session), method: :get, :class => 'btn btn-primary' %>
 <% end %>
 <%= button_to "Back to #{@event.name}", event_path(@event), method: :get, :class => 'btn btn-success' %>
 
