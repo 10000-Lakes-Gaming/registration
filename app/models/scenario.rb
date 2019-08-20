@@ -60,6 +60,10 @@ class Scenario < ActiveRecord::Base
     !['ACG', 'Other'].include? self.game_system
   end
 
+  def headquarters?
+    tier.eql? 'HQ'
+  end
+
   def replayable_display
     if self.evergreen?
       if "PFS".eql? self.game_system
@@ -100,6 +104,15 @@ class Scenario < ActiveRecord::Base
   end
 
   def <=>(scenario)
+    # HQ precedence
+    unless self.headquarters? && scenario.headquarters?
+      if self.headquarters?
+        return -1
+      else
+        return 1
+      end
+    end
+
     game = self.game_system.to_s
     other_game = scenario.game_system.to_s
     sorted = game <=> other_game
