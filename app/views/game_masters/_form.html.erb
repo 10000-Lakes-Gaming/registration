@@ -38,12 +38,13 @@
     <% end %>
 
     <% unless @table.location.blank? %>
-    <div class="field">
-      <div>Location(s) of this table</div>
-      <div>
-        <%= @table.location %>
+      <div class="field">
+        <div>Location(s) of this table</div>
+        <div>
+          <%= @table.location %>
+        </div>
       </div>
-    </div>
+    <% end %>
 
     <div class="field">
       <%= f.label :user_event_id, "Game Master" %>
