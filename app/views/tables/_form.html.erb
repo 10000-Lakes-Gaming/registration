@@ -18,9 +18,19 @@
       </td>
       <td>
         <%# add default row %>
-        <%= f.select :scenario_id, options_for_select(@scenarios.map {|scenario| [scenario.season.to_s + "-" + scenario.scenario_number.to_s.rjust(2, "0") + ": " + scenario.name, scenario.id]}, @table.scenario_id), {include_blank: true} %>
+        <%= f.select :scenario_id, options_for_select(@scenarios.map { |scenario| [scenario.season.to_s + "-" + scenario.scenario_number.to_s.rjust(2, "0") + ": " + scenario.name, scenario.id] }, @table.scenario_id), { include_blank: true } %>
       </td>
     </tr>
+    <% unless @table.game_masters.empty? %>
+      <tr>
+        <td>Table Numbers used by Game Masters</td>
+        <td>
+          <% @table.game_masters.each do |gm| %>
+            <%= gm.table_number %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
     <tr>
       <td><%= f.label :location %></td>
       <td><%= f.text_field :location %></td>
@@ -48,7 +58,9 @@
     <tr>
       <td>
         <%= f.label :premium, 'Is this a premium table?' %>
-        <div class="text-info">Premium tables are charity tables, for an extra fee, paid for at time of registration.</div>
+        <div class="text-info">Premium tables are charity tables, for an extra fee, paid for at time of
+          registration.
+        </div>
       </td>
       <td>
         <%= f.check_box :premium %>
