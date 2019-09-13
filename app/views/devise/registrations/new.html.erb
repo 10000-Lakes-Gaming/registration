@@ -3,8 +3,6 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <%= devise_error_messages! %>
 
-
-
     <div class="well">
       <div class="bg-warning">
         <div class="lead text-danger"><b>Do not use an alias!</b>.</div>
@@ -33,35 +31,31 @@
     <br>
 
     <div class="field">
-      <%= f.label :pfs_number %> <br>
+      <%= f.label :pfs_number, 'Paizo Organized Play Number' %> <br>
       <%= f.number_field :pfs_number %>
+    </div>
+    <p><em>and/or</em></p>
+    <div class="field">
+      <%= f.label :dci_number, 'DCI Number' %> <br>
+      <%= f.number_field :dci_number %>
     </div>
     <br/>
 
     <div class="field">
-      <%= f.label :forum_username, "Username used on Paizo Forums" %> <br>
+      <%= f.label :forum_username, "Username used on Paizo Forums, if any" %> <br>
       <%= f.text_field :forum_username %>
     </div>
     <br>
 
     <div class="field">
-      <%= f.label :email %>: <em>Please use the email address that you registered with paizo.com.</em>
-      <a href="#" class="btn" data-toggle="collapse" data-target="#emailInfo"><span class='glyphicon glyphicon-info-sign text-info' aria-hidden='true'></span></a>
-      <div id="emailInfo" class="bg-info collapse">
-        Using the same email address as you used for paizo.com will help us to get scenarios to you for conventions if
-        you are a GM.
-      </div>
+      <%= f.label :email %>: <em>Please use the email address that you registered with paizo.com, if possible.</em>
       <br>
       <%= f.email_field :email, autofocus: true %>
     </div>
     <br>
     <div class="field">
       <%= f.label :password %>
-      <em>Do not use the same password that you used on paizo.com.</em>
-      <a href="#" class="btn" data-toggle="collapse" data-target="#pwWarn"><span class='glyphicon glyphicon-exclamation-sign text-danger' aria-hidden='true'></span></a>
-      <div id="pwWarn" class="bg-danger collapse">
-        For your own safety, you should <i>always</i> use a different password for every site that you visit.
-      </div>
+      <em>Please do not use the same password that you used anywhere else.</em>
       <% if @minimum_password_length %>
           <div><em>(<%= @minimum_password_length %> characters minimum)</em></div>
       <% end %><br/>
