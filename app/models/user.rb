@@ -12,7 +12,15 @@ class User < ActiveRecord::Base
 
   def pfs_or_dci_number_exists
     if pfs_number.nil? && dci_number.nil?
-      errors.add(:base,'You must enter either a Paizo Organized Play number or a DCI Number')
+      errors.add(:base, 'You must enter either a Paizo Organized Play number or a DCI Number')
+    end
+  end
+
+  def org_play_number
+    if pfs_number.nil?
+      "DCI# #{dci_number}"
+    else
+      "OPF# #{pfs_number}"
     end
   end
 

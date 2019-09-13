@@ -162,7 +162,7 @@ ActiveRecord::Schema.define(version: 2019_09_13_225352) do
     t.integer "gm_stars"
     t.boolean "venture_officer"
     t.string "title"
-    t.decimal "dci_number"
+    t.integer "dci_number"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["pfs_number"], name: "index_users_on_pfs_number", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

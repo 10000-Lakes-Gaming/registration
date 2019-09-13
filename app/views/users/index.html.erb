@@ -6,7 +6,7 @@
   <tr>
     <th>Name</th>
     <th>Email address</th>
-    <th>PFS number</th>
+    <th>OPF number</th>
     <th>Paizo Forum Username</th>
     <th>Admin</th>
     <th colspan="3"></th>
@@ -15,22 +15,29 @@
 
   <tbody>
   <% @users.each do |user| %>
-      <tr>
-        <td><%= user.formal_name_with_stars %></td>
-        <td><%= user.email %></td>
-        <td><%= user.pfs_number %></td>
-        <td><%= user.forum_username %></td>
-        <td>
-          <% if user.admin? %>
-              <span class="glyphicon glyphicon-user"></span>
-          <% end %>
-        </td>
-        <td>
-          <%= link_to 'Show', user, :class => 'btn btn-info' %>
-          <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-primary' %>
-          <%= link_to 'Destroy', user, method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %>
-        </td>
-      </tr>
+    <tr>
+      <td><%= user.formal_name_with_stars %></td>
+      <td><%= user.email %></td>
+      <td>
+        <% unless user.pfs_number.nil? %>
+          <div>OPF# <%= user.pfs_number %></div>
+        <% end %>
+        <% unless user.dci_number.nil? %>
+          <div>DCI# <%= user.dci_number %></div>
+        <% end %>
+      </td>
+      <td><%= user.forum_username %></td>
+      <td>
+        <% if user.admin? %>
+          <span class="glyphicon glyphicon-user"></span>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to 'Show', user, :class => 'btn btn-info' %>
+        <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-primary' %>
+        <%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %>
+      </td>
+    </tr>
   <% end %>
   </tbody>
 </table>

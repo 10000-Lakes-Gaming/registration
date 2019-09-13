@@ -4,8 +4,8 @@ class RegistrationTable < ActiveRecord::Base
   delegate :name, to: :table
   delegate :start, to: :table
   delegate :price, to: :table
-  validates :table_id, :presence => true, :uniqueness => {:scope => :user_event_id}
-  validates :user_event_id, :presence => true, :uniqueness => {:scope => :table_id}
+  validates :table_id, :presence => true, :uniqueness => { :scope => :user_event_id }
+  validates :user_event_id, :presence => true, :uniqueness => { :scope => :table_id }
   validate :check_player_count
 
   def check_player_count
@@ -27,7 +27,6 @@ class RegistrationTable < ActiveRecord::Base
     end
     sorted
   end
-
 
   def self.to_csv (empty_tickets = nil)
     attributes = %w{ticket_number total_seats event session start_time scenario name formal_name pfs_number event_ticket_id, price}
@@ -70,7 +69,11 @@ class RegistrationTable < ActiveRecord::Base
   end
 
   def pfs_number
-    user_event.user.pfs_number
+    if user_event.user.pfs_number.nil?
+      "DCI##{user_event.user.dci_number}"
+    else
+      user_event.user.pfs_number
+    end
   end
 
   def registration_number
