@@ -2,8 +2,8 @@ desc "This is used to generate various on demand emails."
 
 task :send_donation_drive_message => :environment do
   puts "Sending donation drive message"
-  # this is currently hardcoded for SkålCon 2018
-  event           = Event.find(8)
+  # this is currently hardcoded for SkålCon 2019
+  event           = Event.find(10)
   message         = Message.new
   message.subject = "#{event.name} Physical Goods Donation Drive!"
   count           = 0
