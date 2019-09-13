@@ -57,7 +57,7 @@ end
 
 task :send_unpaid_event_message => :environment do
   puts "Sending unpaid registration emails"
-  Event.where('end > ? AND ( prereg_price > 0 or onsite_price > 0)', Date.today).each do |event|
+  Event.where('rsvp_close > ? AND ( prereg_price > 0 or onsite_price > 0)', Date.today).each do |event|
     count           = 0
     message         = Message.new
     message.subject = "Please submit your payment for #{event.name}"

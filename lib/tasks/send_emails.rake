@@ -16,8 +16,8 @@ end
 
 task :send_registration_update_message => :environment do
   puts "Sending Registration Update message"
-  # this is currently hardcoded for SkålCon 2018
-  event           = Event.find(8)
+  # this is currently hardcoded for SkålCon 2019
+  event           = Event.find(10)
   message         = Message.new
   message.subject = "Are you ready for #{event.name}?"
   count           = 0
