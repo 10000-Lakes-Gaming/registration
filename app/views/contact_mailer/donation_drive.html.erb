@@ -23,83 +23,51 @@
 <div class="container-fluid">
   <p><%= image_tag("skalbanner.png", size: "250x100", alt: "SkålCon") %></p>
 
-  <div class="card">
-    <div class="card-header">
-      <div class="h5 card-title"><%= @event.name %> Physical Goods Donation Drive!</div>
-    </div>
-    <div class="card-body">
-      <div class="card-text">We will be running a supply drive for Tubman again this year! Please bring items as per
-        <a href="https://tubman.org/file_download/b8f9d4f2-c099-4a98-b3f1-ebcb4bea9a5d">Tubman’s General Wish List
-          guide</a>,
-        which includes household supplies and certain non-perishable food items. Visit
-        <a href="https://tubman.org/give-help/ways-to-donate/donate-goods.html?page=1">Tubman’s donation page</a> for
-        additional details on what their organization is looking for. Each donation will receive a ‘star’ that will have
-        in-game benefits during SkålCon! In addition, you can request a donation receipt for tax purposes if you so
-        choose.
-      </div>
-    </div>
-  </div>
-
-  <hr>
 
   <div class="card">
     <div class="card-header">
-      <div class="h5 card-title">Every item (up to 15) will get you in game benefits!</div>
+      <div class="h5 card-title">Requesting Physical Donations at <%= @event.name %>!</div>
     </div>
     <div class="card-body">
       <div class="card-text">
-        <div>You will receive one star to put on your badge for each item that you bring in as a donation to the
-          Physical Donation Drive!
-        </div>
-        <hr>
-        <div>
-          <dl class="row">
-            <dt class="col-sm-2">Stars 1-5</dt>
-            <dd class="col-sm-10">
-              <div class="h6">The first five items that you bring will give you a re-roll, once per session, with the
-                bonus on the roll equal to the number of items you have brought (up to +5).
-              </div>
-              <div>Thus, if you bring in three items Friday night, you will receive a +3 to one re-roll every
-                session you play all weekend.
-                <em>(note: This will not stack with yer GM Star bonus re-roll; use which ever is higher)</em>
-              </div>
-            </dd>
-          </dl>
-        </div>
-        <div>
-          <dl class="row">
-            <dt class="col-sm-2">Stars 6-15</dt>
-            <dd class="col-sm-10">
-              <div class="h6">The next ten items will make your <em>Aid Another</em> actions more effective!</div>
-              <div>Once per session, you can grant a bonus to a teammates roll equal to the number of items over
-                five that you have donated. <em>(this will not stack with the regular +2 for aid another)</em>
-              </div>
-              <div>Thus, if you bring in 12 items, you will grant your teammate +7 on a single check that you help
-                with the <em>aid another</em> action.
-              </div>
-            </dd>
-          </dl>
-        </div>
+        <p>Besides attending SkalCon, there are some other ways you can help make this event super
+          successful – physical donations! We accept donations for our auction and raffle – and more importantly, for
+          Tubman! Let’s get some more details so you know what to bring with you to SkalCon!
+        </p>
+        <h3>Supply Drive for Tubman</h3>
+
+        <p>We’ll be having a Supply Drive for Tubman, as we do every year. And we do mean supplies – many of the items
+          on
+          <a href="https://tubman.org/file_download/b8f9d4f2-c099-4a98-b3f1-ebcb4bea9a5d">Tubman’s donation wish
+            list</a>
+          are everyday products a family needs, like soaps, snack bags, and diapers.</p>
+
+        <p>Please look at their
+          <a href="https://tubman.org/file_download/b8f9d4f2-c099-4a98-b3f1-ebcb4bea9a5d">official donation wish
+            list</a>
+          and their
+          <a href="https://www.tubman.org/give-help/ways-to-give/donate-goods.html">donation page</a>
+          on their website. Get some items to bring, and we’ll give you some stars for your SkalCon badge!
+          What do the stars get you? In-game benefits! Your GM will know what’s up. 🙂</p>
+
+        <h3>Auction/Raffle Item Donation</h3>
+
+        <p>Have some gently-used RPG gear that you don’t want anymore? Happen to have some tickets of some kind you’d
+          like to donate to a good cause? SkalCon can take those off your hands!</p>
+
+        <p>Our auction and raffle is stocked, in part, by attendees donating something cool they think others would
+          like.
+          If you have an item you think fits the bill, email <a mailto="contact@skalcon.org">contact@skalcon.org</a>
+          with the details and we’ll be in touch!
+          Item donations are tax deductible as well! Just ask for a donation receipt and we will provide.</p>
       </div>
     </div>
-  </div>
 
-  <hr>
-  <div class="card">
-    <div class="card-header">
-      <div class="h5 card-title">The need is real!</div>
-    </div>
-    <div class="card-body">
-      <div class="card-text">Lets bring a lot of supplies, Pathfinders! Tubman's Transitional Housing is full and their new
-        Youth Center has been full since it opened. The need is great and we can make a real, positive difference in
-        someone's life.
-      </div>
 
-      <div class="card-text">Thank you for making this convention a success!</div>
+    <div class="card-text">Thank you for making this convention a success!</div>
 
-      <hr>
-      <div class="card-text"><%= @event.name %>, 10,000 Lakes Gaming, and Minnesota Paizo Organized Play</div>
-    </div>
+    <hr>
+    <div class="card-text"><%= @event.name %>, 10,000 Lakes Gaming, and Minnesota Paizo Organized Play</div>
   </div>
 </div>
 </body>
