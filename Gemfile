@@ -3,6 +3,7 @@ def next?
 end
 
 source 'https://rubygems.org'
+ruby '~> 2.6.3'
 
 gem 'rails_12factor'
 
