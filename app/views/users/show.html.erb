@@ -7,10 +7,20 @@
   <%= @user.email %>
 </p>
 
-<p>
-  <strong>PFS number:</strong>
-  <%= @user.pfs_number %>
-</p>
+
+<% unless @user.pfs_number.nil? %>
+  <p>
+    <strong>Paizo OPF number:</strong>
+    <%= @user.pfs_number %>
+  </p>
+<% end %>
+
+<% unless @user.dci_number.nil? %>
+  <p>
+    <strong>DCI number:</strong>
+    <%= @user.dci_number %>
+  </p>
+<% end %>
 
 <p>
   <strong>Username for Paizo.com:</strong>
@@ -20,32 +30,32 @@
 <p><strong>GM Stars:</strong> <span class="lead text-warning"><%= @user.show_stars %></span></p>
 
 <% if @user.venture_officer? %>
-    <p><strong>Title:</strong> <%= @user.title %></p>
+  <p><strong>Title:</strong> <%= @user.title %></p>
 <% end %>
 
 <% if admin? %>
-    <p>
-      <strong>Admin:</strong>
-      <%= @user.admin %>
-    </p>
+  <p>
+    <strong>Admin:</strong>
+    <%= @user.admin %>
+  </p>
 <% end %>
 
 <h2>Registrations</h2>
 <% @user.user_events.each do |user_event| %>
-    <div class="well">
-      <h3><%= user_event.event.name %></h3>
-      <!-- TODO - add clamshell? -->
-      <ul>
-        <% user_event.registration_tables.each do |reg_table| %>
-            <li><%= reg_table.table.session.name %>: <%= reg_table.table.scenario.long_name %></li>
-        <% end %>
-      </ul>
-    </div>
+  <div class="well">
+    <h3><%= user_event.event.name %></h3>
+    <!-- TODO - add clamshell? -->
+    <ul>
+      <% user_event.registration_tables.each do |reg_table| %>
+        <li><%= reg_table.table.session.name %>: <%= reg_table.table.scenario.long_name %></li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
 
 <%= button_to 'Edit', edit_user_path(@user), method: :get, :class => 'btn btn-primary' %>
 <% if admin? %>
-    <%= button_to 'Back', users_path, method: :get, :class => 'btn btn-success' %>
+  <%= button_to 'Back', users_path, method: :get, :class => 'btn btn-success' %>
 <% else %>
-    <%= button_to 'Back', welcome_index_path, method: :get, :class => 'btn btn-success' %>
+  <%= button_to 'Back', welcome_index_path, method: :get, :class => 'btn btn-success' %>
 <% end %>

@@ -42,8 +42,12 @@
         </td>
       </tr>
       <tr>
-        <td><%= f.label :pfs_number %></td>
+        <td><%= f.label :pfs_number, 'Paizo Organized Play Number' %></td>
         <td><%= f.text_field :pfs_number %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :dci_number, 'DCI Number' %></td>
+        <td><%= f.text_field :dci_number %></td>
       </tr>
       <tr>
         <td><%= f.label :forum_username, "Username used on Paizo Forums" %></td>

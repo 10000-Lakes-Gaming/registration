@@ -7,12 +7,7 @@ ruby '~> 2.6.3'
 
 gem 'rails_12factor'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-# if next?
   gem 'rails', '~> 5.2.3'
-# else
-#   gem 'rails', '~>  5.0'
-# end
 
 # Security hole updates
 gem 'rails-html-sanitizer', '~> 1.0.4'
@@ -31,7 +26,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'nokogiri', '~> 1.10.3'
 
 # This is the authen gem
-gem 'devise', '~> 4.6.2'
+gem 'devise', '~> 4.7.1'
 gem 'omniauth', '~> 1.9.0'
 gem 'bootstrap-sass', '~> 3.4.1'
 gem 'autoprefixer-rails'
@@ -47,9 +42,6 @@ group :development do
   gem 'spring'
 # This probably belons in development
   gem 'thin'
-  # DUAL boots
-  # gem "ten_years_rails",
-  #     git: "https://github.com/fastruby/ten_years_rails_conf_2018.git"
 end
 
 group :test do
