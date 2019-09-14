@@ -5,13 +5,15 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   has_many :user_events
   has_many :event_hosts
-  validates_uniqueness_of :email, :pfs_number
+  validates_uniqueness_of :email
+  validates_uniqueness_of :pfs_number, unless: :pfs_number_blank?
+  validates_uniqueness_of :dci_number, unless: :dci_number_blank?
   validates :name, :email, :presence => true
   validates :title, :presence => true, if: :venture_officer?
   validate :pfs_or_dci_number_exists
 
   def pfs_or_dci_number_exists
-    if pfs_number.nil? && dci_number.nil?
+    if pfs_number_blank? && dci_number_blank?
       errors.add(:base, 'You must enter either a Paizo Organized Play number or a DCI Number')
     end
   end
@@ -70,3 +72,12 @@ class User < ActiveRecord::Base
 
 
 end
+  private
+
+  def dci_number_blank?
+    dci_number.blank?
+  end
+
+  def pfs_number_blank?
+    pfs_number.blank?
+  end
