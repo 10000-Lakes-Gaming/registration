@@ -24,12 +24,35 @@
       <div class="card-text">
         Thank you for taking a moment to review this email for information about the upcoming <%= @event.name %> on
         <%= @event.start.localtime.to_formatted_s(:long) %>. Some of this will be new (such as the announcement about
-        the VIP panel, and the use of physical tickets), while some will be a refresher (such as our donation drive).
+        our new location, and the Celebrity Paranioa Game, SkålCon the Gathering), while some will be a refresher (such
+        as
+        our donation drive, VIP panel, and the use of physical tickets).
       </div>
     </div>
   </div>
   <hr>
-  <%# check that the event has been paid for. If not, give instructions on how to pay for event. %>
+
+  <hr>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="h5 card-title">New Location!</div>
+      <div class="card-subtitle mb-2 text-muted">Crown Plaza Minneaplois West in Plymouth, Minnesota</div>
+    </div>
+    <div class="card-body">
+      <div class="card-text">This will be our first year in this new venue!
+        <div><a href="http://cpplymouth.com/">Crowne Plaza Minneapolis West</a></div>
+        <div>3131 Campus Drive</div>
+        <div>Plymouth, MN 55441</div>
+        <div>(763) 559-6600</div>
+      </div>
+      <div>SkålCon will be held in the Regency Ballroom. Those of you familiar with Con of the North will know this
+        as the vendor/board game room.
+      </div>
+    </div>
+  </div>
+  <hr>
+<%# check that the event has been paid for. If not, give instructions on how to pay for event. %>
   <% unless @user_event.payment_ok? %>
     <div class="card">
       <div class="card-header">
@@ -58,16 +81,69 @@
     <hr>
   <% end %>
 
-  <%# Note the VIP panel! %>
+  <div class="card">
+    <div class="card-header">
+      <div class="h5 card-title">Celebrity Paranoia at SkålCon</div>
+      <div class="card-subtitle mb-2 text-muted">Friday, September 20, 2019, at 12:30PM at the Plymouth Crown Plaza
+        Regency Room
+      </div>
+    </div>
+    <div class="card-body">
+      <p class="card-text">Your paid admission to SkålCon 2019 access to our Celebrity Paranoia Game at
+        SkålCon 2019!
+      </p>
+
+      <div class="card-text">
+        Join GM Jack Brown with players Clinton Boomer, Jenny Jarzabski, Jaye Sonia, Jessica Redikop, and Scott D Young
+        as they try to save Alpha Complex! You will be able affect the game with your donations, from making the
+        Troubleshooter's
+        die rolls more difficult, to prompting <em>The Benevolence of Friend Computer</em>, to even affecting their
+        character
+        creation!
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="card-text">
+            <p>
+              Life as a clone in sector SFS has never been simpler. Rise with hundreds of others in the barracks. Pop a
+              couple of Wakey-Wakey pills. Wash and eat a leisurely breakfast. Report to your Service Group, retrieve
+              your
+              brooms, mops, and perhaps buckets. Sweep and mop ahead of Scrub-Bot-017 to make sure that its brooms and
+              mops do not get worn. Eat a leisurely lunch with your coworkers, enjoying a Bouncy Bubbly Beverage. Work
+              some more. Down a handful of Mellodaze caplets. Have dinner. Watch a Teela O'Malley episode in the
+              communal
+              view lounge. Drink a warm cup of SleepyTyme relaxant. Sleep soundly.</p>
+
+            <p>Rinse. Repeat.</p>
+
+            <p>Until today.</p>
+
+            <p>Even before your eyes open, your Cerebral Coretech's iBall is displaying instructions for your.
+              <b>'REPORT IMMEDIATELY TO HIST-O-RIA-6 IN BRIEFING ROOM 19'</b>.</p>
+
+            <p>As expected, any questions are answered with <b>'THAT INFORMATION IS ABOVE YOUR SECURITY CLEARANCE'</b>.
+            </p>
+          </div>
+          <div class="card-text">Be Happy! Trust no one! Keep your laser handy!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+
+<%# Note the VIP panel! %>
   <div class="card">
     <div class="card-header">
       <div class="h5 card-title">VIP RPG Panel at SkålCon</div>
-      <div class="card-subtitle mb-2 text-muted">Friday, September 14, at 4:00PM at Fantasy Flight Games Center</div>
+      <div class="card-subtitle mb-2 text-muted">Friday, September 20, 2019, at 3:00PM at the Plymouth Crown Plaza
+        Regency
+        Room
+      </div>
     </div>
     <div class="card-body">
-      <div class="card-text">Your paid admission to SkålCon 2018 gains you access to our first ever VIP RPG Panel at
-        SkålCon 2018!
-      </div>
+      <p class="card-text">Your paid admission to SkålCon 2019 gains you access to our VIP RPG Panel at
+        SkålCon 2019!
+      </p>
       <div class="card-text">This year's panelists are:</div>
       <dl class="row">
         <dt class="col-sm-2">Tonya Woldridge</dt>
@@ -75,22 +151,18 @@
         <dt class="col-sm-2">Thurston Hillman</dt>
         <dd class="col-sm-10">Starfinder Society Developer, Author</dd>
         <dt class="col-sm-2">Jenny Jarzabski</dt>
-        <dd class="col-sm-10">Author (Adventurer's Armory 2, Ungrounded but Unbroken, The Solar Sortie)</dd>
+        <dd class="col-sm-10">Author</dd>
         <dt class="col-sm-2">Clinton Boomer</dt>
-        <dd class="col-sm-10">Author (Hands of the Muted God, Third Riddle)</dd>
+        <dd class="col-sm-10">Author</dd>
         <dt class="col-sm-2">Jaye Sonia</dt>
         <dd class="col-sm-10">Author, Owner of Storm Bunny Studios</dd>
+        <dt class="col-sm-2">Jessica Redekop</dt>
+        <dd class="col-sm-10">Author, City of 7 Seraphs</dd>
+        <dt class="col-sm-2">Christen Sowards</dt>
+        <dd class="col-sm-10">Author, City of 7 Seraphs</dd>
+        <dt class="col-sm-2">Scott D Young</dt>
+        <dd class="col-sm-10">Author</dd>
       </dl>
-      <div class="card-text">Some of the subjects that we'll be discussing are:</div>
-      <ul>
-        <li>What is coming up in PFS and SFS!</li>
-        <li>Care and feeding of GMs (or all the extra bits to run a convention.)</li>
-        <li>How to approach freelancers and developers at conventions?</li>
-        <li>How do I get involved in writing?</li>
-        <li>How to be involved in RPGs when you don’t want to freelance!</li>
-        <li>How to become a better GM (improv, balancing rules with story, etc)</li>
-        <li>Women in the RPG community</li>
-      </ul>
       <div class="card-text">There will be plenty of time for Q&A at this panel, so come ready to have your mind
         blown!
       </div>
@@ -101,261 +173,291 @@
 <%# Add reminder for donation drive! %>
   <div class="card">
     <div class="card-header">
-      <div class="h5  card-title">Donation Drive for Tubman!</div>
-    </div>
-    <div class="card-body">
-      <div class="card-text">We will be running a supply drive for Tubman again this year! Please bring items as per
-        <a href="https://tubman.org/file_download/b8f9d4f2-c099-4a98-b3f1-ebcb4bea9a5d">Tubman’s General Wish List
-          guide</a>, which includes household supplies and certain non-perishable food items. Visit
-        <a href="https://tubman.org/give-help/ways-to-donate/donate-goods.html?page=1">Tubman’s donation page</a> for
-        additional details on what their organization is looking for. Each donation will receive a ‘star’ that will
-        have in-game benefits during SkålCon! In addition, you can request a donation receipt for tax purposes if you
-        so choose.
-      </div>
-      <div class="card-text">There will be in game benefits to bringing your donations, so please be generous!</div>
-    </div>
-  </div>
-
-  <hr>
-
-
-  <div class="card">
-    <div class="card-header">
-      <div class="h5 card-title">Ticketing and Mustering</div>
+      <div class="h5 card-title">Requesting Physical Donations at <%= @event.name %>!</div>
     </div>
     <div class="card-body">
       <div class="card-text">
-        This year we will be trying something new in regards to tickets... as in we will have them!
-      </div>
-      <div class="card-text">
-        When you check in, you will receive a packet with your schedule, your badge, and your tickets!
-      </div>
-      <div clas="card-text">
-        <b>Please see the musterers prior to sitting down a table.</b> These volunteers who will
-        balance the tables to try and make sure that everyone who has a ticket gets a seat at a sub-tier
-        appropriate table.
-      </div>
-      <div class="card-text">
-        If you do not have a ticket for a session, or need to change sessions, please see Headquarters.
-        HQ personnel will be glad to help you find a new table. Please do have an idea of what you would like to play,
-        so that HQ can more quickly assist you. Also, please turn in tickets you are not planning on using, so that
-        others can have the pleasure of playing that game. Remember, seats are limited, and space is running out fast!
+        <p>Besides attending SkalCon, there are some other ways you can help make this event super
+          successful – physical donations! We accept donations for our auction and raffle – and more importantly, for
+          Tubman! Let’s get some more details so you know what to bring with you to SkalCon!
+        </p>
+        <div><b>Supply Drive for Tubman</b></div>
+
+        <p>We’ll be having a Supply Drive for Tubman, as we do every year. And we do mean supplies – many of the items
+          on
+          <a href="https://tubman.org/file_download/b8f9d4f2-c099-4a98-b3f1-ebcb4bea9a5d">Tubman’s donation wish
+            list</a>
+          are everyday products a family needs, like soaps, snack bags, and diapers.</p>
+
+        <p>Please look at their
+          <a href="https://tubman.org/file_download/b8f9d4f2-c099-4a98-b3f1-ebcb4bea9a5d">official donation wish
+            list</a>
+          and their
+          <a href="https://www.tubman.org/give-help/ways-to-give/donate-goods.html">donation page</a>
+          on their website. Get some items to bring, and we’ll give you some stars for your SkalCon badge!
+          What do the stars get you? In-game benefits! Your GM will know what’s up. 🙂</p>
+
+        <div><b>Auction/Raffle Item Donation</b></div>
+
+        <p>Have some gently-used RPG gear that you don’t want anymore? Happen to have some tickets of some kind you’d
+          like to donate to a good cause? SkalCon can take those off your hands!</p>
+
+        <p>Our auction and raffle is stocked, in part, by attendees donating something cool they think others would
+          like.
+          If you have an item you think fits the bill, email
+          <a href="mailto:contact@skalcon.org">contact@skalcon.org</a>
+          with the details and we’ll be in touch!
+          Item donations are tax deductible as well! Just ask for a donation receipt and we will provide.</p>
       </div>
     </div>
-  </div>
-  <hr>
 
-  <% unless @event.online_sales_end.nil? %>
+    <hr>
+
+
     <div class="card">
       <div class="card-header">
-        <div class="h5 card-title">Online table selection and ticket sales
-          closes: <%= @event.online_sales_end.localtime.to_formatted_s(:long_ordinal) %></div>
+        <div class="h5 card-title">Ticketing and Mustering</div>
       </div>
       <div class="card-body">
         <div class="card-text">
-          After <%= @event.online_sales_end.localtime.to_formatted_s(:long_ordinal) %> you will no longer be able to
-          select or buy session tickets for games. After this time, all ticket sales/selections will happen at HQ,
-          during the event.
+          When you check in, you will receive a packet with your badge and your tickets!
+        </div>
+        <div clas="card-text">
+          <b>Please see the musterers prior to sitting down a table.</b> These volunteers who will
+          balance the tables to try and make sure that everyone who has a ticket gets a seat at a sub-tier
+          appropriate table.
         </div>
         <div class="card-text">
-          <span class="text-danger">Avoid the lines</span> by getting your tickets now, by logging
-          into <%= link_to "#{@event.name}", @event %> as soon
-          as possible. Act quickly, as seats are going fast!
+          If you do not have a ticket for a session, or need to change sessions, please see Headquarters.
+          HQ personnel will be glad to help you find a new table. Please do have an idea of what you would like to play,
+          so that HQ can more quickly assist you. Also, please turn in tickets you are not planning on using, so that
+          others can have the pleasure of playing that game. Remember, seats are limited, and space is running out fast!
         </div>
       </div>
     </div>
     <hr>
-  <% end %>
 
-  <div class="card">
-    <div class="card-header">
-      <div class="h5 card-title">Have a donation for the raffle or silent auction?</div>
+    <% unless @event.online_sales_end.nil? %>
+      <div class="card">
+        <div class="card-header">
+          <div class="h5 card-title">Online table selection and ticket sales
+            closes: <%= @event.online_sales_end.localtime.to_formatted_s(:long_ordinal) %></div>
+        </div>
+        <div class="card-body">
+          <div class="card-text">
+            After <%= @event.online_sales_end.localtime.to_formatted_s(:long_ordinal) %> you will no longer be able to
+            select or buy session tickets for games. After this time, all ticket sales/selections will happen at HQ,
+            during the event.
+          </div>
+          <div class="card-text">
+            <span class="text-danger">Avoid the lines</span> by getting your tickets now, by logging
+            into <%= link_to "#{@event.name}", @event %> as soon
+            as possible. Act quickly, as seats are going fast!
+          </div>
+        </div>
+      </div>
+      <hr>
+    <% end %>
+
+    <div classs="card">
+      <div class="card-header">
+        <div class="h5 card-title">SkålCon the Gathering</div>
+      </div>
+      <div class="card-body">
+        <div><b>Schedule of events</b></div>
+        <ul>
+          <li>Friday
+            <ul>
+              <li>Early Bird Special Chaos draft ~$15 sometime early after the con starts.</li>
+              <li>Last Chance Standard: 6PM $15.</li>
+            </ul>
+          </li>
+          <li>Saturday
+            <ul>
+              <li>8AM registration 9AM start $30 Modern Competitive</li>
+              <li>3 PM registration 4PM start Pauper Rags to Riches $10</li>
+            </ul>
+          </li>
+          <li>Sunday
+            <ul>
+              <li>9AM reg, 10AM start $30 Competitive Legacy</li>
+            </ul>
+        </ul>
+      </div>
     </div>
-    <div class="card-body">
-      <div class="card-text">
-        If you have any items you would like to donate for our Raffle, Silent Auction, or to 10,000 Lakes Gaming itself,
-        please head on over to our <a href="https://goo.gl/forms/Lx4IoUhY3VZXtyVY2">donation form</a>!
+
+    <div class="card">
+      <div class="card-header">
+        <div class="h5 card-title">Your schedule at <%= @event.name %> as
+          of <%= DateTime.now.localtime.to_formatted_s(:long) %>
+        </div>
+        <div class="card-subtitle  mb-2 text-muted">
+          Please see <%= link_to "Your Registration", [@event, @user_event] %> for your up to the minute assignments.
+        </div>
       </div>
-      <div class="card-text">
-        When you are done with that, please contact us at
-        <a href="mailto:contact@10klakesgaming.org?subject=Donation">contact@10klakesgaming.org</a> to arrange a time to
-        drop off your items.
-      </div>
-      <div class="card-text">Thank you!</div>
-    </div>
-  </div>
-  <hr>
+      <div class="card-body">
+        <%
+            @sessions = @event.sessions
+            @sessions = @sessions.sort
 
+            @table_sessions = {}
 
-  <div class="card">
-    <div class="card-header">
-      <div class="h5 card-title">Your schedule at <%= @event.name %> as
-        of <%= DateTime.now.localtime.to_formatted_s(:long) %>
-      </div>
-      <div class="card-subtitle  mb-2 text-muted">
-        Please see <%= link_to "Your Registration", [@event, @user_event] %> for your up to the minute assignments.
-      </div>
-    </div>
-    <div class="card-body">
-      <%
-        @sessions = @event.sessions
-        @sessions = @sessions.sort
+            @sessions.each do |session|
+              @table_sessions[session] = nil
+            end
 
-        @table_sessions = {}
-
-        @sessions.each do |session|
-          @table_sessions[session] = nil
-        end
-
-        @user_event.registration_tables.each do |reg_table|
-          session                  = reg_table.table.session
-          @table_sessions[session] = reg_table
-        end
-        @user_event.game_masters.each do |game_master|
-          session                  = game_master.table.session
-          @table_sessions[session] = game_master
-        end
-      %>
-      <div class="cart-text">
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th scope="col">Session</th>
-            <th scope="col">Time</th>
-            <th scope="col">Scenario</th>
-            <th scope="col">Location</th>
-            <th scope="col">Signup Type</th>
-            <th scope="col">Payment Due?</th>
-          </tr>
-          </thead>
-          <tbody>
-          <% @sessions.each do |session| %>
-            <% selection = @table_sessions[session] %>
+            @user_event.registration_tables.each do |reg_table|
+              session                  = reg_table.table.session
+              @table_sessions[session] = reg_table
+            end
+            @user_event.game_masters.each do |game_master|
+              session                  = game_master.table.session
+              @table_sessions[session] = game_master
+            end
+        %>
+        <div class="cart-text">
+          <table class="table table-striped">
+            <thead>
             <tr>
-              <td><%= session.name %></td>
-              <td><%= session.timeslot %></td>
-              <% if selection.nil? %>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              <% else %>
-                <td><%= selection.table.scenario.long_name %></td>
-                <td>
-                  <%= selection.table.location %>
-                  <% if selection.is_a? GameMaster %>
-                    <% unless selection.table_number.blank? %>
-                      (<%= selection.table_number.strip %>)
-                    <% end %>
-                  <% end %>
-                </td>
-                <% if selection.is_a? RegistrationTable %>
-                  <td>Player</td>
+              <th scope="col">Session</th>
+              <th scope="col">Time</th>
+              <th scope="col">Scenario</th>
+              <th scope="col">Location</th>
+              <th scope="col">Signup Type</th>
+              <th scope="col">Payment Due?</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @sessions.each do |session| %>
+              <% selection = @table_sessions[session] %>
+              <tr>
+                <td><%= session.name %></td>
+                <td><%= session.timeslot %></td>
+                <% if selection.nil? %>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                <% else %>
+                  <td><%= selection.table.scenario.long_name %></td>
                   <td>
-                    <% unless selection.payment_ok? %>
-                      <%= number_to_currency(selection.table.price) %>
+                    <%= selection.table.location %>
+                    <% if selection.is_a? GameMaster %>
+                      <% unless selection.table_number.blank? %>
+                        (<%= selection.table_number.strip %>)
+                      <% end %>
                     <% end %>
                   </td>
-                <% elsif selection.is_a? GameMaster %>
-                  <td>GM</td>
-                  <td></td>
+                  <% if selection.is_a? RegistrationTable %>
+                    <td>Player</td>
+                    <td>
+                      <% unless selection.payment_ok? %>
+                        <%= number_to_currency(selection.table.price) %>
+                      <% end %>
+                    </td>
+                  <% elsif selection.is_a? GameMaster %>
+                    <td>GM</td>
+                    <td></td>
+                  <% end %>
                 <% end %>
-              <% end %>
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
-  <hr>
+    <hr>
 
-  <% if @user_event.gamemaster? %>
+    <% if @user_event.gamemaster? %>
 
-    <div class="card">
-      <div class="card-header">
-        <div class="h5 card-title"><span class="text-danger">If you need to drop a table that you have volunteered to GM, please
+      <div class="card">
+        <div class="card-header">
+          <div class="h5 card-title"><span class="text-danger">If you need to drop a table that you have volunteered to GM, please
           reply to this email requesting to be removed. Convention organizers will attempt to find a replacement for
           you. We apologize for any inconvenience this may cause.</span>
+          </div>
         </div>
       </div>
-    </div>
-    <hr>
+      <hr>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="h5 card-title">Volunteer Information</div>
+        </div>
+        <div class="card-body">
+          <div class="card-text">Please thoroughly read through this section, and the next, even if you have done so
+            before,
+            as several things have changed.
+          </div>
+          <ul class="list-group">
+            <li class="list-group-item">
+              If this is your first time volunteering, these guidelines will help answer your questions and guide
+              you through this important part of Paizo Organized Play.
+            </li>
+            <li class="list-group-item">As a volunteer, you are the eyes, ears, face, and voice of Paizo, 10,000 Lakes
+              Gaming, and Minnesota Paizo Organized Play. We expect each of you to maintain a positive attitude,
+              professional behavior, and good hygiene.
+            </li>
+            <li class="list-group-item">The Player Boon token rolls remain the same. There is a 10% chance per token to
+              receive a boon, and you may stack up to five(5) tokens in a single roll (for a maximum chance of 50%). If
+              you win a boon, you will roll randomly for which boon. HQ staff will ask the player, prior to rolling,
+              which
+              campaign they would like to roll for (ACG, PFS, SFS).
+            </li>
+          </ul>
+        </div>
+      </div>
+      <hr>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="h5 card-title">Game Master Logistics:</div>
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item">GMs will be required to collect tickets from their players. No player should be
+              seated that has not gone through the Musterering. Thank you for understanding.
+            </li>
+            <li class="list-group-item">Each GM is responsible to provide their own maps, miniatures, handouts, and
+              scenario-specific pre-generated characters (if your scenario requires them such as in Serpent's Ire).
+            </li>
+            <li class="list-group-item">Each GM is responsible for having a reliable copy of the scenario they are
+              running. Power outlets are scarce in the room so GMs must have a backup option in case their computer or
+              tablet runs out of power. For safety reasons, we cannot allow extension cords to be run across the room.
+            </li>
+            <li class="list-group-item">Chronicles and session reporting sheets will be provided.</li>
+            <li class="list-group-item">The HQ has a supply of New Player Packets and pre-generated iconic characters
+              (this does not include scenario-specific pre-generated characters, such as in Serpent's Ire).
+            </li>
+            <li class="list-group-item">GM boons can be claimed when turning in your first session reporting sheet.
+            </li>
+            <li class="list-group-item">Do not leave your assigned table until HQ has released or reassigned you. HQ may
+              assign you to additional tasks.
+            </li>
+            <li class="list-group-item">No personal items may be left in the HQ area.</li>
+            <li class="list-group-item"><b>The convention room will be closed to all players 30 minutes prior to the the
+              running of interactive specials for the GM pre-special meeting. All GM’s running the specials are expected
+              to be at these meetings, and should report at least 30 minutes prior to the session start time. Please be
+              on
+              time, as we will be discussing signaling and the like.</b>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <hr>
+    <% end %>
 
     <div class="card">
       <div class="card-header">
-        <div class="h5 card-title">Volunteer Information</div>
+        <div class="h5 card-title">Thank you for making <%= @event.name %> a success!</div>
       </div>
       <div class="card-body">
-        <div class="card-text">Please thoroughly read through this section, and the next, even if you have done so
-          before,
-          as several things have changed.
-        </div>
-        <ul class="list-group">
-          <li class="list-group-item">
-            If this is your first time volunteering, these guidelines will help answer your questions and guide
-            you through this important part of Paizo Organized Play.
-          </li>
-          <li class="list-group-item">As a volunteer, you are the eyes, ears, face, and voice of Paizo, 10,000 Lakes
-            Gaming, and Minnesota Paizo Organized Play. We expect each of you to maintain a positive attitude,
-            professional behavior, and good hygiene.
-          </li>
-          <li class="list-group-item">The Player Boon token rolls remain the same. There is a 10% chance per token to
-            receive a boon, and you may stack up to five(5) tokens in a single roll (for a maximum chance of 50%). If
-            you win a boon, you will roll randomly for which boon. HQ staff will ask the player, prior to rolling, which
-            campaign they would like to roll for (ACG, PFS, SFS).
-          </li>
-        </ul>
+        <div class="card-text">We can't do it without <b>you</b>!</div>
       </div>
-    </div>
-    <hr>
-
-    <div class="card">
-      <div class="card-header">
-        <div class="h5 card-title">Game Master Logistics:</div>
+      <div class="card-footer">
+        <div class="card-text"><%= @event.name %>, 10,000 Lakes Gaming, and Minnesota Paizo Organized Play</div>
       </div>
-      <div class="card-body">
-        <ul class="list-group">
-          <li class="list-group-item">GMs will be required to collect tickets from their players. No player should be
-            seated that has not gone through the Musterering. Thank you for understanding.
-          </li>
-          <li class="list-group-item">Each GM is responsible to provide their own maps, miniatures, handouts, and
-            scenario-specific pre-generated characters (if your scenario requires them such as in Serpent's Ire).
-          </li>
-          <li class="list-group-item">Each GM is responsible for having a reliable copy of the scenario they are
-            running. Power outlets are scarce in the room so GMs must have a backup option in case their computer or
-            tablet runs out of power. For safety reasons, we cannot allow extension cords to be run across the room.
-          </li>
-          <li class="list-group-item">Chronicles and session reporting sheets will be provided.</li>
-          <li class="list-group-item">The HQ has a supply of New Player Packets and pre-generated iconic characters
-            (this does not include scenario-specific pre-generated characters, such as in Serpent's Ire).
-          </li>
-          <li class="list-group-item">GM boons can be claimed when turning in your first session reporting sheet.
-          </li>
-          <li class="list-group-item">Do not leave your assigned table until HQ has released or reassigned you. HQ may
-            assign you to additional tasks.
-          </li>
-          <li class="list-group-item">No personal items may be left in the HQ area.</li>
-          <li class="list-group-item">The convention room will be closed to all players 30 minutes prior to the the
-            running of interactive specials for the GM pre-special meeting. All GM’s running the specials are expected
-            to be at these meetings, and should report at least 30 minutes prior to the session start time. Please be on
-            time, as we will be discussing signaling and the like.
-          </li>
-        </ul>
-      </div>
-    </div>
-    <hr>
-  <% end %>
-
-  <div class="card">
-    <div class="card-header">
-      <div class="h5 card-title">Thank you for making <%= @event.name %> a success!</div>
-    </div>
-    <div class="card-body">
-      <div class="card-text">We can't do it without <b>you</b>!</div>
-    </div>
-    <div class="card-footer">
-      <div class="card-text"><%= @event.name %>, 10,000 Lakes Gaming, and Minnesota Paizo Organized Play</div>
     </div>
   </div>
 </div>
