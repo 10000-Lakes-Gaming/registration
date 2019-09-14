@@ -42,7 +42,7 @@
             <li class="list-group-item  list-group-item-warning">GMs</li>
             <% table.game_masters.sort {|a, b| a <=> b}.each do |gm| %>
               <li class="list-group-item"><%= gm.user_event.user.name %>
-                <% unless gm.table_number.nil? %>
+                <% unless gm.table_number.blank? %>
                   (<%= gm.table_number.strip %>)
                 <% end %>
               </li>
