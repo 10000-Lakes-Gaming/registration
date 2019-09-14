@@ -69,11 +69,12 @@ class RegistrationTable < ActiveRecord::Base
   end
 
   def pfs_number
-    if user_event.user.pfs_number.nil?
-      "DCI##{user_event.user.dci_number}"
-    else
-      user_event.user.pfs_number
+    number = ''
+    number = "#{user_event.user.pfs_number}" unless user_event.user.pfs_number.blank?
+    if number.blank?
+      number = "DCI# #{user_event.user.dci_number}" unless user_event.user.dci_number.blank?
     end
+    number
   end
 
   def registration_number

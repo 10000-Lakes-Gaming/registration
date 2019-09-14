@@ -17,10 +17,10 @@ class User < ActiveRecord::Base
   end
 
   def org_play_number
-    if pfs_number.nil?
+    if pfs_number.blank?
       "DCI# #{dci_number}"
     else
-      "OPF# #{pfs_number}"
+      "#{pfs_number}"
     end
   end
 

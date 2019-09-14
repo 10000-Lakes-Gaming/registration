@@ -10,7 +10,17 @@ json.registrations do
       end
     end
     json.user do
-      json.extract! user_event.user, :id, :name, :email, :pfs_number, :forum_username, :title, :gm_stars, :formal_name, :formal_name_with_stars, :show_stars
+      json.id user_event.user.id
+      json.name user_event.user.name
+      json.email user_event.user.email
+      json.pfs_number user_event.user.pfs_number
+      json.dci_number user_event.user.dci_number
+      json.forum_username user_event.user.forum_username
+      json.title user_event.user.title
+      json.gm_stars user_event.user.gm_stars
+      json.formal_name user_event.user.formal_name
+      json.formal_name_with_stars user_event.user.formal_name_with_stars
+      json.show_stars user_event.user.show_stars
     end
   end
 end
