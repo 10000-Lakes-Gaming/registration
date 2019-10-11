@@ -103,6 +103,10 @@ class Scenario < ActiveRecord::Base
     copy
   end
 
+  def option_label
+    "#{game_system} #{season.to_s} - #{scenario_number.to_s.rjust(2, "0")}: + #{name}"
+  end
+
   def <=>(scenario)
     # HQ precedence
     unless self.headquarters? && scenario.headquarters?

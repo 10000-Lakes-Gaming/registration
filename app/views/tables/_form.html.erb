@@ -18,7 +18,7 @@
       </td>
       <td>
         <%# add default row %>
-        <%= f.select :scenario_id, options_for_select(@scenarios.map { |scenario| [scenario.season.to_s + "-" + scenario.scenario_number.to_s.rjust(2, "0") + ": " + scenario.name, scenario.id] }, @table.scenario_id), { include_blank: true } %>
+        <%= f.select :scenario_id, options_for_select(@scenarios.sort.map { |scenario| [season.option_label, scenario.id] }, @table.scenario_id), { include_blank: true } %>
       </td>
     </tr>
     <% unless @table.game_masters.empty? %>
