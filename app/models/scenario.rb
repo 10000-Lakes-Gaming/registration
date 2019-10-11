@@ -12,9 +12,9 @@ class Scenario < ActiveRecord::Base
       name
     else
       if scenario?
-        "#{game_system} #{season}-#{"%02d" % scenario_number}: #{name}"
+        "#{game_system} #{"%02d" % season}-#{"%02d" % scenario_number}: #{name}"
       elsif quest?
-        "#{game_system} Season #{season} Quests: #{name}"
+        "#{game_system} Season #{"%02d" % season} Quests: #{name}"
       elsif AP?
         "#{game_system} AP #{"%d" % scenario_number}: #{name}"
       else
@@ -41,6 +41,10 @@ class Scenario < ActiveRecord::Base
 
   def quest?
     type_of == 'Quest'
+  end
+
+  def other_system?
+    game_system == 'Other'
   end
 
   # noinspection RubyInstanceMethodNamingConvention
@@ -107,38 +111,20 @@ class Scenario < ActiveRecord::Base
     # HQ precedence
     unless self.headquarters? && scenario.headquarters?
       if self.headquarters?
-        return -1
-      else
         return 1
+      elsif scenario.headquarters?
+        return -1
       end
     end
-
-    game = self.game_system.to_s
-    other_game = scenario.game_system.to_s
-    sorted = game <=> other_game
-
-    if sorted == 0
-      season = self.season.to_s
-      other = scenario.season.to_s
-      sorted = (season <=> other) * -1
-      if sorted == 0
-        my_number = self.scenario_number.to_i
-        other_number = scenario.scenario_number.to_i
-        sorted = my_number <=> other_number
-        if sorted == 0
-          # this may be an issue, as tiers are not easily sortable
-          me = self.tier.to_s
-          you = scenario.tier.to_s
-          sorted = me <=> you
-          if sorted == 0
-            me = self.name.to_s
-            you = scenario.name.to_s
-            sorted = me <=> you
-          end
-        end
+    # sort out "other" to bottom
+    unless self.other_system? && scenario.other_system?
+      if self.other_system?
+        return 1
+      elsif scenario.other_system?
+        return -1
       end
     end
-    sorted
+    long_name <=> scenario.long_name
   end
 
 end

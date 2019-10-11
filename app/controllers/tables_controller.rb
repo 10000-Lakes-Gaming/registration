@@ -3,7 +3,7 @@ class TablesController < ApplicationController
   before_action :get_event, :get_session, :get_scenarios
 
   def get_scenarios
-    @scenarios = Scenario.all.order(:season).order(:scenario_number)
+    @scenarios = Scenario.all
   end
 
   def get_session
@@ -13,7 +13,6 @@ class TablesController < ApplicationController
   def get_event
     @event = Event.find(params[:event_id])
   end
-
 
   def get_gms
     @gms = @table.game_masters
@@ -28,7 +27,7 @@ class TablesController < ApplicationController
   # GET /tables
   # GET /tables.json
   def index
-    @tables = @session.tables.sort {|a,b| a <=> b}
+    @tables = @session.tables.sort { |a, b| a <=> b }
   end
 
   # GET /tables/1
@@ -100,6 +99,7 @@ class TablesController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_table
     @table = Table.find(params[:id])
