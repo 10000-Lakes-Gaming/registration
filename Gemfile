@@ -11,7 +11,7 @@ gem 'rails_12factor'
 
 # Security hole updates
 gem 'rails-html-sanitizer', '~> 1.0.4'
-gem 'loofah', '~> 2.2.1 '
+gem 'loofah', '~> 2.3.1'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
