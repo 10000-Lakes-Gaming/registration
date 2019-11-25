@@ -60,7 +60,11 @@
       <%= f.url_field :gm_volunteer_link %>
     </div>
     <div class="field">
-      <%= f.label :external_url %><br>
+      <%= f.label :tables_reg_offsite, 'Is table registration being handled by external convention?' %><br>
+      <%= f.check_box :tables_reg_offsite %>
+    </div>
+    <div class="field">
+      <%= f.label :external_url, 'URL for external Convention\'s registration site.' %><br>
       <%= f.url_field :external_url %>
     </div>
     <div class="field">

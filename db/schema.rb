@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_14_003040) do
+ActiveRecord::Schema.define(version: 2019_11_25_222913) do
 
   create_table "additional_payments", force: :cascade do |t|
     t.string "category"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 2019_09_14_003040) do
     t.datetime "prereg_ends"
     t.string "gm_volunteer_link"
     t.datetime "online_sales_end"
+    t.boolean "tables_reg_offsite", default: false
   end
 
   create_table "game_masters", force: :cascade do |t|
