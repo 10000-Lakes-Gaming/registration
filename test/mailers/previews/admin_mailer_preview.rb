@@ -4,6 +4,16 @@ class AdminMailerPreview < ActionMailer::Preview
   def cotn_gm_request_preview
 
     @event = Event.first
-    AdminMailer.cotn_gm_request_email(@event)
+    setup_admins
+    setup_users
+    AdminMailer.cotn_gm_request_email(@event, @admins, @users)
+  end
+
+  def setup_users
+    @users = User.all
+  end
+
+  def setup_admins
+    @admins = User.where(admin: true)
   end
 end
