@@ -1,0 +1,29 @@
+<h1>Send Email to GMs</h1>
+
+<%= form_for @message, url: cotn_email_path do |f| %>
+  <fieldset>
+
+    <div class="field">
+      <%= f.label :subject %> <%= f.text_field :subject, size: 60 %>
+    </div>
+    <br>
+
+    <div class="field">
+      <div>Please uncheck the users you do not want to send to:</div>
+      <%= f.collection_check_boxes :email_list, @users, :email, :name, name: User.all.map(&:id) do |b| %>
+        <div>
+          <%= b.check_box(checked: true) %>
+          <%= b.label %>
+        </div>
+      <% end %>
+    </div>
+
+  </fieldset>
+  <hr>
+  <fieldset>
+    <div class="field">
+      <%= f.submit "Send Message", :class => 'btn btn-warning' %>
+      <%= link_to 'Cancel', welcome_index_path, :class => 'btn btn-success' %>
+    </div>
+  </fieldset>
+<% end %>

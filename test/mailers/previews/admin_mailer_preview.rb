@@ -6,9 +6,12 @@ class AdminMailerPreview < ActionMailer::Preview
     @event = Event.first
     setup_admins
     setup_users
-    AdminMailer.cotn_gm_request_email(@event, @admins, @users)
+    @message = Message.new
+    @message.email_list = @users.pluck(:email)
+    AdminMailer.cotn_gm_request_email(@message)
   end
 
+  private
   def setup_users
     @users = User.all
   end

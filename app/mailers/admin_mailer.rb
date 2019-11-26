@@ -1,10 +1,10 @@
 class AdminMailer < ApplicationMailer
 
-  def cotn_gm_request_email(event, admins, emails)
-    @event = event
+  def cotn_gm_request_email(message)
 
-    mail(subject: "Please volunteer to GM for #{@event.name}", to: admins.pluck(:email), bcc: emails.pluck(:email)) do |format|
+    mail(subject: message.subject, to:  ENV["GMAIL_SMTP_USERNAME"], bcc: message.email_list) do |format|
       format.html
+      # format.text
     end
   end
 end
