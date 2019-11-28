@@ -53,6 +53,11 @@ Rails.application.routes.draw do
   post 'contact', to: 'contact#create'
   resources :contact
 
+
+  get 'cotn_email', to: 'cotn_email#new', as: 'cotn_email'
+  post 'cotn_email', to: 'cotn_email#create'
+  resources :cotn_email
+
   get 'admin_email', to: 'admin_email#new', as: 'admin_email'
   post 'contact', to: 'admin_email#create'
   resources :admin_email
