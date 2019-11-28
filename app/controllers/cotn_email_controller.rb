@@ -2,12 +2,13 @@ class CotnEmailController < ApplicationController
   before_action :set_admins, :set_users
 
   def new
+    return unless restrict_to_admin
     @message = Message.new
     @message.subject = "Please volunteer to GM for MN-POP at Con of the North 2020"
   end
 
   def create
-
+    return unless restrict_to_admin
     @message = Message.new(message_params)
 
     AdminMailer.cotn_gm_request_email(@message).deliver_now
@@ -25,7 +26,7 @@ class CotnEmailController < ApplicationController
   end
 
   def message_params
-    params.require(:message).permit(:email_list)
+    params.require(:message).permit!
   end
 
 

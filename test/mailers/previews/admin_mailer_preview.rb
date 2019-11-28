@@ -3,7 +3,6 @@ class AdminMailerPreview < ActionMailer::Preview
 
   def cotn_gm_request_preview
 
-    @event = Event.first
     setup_admins
     setup_users
     @message = Message.new

@@ -10,6 +10,7 @@
 
     <div class="field">
       <div>Please uncheck the users you do not want to send to:</div>
+      <%#= f.collection_check_boxes :email_list, @users, :email, :name, name: User.all.map(&:id) do |b| %>
       <%= f.collection_check_boxes :email_list, @users, :email, :name, name: User.all.map(&:id) do |b| %>
         <div>
           <%= b.check_box(checked: true) %>
