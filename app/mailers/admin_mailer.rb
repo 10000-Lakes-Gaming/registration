@@ -4,7 +4,7 @@ class AdminMailer < ApplicationMailer
 
     mail(subject: message.subject, to:  ENV["GMAIL_SMTP_USERNAME"], bcc: message.email_list) do |format|
       format.html
-      # format.text
+      format.text
     end
   end
 end
