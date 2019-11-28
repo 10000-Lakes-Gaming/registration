@@ -23,7 +23,7 @@ class CotnEmailController < ApplicationController
   end
 
   def set_users
-    @users = User.all
+    @users = User.all.sort
   end
 
   def message_params
