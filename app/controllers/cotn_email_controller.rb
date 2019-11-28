@@ -10,6 +10,8 @@ class CotnEmailController < ApplicationController
   def create
     return unless restrict_to_admin
     @message = Message.new(message_params)
+    # defense, for a single real test
+    @message.email_list = ['brown285@umn.edu']
 
     AdminMailer.cotn_gm_request_email(@message).deliver_now
     redirect_to welcome_index_path, notice: "Your messages has been sent."
