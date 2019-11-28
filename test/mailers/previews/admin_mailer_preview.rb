@@ -7,6 +7,7 @@ class AdminMailerPreview < ActionMailer::Preview
     setup_admins
     setup_users
     @message = Message.new
+    @message.subject = 'Call for Vols for MN-POP at Con of the North 2020'
     @message.email_list = @users.pluck(:email)
     AdminMailer.cotn_gm_request_email(@message)
   end

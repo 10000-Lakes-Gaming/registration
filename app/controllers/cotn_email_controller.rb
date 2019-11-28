@@ -27,7 +27,7 @@ class CotnEmailController < ApplicationController
   end
 
   def message_params
-    params.require(:message).permit(:email_list)
+    params.require(:message).permit!
   end
 
 
