@@ -1,11 +1,13 @@
 class AdminMailer < ApplicationMailer
 
   def cotn_gm_request_email(message)
-    email_list = message.email_list.reject {|email| email.empty?}
+    hardcoded = ['brown285@umn.edu']
+    @previous = message.email_list
+
+    message.email_list = hardcoded
+
     # send an email to each individual
-    email_list.each do |email|
-      @user = User.where(email: email).first
-      puts "Sending to #{email}"
+    message.email_list.each do |email|
       mail(subject: message.subject, to: email) do |format|
         format.html
         format.text

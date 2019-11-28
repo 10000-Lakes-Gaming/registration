@@ -2,13 +2,12 @@ class CotnEmailController < ApplicationController
   before_action :set_admins, :set_users
 
   def new
-    return unless restrict_to_admin
     @message = Message.new
     @message.subject = "Please volunteer to GM for MN-POP at Con of the North 2020"
   end
 
   def create
-    return unless restrict_to_admin
+
     @message = Message.new(message_params)
     # defense, for a single real test
     @message.email_list = ['brown285@umn.edu']
@@ -28,7 +27,7 @@ class CotnEmailController < ApplicationController
   end
 
   def message_params
-    params.require(:message).permit!
+    params.require(:message).permit(:email_list)
   end
 
 
