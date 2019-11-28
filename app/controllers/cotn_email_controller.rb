@@ -3,7 +3,7 @@ class CotnEmailController < ApplicationController
 
   def new
     @message = Message.new
-    @message.subject = "Please volunteer to GM for MN-POP at Con of the North 2020"
+    @message.subject = "Call for Vols for MN-POP at Con of the North 2020"
   end
 
   def create
