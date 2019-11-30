@@ -12,7 +12,7 @@ class CotnEmailController < ApplicationController
     @message = Message.new(message_params)
     # defense, for a single real test
 
-    AdminMailer.cotn_gm_request_email(@message).deliver_now
+    AdminMailer.cotn_gm_request_email(@message).deliver
     redirect_to welcome_index_path, notice: "Your messages has been sent."
   end
 
