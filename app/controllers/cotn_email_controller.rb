@@ -11,8 +11,16 @@ class CotnEmailController < ApplicationController
 
     @message = Message.new(message_params)
     # defense, for a single real test
+    puts "Email list: #{@message.email_list.to_s}"
+    @message.email_list.reject { |email| email.empty? }.each do |email|
+      user = User.where(email: email).first
+      @message.user = @user
+      @message.email = email
+      puts "Sending to #{user.formal_name} with email #{email}"
+      puts "Another check.... #{user.email}"
+      AdminMailer.cotn_gm_request_email(@message).deliver
+    end
 
-    AdminMailer.cotn_gm_request_email(@message).deliver
     redirect_to welcome_index_path, notice: "Your messages has been sent."
   end
 
