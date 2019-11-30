@@ -8,7 +8,7 @@ class AdminMailer < ApplicationMailer
       puts "Sending to #{@user.formal_name} with email #{email}"
       puts "Another check.... #{@user.email}"
 
-      mail(subject: message.subject, to: email) do |format|
+      mail(subject: message.subject, to: email, cc: ENV['GMAIL_SMTP_USERNAME']) do |format|
         format.html
         format.text
       end
