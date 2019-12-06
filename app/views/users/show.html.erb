@@ -27,6 +27,11 @@
   <%= @user.forum_username %>
 </p>
 
+<p>
+  <strong>I opted out of emails:</strong> <%= yes_no(@user.opt_out) %>
+<div class="info">(Note: you will still get emails for GM assignments and receipts)</div>
+</p>
+
 <p><strong>GM Stars:</strong> <span class="lead text-warning"><%= @user.show_stars %></span></p>
 
 <% if @user.venture_officer? %>
@@ -36,7 +41,7 @@
 <% if admin? %>
   <p>
     <strong>Admin:</strong>
-    <%= @user.admin %>
+    <%= yes_no(@user.admin) %>
   </p>
 <% end %>
 

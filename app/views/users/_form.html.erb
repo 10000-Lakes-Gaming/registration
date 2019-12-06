@@ -57,6 +57,13 @@
         <td><%= f.label :gm_stars %></td>
         <td><%= f.select :gm_stars, %w(0 1 2 3 4 5) %></td>
       </tr>
+      <tr>
+        <td>
+          <%= f.label :opt_out, 'I do not want emails from this application.' %>
+          <div class="info">(Note: you will still get emails for GM assignments and receipts)</div>
+        </td>
+        <td><%= f.check_box :opt_out %></td>
+      </tr>
       <% if admin? %>
           <tr>
             <td><%= f.label :venture_officer %></td>
