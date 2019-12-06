@@ -1,0 +1,6 @@
+  <% if @message.user %>
+To opt out of emails (except for payment receipts and GM assignments), please go to <%= edit_user_url(@message.user) %>, click and click the checkbox next to "I do not want emails from this application.", and then "save".
+  <% else %>
+To opt out of emails (except for payment receipts and GM assignments), please go to <%=  welcome_index_url %>, click on "My Profile", scroll to the bottom, then click "Edit", and click the checkbox next to "I do not want emails from this application.", and then "save".
+  <% end %>
+
