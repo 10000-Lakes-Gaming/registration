@@ -14,11 +14,11 @@ class AdminEmailController < ApplicationController
       logger.info "Found email list => " + email_list
       emails = []
       email_list.split.each do |email|
-        logger.info "adding email " + email
-        emails.push email
+        user = User.where(email: email).first
+        emails.push email unless (email.blank? || user.opt_out?)
       end
 
-      ContactMailer.admin_email(@message, emails).deliver_now
+      ContactMailer.admin_email(@message, emails).deliver
       redirect_to welcome_index_path, notice: "Your messages has been sent."
     else
       flash[:alert] = "An error occurred while delivering this message."
