@@ -20,34 +20,53 @@
   </thead>
 
   <tbody>
+  <% total_number_tables = 0 %>
+  <% total_gms_needed = 0 %>
+  <% total_gms_assigned = 0 %>
+  <% total_players_needed = 0 %>
+  <% total_players_signed_up = 0 %>
   <% @tables_by_scenario.each do |scenario, tables| %>
-      <tr>
-        <td><%= scenario.long_name %></td>
-        <% table_count = 0; %>
-        <% gm_needed_count = 0; %>
-        <% gm_assigned_count = 0; %>
-        <% gm_remaining_count = 0; %>
-        <% player_needed_count = 0; %>
-        <% player_assigned_count = 0; %>
-        <% player_remaining_count = 0; %>
-        <% tables.each do |table| %>
-            <% table_count += table.gms_needed %>
-            <% gm_needed_count += table.gms_needed %>
-            <% gm_assigned_count += table.current_gms %>
-            <% gm_remaining_count += table.gms_short %>
-            <% player_needed_count += table.max_players %>
-            <% player_assigned_count += table.current_registrations %>
-            <% player_remaining_count += table.remaining_seats %>
-        <% end %>
-        <td><%= table_count %></td>
-        <td><%= gm_needed_count %></td>
-        <td><%= gm_assigned_count %></td>
-        <td><%= gm_remaining_count %></td>
-        <td><%= player_needed_count %></td>
-        <td><%= player_assigned_count %></td>
-        <td><%= player_remaining_count %></td>
-      </tr>
+    <tr>
+      <td><%= scenario.long_name %></td>
+      <% table_count = 0; %>
+      <% gm_needed_count = 0; %>
+      <% gm_assigned_count = 0; %>
+      <% gm_remaining_count = 0; %>
+      <% player_needed_count = 0; %>
+      <% player_assigned_count = 0; %>
+      <% player_remaining_count = 0; %>
+      <% tables.each do |table| %>
+        <% table_count += table.gms_needed %>
+        <% gm_needed_count += table.gms_needed %>
+        <% gm_assigned_count += table.current_gms %>
+        <% gm_remaining_count += table.gms_short %>
+        <% player_needed_count += table.max_players %>
+        <% player_assigned_count += table.current_registrations %>
+        <% player_remaining_count += table.remaining_seats %>
+      <% end %>
+      <% total_number_tables += table_count %>
+      <% total_gms_needed += gm_needed_count %>
+      <% total_gms_assigned +=  gm_assigned_count %>
+      <% total_players_needed += player_needed_count %>
+      <% total_players_signed_up += player_assigned_count %>
+      <td><%= table_count %></td>
+      <td><%= gm_needed_count %></td>
+      <td><%= gm_assigned_count %></td>
+      <td><%= gm_remaining_count %></td>
+      <td><%= player_needed_count %></td>
+      <td><%= player_assigned_count %></td>
+      <td><%= player_remaining_count %></td>
+    </tr>
   <% end %>
+  <tr>
+    <td>Totals</td>
+    <td><%= total_number_tables %></td>
+    <td><%= total_gms_needed %></td>
+    <td><%= total_gms_assigned %></td>
+    <td><%= total_gms_needed - total_gms_assigned %></td>
+    <td><%= total_players_needed %></td>
+    <td><%= total_players_signed_up %></td>
+    <td><%= total_players_needed - total_players_signed_up %></td>
+  </tr>
   </tbody>
-
 </table>
