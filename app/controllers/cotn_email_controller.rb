@@ -1,5 +1,5 @@
 class CotnEmailController < ApplicationController
-  before_action :set_admins, :set_users
+  before_action :set_users
 
   def new
     @message = Message.new
@@ -14,11 +14,15 @@ class CotnEmailController < ApplicationController
     puts "Email list: #{@message.email_list.to_s}"
     @message.email_list.reject { |email| email.empty? }.each do |email|
       user = User.where(email: email).first
-      @message.user = @user
-      @message.email = email
-      puts "Sending to #{user.formal_name} with email #{email}"
-      puts "Another check.... #{user.email}"
-      AdminMailer.cotn_gm_request_email(@message).deliver
+      if user.opt_out?
+        puts "Not emailing #{user.formal_name} as they have opted out of emails."
+      else
+        @message.user = @user
+        @message.email = email
+        puts "Sending to #{user.formal_name} with email #{email}"
+        puts "Another check.... #{user.email}"
+        AdminMailer.cotn_gm_request_email(@message).deliver
+      end
     end
 
     redirect_to welcome_index_path, notice: "Your messages has been sent."
@@ -26,12 +30,8 @@ class CotnEmailController < ApplicationController
 
   private
 
-  def set_admins
-    @admins = User.where(admin: true)
-  end
-
   def set_users
-    @users = User.all.sort
+    @users = User.where(opt_out: false).sort
   end
 
   def message_params

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_02_184626) do
+ActiveRecord::Schema.define(version: 2019_12_08_202842) do
 
   create_table "additional_payments", force: :cascade do |t|
     t.string "category"
@@ -164,7 +164,7 @@ ActiveRecord::Schema.define(version: 2019_12_02_184626) do
     t.boolean "venture_officer"
     t.string "title"
     t.integer "dci_number"
-    t.boolean "opt_out"
+    t.boolean "opt_out", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
