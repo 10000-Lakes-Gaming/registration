@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :dci_number, unless: :dci_number_blank?
   validates :name, :email, :presence => true
   validates :title, :presence => true, if: :venture_officer?
+  # TODO: remove title if not checked?
+  # TODO: Add validation that name is 2 words, min
   validate :pfs_or_dci_number_exists
 
   def pfs_or_dci_number_exists
