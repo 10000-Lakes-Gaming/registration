@@ -15,7 +15,7 @@
   <% if @scenario.author.present? %>
     <div>by <%= @scenario.author %></div>
   <% end %>
-  <%= render partial: 'events/table_badges', locals: {table: @table} %>
+  <%= render partial: 'events/table_badges', locals: { table: @table } %>
 </div>
 
 
@@ -26,9 +26,9 @@
   </p>
   <button data-toggle="collapse" data-target="#players" class="btn btn-info">Current Players</button>
   <% if event_host? %>
-      <% if @table.registration_tables.size < @table.max_players %>
-          <%= button_to "Add Player", new_event_session_table_registration_table_path(@event, @session, @table), method: :get, :class => "btn btn-warning" %>
-      <% end %>
+    <% if @table.registration_tables.size < @table.max_players %>
+      <%= button_to "Add Player", new_event_session_table_registration_table_path(@event, @session, @table), method: :get, :class => "btn btn-warning" %>
+    <% end %>
   <% end %>
   <div id="players" class="collapse">
     <%#  header row %>
@@ -37,19 +37,19 @@
       <div class="col-md-3 label label-default">Email</div>
       <div class="col-md-2 label label-default">PFS Number</div>
       <% if event_host? %>
-          <div class="col-md-4 label label-default">Host Functions</div>
+        <div class="col-md-4 label label-default">Host Functions</div>
       <% end %>
     </div>
     <% @table.registration_tables.each do |reg_table| %>
-        <% player = reg_table.user_event.user %>
-        <div class="row">
-          <div class="col-md-2"><%= player.name %></div>
-          <div class="col-md-3"><%= player.email %></div>
-          <div class="col-md-2"><%= player.pfs_number %></div>
-          <% if event_host? %>
-              <div class="col-md-2"><%= button_to 'Remove from Table', [@event, @session, @table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove #{player.long_name} from #{@scenario.long_name}?"}, :class => "btn btn-danger" %></div>
-          <% end %>
-        </div>
+      <% player = reg_table.user_event.user %>
+      <div class="row">
+        <div class="col-md-2"><%= player.name %></div>
+        <div class="col-md-3"><%= player.email %></div>
+        <div class="col-md-2"><%= player.pfs_number %></div>
+        <% if event_host? %>
+          <div class="col-md-2"><%= button_to 'Remove from Table', [@event, @session, @table, reg_table], method: :delete, data: { confirm: "Are you sure you want to remove #{player.long_name} from #{@scenario.long_name}?" }, :class => "btn btn-danger" %></div>
+        <% end %>
+      </div>
     <% end %>
   </div>
 </div>
@@ -68,9 +68,9 @@
   <div>
     <button data-toggle="collapse" data-target="#gamemasters" class="btn btn-info">Current Game Masters</button>
     <% if event_host? %>
-        <% if @table.game_masters.size < @table.gms_needed %>
-            <%= button_to "Add GM", new_event_session_table_game_master_path(@event, @session, @table), method: :get, :class => "btn btn-warning" %>
-        <% end %>
+      <% if @table.game_masters.size < @table.gms_needed %>
+        <%= button_to "Add GM", new_event_session_table_game_master_path(@event, @session, @table), method: :get, :class => "btn btn-warning" %>
+      <% end %>
     <% end %>
   </div>
   <div id="gamemasters" class="collapse">
@@ -80,28 +80,29 @@
       <div class="col-md-3 label label-default">Email</div>
       <div class="col-md-2 label label-default">PFS Number</div>
       <% if event_host? %>
-          <div class="col-md-2 label label-default">Host Functions</div>
+        <div class="col-md-2 label label-default">Host Functions</div>
       <% end %>
     </div>
     <% @table.game_masters.each do |game_master| %>
-        <% gm = game_master.user_event.user %>
-        <div class="row">
-          <div class="col-md-2"><%= gm.name %></div>
-          <div class="col-md-3"><%= gm.email %></div>
-          <div class="col-md-2"><%= gm.pfs_number %></div>
-          <% if event_host? %>
-              <div class="col-md-2"><%= button_to 'Remove from Table', [@event, @session, @table, game_master], method: :delete, data: {confirm: "Are you sure you want to remove #{gm.long_name} as a GM from #{@scenario.long_name}?"}, :class => "btn btn-danger" %></div>
-          <% end %>
-        </div>
+      <% gm = game_master.user_event.user %>
+      <div class="row">
+        <div class="col-md-2"><%= gm.name %></div>
+        <div class="col-md-3"><%= gm.email %></div>
+        <div class="col-md-2"><%= gm.pfs_number %></div>
+        <% if event_host? %>
+              
+          <div class="col-md-2"><%= button_to 'Remove from Table', [@event, @session, @table, game_master], method: :delete, data: { confirm: "Are you sure you want to remove #{gm.long_name} as a GM from #{@scenario.long_name}?" }, :class => "btn btn-danger" %></div>
+        <% end %>
+      </div>
     <% end %>
   </div>
 </div>
 
 <hr>
 <% if event_host? %>
-    <%= button_to 'Edit this table', edit_event_session_table_path(@event, @session, @table),
-                  method: :get, :class => "btn btn-primary" %>
-    <%= button_to 'Back', event_session_tables_path, method: :get, :class => "btn btn-success" %>
+  <%= button_to 'Edit this table', edit_event_session_table_path(@event, @session, @table),
+                method: :get, :class => "btn btn-primary" %>
+  <%= button_to 'Back', event_session_tables_path, method: :get, :class => "btn btn-success" %>
 <% else %>
   <%= button_to 'Back', event_path, method: :get, :class => "btn btn-success" %>
 <% end %>
