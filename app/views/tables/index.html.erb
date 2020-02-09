@@ -60,13 +60,17 @@
       <td class="text-center"><%= table.game_masters.size %>/<%= table.gms_needed %></td>
       <td>
         <% table.game_masters.each do |gm| %>
-          <div><%= gm.user_event.user.long_name %></div>
+          <% if event_host? %>
+            <%= button_to "Edit #{gm.user_event.user.long_name}",edit_event_session_table_game_master_path(@event, @session, table, gm), method: :get, :class => "btn btn-primary" %>
+          <% else %>
+            <div><%= gm.user_event.user.long_name %></div>
+          <% end %>
         <% end %>
       </td>
       <td><%= link_to 'Show', [@event, @session, table], :class => 'btn btn-info' %>
         <% if admin? %>
           <%= link_to 'Edit', edit_event_session_table_path(@event, @session, table), :class => 'btn btn-primary' %>
-          <%= link_to 'Destroy', [@event, @session, table], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %>
+          <%= link_to 'Destroy', [@event, @session, table], method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %>
         <% end %>
       </td>
     </tr>
