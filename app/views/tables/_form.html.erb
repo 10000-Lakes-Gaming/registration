@@ -17,32 +17,6 @@
         <%= f.label :scenario_id %>
       </td>
       <td>
-        <table class="table">
-          <thead>
-          <tr>
-            <th>unsorted</th>
-            <th>sorted</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>
-              <ul>
-              <% @scenarios.each do |scenario| %>
-              <li><%= scenario.long_name %></li>
-              <% end %>
-              </ul>
-            </td>
-            <td>
-              <ul>
-                <% @scenarios.sort.each do |scenario| %>
-                  <li><%= scenario.long_name %></li>
-                <% end %>
-              </ul>
-            </td>
-          </tr>
-          </tbody>
-        </table>
         <%# add default row %>
         <%= f.select :scenario_id, options_for_select(@scenarios.map { |scenario| [scenario.long_name, scenario.id] }, @table.scenario_id), { include_blank: true } %>
       </td>
