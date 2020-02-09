@@ -117,8 +117,8 @@ class GameMastersController < ApplicationController
     prevent_non_admin
     respond_to do |format|
       if @game_master.update(game_master_params)
-        format.html {redirect_to [@event, @session, @table, @game_master], notice: 'Game master was successfully updated.'}
-        format.json {render :show, status: :ok, location: [@event, @session, @table, @game_master]}
+        format.html {redirect_to [@event, @session, @table], notice: 'Game master was successfully updated.'}
+        format.json {render :show, status: :ok, location: [@event, @session, @table]}
       else
         format.html {render :edit}
         format.json {render json: @game_master.errors, status: :unprocessable_entity}

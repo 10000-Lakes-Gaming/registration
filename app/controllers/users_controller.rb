@@ -49,6 +49,8 @@ class UsersController < ApplicationController
     prevent_non_admin
     @user = User.new(user_params)
 
+    Rails.logger.info "I am saving user #{@user}"
+
     respond_to do |format|
       if @user.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }
