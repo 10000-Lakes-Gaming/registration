@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_08_202842) do
+ActiveRecord::Schema.define(version: 2020_02_13_200640) do
 
   create_table "additional_payments", force: :cascade do |t|
     t.string "category"
@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(version: 2019_12_08_202842) do
     t.boolean "retired", default: false
     t.string "game_system", default: "PFS"
     t.boolean "evergreen"
+    t.string "catalog_number"
   end
 
   create_table "sessions", force: :cascade do |t|

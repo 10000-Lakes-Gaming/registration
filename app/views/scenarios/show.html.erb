@@ -3,25 +3,28 @@
 <div class="well">
   <h4><%= @scenario.long_name %></h4>
   <div>
+    <% unless @scenario.catalog_number.nil? %>
+    <div><b>Catalog Number: </b> <%= @scenario.catalog_number %></div>
+    <% end %>
     <div><b>Type:</b>  <%= @scenario.type_of %></div>
     <% if @scenario.evergreen? %>
-        <div class="text-success">This scenario is <%= @scenario.replayable_display %>.</div>
+      <div class="text-success">This scenario is <%= @scenario.replayable_display %>.</div>
     <% end %>
     <% if @scenario.pregen_only? %>
-        <div class="text-primary">This scenario is pregen-only.</div>
+      <div class="text-primary">This scenario is pregen-only.</div>
     <% end %>
     <% if @scenario.hard_mode? %>
-        <div class="text-warning">This scenario has a hard mode.</div>
+      <div class="text-warning">This scenario has a hard mode.</div>
     <% end %>
     <% if @scenario.retired? %>
-        <div class="text-danger">This scenario is retired.</div>
+      <div class="text-danger">This scenario is retired.</div>
     <% end %>
     <hr>
     <div style="white-space: pre-wrap;"><%= @scenario.description %></div>
     <div><strong>Written by:</strong> <%= @scenario.author %></div>
     <div>
       <% unless @scenario.paizo_url.nil? %>
-          <a href="<%= @scenario.paizo_url %>" target="_blank">Click to see on Paizo's site</a>.
+        <a href="<%= @scenario.paizo_url %>" target="_blank">Click to see on Paizo's site</a>.
       <% end %>
     </div>
   </div>
@@ -30,7 +33,7 @@
 
 
 <% if admin? %>
-    <%= link_to 'Edit', edit_scenario_path(@scenario), :class => 'btn btn-primary' %>
+  <%= link_to 'Edit', edit_scenario_path(@scenario), :class => 'btn btn-primary' %>
 <% end %>
 <%= link_to 'Back', scenarios_path, :class => 'btn btn-success' %>
 

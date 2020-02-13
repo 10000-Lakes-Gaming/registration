@@ -52,6 +52,9 @@
                 <h4 class="modal-header"><%= scenario.long_name %></h4>
               </div>
               <div class="modal-body">
+                <% unless @scenario.catalog_number.nil? %>
+                  <div><b>Catalog Number: </b> <%= @scenario.catalog_number %></div>
+                <% end %>
                 <div><b>Type:</b>  <%= scenario.type_of %></div>
                 <hr>
                 <div style="white-space: pre-wrap;"><%= scenario.description %></div>

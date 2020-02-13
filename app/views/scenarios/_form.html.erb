@@ -1,41 +1,45 @@
 <%= form_for(@scenario) do |f| %>
-    <% if @scenario.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@scenario.errors.count, "error") %> prohibited this scenario from being saved:</h2>
+  <% if @scenario.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@scenario.errors.count, "error") %> prohibited this scenario from being saved:</h2>
 
-          <ul>
-            <% @scenario.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
+      <ul>
+        <% @scenario.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-    <div class="field">
-      <%= f.label :game_system %><br>
-      <%= f.select :game_system, %w(PFS SFS Playtest PFS2 ACG Other) %>
-    </div>
+  <div class="field">
+    <%= f.label :game_system %><br>
+    <%= f.select :game_system, %w(PFS SFS Playtest PFS2 ACG Other) %>
+  </div>
 
-    <div class="field">
-      <%= f.label :type_of %><br>
-      <%= f.select :type_of, ['Scenario', 'Quest', 'Module', 'Adventure Path', 'ACG', 'Other'] %>
-    </div>
-    <div class="field">
-      <%= f.label :season %><br>
-      <%= f.number_field :season %>
-    </div>
-    <div class="field">
-      <%= f.label :scenario_number %><br>
-      <%= f.number_field :scenario_number %>
-    </div>
-    <div class="field">
-      <%= f.label :name %><br>
-      <%= f.text_field :name %>
-    </div>
+  <div class="field">
+    <%= f.label :type_of %><br>
+    <%= f.select :type_of, ['Scenario', 'Quest', 'Module', 'Adventure Path', 'ACG', 'Other'] %>
+  </div>
+  <div class="field">
+    <%= f.label :season %><br>
+    <%= f.number_field :season %>
+  </div>
+  <div class="field">
+    <%= f.label :scenario_number %><br>
+    <%= f.number_field :scenario_number %>
+  </div>
+  <div class="field">
+    <%= f.label :catalog_number %><br>
+    <%= f.text_field :catalog_number %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
 
-    <div class="field">
-      <%= f.label :tier %><br>
-      <%= f.select :tier, %w(1 1-2 1-3 1-4 1-5 1-6 1-7 1-11 1-15 1-19
+  <div class="field">
+    <%= f.label :tier %><br>
+    <%= f.select :tier, %w(1 1-2 1-3 1-4 1-5 1-6 1-7 1-11 1-15 1-19
                              2 2-4
                              3 3-4 3-5 3-6 3-7
                              4 4-5 4-6
@@ -54,37 +58,40 @@
                              17 17-18 17-19
                              18 18-19 18-20
                              19 19-20
-                             ACG HQ Overseer) , :include_blank => true %>
-    </div>
+                             ACG HQ Overseer), :include_blank => true %>
+  </div>
 
 
-    <div class="field">
-      <%= f.label :description %><br>
-      <%= f.text_area :description, size: "70x15" %>
-    </div>
-    <div class="field">
-      <%= f.label :author %><br>
-      <%= f.text_field :author %>
-    </div>
-    <div class="field">
-      <%= f.label :paizo_url %><br>
-      <%= f.text_field :paizo_url %>
-    </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description, size: "70x15" %>
+  </div>
 
-    <div class="field">
-      <%= f.label :evergreen %>
-      <%= f.check_box :evergreen %>
-    </div>
-    <div class="field">
-      <%= f.label :hard_mode %> <%= f.check_box :hard_mode %>
-    </div>
-    <div class="field">
-      <%= f.label :pregen_only, 'Pregens Only' %> <%= f.check_box :pregen_only %>
-    </div>
-    <div class="field">
-      <%= f.label :retired, 'Retired' %> <%= f.check_box :retired %>
-    </div>
-    <div class="actions">
-      <%= f.submit :class => 'btn btn-primary' %>
-    </div>
+  <div class="field">
+    <%= f.label :author %><br>
+    <%= f.text_field :author %>
+  </div>
+
+  <div class="field">
+    <%= f.label :paizo_url %><br>
+    <%= f.text_field :paizo_url %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :evergreen %>
+    <%= f.check_box :evergreen %>
+  </div>
+  <div class="field">
+    <%= f.label :hard_mode %> <%= f.check_box :hard_mode %>
+  </div>
+  <div class="field">
+    <%= f.label :pregen_only, 'Pregens Only' %> <%= f.check_box :pregen_only %>
+  </div>
+  <div class="field">
+    <%= f.label :retired, 'Retired' %> <%= f.check_box :retired %>
+  </div>
+  <div class="actions">
+    <%= f.submit :class => 'btn btn-primary' %>
+  </div>
 <% end %>
