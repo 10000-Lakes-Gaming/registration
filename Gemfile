@@ -7,7 +7,7 @@ ruby '~> 2.6.5'
 
 gem 'rails_12factor'
 
-  gem 'rails', '~> 5.2.4'
+gem 'rails', '~> 5.2.4'
 
 # Security hole updates
 # gem 'rails-html-sanitizer', '~> 1.3.0'

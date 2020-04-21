@@ -78,12 +78,12 @@ class Scenario < ActiveRecord::Base
     end
   end
 
-  def self.to_csv ()
+  def self.to_csv (scenario_list)
     attributes = %w{game_system season number name tier description author type hard_mode pregen_only retired replayable url}
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
-      all.each do |scenario|
+      scenario_list.each do |scenario|
         csv << [scenario.game_system, scenario.season, scenario.scenario_number, scenario.name, scenario.tier, scenario.description, scenario.author, scenario.type_of, scenario.hard_mode, scenario.pregen_only, scenario.retired, scenario.evergreen, scenario.paizo_url]
       end
     end

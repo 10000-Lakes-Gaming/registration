@@ -21,7 +21,7 @@ class ScenariosController < ApplicationController
         render :index
       }
       format.csv {
-        send_data @scenarios.to_csv, filename: "all_scenarios.csv"
+        send_data Scenario.to_csv(@scenarios), filename: "all_scenarios.csv"
       }
     end
   end

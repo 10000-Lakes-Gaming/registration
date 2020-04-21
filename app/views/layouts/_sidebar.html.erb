@@ -61,7 +61,7 @@
         <li style="padding-top: 1em;"><u>Event APIs</u></li>
         <li><%= link_to "Registrations (APIs)", search_event_user_events_path(@event) %></li>
         <li><%= link_to "GM List (JSON)", event_gm_list_index_path(@event, :format => :json) %></li>
-        <li><%= link_to "GM List (CSV)", event_gm_list_index_path(@event, :format => :json) %></li>
+        <li><%= link_to "GM List (CSV)", event_gm_list_index_path(@event, :format => :csv) %></li>
         <li><%= link_to 'Event Tables (JSON)', event_path(@event, :format => :json) %></li>
         <li><%= link_to "Tickets (CSV)", event_tickets_path(@event, :format => :csv) %></li>
       <% end %>
