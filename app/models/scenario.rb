@@ -104,7 +104,7 @@ class Scenario < ActiveRecord::Base
     copy.retired = retired
     copy.game_system = game_system
     copy.evergreen = evergreen
-    copy
+    copy.catalog_number = catalog_number
   end
 
   def <=>(scenario)
