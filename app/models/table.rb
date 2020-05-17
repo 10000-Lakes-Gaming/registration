@@ -8,14 +8,25 @@ class Table < ActiveRecord::Base
   delegate :end, to: :session
   delegate :prereg_ends, to: :session
   delegate :prereg_closed?, to: :session
-  validates :scenario_id, :session_id, :max_players, :gms_needed, :presence => true
-  validates_numericality_of :gms_needed, :max_players, greater_than: 0
+  validates :scenario_id, :session_id, :gms_needed, :presence => true
+  validates_numericality_of :gms_needed, greater_than: 0
+  validate :validate_max_players
+
+  def validate_max_players
+    unless session.event.tables_reg_offsite
+      if max_players.nil?
+        errors[:max_players] << 'cannot be blank'
+      elsif max_players <= 0
+        errors[:max_players] << 'must be greater than 0'
+      end
+    end
+  end
 
   def <=> (tab)
     # Remove "Table"  and sort by number, if possible.
-    myloc  = self.location.to_s.downcase[/\d+/]
+    myloc = self.location.to_s.downcase[/\d+/]
     tabloc = tab.location.to_s.downcase[/\d+/]
-    sort   = myloc.to_i <=> tabloc.to_i
+    sort = myloc.to_i <=> tabloc.to_i
 
     if sort == 0
       sort = self.location.to_s <=> tab.location.to_s
@@ -80,13 +91,13 @@ class Table < ActiveRecord::Base
 
   def gm_table_assignments
     tabs = []
-    game_masters.collect {|gm|
+    game_masters.collect { |gm|
       unless gm.table_number.blank?
         tabs << gm.table_number.strip
       end
     }
     # sort by the number...
-    tabs.sort_by {|x| x[/\d+/].to_i}.join(", ")
+    tabs.sort_by { |x| x[/\d+/].to_i }.join(", ")
   end
 
 
