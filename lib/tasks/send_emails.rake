@@ -38,8 +38,7 @@ task :send_skalcon_announcement => :environment do
   message = Message.new
   message.subject = "The physical SkålCon 2020 convention is canceled"
   count = 0
-  # users = User.all
-  users = User.where(id: 3)
+  users = User.all
   users.each do |user|
     if user.opt_out?
       puts "User #{user} opted out of emails"
