@@ -60,7 +60,15 @@ class ContactMailerPreview < ActionMailer::Preview
     message.subject = "Stuff for #{@event.name}"
 
     ContactMailer.registration_update(message, @user.email, @event, @user_event)
+  end
 
+  def skalcon_announcement_preview
+    @user = User.first
+
+    message = Message.new
+    message.subject = "The physical SkalCon 2020 convention is cancelled"
+
+    ContactMailer.skalcon_announcement(message, @user )
   end
 
   private

@@ -31,3 +31,22 @@ task :send_registration_update_message => :environment do
   end
   puts "#{count} Registration Update emails were sent."
 end
+
+task :send_skalcon_announcement => :environment do
+  puts "Sending out registration reminder"
+
+  message = Message.new
+  message.subject = "The physical SkålCon 2020 convention is canceled"
+  count = 0
+  # users = User.all
+  users = User.where(id: 3)
+  users.each do |user|
+    if user.opt_out?
+      puts "User #{user} opted out of emails"
+    else
+      ContactMailer.skalcon_announcement(message, user).deliver
+      count += 1
+    end
+  end
+  puts "#{count} skalcon_announcement emails were sent."
+end

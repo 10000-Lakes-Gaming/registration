@@ -1,6 +1,4 @@
 class ContactMailer < ApplicationMailer
-
-
   # for admins to send emails to users.
   def admin_email(message, emails)
     @message = message
@@ -81,6 +79,15 @@ class ContactMailer < ApplicationMailer
     user = User.where(email: email).first
     @message.user = user
     mail(subject: @message.subject, to: email) unless email.blank? || user.opt_out?
+  end
+
+  def skalcon_announcement(message, user)
+    @message = message
+    @user = user
+
+    unless user.opt_out? || user.email.blank?
+      mail(subject: @message.subject, to: user.email)
+    end
   end
 
 end

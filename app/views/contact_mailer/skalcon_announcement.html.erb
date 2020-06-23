@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+        integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+          integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+          crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+          integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+          crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div class="container-fluid">
+  <p><%= image_tag("skalbanner.png", size: "250x100", alt: "SkålCon") %></p>
+
+  <h1>The physical SkålCon 2020 convention is cancelled.</h1>
+
+  <p>We realize many of you were looking forward to this event. However, with the COVID-19 pandemic still ongoing, it
+    would be immensely difficult for us to hold a safe convention for our volunteers and attendees given the nature of
+    gaming conventions (i.e. sitting in the same room for 12+ hours in a day in relative close proximity with other
+    people).</p>
+
+  <p>Skålcon 2021 will be held September 24th - 26th 2021 at the Crowne Plaza Minneapolis West. We hope that the effects
+    of the pandemic will be mitigated by then!</p>
+
+  <p>But we still need your help! We’d love to bring our community together online, to meet (at a distance) and to raise
+    donations for Tubman like we do every year. To better assess how to hold an online event that meets these goals, we
+    need YOU to please take
+    <%= link_to 'this survey', 'https://forms.gle/cxwHbSZZ1DM4c2a1A' %>
+    We have some simple questions about the types of programming an online event would have and will help determine if
+    we have enough interest in an online Skalcon event this year!</p>
+
+</div>
+<hr>
+<div><%= image_tag("MN-POP.png", width: 250, alt: "Minnesota Paizo Organized Play") %>
+  <%= image_tag("10klogo.png", height: 250, alt: "10kLakesGaming", border: 1) %></div>
+<%= render partial: "layouts/opt_out_email_footer" %>
+</body>
+</html>
