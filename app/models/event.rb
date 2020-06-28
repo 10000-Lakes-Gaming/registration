@@ -6,6 +6,16 @@ class Event < ActiveRecord::Base
   has_many :game_masters, through: :tables
   has_many :registration_tables, through: :tables
 
+  validate :event_type_validator
+
+  def event_type_validator
+    errors[:online].push 'must have one of online or in person selected' unless self.event_type_selected
+  end
+
+  def event_type_selected
+    self.in_person || self.online
+  end
+
   def <=> (event)
     self.name <=> event.name
   end

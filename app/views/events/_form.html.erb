@@ -1,77 +1,101 @@
 <%= form_for(@event) do |f| %>
-    <% if @event.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+  <% if @event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
 
-          <ul>
-            <% @event.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
+      <ul>
+        <% @event.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-    <div class="field">
-      <%= f.label :name %><br>
-      <%= f.text_field :name %>
-    </div>
-    <div class="field">
-      <%= f.label :start %><br>
-      <%= f.datetime_select :start %>
-    </div>
-    <div class="field">
-      <%= f.label :end %><br>
-      <%= f.datetime_select :end %>
-    </div>
-    <div class="field">
-      <%= f.label :prereg_ends , 'Preregistration or Early Bird ends'%><br>
-      <%= f.datetime_select :prereg_ends %>
-    </div>
-    <div class="field">
-      <%= f.label :online_sales_end, 'Online sale/selection of table tickets ends'%><br>
-      <%= f.datetime_select :online_sales_end %>
-    </div>
-    <div class="field">
-      <%= f.label :rsvp_close %><br>
-      <%= f.datetime_select :rsvp_close %>
-    </div>
-    <div class="field">
-      <%= f.label :location %><br>
-      <%= f.text_field :location %>
-    </div>
-    <div class="field">
-      <%= f.label :charity %><br>
-      <%= f.check_box :charity %>
-    </div>
-    <div class="field">
-      <%= f.label :prereg_price, 'Preregistration or Early Bird Price' %><br>
-      <%= f.number_field :prereg_price %>
-    </div>
-    <div class="field">
-      <%= f.label :onsite_price, 'Onsite (Regular) Price' %><br>
-      <%= f.number_field :onsite_price %>
-    </div>
-    <div class="field">
-      <%= f.label :info %><br/>
-      <%= f.text_area :info %>
-    </div>
-    <div class="field">
-      <%= f.label :gm_volunteer_link %><br/>
-      <%= f.url_field :gm_volunteer_link %>
-    </div>
-    <div class="field">
-      <%= f.label :tables_reg_offsite, 'Is table registration being handled by external convention?' %><br>
-      <%= f.check_box :tables_reg_offsite %>
-    </div>
-    <div class="field">
-      <%= f.label :external_url, 'URL for external Convention\'s registration site.' %><br>
-      <%= f.url_field :external_url %>
-    </div>
-    <div class="field">
-      <%= f.label :event_number %><br>
-      <%= f.number_field :event_number %>
-    </div>
-    <div class="actions">
-      <%= f.submit %>
-    </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+
+  <hr/>
+
+  <div class="field">
+    <%= f.check_box :in_person %>
+    <%= f.label :in_person, 'This convention will have an in person component' %>
+  </div>
+
+  <div class="field">
+    <%= f.check_box :online %>
+    <%= f.label :online, 'This convention will have an online component' %>
+  </div>
+
+  <hr/>
+  <%# let's put this in some sort of container %>
+  <div class="field">
+    <%= f.label :start %><br>
+    <%= f.datetime_select :start %>
+  </div>
+  <div class="field">
+    <%= f.label :end %><br>
+    <%= f.datetime_select :end %>
+  </div>
+  <div class="field">
+    <%= f.label :prereg_ends, 'Preregistration or Early Bird ends' %><br>
+    <%= f.datetime_select :prereg_ends %>
+  </div>
+  <div class="field">
+    <%= f.label :online_sales_end, 'Online sale/selection of table tickets ends' %>
+    <%= f.datetime_select :online_sales_end %>
+  </div>
+  <div class="field">
+    <%= f.label :rsvp_close %><br>
+    <%= f.datetime_select :rsvp_close %>
+  </div>
+
+  <hr/>
+
+  <div class="field">
+    <%= f.label :location %><br>
+    <%= f.text_field :location %>
+  </div>
+
+  <hr/>
+
+  <div class="field">
+    <%= f.label :charity, 'This is a charity event: ' %>
+    <%= f.check_box :charity %>
+  </div>
+
+  <hr/>
+
+  <div class="field">
+    <%= f.label :prereg_price, 'Preregistration or Early Bird Price' %><br>
+    <%= f.number_field :prereg_price %>
+  </div>
+  <div class="field">
+    <%= f.label :onsite_price, 'Onsite (Regular) Price' %><br>
+    <%= f.number_field :onsite_price %>
+  </div>
+  <div class="field">
+    <%= f.label :info %><br/>
+    <%= f.text_area :info %>
+  </div>
+  <div class="field">
+    <%= f.label :gm_volunteer_link %><br/>
+    <%= f.url_field :gm_volunteer_link %>
+  </div>
+  <div class="field">
+    <%= f.label :tables_reg_offsite, 'Is table registration being handled by external convention?' %><br>
+    <%= f.check_box :tables_reg_offsite %>
+  </div>
+  <div class="field">
+    <%= f.label :external_url, 'URL for external Convention\'s registration site.' %><br>
+    <%= f.url_field :external_url %>
+  </div>
+  <div class="field">
+    <%= f.label :event_number %><br>
+    <%= f.number_field :event_number %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
 <% end %>
