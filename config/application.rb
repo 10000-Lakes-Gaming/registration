@@ -15,5 +15,7 @@ module PfsRegistration
     # config.active_record.raise_in_transactional_callbacks = true
     config.time_zone = 'Central Time (US & Canada)'
     config.active_record.default_timezone = :local
+
+    Rails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
   end
 end

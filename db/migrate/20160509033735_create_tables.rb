@@ -1,4 +1,4 @@
-class CreateTables < ActiveRecord::Migration
+class CreateTables < ActiveRecord::Migration[5.2]
   def change
     create_table :tables do |t|
       t.references :session, index: true, foreign_key: true

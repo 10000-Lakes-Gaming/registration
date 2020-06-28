@@ -78,6 +78,8 @@ ActiveRecord::Schema.define(version: 2020_02_13_200640) do
     t.string "payment_id"
     t.datetime "payment_date"
     t.integer "seat"
+    t.index ["table_id"], name: "index_registration_tables_on_table_id"
+    t.index ["user_event_id"], name: "index_registration_tables_on_user_event_id"
   end
 
   create_table "scenarios", force: :cascade do |t|

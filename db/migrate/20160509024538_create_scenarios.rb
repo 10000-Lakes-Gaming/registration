@@ -1,4 +1,4 @@
-class CreateScenarios < ActiveRecord::Migration
+class CreateScenarios < ActiveRecord::Migration[5.2]
   def change
     create_table :scenarios do |t|
       t.string :type
@@ -14,4 +14,3 @@ class CreateScenarios < ActiveRecord::Migration
     end
   end
 end
-    

@@ -1,4 +1,4 @@
-class CreateSessions < ActiveRecord::Migration
+class CreateSessions < ActiveRecord::Migration[5.2]
   def change
     create_table :sessions do |t|
       t.belongs_to :event, index: true, foreign_key: true

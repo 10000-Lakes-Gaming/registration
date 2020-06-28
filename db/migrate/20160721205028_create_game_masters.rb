@@ -1,4 +1,4 @@
-class CreateGameMasters < ActiveRecord::Migration
+class CreateGameMasters < ActiveRecord::Migration[5.2]
   def change
     create_table :game_masters do |t|
       t.belongs_to :table, index: true, foreign_key: true

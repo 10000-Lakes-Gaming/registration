@@ -1,4 +1,4 @@
-class CreateRegistrationTables < ActiveRecord::Migration
+class CreateRegistrationTables < ActiveRecord::Migration[5.2]
   def change
     create_table :registration_tables do |t|
       t.references :table, foreign_key: true
