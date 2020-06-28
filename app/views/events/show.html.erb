@@ -29,7 +29,8 @@
       <% elsif @event.online? %>Online
       <% end %>
     </dd>
-
+    <dt>Chat Server:</dt>
+    <dd><a target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a></dd>
   </dl>
 </div>
 
