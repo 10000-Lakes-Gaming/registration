@@ -21,6 +21,15 @@
       <dt>Event Number:</dt>
       <dd class=" text-info"><%= @event.event_number %></dd>
     <% end %>
+    <dt>Event Type:</dt>
+    <dd class="text-info">
+      <% if @event.in_person? %>In person
+      <% end %>
+      <% if @event.in_person? && @event.online? %>and online
+      <% elsif @event.online? %>Online
+      <% end %>
+    </dd>
+
   </dl>
 </div>
 
