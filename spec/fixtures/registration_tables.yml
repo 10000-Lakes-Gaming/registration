@@ -1,0 +1,29 @@
+one:
+  table:
+  user_event:
+
+two:
+  table:
+  user_event:
+
+three:
+  table:
+  user_event:
+
+four:
+  table:
+  user_event:
+
+premium_paid:
+  table:  premium
+  user_event: paid_user_event
+  paid: true
+  payment_amount: 2000
+  payment_id: TEST_PAYMENT_123
+
+premium_unpaid:
+  table:  premium
+  user_event: paid_event_unpaid_table
+  paid: false
+  payment_amount:
+  payment_id:

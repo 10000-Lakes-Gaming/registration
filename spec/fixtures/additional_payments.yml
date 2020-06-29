@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+unpaid_additional:
+  category: auction
+  description: A neat boon!
+  charitable_donation: true
+  market_price: 2000
+  payment_price: 40000
+  payment_amount:
+  payment_id:
+  payment_date:
+  user_event: paid_user_event_unpaid_additional
+
+paid_payment:
+  category: auction
+  description: A neat boon!
+  charitable_donation: true
+  market_price: 2000
+  payment_price: 40000
+  payment_amount: 40000
+  payment_id: thisisanID
+  payment_date: <%= 1.day.ago.to_s(:db) %>
+  user_event: normal_guy_my_event
+
+paid_but_under_market:
+  category: auction
+  description: A neat boon!
+  charitable_donation: true
+  market_price: 2000
+  payment_price: 1800
+  payment_amount: 1800
+  payment_id: thisisanID
+  payment_date: <%= 1.day.ago.to_s(:db) %>
+  user_event: normal_guy_my_event
+
