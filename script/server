@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e
+cd "$(dirname "$0")/.."
+
+# If we start packaging things, or need webpacker, uncomment
+# if ! [ -x "$(command -v node)" ]; then
+#    echo 'node is not installed, please install. Exiting.'
+#    exit 1
+# fi
+
+script/update
+bundle exec bin/rails server

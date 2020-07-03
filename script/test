@@ -1,0 +1,32 @@
+#!/bin/bash
+set -e
+cd "$(dirname "$0")/.."
+
+REBUILD=''
+
+while getopts r option
+do
+case "${option}"
+in
+r) REBUILD=true
+esac
+done
+
+if [ $REBUILD ]; then
+    echo 'Rebuilding database'
+    RAILS_ENV=test bundle exec rails db:environment:set
+    RAILS_ENV=test bundle exec rails db:drop
+else
+    echo 'Running tests without a complete rebuild'
+fi
+
+# Remove the -r flag, if it exists
+for i do
+  [ "$i" = -r ] || set -- "$@" "$i"
+  shift
+done
+
+echo 'Running Migration'
+RAILS_ENV=test bundle exec rails db:migrate
+echo "Run rspec $@"
+bundle exec rspec $@
