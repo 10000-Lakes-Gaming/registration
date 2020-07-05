@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+script/setup
+
+echo 'bundle exec rails db:migrate'
+bundle exec rails db:migrate
+echo 'migration complete'
+# If we end up needing webpacker, clean this up
+
+# echo 'run webpacker'
+# bundle exec rails webpacker:compile

@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+my_event:
+  name: My Event
+  start: <%= 7.day.from_now.to_s(:db) %>
+  end: <%= 10.day.from_now.to_s(:db) %>
+  location: This is a place
+  rsvp_close: <%= 7.day.from_now.to_s(:db) %>
+  prereg_price: 20
+  onsite_price: 30
+  prereg_ends: <%= 5.day.from_now.to_s(:db) %>
+
+prereg_ended_event:
+  name: My Event
+  start: <%= 5.day.from_now.to_s(:db) %>
+  end: <%= 7.day.from_now.to_s(:db) %>
+  location: This is a place
+  rsvp_close: <%= 5.day.from_now.to_s(:db) %>
+  prereg_price: 20
+  onsite_price: 30
+  prereg_ends: <%= 5.day.ago.to_s(:db) %>
+
+other:
+  name: Other Event
+  start: <%= 5.day.from_now.to_s(:db) %>
+  end: <%= 5.day.from_now.to_s(:db) %>
+  location: MyString
+  rsvp_close: <%= 5.day.from_now.to_s(:db) %>
+  prereg_ends: <%= 5.day.from_now.to_s(:db) %>

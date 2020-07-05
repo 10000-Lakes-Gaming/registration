@@ -1,5 +1,141 @@
 # Registration application
 
+## Table of Contents
+- [Setup your local development environment](#setup)
+  - [Environment](#environment)
+  - [Dependencies](#dependencies)
+    - [Ruby](#ruby)
+  - [Database](#database)
+    - [schema.rb](#schema.rb)
+    - [SQLite3](#sqlite)
+- [Get Started](#getting-started)
+- [Testing](#testing)
+- [Code Standards](#code-standards)
+- [Committing Code](#commiting-code)
+
+----
+## Setup
+The following assumes that you are doing your work on a Macintosh. It will try to be IDE/Editor agnostic. It also assumes that you have [Home Brew](https://brew.sh/) on your machine. At this point, for other development environments, I am not going to be able to give a lot of help.
+
+### Make sure Home Brew is up to date
+Before you try doing any of these, you should make sure that your homebrew app is up to date, and cleaned up. Please run:
+```
+% brew update
+% brew doctor
+```
+These may give you some suggestions that will make your system work better. It is probably a good idea to fix whatever `brew doctor` tells you to.
+
+Use your discretion on deleting things... make sure that they are not used.
+Keeping your homebrew updated is probably a good thing. Consider adding a crontab such as:
+
+```
+0 12 * * * /usr/local/bin/brew update && /usr/local/bin/brew upgrade && /usr/local/bin/brew cleanup >> .brew/brew.log 2>&1 
+```
+You can add this with `crontab -e`  
+
+---
+### Environment
+As this is being built as a [12-factor app](https://12factor.net/), most configuration will be done as environment variables. Most are listed far below .
+
+
+### Dependencies
+#### Ruby
+This application is written in Ruby. It is expected that you will be using [rbenv](https://github.com/rbenv/rbenv) as
+your ruby environment manager, and our scripts are set up to require that.
+
+On a Mac, you can install `rbenv` with:
+```
+% brew install rbenv
+``` 
+To make sure your rbenv (and ruby-build) are up to date, please run when you first checkout the project:
+This will also be done in the [update](script/update) script.
+```
+brew upgrade rbenv ruby-build
+```
+
+For the current release, we will be using **Ruby 2.7.1**. Please make sure that you have this version installed with:
+```
+% rbenv install 2.7.1
+```
+The project's setup script will make sure that your local `.ruby-version` has the correct version in it. 
+
+**NOTE** Please make sure that you do _not_ have `RBENV_VERSION` set in your shell (from `~/.bash_profile`), as this will overwrite any local settings. 
+
+
+### Database  
+Like most applications, PFS registration uses databases
+#### Schema.rb  
+Rails uses a `db/schema.rb` file to keep track of the changes, and to rebuild the database fast.  However, it is changed every time you run a migration:
+`bundle exec rails db:migrate`
+
+Please make sure that there are real changes before checking it in. It is excluded from rubocop, so only real schema changes will be there. 
+
+Note that objects like views, created by SQL query, will not be represented.
+
+#### SQLite3  
+For running tests and local development, we use SQLite3.
+Migrations are created in such a way that any views, mviews, or table that are from outside of our schema are mocked as real tables in SQLite3 schemas. These are referred to as `mocked_instances`, and currently are our development and test environments.
+
+To run, you will need to have SQLite3 installed. 
+`brew install sqlite3` 
+(or something like that.) 
+
+
+---
+## Getting Started
+Immediately after cloning this repository, you should `cd` into your local repo, and run:
+```
+% ./script/setup
+```
+This will attempt to install the needed ruby gems and set up a few other things, such as `overcommit`. It will also tell you if you are missing any dependencies to build or test the application.
+
+From there, you could run the tests
+```
+% ./script/test
+```
+or run the server. Note that by default Rails apps will run locally on [http://localhost:3000](http://localhost:3000) 
+```
+% ./script/server
+```
+
+To run Rails Console, you can simply use the `console` script with:
+```
+% ./script/console
+```
+Any of these should tell you if you are missing any needed dependencies or executables. 
+
+It is a goal of this project to be able to run the server and all tests locally without a network connection. As such, we will be using `SQLite3
+ as our test and development database, while staging and production will utilize Oracle or mySQL.
+
+---
+## Testing
+Unit and integration testing of the applications modules and classes will be handled with `rspec`. Test specs will be stored in `./spec`, and should be organized by the directory structure of the objects or other files. 
+
+Example: Tests for `app/controller/WelxomeController` should be located in `spec/controller/WelcomeControllerSpec`
+
+Our goal is near 100% code coverage. That being said, we should not be testing Rails itself, ActiveRecord, and the like. This also means that if files are created by Rails generators (such as helpers or concerns), please remove them if they are not being used.  
+ 
+---
+## Code Standards
+We will be using `rubocop` to enforce code styling. As we are starting fresh, there are very few cops that are being exluded, if any.  
+
+---
+## Commiting code
+Prior to commiting code, you should run `bundle exec rubocop -a` to make sure your code passes code styling. If you do not, `overcommit` will be checking your code style, and prevent you from commiting code. 
+
+Overcommit will also be checking your commit statements, but mostly for line length and basic formatting. You can read about good commit messages on [Chris Beam's blog on git commits](https://chris.beams.io/posts/git-commit/).
+
+When you are commiting a change that is not complete (due to needing to switch drivers, end of day, or what have you), please start the commit message with `WIP: [What this commit will eventually do]` so that we can tell that it was not complete.
+
+When you are commiting the final change that fixes an issue, always add a line with `Fixes: #[ISSUE NUMBER]`
+
+
+------   
+
+
+## Other Development Considerations
+------
+
 A few things to note, for early documentation.
 
 To "register" is to create the `UserEvent`... associate the user with the event. 
