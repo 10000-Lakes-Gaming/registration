@@ -54,7 +54,45 @@ describe Event, type: :model do
 
       event.save
       expect(event.errors[:optional_fee]).to_not be_empty
+    end
 
+    it 'charity_optional_fee_ok if charity' do
+      event = Event.new
+      event.charity = true
+
+      event.save
+      expect(event.charity_optional_fee_ok).to be true
+      expect(event.errors[:optional_fee]).to be_empty
+    end
+
+    it 'charity_optional_fee_ok if charity has optional fee' do
+      event = Event.new
+      event.charity = true
+      event.optional_fee = true
+
+      event.save
+      expect(event.charity_optional_fee_ok).to be true
+      expect(event.errors[:optional_fee]).to be_empty
+    end
+
+    it 'charity_optional_fee_ok if not charity has optioanal fee' do
+      event = Event.new
+      event.charity = false
+      event.optional_fee = true
+
+      event.save
+      expect(event.charity_optional_fee_ok).to be false
+      expect(event.errors[:optional_fee]).to_not be_empty
+    end
+
+    it 'charity_optional_fee_ok if not charity no optional fee' do
+      event = Event.new
+      event.charity = false
+      event.optional_fee = false
+
+      event.save
+      expect(event.charity_optional_fee_ok).to be true
+      expect(event.errors[:optional_fee]).to be_empty
     end
   end
 
