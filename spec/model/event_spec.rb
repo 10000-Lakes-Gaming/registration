@@ -34,5 +34,24 @@ describe Event, type: :model do
       expect(event.event_type_selected).to be false
       expect(event.errors[:online]).to_not be_empty
     end
+
+    it 'If an event has a chat server, the UI should validate that' do
+      event = Event.new
+      event.chat_server = 'Discord'
+      event.chat_server_url = 'https://www.google.com'
+
+      event.save
+      expect(event.has_chat_server).to be true
+    end
+
+    it 'If an event has a chat server, that server must have a URL' do
+      event = Event.new
+      event.chat_server = 'Discord'
+      event.chat_server_url = nil
+
+      event.save
+      expect(event.has_chat_server).to be false
+      expect(event.errors[:chat_server]).to_not be_empty
+    end
   end
 end

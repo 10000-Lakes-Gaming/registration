@@ -7,6 +7,15 @@ class Event < ActiveRecord::Base
   has_many :registration_tables, through: :tables
 
   validate :event_type_validator
+  # validate :has_chat_server_validator
+
+  # def has_chat_server_validator
+  #   errors[:chat_server].push 'must have a chat server url' if self.chat_server && !self.chat_server_url
+  # end
+
+  def has_chat_server
+    
+  end
 
   def event_type_validator
     errors[:online].push 'must have one of online or in person selected' unless self.event_type_selected
