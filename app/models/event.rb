@@ -36,7 +36,7 @@ class Event < ActiveRecord::Base
   end
 
   def optional_fee_validator
-    errors[:optional_fee].push 'optional fee must be false unless this event is a charity event' unless self.charity_optional_fee_ok
+    errors[:optional_fee].push 'must not be checked unless this event is a charity event' unless self.charity_optional_fee_ok
   end
 
   def charity_optional_fee_ok
