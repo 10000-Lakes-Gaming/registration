@@ -1,0 +1,45 @@
+#!/bin/bash
+set -e
+cd "$(dirname "$0")/.."
+
+if ! [ -x "$(command -v rbenv)" ]; then
+    echo 'rbenv is not installed, please install with `brew install rbenv`. Exiting.'
+    exit 1
+fi
+
+if ! [ -x "$(command -v sqlite3)" ]; then
+    echo 'sqlite3 is not installed, please install with `brew install sqlite3`. Exiting.'
+    exit 1
+fi
+
+RUBY_VERSION=2.7.1
+
+echo $(command -v rbenv )
+if [ ! -f .ruby-version ] ; then
+  echo "Creating .ruby-version with version $RUBY_VERSION"
+  touch ./.ruby-version
+fi
+echo $RUBY_VERSION > .ruby-version
+
+echo "$(command ruby --version)"
+
+version="$(command ruby --version)"
+version_simple="${version%p*}"
+version_str="ruby $RUBY_VERSION"
+if [[ $version_simple == $version_str ]]; then
+  echo "You are on ruby version [$version_str]"
+else
+  echo "You are not on ruby version [$version_str]. Please make sure that you have not set RBENV_VERSION in your environment. Exiting"
+  exit 1
+fi
+
+gem install bundler
+bundle install
+
+# Enable when ready for rubocop
+# echo 'Adding Overcommit'
+# gem install overcommit
+# overcommit --install
+# overcommit --sign
+
+echo 'done'
