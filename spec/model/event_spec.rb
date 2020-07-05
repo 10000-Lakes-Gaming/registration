@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Event, type: :model do
-
   context 'One of in_person or online must be selected' do
     it 'If only in_person selected validation passes' do
       event = Event.new
@@ -33,6 +32,29 @@ describe Event, type: :model do
       event.save
       expect(event.event_type_selected).to be false
       expect(event.errors[:online]).to_not be_empty
+    end
+  end
+
+  context '#optional_fee' do
+    it 'optional fee should be false if not a charity event' do
+      event = Event.new
+      event.charity = false
+      event.prereg_price = 20
+      event.onsite_price = 25
+
+      expect(event.optional_fee).to be_falsey
+    end
+
+    it 'optional fee set to true for not charity should throw error' do
+      event = Event.new
+      event.charity = false
+      event.prereg_price = 20
+      event.onsite_price = 25
+      event.optional_fee = true
+
+      event.save
+      expect(event.errors[:optional_fee]).to_not be_empty
+
     end
   end
 
