@@ -34,23 +34,46 @@ describe Event, type: :model do
       expect(event.event_type_selected).to be false
       expect(event.errors[:online]).to_not be_empty
     end
+  end
 
-    it 'If an event has a chat server, the UI should validate that' do
+  context 'Event has a chat_server' do
+    it 'Event has no chat_server' do
+      event = Event.new
+      event.chat_server = nil
+      event.chat_server_url = nil
+      
+      event.save
+      expect(event.valid_chat_server).to be true
+      expect(event.errors[:chat_server]).to be_empty
+    end
+    it 'Event has a chat_server and a chat_server_url' do
       event = Event.new
       event.chat_server = 'Discord'
       event.chat_server_url = 'https://www.google.com'
 
       event.save
-      expect(event.has_chat_server).to be true
+      expect(event.valid_chat_server).to be true
+      expect(event.errors[:chat_server]).to be_empty
     end
 
-    it 'If an event has a chat server, that server must have a URL' do
+    ## TODO: is this actually invalid? I'm not sure that this shouldn't just not show the text box...
+    it 'If event has a chat_server_url but no chat_server' do
+      event = Event.new
+      event.chat_server = nil
+      event.chat_server_url = 'https://www.google.com'
+
+      event.save
+      expect(event.valid_chat_server).to be false
+      expect(event.errors[:chat_server]).to_not be_empty
+    end
+
+    it 'If an event has a chat_server and no chat_server_url' do
       event = Event.new
       event.chat_server = 'Discord'
       event.chat_server_url = nil
 
       event.save
-      expect(event.has_chat_server).to be false
+      expect(event.valid_chat_server).to be false
       expect(event.errors[:chat_server]).to_not be_empty
     end
   end
