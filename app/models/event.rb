@@ -7,9 +7,9 @@ class Event < ActiveRecord::Base
   has_many :registration_tables, through: :tables
 
   validate :event_type_validator
-  validate :has_chat_server_validator
+  validate :chat_server_validator
 
-  def has_chat_server_validator
+  def chat_server_validator
     errors[:chat_server].push 'must have both a name and a valid URL' unless self.valid_chat_server
   end
 
@@ -24,6 +24,10 @@ class Event < ActiveRecord::Base
     end
 
     false
+  end
+
+  def chat_server?
+    self.chat_server.present? && self.chat_server_url.present?
   end
 
   def event_type_validator

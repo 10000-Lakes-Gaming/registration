@@ -116,4 +116,39 @@ describe Event, type: :model do
       expect(event.errors[:chat_server]).to_not be_empty
     end
   end
+
+  context '#chat_server?' do
+    it 'return true if both chat server and URL are present' do
+      event = Event.new
+      event.chat_server = 'Discord'
+      event.chat_server_url = 'https://www.google.com'
+
+      expect(event.chat_server?).to be true
+    end
+
+    it 'return false if chat server present and URL is blank' do
+      event = Event.new
+      event.chat_server = 'Discord'
+      event.chat_server_url = ' '
+
+      expect(event.chat_server?).to be false
+    end
+
+    it 'return false if chat server blank and URL is present' do
+      event = Event.new
+      event.chat_server = ' '
+      event.chat_server_url = 'https://www.google.com'
+
+      expect(event.chat_server?).to be false
+    end
+
+    it 'return false if chat server and URL are blank' do
+      event = Event.new
+      event.chat_server = ' '
+      event.chat_server_url = nil
+
+      expect(event.chat_server?).to be false
+    end
+
+  end
 end
