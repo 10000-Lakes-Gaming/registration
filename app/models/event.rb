@@ -41,7 +41,7 @@ class Event < ActiveRecord::Base
   def closed?
     closed = false
     unless self.rsvp_close.nil?
-      now    = DateTime.now
+      now = DateTime.now
       closed = self.rsvp_close <= now
     end
     closed
@@ -54,7 +54,7 @@ class Event < ActiveRecord::Base
   def premium_tables
     premium_tables = []
     sessions.each do |session|
-      premium_tables.concat(session.tables.select {|table| table.premium})
+      premium_tables.concat(session.tables.select { |table| table.premium })
     end
     premium_tables
   end
@@ -62,7 +62,7 @@ class Event < ActiveRecord::Base
   def prereg_closed?
     closed = false
     unless self.prereg_ends.nil?
-      now    = DateTime.now
+      now = DateTime.now
       closed = self.prereg_ends <= now
     end
     closed
@@ -71,7 +71,7 @@ class Event < ActiveRecord::Base
   def online_sales_closed?
     closed = false
     unless self.online_sales_end.nil?
-      now    = DateTime.now
+      now = DateTime.now
       closed = self.online_sales_end <= now
     end
     closed
