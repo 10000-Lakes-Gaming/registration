@@ -41,12 +41,12 @@ describe Event, type: :model do
       event = Event.new
       event.chat_server = nil
       event.chat_server_url = nil
-      
+
       event.save
       expect(event.valid_chat_server).to be true
       expect(event.errors[:chat_server]).to be_empty
     end
-    it 'Event has a chat_server and a chat_server_url' do
+    it 'Event has a chat_server and a chat_server_url errors should be empty' do
       event = Event.new
       event.chat_server = 'Discord'
       event.chat_server_url = 'https://www.google.com'
@@ -56,8 +56,7 @@ describe Event, type: :model do
       expect(event.errors[:chat_server]).to be_empty
     end
 
-    ## TODO: is this actually invalid? I'm not sure that this shouldn't just not show the text box...
-    it 'If event has a chat_server_url but no chat_server' do
+    it 'If event has a chat_server_url but no chat_server error should exist' do
       event = Event.new
       event.chat_server = nil
       event.chat_server_url = 'https://www.google.com'
@@ -67,10 +66,30 @@ describe Event, type: :model do
       expect(event.errors[:chat_server]).to_not be_empty
     end
 
-    it 'If an event has a chat_server and no chat_server_url' do
+    it 'If an event has a chat_server and no chat_server_url error should exist' do
       event = Event.new
       event.chat_server = 'Discord'
       event.chat_server_url = nil
+
+      event.save
+      expect(event.valid_chat_server).to be false
+      expect(event.errors[:chat_server]).to_not be_empty
+    end
+
+    it 'If an event has a chat_server and a blank chat_server_url error should exist' do
+      event = Event.new
+      event.chat_server = 'Discord'
+      event.chat_server_url = '   '
+
+      event.save
+      expect(event.valid_chat_server).to be false
+      expect(event.errors[:chat_server]).to_not be_empty
+    end
+
+    it 'If an event has a blanl chat_server and a chat_server_url error should exist' do
+      event = Event.new
+      event.chat_server = '  '
+      event.chat_server_url = 'https://my.chat.server/'
 
       event.save
       expect(event.valid_chat_server).to be false

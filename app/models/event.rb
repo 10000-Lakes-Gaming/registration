@@ -14,17 +14,16 @@ class Event < ActiveRecord::Base
   end
 
   def valid_chat_server
-    if self.chat_server.nil?
-      if self.chat_server_url.nil?
-        return true
-      end
-    else
-      if !self.chat_server_url.nil?
-        return true
-      end
+    # using Rails blank? instead of nil to catch all whitespace or empty string
+    if self.chat_server.blank?
+      return true if self.chat_server_url.blank?
     end
 
-    return false
+    unless self.chat_server.blank?
+      return true unless self.chat_server_url.blank?
+    end
+
+    false
   end
 
   def event_type_validator
