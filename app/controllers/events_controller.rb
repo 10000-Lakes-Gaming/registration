@@ -144,7 +144,8 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event).permit(:name, :start, :end, :location, :rsvp_close, :prereg_ends, :charity,
                                   :prereg_price, :onsite_price, :info, :gm_volunteer_link, :tables_reg_offsite,
-                                  :external_url, :event_number, :online_sales_end, :online, :in_person)
+                                  :external_url, :event_number, :online_sales_end, :online, :in_person, 
+                                  :chat_server, :chat_server_url)
   end
 
 end
