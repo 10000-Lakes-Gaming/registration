@@ -79,16 +79,36 @@ describe Event, type: :model do
     it 'If an event has a chat_server and a blank chat_server_url error should exist' do
       event = Event.new
       event.chat_server = 'Discord'
-      event.chat_server_url = '   '
+      event.chat_server_url = " \t\r\n"
+
+      event.save
+      expect(event.valid_chat_server).to be false
+      expect(event.errors[:chat_server]).to_not be_empty
+    end
+    it 'If an event has a chat_server and an empty chat_server_url error should exist' do
+      event = Event.new
+      event.chat_server = 'Discord'
+      event.chat_server_url = ''
 
       event.save
       expect(event.valid_chat_server).to be false
       expect(event.errors[:chat_server]).to_not be_empty
     end
 
-    it 'If an event has a blanl chat_server and a chat_server_url error should exist' do
+    it 'If an event has a blank chat_server and a chat_server_url error should exist' do
       event = Event.new
-      event.chat_server = '  '
+      # Note that if we do these special characters, we must use double quptes, because Ruby
+      event.chat_server = " \t\n\r"
+      event.chat_server_url = 'https://my.chat.server/'
+
+      event.save
+      expect(event.valid_chat_server).to be false
+      expect(event.errors[:chat_server]).to_not be_empty
+    end
+
+    it 'If an event has an empty chat_server and a chat_server_url error should exist' do
+      event = Event.new
+      event.chat_server = ''
       event.chat_server_url = 'https://my.chat.server/'
 
       event.save

@@ -19,8 +19,8 @@ class Event < ActiveRecord::Base
       return true if self.chat_server_url.blank?
     end
 
-    unless self.chat_server.blank?
-      return true unless self.chat_server_url.blank?
+    if self.chat_server.present?
+      return true if self.chat_server_url.present?
     end
 
     false
