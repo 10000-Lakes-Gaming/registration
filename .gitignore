@@ -27,3 +27,4 @@ railsbox-passwords.txt
 /config/app_environment_variables.rb
 /test/html_reports/
 /sample_GM_email.pdf
+/coverage

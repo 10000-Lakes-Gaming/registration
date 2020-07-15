@@ -43,12 +43,23 @@
     <%= f.datetime_select :prereg_ends %>
   </div>
   <div class="field">
-    <%= f.label :online_sales_end, 'Online sale/selection of table tickets ends' %>
+    <%= f.label :online_sales_end, 'Online sale/selection of table tickets ends' %><br>
     <%= f.datetime_select :online_sales_end %>
   </div>
   <div class="field">
     <%= f.label :rsvp_close %><br>
     <%= f.datetime_select :rsvp_close %>
+  </div>
+
+  <hr/>
+
+  <div class="field">
+    <%= f.label :chat_server %><br>
+    <%= f.text_field :chat_server %>
+  </div>
+  <div class="field">
+    <%= f.label :chat_server_url %><br>
+    <%= f.text_field :chat_server_url %>
   </div>
 
   <hr/>

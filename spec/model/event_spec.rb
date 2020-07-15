@@ -35,4 +35,120 @@ describe Event, type: :model do
       expect(event.errors[:online]).to_not be_empty
     end
   end
+
+  context 'Event has a chat_server' do
+    it 'Event has no chat_server' do
+      event = Event.new
+      event.chat_server = nil
+      event.chat_server_url = nil
+
+      event.save
+      expect(event.valid_chat_server).to be true
+      expect(event.errors[:chat_server]).to be_empty
+    end
+    it 'Event has a chat_server and a chat_server_url errors should be empty' do
+      event = Event.new
+      event.chat_server = 'Discord'
+      event.chat_server_url = 'https://www.google.com'
+
+      event.save
+      expect(event.valid_chat_server).to be true
+      expect(event.errors[:chat_server]).to be_empty
+    end
+
+    it 'If event has a chat_server_url but no chat_server error should exist' do
+      event = Event.new
+      event.chat_server = nil
+      event.chat_server_url = 'https://www.google.com'
+
+      event.save
+      expect(event.valid_chat_server).to be false
+      expect(event.errors[:chat_server]).to_not be_empty
+    end
+
+    it 'If an event has a chat_server and no chat_server_url error should exist' do
+      event = Event.new
+      event.chat_server = 'Discord'
+      event.chat_server_url = nil
+
+      event.save
+      expect(event.valid_chat_server).to be false
+      expect(event.errors[:chat_server]).to_not be_empty
+    end
+
+    it 'If an event has a chat_server and a blank chat_server_url error should exist' do
+      event = Event.new
+      event.chat_server = 'Discord'
+      event.chat_server_url = " \t\r\n"
+
+      event.save
+      expect(event.valid_chat_server).to be false
+      expect(event.errors[:chat_server]).to_not be_empty
+    end
+    it 'If an event has a chat_server and an empty chat_server_url error should exist' do
+      event = Event.new
+      event.chat_server = 'Discord'
+      event.chat_server_url = ''
+
+      event.save
+      expect(event.valid_chat_server).to be false
+      expect(event.errors[:chat_server]).to_not be_empty
+    end
+
+    it 'If an event has a blank chat_server and a chat_server_url error should exist' do
+      event = Event.new
+      # Note that if we do these special characters, we must use double quptes, because Ruby
+      event.chat_server = " \t\n\r"
+      event.chat_server_url = 'https://my.chat.server/'
+
+      event.save
+      expect(event.valid_chat_server).to be false
+      expect(event.errors[:chat_server]).to_not be_empty
+    end
+
+    it 'If an event has an empty chat_server and a chat_server_url error should exist' do
+      event = Event.new
+      event.chat_server = ''
+      event.chat_server_url = 'https://my.chat.server/'
+
+      event.save
+      expect(event.valid_chat_server).to be false
+      expect(event.errors[:chat_server]).to_not be_empty
+    end
+  end
+
+  context '#chat_server?' do
+    it 'return true if both chat server and URL are present' do
+      event = Event.new
+      event.chat_server = 'Discord'
+      event.chat_server_url = 'https://www.google.com'
+
+      expect(event.chat_server?).to be true
+    end
+
+    it 'return false if chat server present and URL is blank' do
+      event = Event.new
+      event.chat_server = 'Discord'
+      event.chat_server_url = ' '
+
+      expect(event.chat_server?).to be false
+    end
+
+    it 'return false if chat server blank and URL is present' do
+      event = Event.new
+      event.chat_server = ' '
+      event.chat_server_url = 'https://www.google.com'
+
+      expect(event.chat_server?).to be false
+    end
+
+    it 'return false if chat server and URL are blank' do
+      event = Event.new
+      event.chat_server = ' '
+      event.chat_server_url = nil
+
+      expect(event.chat_server?).to be false
+    end
+
+  end
 end
