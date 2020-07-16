@@ -30,6 +30,28 @@ class Event < ActiveRecord::Base
   def chat_server?
     self.chat_server.present? && self.chat_server_url.present?
   end
+  validate :chat_server_validator
+
+  def chat_server_validator
+    errors[:chat_server].push 'must have both a name and a valid URL' unless self.valid_chat_server
+  end
+
+  def valid_chat_server
+    # using Rails blank? instead of nil to catch all whitespace or empty string
+    if self.chat_server.blank?
+      return true if self.chat_server_url.blank?
+    end
+
+    if self.chat_server.present?
+      return true if self.chat_server_url.present?
+    end
+
+    false
+  end
+
+  def chat_server?
+    self.chat_server.present? && self.chat_server_url.present?
+  end
 
   def event_type_validator
     errors[:online].push 'must have one of online or in person selected' unless self.event_type_selected
