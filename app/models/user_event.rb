@@ -41,6 +41,10 @@ class UserEvent < ActiveRecord::Base
     additional_payments.any? {|payment| payment.payment_id.nil?}
   end
 
+  def registration_cost
+    donation || event.price
+  end
+
   def total_paid
     total = self.payment_amount.to_i
     registration_tables.each do |table|

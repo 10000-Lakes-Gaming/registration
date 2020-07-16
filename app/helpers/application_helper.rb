@@ -65,7 +65,6 @@ module ApplicationHelper
 
   def donations_options(elements = 20, increment = 5, starting = 0)
     fees = optional_fee_list elements, increment, starting
-    # fees.map { |fee| [number_to_currency fee, fee] }
     fees.map do |fee|
       [number_to_currency(fee), fee]
     end
