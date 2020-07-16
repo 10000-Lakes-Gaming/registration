@@ -5,7 +5,7 @@
     <script
     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
     data-key="<%= ENV['PUBLISHABLE_KEY'] %>"
-    data-amount="<%= event.price.to_i * 100 %>"
+    data-amount="<%= user_event.registration_cost.to_i * 100 %>"
     data-name="<%= user_event.user.name %>"
     data-description="<%= event.name %> Payment"
     data-zip-code="true"

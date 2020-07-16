@@ -158,6 +158,6 @@ class UserEventsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.def user_event_params
   def user_event_params
-    params.require(:user_event).permit(:user_id, :event_id, :vip, :paid, :payment_amount, :payment_id, :payment_date, :since)
+    params.require(:user_event).permit(:user_id, :event_id, :vip, :paid, :payment_amount, :payment_id, :payment_date, :since, :donation)
   end
 end

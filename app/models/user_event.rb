@@ -1,11 +1,11 @@
 class UserEvent < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :event
+  belongs_to :user, inverse_of: :user_events
+  belongs_to :event, inverse_of: :user_events
   has_many :registration_tables
   has_many :game_masters
   has_many :additional_payments
-  validates :event_id, :presence => true, :uniqueness => {:scope => :user_id}
-  validates :user_id, :presence => true, :uniqueness => {:scope => :event_id}
+  validates :event_id, :presence => true, :uniqueness => { :scope => :user_id }
+  validates :user_id, :presence => true, :uniqueness => { :scope => :event_id }
   validates :payment_id, :presence => true, :if => :payment_amount
   delegate :name, to: :event
 
@@ -21,12 +21,12 @@ class UserEvent < ActiveRecord::Base
     game_masters.each do |gm|
       tables << gm.table
     end
-    tables.sort {|a,b| a.session <=> b.session}
+    tables.sort { |a, b| a.session <=> b.session }
   end
 
   def payment_ok?
     # @registration.event.price&.nonzero?
-    self.paid? || self.event.price.nil? || self.event.price <= 0
+    self.paid? || self.registration_cost.nil? || self.registration_cost <= 0
   end
 
   def gamemaster?

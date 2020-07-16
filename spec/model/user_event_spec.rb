@@ -87,4 +87,15 @@ describe UserEvent, type: :model do
       expect(reg.unpaid_additional_payments?).to be_falsey
     end
   end
+
+  context '#registration_cost' do
+    it 'if no donation then event price' do
+      expect(admin_my_event.registration_cost).to eq my_event.price
+    end
+
+    it 'if (optional) donation set, then that' do
+      admin_my_event.donation = 44
+      expect(admin_my_event.registration_cost).to eq 44
+    end
+  end
 end

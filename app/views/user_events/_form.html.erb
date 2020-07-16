@@ -1,78 +1,116 @@
 <%= form_for([@event, @user_event]) do |f| %>
-    <% if @user_event.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@user_event.errors.count, "error") %> prohibited this user_event from being saved:</h2>
+  <% if @user_event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_event.errors.count, "error") %> prohibited this user_event from being saved:</h2>
 
-          <ul>
-            <% @user_event.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
+      <ul>
+        <% @user_event.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
 
-    <% if admin? %>
-        <%# admin section %>
-        <div>
-          <%= f.label :user_id %>:
-          <% if @user_event.persisted? %>
-              <%= f.hidden_field :user_id, :value => @user_event.user_id %>
-              <%= "#{@user_event.user.name} (#{@user_event.user.email})" %>
-          <% else %>
-              <%= f.select :user_id, options_for_select(@users.map {|user| ["#{user.name} (#{user.email})", user.id]}.to_h, @user_event.user_id), include_blank: 'Select User...' %>
-          <% end %>
-        </div>
+  <% if admin? %>
+    <%# admin section %>
+    <div>
+      <%= f.label :user_id %>:
+      <% if @user_event.persisted? %>
+        <%= f.hidden_field :user_id, :value => @user_event.user_id %>
+        <%= "#{@user_event.user.name} (#{@user_event.user.email})" %>
+      <% else %>
+        <%= f.select :user_id, options_for_select(@users.map { |user| ["#{user.name} (#{user.email})", user.id] }.to_h, @user_event.user_id), include_blank: 'Select User...' %>
+      <% end %>
+    </div>
 
-        <div>
-          <%= f.label :event_id %>:
-          <% unless @user_event.persisted? %>
-              <%= f.select :event_id, options_for_select(@events.map {|event| [event.name, event.id]}.to_h, @event.id) %>
-          <% else %>
-              <%= @event.name %>
-          <% end %>
-        </div>
+    <div>
+      <%= f.label :event_id %>:
+      <% unless @user_event.persisted? %>
+        <%= f.select :event_id, options_for_select(@events.map { |event| [event.name, event.id] }.to_h, @event.id) %>
+      <% else %>
+        <%= @event.name %>
+      <% end %>
+    </div>
 
     <div class="field">
       <%= f.label :vip, "GM/HQ Only" %>
       <%= f.check_box :vip %>
-      <div class="text-info">This would be a person who is not be playing in any sessions, so suppress any emails for reminders to RSVP for table sessions.</div>
+      <div class="text-info">This would be a person who is not be playing in any sessions, so suppress any emails for
+        reminders to RSVP for table sessions.
+      </div>
     </div>
 
-        <div id="admindiv">
-          <% if @user_event.persisted?
-               username = @user_event.user.name
-             else
-               username = 'the player'
-             end %>
-          <div>
-            <%= f.label :paid, "Check when #{username} has paid: " %>
-            <%= f.check_box :paid %>
-          </div>
-          <div>
-            <%= f.label :payment_amount, 'Amount paid. Note: this needs to be in cents (or dollars * 100)' %>
-            <%= f.number_field :payment_amount %>
-          </div>
-          <div>
-            <%= f.label :payment_id, "Payment ID, Manual, or Cash?"%>
-            <%= f.text_field :payment_id %>
-          </div>
-          <div>
-            <%= f.label :payment_date%>
-            <%= f.datetime_select :payment_date %>
-          </div>
+    <div id="admindiv">
+      <% if @user_event.persisted?
+           username = @user_event.user.name
+         else
+           username = 'the player'
+         end %>
+      <div>
+        <%= f.label :paid, "Check when #{username} has paid: " %>
+        <%= f.check_box :paid %>
+      </div>
+      <div>
+        <%= f.label :payment_amount, 'Amount paid. Note: this needs to be in cents (or dollars * 100)' %>
+        <%= f.number_field :payment_amount %>
+      </div>
+      <div>
+        <%= f.label :payment_id, "Payment ID, Manual, or Cash?" %>
+        <%= f.text_field :payment_id %>
+      </div>
+      <div>
+        <%= f.label :payment_date %>
+        <%= f.datetime_select :payment_date %>
+      </div>
+    </div>
+    <%# end admin section %>
+  <% else %>
+    <%# Normal user block %>
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+    <%= f.hidden_field :event_id, :value => @event.id %>
+    <%= f.hidden_field :paid, :value => false %>
+  <% end %>
+  <% player = @user_event.user %>
+  <div class="well">
+    <div class="row">
+      <div class="col-md-2 col-sm-3"><strong>Name:</strong></div>
+      <div class="col-md-6 col-sm-5"><%= player.name %></div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-sm-3"><strong>PFS Number:</strong></div>
+      <div class="col-md-6 col-sm-5"><%= player.pfs_number %></div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-sm-3"><strong>Email:</strong></div>
+      <div class="col-md-6 col-sm-5"><%= player.email %></div>
+    </div>
+    <% if @event.price&.nonzero? %>
+      <% if @user_event.donation %>
+        <div class="row">
+          <% if @user_event.paid? %>
+            <% donation_label = 'My Donation' %>
+          <% else %>
+            <% donation_label = 'My Pledged Donation' %>
+          <% end %>
+          <div class="col-md-2 col-sm-3"><%= f.label :donation, donation_label %>:</div>
+          <div class="col-md-6 col-sm-5">
+            <% if @user_event.paid? %>
+              <%= number_to_currency @user_event.donation %></div>
+            <% else %>
+              <%= f.select :donation, options_for_select(donations_options, @event.price) %>
+            <% end %>
+            </div>
         </div>
-        <%# end admin section %>
-    <% else %>
-        <%# Normal user block %>
-        <%= f.hidden_field :user_id, :value => current_user.id %>
-        <%= f.hidden_field :event_id, :value => @event.id %>
-        <%= f.hidden_field :paid, :value => false %>
+      <% end %>
     <% end %>
-
-
+    </div>
     <%# we need styling on the buttons. %>
     <div class="actions">
-      <%= f.submit "Register", :class => 'btn btn-primary' %>
+      <% if @user_event.persisted? %>
+        <%= f.submit "Update", :class => 'btn btn-primary' %>
+      <% else %>
+        <%= f.submit "Register", :class => 'btn btn-primary' %>
+      <% end %>
     </div>
 <% end %>
