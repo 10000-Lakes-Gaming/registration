@@ -7,6 +7,7 @@ class Event < ActiveRecord::Base
   has_many :registration_tables, through: :tables
 
   validate :event_type_validator
+  validate :optional_fee_validator
   validate :chat_server_validator
 
   def chat_server_validator
@@ -32,6 +33,16 @@ class Event < ActiveRecord::Base
 
   def event_type_validator
     errors[:online].push 'must have one of online or in person selected' unless self.event_type_selected
+  end
+
+  def optional_fee_validator
+    errors[:optional_fee].push 'must not be checked unless this event is a charity event' unless self.charity_optional_fee_ok
+  end
+
+  def charity_optional_fee_ok
+    return true if self.charity
+
+    !self.optional_fee
   end
 
   def event_type_selected

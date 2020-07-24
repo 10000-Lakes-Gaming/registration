@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  has_many :user_events
+  has_many :user_events, inverse_of: :user
   has_many :event_hosts
   validates_uniqueness_of :email
   validates_uniqueness_of :pfs_number, unless: :pfs_number_blank?

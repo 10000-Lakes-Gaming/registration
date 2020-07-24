@@ -1,8 +1,8 @@
 
-event_start = DateTime.now.change({ hour: 12, min: 0, sec: 0 })
+event_start = DateTime.now.change({ hour: 12, min: 0, sec: 0 }) + 1.month
 
 event = Event.create!({ name: 'Initial Con!', start: event_start, end: event_start + 29.hours,
-                        rsvp_close: event_start - 1.day, prereg_ends: event_start - 1.week,
+                        rsvp_close: event_start - 1.day, prereg_ends: event_start - 1.week  ,
                         location: 'Fantasy Realms' })
 
 sessions = Session.create!([{ event_id: event.id, name: "Session 1", start: event_start,
@@ -29,9 +29,9 @@ tables = Table.create!([{ session_id: 1, scenario_id: 1, max_players: 6, premium
 
 
 puts("Seeding users!")
-users = User.create!([{ name: "Jack Brown", pfs_number: 74294, admin: true, email: "silbeg@gmail.com",
+users = User.create!([{ name: "Jack Brown", pfs_number: 788, admin: true, email: "silbeg@gmail.com",
                         password: 'password', password_confirmation: 'password' },
-                      { name: "Keith Apperson", pfs_number: 124235, admin: true, email: "ziegrauros@gmail.com",
+                      { name: "A. User", pfs_number: 1234687, admin: true, email: "auser@gmail.com",
                         password: 'password', password_confirmation: 'password' },
                       { name: "Ryan Blomquist", pfs_number: 8769, admin: true, email: "blomquist.r@gmail.com",
                         password: 'password', password_confirmation: 'password' }])

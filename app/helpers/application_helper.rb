@@ -46,6 +46,7 @@ module ApplicationHelper
 
   def self_select_allowed?
     allowed = false
+    # Kept to be refactored
     # @event.sessions.each do |session|
     #   session.tables.each do |table|
     #     allowed |= table.gm_self_select?
@@ -57,5 +58,17 @@ module ApplicationHelper
   def online_sales_closed?
     @event.online_sales_closed?
   end
+
+  def optional_fee_list(elements = 20, increment = 5, starting = 0)
+    fees = (starting..(starting + elements * increment)).step(increment).to_a
+  end
+
+  def donations_options(elements = 20, increment = 5, starting = 0)
+    fees = optional_fee_list elements, increment, starting
+    fees.map do |fee|
+      [number_to_currency(fee), fee]
+    end
+  end
+
 end
 

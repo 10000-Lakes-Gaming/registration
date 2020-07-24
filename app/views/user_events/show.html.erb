@@ -24,6 +24,16 @@
   </div>
 
   <% if @event.price&.nonzero? %>
+    <% if @user_event.donation %>
+      <div class="row">
+        <div class="col-md-2 col-sm-3"><strong><% unless @user_event.paid? %>Pledged <% end %>Donation:</strong></div>
+        <div class="col-md-6 col-sm-5"><%= number_to_currency @user_event.donation %>
+          <% unless @user_event.paid? %>
+            <div><%= link_to 'Edit Pledged Donation', edit_event_user_event_path(@event, @user_event) %></div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
     <div class="row">
       <div class="col-md-2 col-sm-3"><strong>Paid:</strong></div>
       <div class="col-md-6 col-sm-5">
@@ -33,7 +43,6 @@
           No
           <%= render partial: "registration_payment/registration_payment", locals: {event: @event, user_event: @user_event} %>
         <% end %>
-
       </div>
     </div>
   <% end %>
@@ -87,23 +96,23 @@
 
 
 <%
-  @sessions = @event.sessions
-  @sessions = @sessions.sort
-  @table_sessions = {}
+    @sessions = @event.sessions
+    @sessions = @sessions.sort
+    @table_sessions = {}
 
-  @sessions.each do |session|
-    @table_sessions[session] = nil
-  end
+    @sessions.each do |session|
+      @table_sessions[session] = nil
+    end
 
 
-  @user_event.registration_tables.each do |reg_table|
-    session                  = reg_table.table.session
-    @table_sessions[session] = reg_table
-  end
-  @user_event.game_masters.each do |game_master|
-    session                  = game_master.table.session
-    @table_sessions[session] = game_master
-  end
+    @user_event.registration_tables.each do |reg_table|
+      session = reg_table.table.session
+      @table_sessions[session] = reg_table
+    end
+    @user_event.game_masters.each do |game_master|
+      session = game_master.table.session
+      @table_sessions[session] = game_master
+    end
 %>
 <div class="well">
   <table class="table table-striped">
