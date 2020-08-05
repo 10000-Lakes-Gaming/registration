@@ -12,6 +12,7 @@ class Event < ActiveRecord::Base
 
   def set_donation(user_event)
     return unless optional_fee?
+    return unless user_event.donation.blank?
 
     user_event.donation = price
   end
