@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 describe Event, type: :model do
-
+  fixtures :events
+  fixtures :users
   context 'One of in_person or online must be selected' do
     it 'If only in_person selected validation passes' do
       event = Event.new
@@ -326,6 +327,24 @@ describe Event, type: :model do
 
       expect(event.chat_server?).to be false
     end
+  end
+  context 'charity event' do
+    it 'It is a charity event with an optional fee' do
+      event = events(:charity_event)
+      expect(event.charity?).to be true
+      expect(event.optional_fee?).to be true
+    end
 
+    it 'Calls after add' do
+      event = events(:charity_event)
+      user = users(:dude1)
+
+      user_event= UserEvent.new
+      user_event.user = user
+      user_event.event = event
+      event.user_events << user_event
+
+      expect(user_event.donation).to eq event.price
+    end
   end
 end

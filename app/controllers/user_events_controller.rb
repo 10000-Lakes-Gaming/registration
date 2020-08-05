@@ -65,10 +65,11 @@ class UserEventsController < ApplicationController
   # GET /user_events/new
   def new
     if current_user.admin?
-      @user_event = UserEvent.new({:event => @event})
+      @user_event = UserEvent.new({ :event => @event })
     else
-      @user_event = UserEvent.new({:user => current_user, :event => @event})
+      @user_event = UserEvent.new({ :user => current_user, :event => @event })
     end
+    @event.set_donation(@user_event)
   end
 
   # GET /user_events/1/edit
@@ -154,7 +155,6 @@ class UserEventsController < ApplicationController
       }
     end
   end
-
 
   # Never trust parameters from the scary internet, only allow the white list through.def user_event_params
   def user_event_params

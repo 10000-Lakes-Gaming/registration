@@ -1,6 +1,6 @@
 class Event < ActiveRecord::Base
   has_many :sessions, dependent: :destroy
-  has_many :user_events, dependent: :destroy
+  has_many :user_events, dependent: :destroy, after_add: :set_donation
   has_many :event_hosts, dependent: :destroy
   has_many :tables, through: :sessions
   has_many :game_masters, through: :tables
@@ -9,6 +9,12 @@ class Event < ActiveRecord::Base
   validate :event_type_validator
   validate :optional_fee_validator
   validate :chat_server_validator
+
+  def set_donation(user_event)
+    return unless optional_fee?
+
+    user_event.donation = price
+  end
 
   def chat_server_validator
     errors[:chat_server].push 'must have both a name and a valid URL' unless self.valid_chat_server
