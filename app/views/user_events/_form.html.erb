@@ -75,15 +75,15 @@
   <div class="well">
     <div class="row">
       <div class="col-md-2 col-sm-3"><strong>Name:</strong></div>
-      <div class="col-md-6 col-sm-5"><%= player.name %></div>
+      <div class="col-md-6 col-sm-5"><%= player&.name %></div>
     </div>
     <div class="row">
       <div class="col-md-2 col-sm-3"><strong>PFS Number:</strong></div>
-      <div class="col-md-6 col-sm-5"><%= player.pfs_number %></div>
+      <div class="col-md-6 col-sm-5"><%= player&.pfs_number %></div>
     </div>
     <div class="row">
       <div class="col-md-2 col-sm-3"><strong>Email:</strong></div>
-      <div class="col-md-6 col-sm-5"><%= player.email %></div>
+      <div class="col-md-6 col-sm-5"><%= player&.email %></div>
     </div>
     <% if @event.price&.nonzero? %>
       <% if @user_event.donation %>
