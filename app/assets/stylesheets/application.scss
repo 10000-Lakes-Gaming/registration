@@ -36,6 +36,23 @@ $info: #007294;
 $success: #398439;
 $unpaid: #B00100;
 
+@mixin width {
+  width: auto !important;
+}
+
+table {
+  &.table-fit {
+    @include width;
+    table-layout: auto !important;
+    thead th, tfoot th  {
+      @include width;
+    }
+    tbody td, tfoot td {
+      @include width;
+    }
+  }
+}
+
 .header-main {
   background-color: $main-background;
 }

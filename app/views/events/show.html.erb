@@ -36,7 +36,7 @@
   </dl>
 </div>
 
-<div>
+<div class="panel">
   <h2>Online Registration</h2>
   <% if @event.closed? %>
     <div class="alert-danger lead">Online Registration is closed!</div>
@@ -59,12 +59,14 @@
   <% end %>
 </div>
 
-<div class="detailsBlock" style="border: solid thin black;">
+<div class="panel detailsBlock" style="border: solid thin black;">
   <h3>Registration Details</h3>
+  <% if @event.info.present? %>
+    <div class="well">
+      <div class="bg-warning text-primary" style="margin-top: 0;white-space: pre-wrap"><%= @event.info %></div>
+    </div>
+  <% end %>
 
-  <div class="well">
-    <div class="bg-warning text-primary" style="margin-top: 0;white-space: pre-wrap"><%= @event.info %></div>
-  </div>
   <div class="well">
     <% if @event.charity? %>
       <div class="row">
@@ -170,7 +172,7 @@
 
 <%# TODO - for future, maybe make this a little more dynamic - and have a custom message %>
 <% unless self_select_allowed? %>
-  <div id="gm_info" style="border: solid thin black;">
+  <div class="panel" id="gm_info" style="border: solid thin black;">
     <h3 class="text-danger">Attention GMs!</h3>
 
     <div class="well">
@@ -194,10 +196,12 @@
   </div>
 <% end %>
 
+<%= render partial: 'my_schedule', locals: { event: @event, user_event: @registration } %>
 
 <div class="sessionsOffered" style="border: solid thin black;">
-  <h3>Sessions/Scenarios Offered</h3>
+  <h3><%= @event.name %> Game Sign-up</h3>
 
+  <%# Add clamshells here %>
   <% if @event.closed? %>
     <div class="well">
       <div class="bg-warning text-danger lead" style="margin-bottom: 0">
@@ -326,6 +330,7 @@
             <% if @registration %>
               <div class="col-md-3 no-pad " style="padding-left: 1em;">
                 <% if @tables.include? table %>
+
                   <% registration_table = @reg_tables_hash[table] %>
                   <% if registration_table.payment_ok? %>
                     <span class="badge badge-player">Player</span>
@@ -353,12 +358,17 @@
                   <% end %>
                 <% end %>
 
+                <%# Add helper to check for times as well... %>
                 <% registered_this_session = @sessions.include?(session) || @gm_sessions.include?(session) %>
                 <% if !registered_this_session && registrations_available && @registration.payment_ok? %>
+
                   <% unless table.raffle? or @event.closed? or online_sales_closed? or @event.tables_reg_offsite %>
                     <% unless table.premium? %>
-                      <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table),
-                                    :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.closed? %>
+                      <%# TODO - make this something like "ENOUGH" GMs present... i.e., 1 GM per 6 player %>
+                      <% if table.game_masters.present? %>
+                        <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table),
+                                      :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.closed? %>
+                      <% end %>
                     <% else %>
                       <%= button_to "Buy Ticket for #{number_to_currency table.price}", new_event_session_table_registration_table_path(@event, session, table),
                                     :class => "btn btn-xs btn-success", :method => :get, :disabled => table.closed?,
