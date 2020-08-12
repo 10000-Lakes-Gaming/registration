@@ -24,20 +24,19 @@
     <h3>My <%= event.name %> Schedule</h3>
     <!-- Add some padding on the elements below-->
     <div class="bg-warning">
-      <div style="display: inline-block; vertical-align: top; font-size: 1.5em;">
-        <span class="glyphicon glyphicon-bullhorn"></span>
-      </div>
-      <div style="display: inline-block">
-        Chat Server: <a target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a>
+      <div>
+        <span style="font-size: 1.5em" class="glyphicon glyphicon-bullhorn"></span>
+        <%= event.name %> Chat Server:
+        <a target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a>
       </div>
     </div>
 
     <div class="bg-warning">
-      <div style="display: inline-block; vertical-align: top; font-size: 1.5em;">
-        <span class="glyphicon glyphicon-info-sign"></span>
-      </div>
-      <div style="display: inline-block">
-        Boilerplate about looking for VTTs for online tables in the table details.
+      <div><span style="font-size: 1.5em" class="glyphicon glyphicon-info-sign"></span>
+        If your game location is 'online', please click on the 'View Table Details' link for that session. Your game
+        master
+        will have important information there, such as their <abbr title="Virtual Table Top">VTT</abbr> link, and
+        which chat room the game will be using. Instructions on how to sign-in to the table will be there as well.
       </div>
     </div>
 
@@ -47,14 +46,15 @@
           <span class="text-danger glyphicon glyphicon-warning-sign"></span>
         </div>
         <div style="display: inline-block">
-          Boilerplate for GMs to make sure they add their VTT links, voice chat rooms, and possibly signup form links
+          Please make sure that you have added your <abbr title="Virtual Table Top">VTT</abbr> link, included the chat
+          room (if needed), and your sign-in instructions (typically a link to your sign-in sheet).
         </div>
       </div>
     <% end %>
   <% end %>
   <div class="table-responsive">
     <table class="table table-striped panel-body">
-<!--    <table class="table table-striped panel-body table-fit">-->
+      <!--    <table class="table table-striped panel-body table-fit">-->
       <thead>
       <tr>
         <th scope="col">Session</th>
