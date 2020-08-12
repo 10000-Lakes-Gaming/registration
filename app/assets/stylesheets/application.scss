@@ -36,6 +36,33 @@ $info: #007294;
 $success: #398439;
 $unpaid: #B00100;
 
+@mixin width {
+  width: auto !important;
+}
+
+table {
+  &.table-fit {
+    @include width;
+    table-layout: auto !important;
+
+    thead th, tfoot th {
+      @include width;
+    }
+
+    tbody td, tfoot td {
+      @include width;
+    }
+  }
+}
+
+.panel-padded {
+  padding: 0.5em;
+}
+
+.top-buffer {
+  padding-top: 5px;
+}
+
 .header-main {
   background-color: $main-background;
 }
@@ -91,6 +118,7 @@ $unpaid: #B00100;
       background-color: $paleGray;
       color: $blue;
     }
+
     /* Change the link color on hover */
     li a:hover {
       background-color: $blue;
@@ -188,18 +216,21 @@ div.bottom {
   border-spacing: 2px;
   border-collapse: separate;
   width: 100%;
+
   td {
     font-size: 0.79em;
     padding: 5px;
     background-color: $white;
     vertical-align: top;
   }
+
   td:first-child {
     font-weight: bold;
     background-color: $lightGrey;
     width: 25%;
     white-space: nowrap;
   }
+
   td.tableHeaderInfo {
     width: 100%;
     color: #666666;
@@ -318,6 +349,7 @@ div.bottom {
   @include button-variant($white, $evergreen, $evergreen);
   font-weight: bold;
 }
+
 .btn-more-info {
   @include button-variant($white, #007294, #007294);
   font-weight: bold;
@@ -342,6 +374,7 @@ div.bottom {
 .btn-round-xs {
   border-radius: 11px;
 }
+
 .btn-info {
   @include button-variant($white, #007294, #007294);
 }

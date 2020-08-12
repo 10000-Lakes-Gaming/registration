@@ -3,6 +3,33 @@ require 'rails_helper'
 describe Event, type: :model do
   fixtures :events
   fixtures :users
+  fixtures :sessions
+  fixtures :tables
+
+  context '#tables' do
+    it 'my event has 6 tables' do
+      event = events(:my_event)
+      one = tables(:one)
+      two = tables(:two)
+      core = tables(:core)
+      raffle = tables(:raffle)
+      premium = tables(:premium)
+      premium2 = tables(:premium_2)
+      expect(event.tables.length).to be 6
+      expect(event.tables).to include(one, two, core, raffle, premium, premium2)
+    end
+  end
+
+  context '#sessions' do
+    it 'my_event has 2 sessions' do
+      event = events(:my_event)
+      morning = sessions(:morning)
+      evening = sessions(:evening)
+      expect(event.sessions.length).to be 2
+      expect(event.sessions).to include(morning, evening)
+    end
+  end
+
   context 'One of in_person or online must be selected' do
     it 'If only in_person selected validation passes' do
       event = Event.new

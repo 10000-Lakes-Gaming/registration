@@ -1,0 +1,115 @@
+<%
+    # Consider moving all of this to a helper
+    # Also move this to a partial, so that we can include it on the Events page.
+    sessions = event.sessions
+    sessions = sessions.sort
+    table_sessions = {}
+
+    sessions.each do |session|
+      table_sessions[session] = nil
+    end
+
+    user_event.registration_tables.each do |reg_table|
+      session = reg_table.table.session
+      table_sessions[session] = reg_table
+    end
+    user_event.game_masters.each do |game_master|
+      session = game_master.table.session
+      table_sessions[session] = game_master
+    end
+%>
+
+<div class="panel panel-padded" style="border: solid thin black;">
+  <% if event.online? %>
+    <h3>My <%= event.name %> Schedule</h3>
+    <!-- Add some padding on the elements below-->
+    <div class="bg-warning top-buffer">
+      <div>
+        <span style="font-size: 1.5em" class="glyphicon glyphicon-bullhorn"></span>
+        <%= event.name %> Chat Server:
+        <a target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a>
+      </div>
+    </div>
+
+    <div class="bg-warning top-buffer">
+      <div><span style="font-size: 1.5em" class="glyphicon glyphicon-info-sign"></span>
+        If your game location is 'online', please click on the 'View Table Details' link for that session. Your game
+        master will have important information there, such as their <abbr title="Virtual Table Top">VTT</abbr> link, and
+        which chat room the game will be using. Instructions on how to sign-in to the table will be there as well.
+      </div>
+    </div>
+
+    <% if user_event.gamemaster? %>
+      <div class="bg-warning text-danger top-buffer">
+        <div style="display: inline-block; vertical-align: top; font-size: 1.5em;">
+          <span class="text-danger glyphicon glyphicon-warning-sign"></span>
+        </div>
+        <div style="display: inline-block">
+          Please make sure that you have added your <abbr title="Virtual Table Top">VTT</abbr> link, included the chat
+          room (if needed), and your sign-in instructions (typically a link to your sign-in sheet).
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  <div class="table-responsive">
+    <table class="table table-striped panel-body">
+      <!--    <table class="table table-striped panel-body table-fit">-->
+      <thead>
+      <tr>
+        <th scope="col">Session</th>
+        <th scope="col">Scenario</th>
+        <th scope="col">Ticket Type</th>
+        <th scope="col">Location</th>
+        <th scope="col">Table Details</th>
+        <% if user_event.gamemaster? %>
+          <th scope="col">GM Setup</th>
+        <% end %>
+        <th scope="col">Payment Due?</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% sessions.each do |session| %>
+        <% selection = table_sessions[session] %>
+        <% unless selection.blank? %>
+          <tr>
+            <td><%= session.timeslot %></td>
+            <td><%= selection.table.scenario.long_name %></td>
+            <td>
+              <% if selection.is_a? RegistrationTable %>
+                Player
+              <% elsif selection.is_a? GameMaster %>
+                GM
+              <% end %>
+            </td>
+            <td>
+              <%# handle online differently %>
+              <%= (selection.is_a? GameMaster) ? selection.table.location : 'See Musterer' %>
+            </td>
+            <td>
+              <div style="display: inline-block"><%= link_to 'View Table Details', event_session_table_path(event, session, selection.table) %></div>
+            </td>
+            <% if user_event.gamemaster? %>
+              <td>
+                <% if selection.is_a? GameMaster %>
+                  <div style="display: inline-block"><%= link_to 'Edit Table Details', event_session_table_game_master_path(event, session, selection.table, selection) %></div>
+                <% end %>
+            <% end %>
+            </td>
+            <% if selection.is_a? RegistrationTable %>
+              <td>
+                <% unless selection.payment_ok? %>
+                  <div style="display: inline-block">
+                    <%= render partial: "table_payment/table_payment", locals: { event: event, registration_table: selection, button_label: "Pay for #{number_to_currency(selection.table.price)} Ticket" } %>
+                  </div>
+                <% end %>
+              </td>
+            <% elsif selection.is_a? GameMaster %>
+              <td></td>
+            <% end %>
+        <% end %>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
