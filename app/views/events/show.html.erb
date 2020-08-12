@@ -374,7 +374,7 @@
 
                       <% if !registered_this_session && table.gm_self_select? && table.need_gms? %>
                         <%= button_to 'I will GM!', new_event_session_table_game_master_path(@event, session, table),
-                                      :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.closed? %>
+                                      :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.closed? if self_select_allowed?%>
                       <% end %>
 
 

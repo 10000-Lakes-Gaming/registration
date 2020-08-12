@@ -16,6 +16,10 @@
     <%= f.text_field :name %>
   </div>
 
+  <div class="field">
+    <%= f.label :event_number, 'Organized Play Event Number' %><br>
+    <%= f.number_field :event_number %>
+  </div>
   <hr/>
 
   <div class="field">
@@ -72,13 +76,13 @@
   <hr/>
 
   <div class="field">
-    <%= f.label :charity, 'This is a charity event: ' %>
     <%= f.check_box :charity %>
+    <%= f.label :charity, 'This is a charity event: ' %>
   </div>
 
   <div class="field">
-    <%= f.label :optional_fee, "The registration fee for this event is an optional donation: " %>
     <%= f.check_box :optional_fee %>
+    <%= f.label :optional_fee, "The registration fee for this event is an optional donation: " %>
   </div>
 
   <hr/>
@@ -95,23 +99,26 @@
     <%= f.label :info %><br/>
     <%= f.text_area :info %>
   </div>
+  <hr>
+  <div class="field">
+    <%= f.check_box :gm_self_select %>
+    <%= f.label :gm_self_select, 'GMs are allowed to self-select?' %>
+
+  </div>
   <div class="field">
     <%= f.label :gm_volunteer_link %><br/>
     <%= f.url_field :gm_volunteer_link %>
   </div>
+  <hr>
   <div class="field">
-    <%= f.label :tables_reg_offsite, 'Is table registration being handled by external convention?' %><br>
     <%= f.check_box :tables_reg_offsite %>
+    <%= f.label :tables_reg_offsite, 'Table registration is being handled by external convention?' %>
   </div>
-  <div class="field">
+  <p class="field">
     <%= f.label :external_url, 'URL for external Convention\'s registration site.' %><br>
     <%= f.url_field :external_url %>
-  </div>
-  <div class="field">
-    <%= f.label :event_number %><br>
-    <%= f.number_field :event_number %>
-  </div>
+  </p>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class => 'btn btn-success' %>
   </div>
 <% end %>

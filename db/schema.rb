@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_16_013340) do
+ActiveRecord::Schema.define(version: 2020_08_12_021751) do
 
   create_table "additional_payments", force: :cascade do |t|
     t.string "category"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 2020_07_16_013340) do
     t.string "chat_server"
     t.string "chat_server_url"
     t.boolean "optional_fee"
+    t.boolean "gm_self_select", default: true
   end
 
   create_table "game_masters", force: :cascade do |t|

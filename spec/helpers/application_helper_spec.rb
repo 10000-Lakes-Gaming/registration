@@ -35,7 +35,7 @@ describe ApplicationHelper do
       @event.gm_self_select = true
       expect(helper.self_select_allowed?).to be true
     end
-    
+
     it 'if event is true, then it should be falke if all tables are set to false' do
       @event.gm_self_select = true
       @event.tables.each { |table| table.gm_self_select = false }
