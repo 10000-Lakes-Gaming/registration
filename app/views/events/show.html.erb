@@ -36,7 +36,7 @@
   </dl>
 </div>
 
-<div class="panel">
+<div class="panel panel-padded">
   <h2>Online Registration</h2>
   <% if @event.closed? %>
     <div class="alert-danger lead">Online Registration is closed!</div>
@@ -59,7 +59,7 @@
   <% end %>
 </div>
 
-<div class="panel detailsBlock" style="border: solid thin black;">
+<div class="panel panel-padded detailsBlock" style="border: solid thin black;">
   <h3>Registration Details</h3>
   <% if @event.info.present? %>
     <div class="well">
@@ -172,7 +172,7 @@
 
 <%# TODO - for future, maybe make this a little more dynamic - and have a custom message %>
 <% unless self_select_allowed? %>
-  <div class="panel" id="gm_info" style="border: solid thin black;">
+  <div class="panel panel-padded" id="gm_info" style="border: solid thin black;">
     <h3 class="text-danger">Attention GMs!</h3>
 
     <div class="well">
@@ -198,7 +198,7 @@
 
 <%= render partial: 'my_schedule', locals: { event: @event, user_event: @registration } %>
 
-<div class="sessionsOffered" style="border: solid thin black;">
+<div class="panel panel-padded sessionsOffered" style="border: solid thin black;">
   <h3><%= @event.name %> Game Sign-up</h3>
 
   <% if @event.closed? %>

@@ -19,11 +19,11 @@
     end
 %>
 
-<div class="panel" style="border: solid thin black;">
+<div class="panel panel-padded" style="border: solid thin black;">
   <% if event.online? %>
     <h3>My <%= event.name %> Schedule</h3>
     <!-- Add some padding on the elements below-->
-    <div class="bg-warning">
+    <div class="bg-warning top-buffer">
       <div>
         <span style="font-size: 1.5em" class="glyphicon glyphicon-bullhorn"></span>
         <%= event.name %> Chat Server:
@@ -31,17 +31,16 @@
       </div>
     </div>
 
-    <div class="bg-warning">
+    <div class="bg-warning top-buffer">
       <div><span style="font-size: 1.5em" class="glyphicon glyphicon-info-sign"></span>
         If your game location is 'online', please click on the 'View Table Details' link for that session. Your game
-        master
-        will have important information there, such as their <abbr title="Virtual Table Top">VTT</abbr> link, and
+        master will have important information there, such as their <abbr title="Virtual Table Top">VTT</abbr> link, and
         which chat room the game will be using. Instructions on how to sign-in to the table will be there as well.
       </div>
     </div>
 
     <% if user_event.gamemaster? %>
-      <div class="bg-warning text-danger">
+      <div class="bg-warning text-danger top-buffer">
         <div style="display: inline-block; vertical-align: top; font-size: 1.5em;">
           <span class="text-danger glyphicon glyphicon-warning-sign"></span>
         </div>
