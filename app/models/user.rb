@@ -62,6 +62,15 @@ class User < ActiveRecord::Base
     current_events
   end
 
+  def registration_for_event(event)
+    user_events.find { |ue| ue.event.eql? event }
+  end
+
+  def gamemaster_for_event(event)
+    registration = registration_for_event event
+    registration.present? && registration.gamemaster?
+  end
+
   def <=> (user)
     sort = 0
     if user.nil?
@@ -74,12 +83,13 @@ class User < ActiveRecord::Base
 
 
 end
-  private
 
-  def dci_number_blank?
-    dci_number.blank?
-  end
+private
 
-  def pfs_number_blank?
-    pfs_number.blank?
-  end
+def dci_number_blank?
+  dci_number.blank?
+end
+
+def pfs_number_blank?
+  pfs_number.blank?
+end

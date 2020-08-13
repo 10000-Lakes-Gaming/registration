@@ -1,4 +1,48 @@
-<h1>Editing Game Master</h1>
+<!-- breadcrumbs -->
+<ol class="breadcrumb">
+  <li><%= link_to "#{@event.name}", event_path(@event) %></li>
+  <li><%= link_to "#{@session.long_name}", event_session_path(@event, @session) %></li>
+  <li><%= link_to "#{@table.long_name}", event_session_table_path(@event, @session, @table) %></li>
+  <li>Game Master Information</li>
+</ol>
+
+<div class="page-header">
+  <h1><%= @event.name %></h1>
+  <h2><%= @session.name %>
+    <small><%= @session.timeslot %></small>
+  </h2>
+  <h3><%= @table.long_name %></h3>
+</div>
+
+<% player = @game_master&.user_event&.user %>
+<%#
+table info
+table number
+session ?
+%>
+<h4>Table Information</h4>
+<div class="panel panel-padded" style="border: solid thin black;">
+  <div class="row">
+    <div class="col-md-2 col-sm-3"><strong>Table Location:</strong></div>
+    <div class="col-md-6 col-sm-5"><%= @table.location %></div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 col-sm-3"><strong>Table Information:</strong></div>
+    <div class="col-md-6 col-sm-5">Put stuff here</div>
+  </div>
+</div>
+
+<h4>Game Master's Information</h4>
+<div class="panel panel-padded" style="border: solid thin black;">
+  <div class="row">
+    <div class="col-md-2 col-sm-3"><strong>Game Master:</strong></div>
+    <div class="col-md-6 col-sm-5"><%= player&.formal_name %></div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 col-sm-3"><strong>Email:</strong></div>
+    <div class="col-md-6 col-sm-5"><%= player&.email %></div>
+  </div>
+</div>
 
 <%= render 'form' %>
 

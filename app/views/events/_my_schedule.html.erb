@@ -91,7 +91,7 @@
             <% if user_event.gamemaster? %>
               <td>
                 <% if selection.is_a? GameMaster %>
-                  <div style="display: inline-block"><%= link_to 'Edit Table Details', event_session_table_game_master_path(event, session, selection.table, selection) %></div>
+                  <div style="display: inline-block"><%= link_to 'Edit Table Details', edit_event_session_table_game_master_path(event, session, selection.table, selection) %></div>
                 <% end %>
             <% end %>
             </td>

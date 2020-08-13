@@ -19,6 +19,10 @@ module ApplicationHelper
     host || admin?
   end
 
+  def game_master?
+    current_user.gamemaster_for_event @event
+  end
+
   def yes_no (value)
     value ? "Yes" : "No"
   end
