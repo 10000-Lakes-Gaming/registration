@@ -1,4 +1,11 @@
 <p id="notice"><%= notice %></p>
+
+<ol class="breadcrumb">
+  <li><%= link_to "#{@event.name}", event_path(@event) %></li>
+  <li><%= link_to "#{@session.long_name}", event_session_path(@event, @session) %></li>
+  <li><%= @table.long_name %></li>
+</ol>
+
 <div class="page-header">
   <h1><%= @event.name %></h1>
   <h2><%= @session.name %>

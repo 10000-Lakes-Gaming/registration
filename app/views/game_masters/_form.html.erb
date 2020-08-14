@@ -12,59 +12,67 @@
   <% end %>
 
 
+  <h4>Online Game Information</h4>
+  <div class="panel panel-padded thin-border">
+  </div>
 
   <%= f.hidden_field :table_id, :value => @table.id %>
 
-
   <%# this needs to be a dropdown of registered users -- which can be found from the user_events %>
-  <% if admin? %>
-    <div class="field">
-      <%= f.label :table_number %>
-      <div class="small">This is the exact table number/location for this GM.</div>
-      <%= f.text_field :table_number %>
-    </div>
-
-    <% unless @table.location.blank? %>
+  <% if event_host? %>
+    <h4>Host Contolled Information</h4>
+    <div class="panel panel-padded thin-border">
       <div class="field">
-        <div>Table numbers used by other GMs for this Table</div>
-        <div>
-          <% @table.game_masters.each do |gm| %>
-            <% unless @game_master == gm %>
-              <%= gm.table_number %>
+        <%= f.label :table_number %>
+        <div class="small">The table number/location for this GM.</div>
+        <%= f.text_field :table_number %>
+      </div>
+
+      <% unless @table.location.blank? %>
+        <div class="field">
+          <div>Table numbers used by other GMs for this Table</div>
+          <div>
+            <% @table.game_masters.each do |gm| %>
+              <% unless @game_master == gm %>
+                <%= gm.table_number %>
+              <% end %>
             <% end %>
-          <% end %>
+          </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
 
-    <% unless @table.location.blank? %>
+      <% unless @table.location.blank? %>
+        <div class="field">
+          <div>Location(s) of this table</div>
+          <div>
+            <%= @table.location %>
+          </div>
+        </div>
+      <% end %>
+
       <div class="field">
-        <div>Location(s) of this table</div>
-        <div>
-          <%= @table.location %>
-        </div>
+        <%= f.label :user_event_id, "Game Master" %>
+        <% if @game_master.user_event
+             gm_id = @game_master.user_event.id
+           else
+             gm_id = 0
+           end %>
+        <%# have to make user_event_id required. %>
+        <%= f.select :user_event_id, options_for_select(@possible_gms.map { |user_event| [user_event.user.name, user_event.id] }.to_h, gm_id), include_blank: 'Select User...' %>
       </div>
-    <% end %>
 
-    <div class="field">
-      <%= f.label :user_event_id, "Game Master" %>
-      <% if @game_master.user_event
-           gm_id = @game_master.user_event.id
-         else
-           gm_id = 0
-         end %>
-      <%# have to make user_event_id required. %>
-      <%= f.select :user_event_id, options_for_select(@possible_gms.map { |user_event| [user_event.user.name, user_event.id] }.to_h, gm_id), include_blank: 'Select User...' %>
+      <hr>
+      <div class="actions">
+        <%= f.submit "Save Game Master", :class => 'btn btn-warning   ' %>
+      </div>
     </div>
-
-    <hr>
+  <% elsif @game_master.new_record? %>
+      <div class="actions">
+        <%= f.submit "Add me as GM to Table", :class => 'btn btn-warning' %>
+      </div>
+    <% else %>
     <div class="actions">
-      <%= f.submit "Save Game Master", :class => 'btn btn-warning   ' %>
-    </div>
-  <% else %>
-
-    <div class="actions">
-      <%= f.submit "Add me as GM to Table", :class => 'btn btn-warning' %>
+      <%= f.submit "Save", :class => 'btn btn-warning' %>
     </div>
   <% end %>
 <% end %>
