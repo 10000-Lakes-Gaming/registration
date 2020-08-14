@@ -63,6 +63,13 @@ table {
   border: solid thin black
 }
 
+dd.head, dt.head {
+  font-size: 16px;
+}
+dd.padded {
+  margin-top: 0.5em;
+}
+
 .top-buffer {
   padding-top: 5px;
 }
@@ -130,6 +137,10 @@ table {
       text-decoration: none;
     }
   }
+}
+
+a.ul {
+  text-decoration: underline;
 }
 
 div.bottom {

@@ -2,27 +2,21 @@
   <p id="notice" class="alert alert-success"><%= notice %></p>
 <% end %>
 
-<style type="text/css">
-    dt, dd {
-        font-size: 16px;
-    }
-</style>
-
 <h1><strong><%= @event.name %></strong></h1>
 <div>
   <h2>Event Details</h2>
   <dl class="dl-horizontal">
-    <dt>Location:</dt>
-    <dd class=" text-info"><%= @event.location %></dd>
-    <dt>Dates:</dt>
-    <dd class=" text-info"><%= @event.start.localtime.to_formatted_s(:long) %>
+    <dt class="head">Location:</dt>
+    <dd class="head text-info"><%= @event.location %></dd>
+    <dt class="head">Dates:</dt>
+    <dd class="head text-info"><%= @event.start.localtime.to_formatted_s(:long) %>
       to <%= @event.end.localtime.to_formatted_s(:long) %></dd>
     <% if @event.event_number? %>
-      <dt>Event Number:</dt>
-      <dd class=" text-info"><%= @event.event_number %></dd>
+      <dt class="head">Event Number:</dt>
+      <dd class="head text-info"><%= @event.event_number %></dd>
     <% end %>
-    <dt>Event Type:</dt>
-    <dd class="text-info">
+    <dt class="head">Event Type:</dt>
+    <dd class="head text-info">
       <% if @event.in_person? %>In person
       <% end %>
       <% if @event.in_person? && @event.online? %>and online
@@ -30,8 +24,8 @@
       <% end %>
     </dd>
     <% if @event.chat_server? %>
-      <dt>Chat Server:</dt>
-      <dd><a target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a></dd>
+      <dt class="head">Chat Server:</dt>
+      <dd class="head text-info"><a class="ul" target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a></dd>
     <% end %>
   </dl>
 </div>
