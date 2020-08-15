@@ -23,3 +23,9 @@ evening_pre:
   name: Evening Slot
   start: 2017-08-02 14:00:00
   end: 2017-08-02 20:00:00
+
+other_session:
+  event: other
+  name: Evening Slot
+  start: 2017-08-02 14:00:00
+  end: 2017-08-02 20:00:00

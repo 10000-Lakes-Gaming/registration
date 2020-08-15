@@ -9,6 +9,8 @@ my_event:
   prereg_price: 20
   onsite_price: 30
   prereg_ends: <%= 5.day.from_now.to_s(:db) %>
+  in_person: true
+  online: false
 
 prereg_ended_event:
   name: My Event
@@ -27,6 +29,8 @@ other:
   location: MyString
   rsvp_close: <%= 5.day.from_now.to_s(:db) %>
   prereg_ends: <%= 5.day.from_now.to_s(:db) %>
+  in_person: false
+  online: true
 
 charity_event:
   name: Charity Event
@@ -39,3 +43,5 @@ charity_event:
   onsite_price: 15
   charity: true
   optional_fee: true
+  online: true
+  in_person: true

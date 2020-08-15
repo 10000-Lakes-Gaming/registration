@@ -8,9 +8,20 @@ class Table < ActiveRecord::Base
   delegate :end, to: :session
   delegate :prereg_ends, to: :session
   delegate :prereg_closed?, to: :session
+  delegate :event, to: :session
   validates :scenario_id, :session_id, :gms_needed, :presence => true
   validates_numericality_of :gms_needed, greater_than: 0
   validate :validate_max_players
+  validate :validate_online
+  validates_presence_of :location, if: :online, :message => 'required when table is online'
+
+  def validate_online
+    if self.online?
+      errors[:online] << 'cannot be set if event is not online' unless event.online?
+    else
+      errors[:online] << 'must be seet of event is not in_person' unless event.in_person?
+    end
+  end
 
   def validate_max_players
     if session.event.tables_reg_offsite
