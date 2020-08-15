@@ -1,11 +1,36 @@
 <div class="page-header">
-  <h1><%= @event.name %></h1>
-  <h2><%= @session.name %>
-    <small><%= @session.timeslot %></small>
-  </h2>
-  <h3><%= @table.long_name %></h3>
+  <ol class="breadcrumb">
+    <li><%= link_to "#{@event.name}", event_path(@event) %></li>
+    <li><%= link_to "#{@session.long_name}", event_session_path(@event, @session) %></li>
+    <% if @table.persisted? %>
+      <li><%= @table.long_name %></li>
+    <% else %>
+      <li>New Table</li>
+    <% end %>
+  </ol>
+
+  <div>
+    <h2>Table Details</h2>
+    <div class="panel ">
+      <dl class="dl-horizontal">
+        <dt class="head">Event:</dt>
+        <dd class="head text-info"><%= @event.name %></dd>
+        <dt class="head">Session:</dt>
+        <dd class="head text-info"><%= @session.name %></dd>
+`
+        <% if @table.persisted? %>
+          <dt class="head">Game:</dt>
+          <dd class="head text-info"><%= @table.long_name %></dd>
+          <% if @table.location.present? && !@table.online? %>
+            <dt class="head">Location:</dt>
+            <dd class="head text-info"><%= @table.location %></dd>
+          <% end %>
+        <% end %>
+      </dl>
+    </div>
+  </div>
 </div>
-<h4>Edit Table for <%= @session.name %></h4>
+<h2>Edit Table for <%= @session.name %></h2>
 
 <%= render 'form' %>
 
