@@ -416,7 +416,6 @@
   <%= button_to 'Add Session', new_event_session_path(@event), :class => 'btn btn-warning', :method => :get %>
 <% end %>
 <% if admin? %>
-  <%= button_to 'Add Session', new_event_session_path(@event), :class => 'btn btn-warning', :method => :get %>
   <%= button_to 'Edit', edit_event_path(@event), :class => 'btn btn-primary', :method => :get %>
 <% end %>
 <%= button_to 'Back', events_path, :class => 'btn btn-success', :method => :get %>
