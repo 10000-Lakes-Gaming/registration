@@ -1,91 +1,57 @@
 <div class="page-header">
-  <h1><%= @event.name %></h1>
-  <h2><%= @session.name %>
-    <small><%= @session.timeslot %></small>
-  </h2>
-  <h3><%= @table.long_name %></h3>
-</div>
+  <ol class="breadcrumb">
+    <li><%= link_to "#{@event.name}", event_path(@event) %></li>
+    <li><%= link_to "#{@session.long_name}", event_session_path(@event, @session) %></li>
+    <li><%= link_to "#{@table.long_name}", event_session_table_path(@event, @session, @table) %></li>
+    <li>New Game Master</li>
+  </ol>
 
-
-<div class="well">
-  <div class="field">
-    Description: <%= @table.scenario.description %>
+  <h2>Table Details</h2>
+  <div class="panel ">
+    <dl class="dl-horizontal">
+      <dt class="head">Event:</dt>
+      <dd class="head text-info"><%= @event.name %></dd>
+      <dt class="head">Session:</dt>
+      <dd class="head text-info"><%= @session.name %></dd>
+      <dt class="head">Game:</dt>
+      <dd class="head text-info"><%= @table.long_name %></dd>
+      <% if @table.location.present? && !@table.online? %>
+        <dt class="head">Location:</dt>
+        <dd class="head text-info"><%= @table.location %></dd>
+      <% end %>
+    </dl>
   </div>
-  <% if @table.scenario.author.present? %>
-    <div>by <%= @table.scenario.author %></div>
+
+  <% if @table.online? %>
+    <h3>Online Game Details</h3>
+    <div class="well">
+      <dl class="dl-horizontal">
+        <dt class="head"><abbr title="Virtual Table Top">VTT</abbr></dt>
+        <dd class="head text-info"><%= @game_master.vtt_type %></dd>
+        <dt class="head"><abbr title="Virtual Table Top">VTT</abbr> Location:</dt>
+        <dd class="head text-info">
+          <a class="ul" target="_blank" href="<%= @game_master.vtt_url %>>"><%= @game_master.vtt_name %></a></dd>
+        <dt class="head">Event Chat Server:</dt>
+        <dd class="head text-info">
+          <a class="ul" target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a></dd>
+        <dt class="head">Game Chat Room:</dt>
+        <dd class="head text-info"><%= @table.location %></dd>
+      </dl>
+    </div>
   <% end %>
-  <%= render partial: 'events/table_badges', locals: {table: @table} %>
+
+  <h3>Adventure Details</h3>
+  <div class="well">
+    <div style="white-space: pre-wrap"><%= @table.scenario.description %></div>
+    <% if @table.scenario.author.present? %>
+      <div>by <%= @table.scenario.author %></div>
+    <% end %>
+    <%= render partial: 'events/table_badges', locals: { table: @table } %>
+  </div>
 </div>
+
+<h2>Edit Game Master for <%= @table.long_name %></h2>
+
 <%= render 'form' %>
-
-<div class="alert-info">Once you have volunteered to GM a table, you will need to contact the hosts of the event (either
-  by replying to your confirmation email, or through <a href="email:<%= ENV['GMAIL_SMTP_USERNAME'] %>?Subject=I%20can%20no%20longer%20GM%20something">our contact email</a>
-
-</div>
-
-<% if admin? %>
-<h4>Current Players in session.</h4>
-<div class="well">
-  <button data-toggle="collapse" data-target="#players" class="btn btn-info">Show</button>
-  <div id="players" class="collapse">
-    <div class="row">
-      <div class="col-md-2 label label-default">Name</div>
-      <div class="col-md-3 label label-default">Email</div>
-      <div class="col-md-2 label label-default">PFS Number</div>
-      <% if admin? %>
-          <div class="col-md-2 label label-default">Admin</div>
-      <% end %>
-    </div>
-    <% @session.players.each do |player| %>
-        <div class="row">
-          <div class="col-md-2"><%= player.name %></div>
-          <div class="col-md-3"><%= player.email %></div>
-          <div class="col-md-2"><%= player.pfs_number %></div>
-          <% if admin? %>
-              <% # find the reg table.
-                 @table.registration_tables.each do |reg_table| %>
-                  <% if reg_table.user_event.user == player %>
-                      <div class="col-md-2">
-                        <%= button_to 'Remove from Table', [@event, @session, @table, reg_table], method: :delete, data: {confirm: "Are you sure you want to remove #{player.long_name} from #{@table.scenario.long_name}?"}, :class => "btn btn-danger" %>
-                      </div>
-                  <% end %>
-              <% end %>
-          <% end %>
-        </div>
-    <% end %>
-  </div>
-</div>
-<h4>Current GMs in session.</h4>
-<div class="well">
-  <div>This table current has <span class="badge"><%= @table.game_masters.size %></span> out of
-    <span class="badge"><%= @table.gms_needed %></span> game masters.
-  </div>
-  <div>
-    <button data-toggle="collapse" data-target="#gamemasters" class="btn btn-info">Current Game Masters</button>
-  </div>
-  <div id="gamemasters" class="collapse">
-    <%#  header row %>
-    <div class="row">
-      <div class="col-md-2 label label-default">Name</div>
-      <div class="col-md-3 label label-default">Email</div>
-      <div class="col-md-2 label label-default">PFS Number</div>
-      <% if admin? %>
-          <div class="col-md-2 label label-default">Admin</div>
-      <% end %>
-    </div>
-    <% @table.game_masters.each do |game_master| %>
-        <% gm = game_master.user_event.user %>
-        <div class="row">
-          <div class="col-md-2"><%= gm.name %></div>
-          <div class="col-md-3"><%= gm.email %></div>
-          <div class="col-md-2"><%= gm.pfs_number %></div>
-          <% if admin? %>
-              <div class="col-md-2"><%= button_to 'Remove from Table', [@event, @session, @table, game_master], method: :delete, data: {confirm: "Are you sure you want to remove #{gm.long_name} as a GM from #{@table.scenario.long_name}?"}, :class => "btn btn-danger" %></div>
-          <% end %>
-        </div>
-    <% end %>
-  </div>
-</div>
-<% end %>
 
 <%= link_to 'Back', event_session_table_game_masters_path, :class => 'btn btn-success' %>

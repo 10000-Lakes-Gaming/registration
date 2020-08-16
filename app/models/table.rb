@@ -38,6 +38,18 @@ class Table < ActiveRecord::Base
     end
   end
 
+  def vtt_type
+    game_masters.first&.vtt_type
+  end
+
+  def vtt_name
+    game_masters.first&.vtt_name
+  end
+
+  def vtt_url
+    game_masters.first&.vtt_url
+  end
+
   def <=> (tab)
     # Remove "Table"  and sort by number, if possible.
     myloc = self.location.to_s.downcase[/\d+/]

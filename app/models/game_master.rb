@@ -9,6 +9,8 @@ class GameMaster < ActiveRecord::Base
 
   attr_accessor :save_despite_warnings
   before_save :check_for_warnings
+  before_update :check_for_warnings
+  before_create :check_for_warnings
 
   def warnings
     @warnings ||= ActiveModel::Errors.new(self)
@@ -16,11 +18,6 @@ class GameMaster < ActiveRecord::Base
 
   def check_for_warnings
     # warnings.add(:notes, :too_long, count: 120) if notes.to_s.length > 120
-    if online?
-      warnings.add(:vtt_type, :required) if vtt_type.blank?
-      warnings.add(:vtt_name, :required) if vtt_name.blank?
-      warnings.add(:vtt_url, :required) if vtt_url.blank?
-    end
     !!save_despite_warnings
   end
 

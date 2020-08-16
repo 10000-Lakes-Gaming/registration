@@ -1,5 +1,4 @@
 <p id="notice"><%= notice %></p>
-
 <!-- breadcrumbs -->
 <ol class="breadcrumb">
   <li><%= link_to "#{@event.name}", event_path(@event) %></li>
@@ -8,72 +7,65 @@
   <li>Game Master Information</li>
 </ol>
 
+<h2>Table Details</h2>
+<div class="panel ">
+  <dl class="dl-horizontal">
+    <dt class="head">Event:</dt>
+    <dd class="head text-info"><%= @event.name %></dd>
+    <dt class="head">Session:</dt>
+    <dd class="head text-info"><%= @session.name %></dd>
+    <dt class="head">Game:</dt>
+    <dd class="head text-info"><%= @table.long_name %></dd>
+    <% if @table.location.present? && !@table.online? %>
+      <dt class="head">Location:</dt>
+      <dd class="head text-info"><%= @table.location %></dd>
+    <% end %>
+  </dl>
+</div>
 
-<div class="page-header">
-  <h1><%= @event.name %></h1>
-  <h2><%= @session.name %>
-    <small><%= @session.timeslot %></small>
-  </h2>
-  <h3><%= @table.long_name %></h3>
+<% if @table.online? %>
+  <h3>Online Game Details</h3>
+  <div class="well">
+    <dl class="dl-horizontal">
+      <dt class="head"><abbr title="Virtual Table Top">VTT</abbr></dt>
+      <dd class="head text-info"><%= @game_master.vtt_type %></dd>
+      <dt class="head"><abbr title="Virtual Table Top">VTT</abbr> Location:</dt>
+      <dd class="head text-info">
+        <a class="ul" target="_blank" href="<%= @game_master.vtt_url %>>"><%= @game_master.vtt_name %></a></dd>
+      <dt class="head">Event Chat Server:</dt>
+      <dd class="head text-info">
+        <a class="ul" target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a></dd>
+      <dt class="head">Game Chat Room:</dt>
+      <dd class="head text-info"><%= @table.location %></dd>
+    </dl>
+  </div>
+<% end %>
+
+<h3>Adventure Details</h3>
+<div class="well">
+  <div style="white-space: pre-wrap"><%= @table.scenario.description %></div>
+  <% if @table.scenario.author.present? %>
+    <div>by <%= @table.scenario.author %></div>
+  <% end %>
+  <%= render partial: 'events/table_badges', locals: { table: @table } %>
 </div>
 
 <% player = @game_master&.user_event&.user %>
-<%#
-table info
-table number
-session ?
-%>
-<h4>Table Information</h4>
-<div class="panel panel-padded" style="border: solid thin black;">
-  <div class="row">
-    <div class="col-md-2 col-sm-3"><strong>Table Location:</strong></div>
-    <div class="col-md-6 col-sm-5"><%= @table.location %></div>
-  </div>
-  <div class="row">
-    <div class="col-md-2 col-sm-3"><strong>Table Information:</strong></div>
-    <div class="col-md-6 col-sm-5">Put stuff here</div>
-  </div>
+<h3>Game Master's Information</h3>
+
+<div class="well">
+  <dl class="dl-horizontal">
+    <dt class="head">Game Master:</dt>
+    <dd class="head text-info"><%= player&.formal_name %></dd>
+    <dt class="head"><strong><abbr title="Game Master">GM</abbr>'s Email:</strong></dt>
+    <dd class="head text-info"><%= player&.email %></dd>
+  </dl>
 </div>
-
-<h4>Game Master's Information</h4>
-<div class="panel panel-padded thin-border">
-  <div class="row">
-    <div class="col-md-2 col-sm-3"><strong>Game Master:</strong></div>
-    <div class="col-md-6 col-sm-5"><%= player.formal_name %></div>
-  </div>
-  <div class="row">
-    <div class="col-md-2 col-sm-3"><strong>Email:</strong></div>
-    <div class="col-md-6 col-sm-5"><%= player.email %></div>
-  </div>
-</div>
-
-
-<h4>Online Game Information</h4>
-<div class="panel panel-padded thin-border">
-  <div class="row">
-    <div class="col-md-2 col-sm-3"><strong>Chat Server:</strong></div>
-    <%# create the link for this %>
-    <div class="col-md-6 col-sm-5"><%= @event.chat_server %></div>
-  </div>
-  <div class="row">
-    <div class="col-md-2 col-sm-3"><strong>Chat Room:</strong></div>
-    <%# create the link for this %>
-    <div class="col-md-6 col-sm-5">Table Chatroom</div>
-  </div>
-  <div class="row">
-    <div class="col-md-2 col-sm-3"><strong>VTT Type:</strong></div>
-    <div class="col-md-6 col-sm-5">Roll20</div>
-  </div>
-  <div class="row">
-    <div class="col-md-2 col-sm-3"><strong>VTT Link:</strong></div>
-    <%# TODO: Link from name and URL %>
-    <div class="col-md-6 col-sm-5"><a target="_blank" href="">Roll20</a></div>
-  </div>
-</div>
-
-
-
 
 <hr>
-<%= link_to 'Edit', edit_event_session_table_game_master_path(@event, @session, @table, @game_master) %> |
-<%= link_to 'Back', event_session_table_game_masters_path %>
+
+<%= button_to "Edit", edit_event_session_table_game_master_path(@event, @session, @table, @game_master), method: :get, :class => "btn btn-primary" %>
+<% if event_host? %>
+  <%= button_to "Back to Table", event_session_table_path(@event, @session, @table), method: :get, :class => "btn btn-warning" %>
+<% end %>
+<%= button_to "Back to #{@event.name}", event_path(@event), method: :get, :class => "btn btn-success" %>

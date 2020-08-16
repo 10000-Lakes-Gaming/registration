@@ -1,34 +1,36 @@
-<div class="page-header">
-  <ol class="breadcrumb">
-    <li><%= link_to "#{@event.name}", event_path(@event) %></li>
-    <li><%= link_to "#{@session.long_name}", event_session_path(@event, @session) %></li>
-    <% if @table.persisted? %>
-      <li><%= @table.long_name %></li>
-    <% else %>
-      <li>New Table</li>
-    <% end %>
-  </ol>
+<div>
+  <h2>Table Details</h2>
+  <div class="panel ">
+    <dl class="dl-horizontal">
+      <dt class="head">Event:</dt>
+      <dd class="head text-info"><%= @event.name %></dd>
+      <dt class="head">Session:</dt>
+      <dd class="head text-info"><%= @session.name %></dd>
+      <dt class="head">Game:</dt>
+      <dd class="head text-info"><%= @table.long_name %></dd>
+      <% if @table.location.present? && !@table.online? %>
+        <dt class="head">Location:</dt>
+        <dd class="head text-info"><%= @table.location %></dd>
+      <% end %>
+    </dl>
+  </div>
 
-  <div>
-    <h2>Table Details</h2>
-    <div class="panel ">
+  <% if @table.online? %>
+    <h3>Online Game Details</h3>
+    <div class="well">
       <dl class="dl-horizontal">
-        <dt class="head">Event:</dt>
-        <dd class="head text-info"><%= @event.name %></dd>
-        <dt class="head">Session:</dt>
-        <dd class="head text-info"><%= @session.name %></dd>
-`
-        <% if @table.persisted? %>
-          <dt class="head">Game:</dt>
-          <dd class="head text-info"><%= @table.long_name %></dd>
-          <% if @table.location.present? && !@table.online? %>
-            <dt class="head">Location:</dt>
-            <dd class="head text-info"><%= @table.location %></dd>
-          <% end %>
-        <% end %>
+        <dt class="head"><abbr title="Virtual Table Top">VTT</abbr></dt>
+        <dd class="head text-info"><%= nil %></dd>
+        <dt class="head">VT:</dt>
+        <dd class="head text-info"><a class="ul" target="_blank" href="http://www.roll20.net">TBS</a></dd>
+        <dt class="head">Event Chat Server:</dt>
+        <dd class="head text-info">
+          <a class="ul" target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a></dd>
+        <dt class="head">Game Chat Room:</dt>
+        <dd class="head text-info"><%= @table.location %></dd>
       </dl>
     </div>
-  </div>
+  <% end %>
 </div>
 <h2>Edit Table for <%= @session.name %></h2>
 
