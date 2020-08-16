@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_28_201503) do
+ActiveRecord::Schema.define(version: 2020_08_14_033312) do
 
   create_table "additional_payments", force: :cascade do |t|
     t.string "category"
@@ -58,6 +58,10 @@ ActiveRecord::Schema.define(version: 2020_06_28_201503) do
     t.boolean "tables_reg_offsite", default: false
     t.boolean "in_person", default: true
     t.boolean "online", default: false
+    t.string "chat_server"
+    t.string "chat_server_url"
+    t.boolean "optional_fee"
+    t.boolean "gm_self_select", default: true
   end
 
   create_table "game_masters", force: :cascade do |t|
@@ -130,6 +134,7 @@ ActiveRecord::Schema.define(version: 2020_06_28_201503) do
     t.boolean "non_pfs"
     t.string "information"
     t.boolean "gm_self_select", default: true
+    t.boolean "online", default: false
     t.index ["scenario_id"], name: "index_tables_on_scenario_id"
     t.index ["session_id"], name: "index_tables_on_session_id"
   end
@@ -144,6 +149,7 @@ ActiveRecord::Schema.define(version: 2020_06_28_201503) do
     t.integer "payment_amount"
     t.datetime "payment_date"
     t.boolean "vip"
+    t.integer "donation"
     t.index ["event_id"], name: "index_user_events_on_event_id"
     t.index ["user_id"], name: "index_user_events_on_user_id"
   end

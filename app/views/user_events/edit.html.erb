@@ -1,6 +1,10 @@
-<h1>Editing Registration</h1>
+<h1><%= @event.name %></h1>
+<h2>Update registration for <%= @user_event.name %></h2>
+<% player = @user_event.user %>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', [@event, @user_event], :class => 'btn btn-info' %>
-<%= link_to 'Back', event_user_events_path, :class => 'btn btn-success' %>
+<% if admin? %>
+  <%= link_to 'Show', [@event, @user_event], :class => 'btn btn-info' %>
+  <%= link_to 'Back', event_user_events_path, :class => 'btn btn-success' %>
+<% end %>

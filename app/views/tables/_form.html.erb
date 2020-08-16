@@ -21,7 +21,8 @@
         <%= f.select :scenario_id, options_for_select(@scenarios.sort.map { |scenario| [scenario.long_name, scenario.id] }, @table.scenario_id), { include_blank: true } %>
       </td>
     </tr>
-    <% unless @table.game_masters.empty? %>
+
+    <% unless @table.game_masters.empty? || @table.online? %>
       <tr>
         <td>Table Numbers used by Game Masters</td>
         <td>
@@ -31,8 +32,21 @@
         </td>
       </tr>
     <% end %>
+
+    <% if @event.online? %>
+      <tr>
+        <td><%= f.label :online, 'This table will be online' %></td>
+        <td><%= f.check_box :online %></td>
+      </tr>
+    <% end %>
+
     <tr>
-      <td><%= f.label :location %></td>
+      <td>
+        <% if @event.online? %>
+          <div class="text-info">If this is an online table, this is the game's chat room</div>
+        <% end %>
+        <%= f.label :location %>
+      </td>
       <td><%= f.text_field :location %></td>
     </tr>
 

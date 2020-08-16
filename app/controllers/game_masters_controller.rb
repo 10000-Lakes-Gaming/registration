@@ -1,16 +1,8 @@
 class GameMastersController < ApplicationController
+  include ApplicationHelper
+
   before_action :set_game_master, only: [:show, :edit, :update, :destroy]
   before_action :get_event, :get_session, :get_table, :get_user_event, :get_possible_gms
-
-  # TODO - prevent a multiple on GM assignment
-
-  def prevent_non_admin
-    unless current_user.admin?
-      redirect_to events_path
-    end
-  end
-
-
   # GET /game_masters/1
   # GET /game_masters/1.json
   def show
@@ -66,13 +58,13 @@ class GameMastersController < ApplicationController
   # GET /game_masters
   # GET /game_masters.json
   def index
-    prevent_non_admin
+    restrict_to_hosts
     @game_masters = GameMaster.where(table_id: @table.id)
   end
 
   # GET /game_masters/1/edit
   def edit
-    prevent_non_admin
+    restrict_to_gamemaster
     @possible_gms << @game_master.user_event
   end
 
@@ -114,7 +106,7 @@ class GameMastersController < ApplicationController
   # PATCH/PUT /game_masters/1
   # PATCH/PUT /game_masters/1.json
   def update
-    prevent_non_admin
+    restrict_to_hosts
     respond_to do |format|
       if @game_master.update(game_master_params)
         format.html {redirect_to [@event, @session, @table], notice: 'Game master was successfully updated.'}
@@ -129,7 +121,7 @@ class GameMastersController < ApplicationController
   # DELETE /game_masters/1
   # DELETE /game_masters/1.json
   def destroy
-    prevent_non_admin
+    restrict_to_admin
     @game_master.destroy
 
     gm_name = "<UNKNOWN>"

@@ -19,17 +19,20 @@ module ApplicationHelper
     host || admin?
   end
 
+  def game_master?
+    current_user.gamemaster_for_event @event
+  end
 
   def yes_no (value)
     value ? "Yes" : "No"
   end
 
   def receipts_exist?
-    current_user.user_events.any? {|user_event| user_event.total_price > 0}
+    current_user.user_events.any? { |user_event| user_event.total_price > 0 }
   end
 
   def unpaid_payments?
-    current_user.user_events.any? {|user_event| user_event.additional_payments.any? {|payment| payment.unpaid?}}
+    current_user.user_events.any? { |user_event| user_event.additional_payments.any? { |payment| payment.unpaid? } }
   end
 
   def pending_payments
@@ -45,17 +48,24 @@ module ApplicationHelper
   end
 
   def self_select_allowed?
-    allowed = false
-    # @event.sessions.each do |session|
-    #   session.tables.each do |table|
-    #     allowed |= table.gm_self_select?
-    #   end
-    # end
-    allowed
+    allowed = @event.gm_self_select?
+    allowed && @event.tables.any? { |table| table.gm_self_select? }
   end
 
   def online_sales_closed?
     @event.online_sales_closed?
   end
+
+  def optional_fee_list(elements = 20, increment = 5, starting = 0)
+    fees = (starting..(starting + elements * increment)).step(increment).to_a
+  end
+
+  def donations_options(elements = 20, increment = 5, starting = 0)
+    fees = optional_fee_list elements, increment, starting
+    fees.map do |fee|
+      [number_to_currency(fee), fee]
+    end
+  end
+
 end
 

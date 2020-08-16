@@ -32,6 +32,12 @@ class ApplicationController < ActionController::Base
     event_host?
   end
 
+  def restrict_to_gamemaster
+    unless event_host? || @game_master&.assigned(current_user)
+      redirect_to events_path
+    end
+  end
+
   def force_to_current_user
     @user = current_user
   end

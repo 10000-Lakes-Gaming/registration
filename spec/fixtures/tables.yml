@@ -5,6 +5,7 @@ one:
   gms_needed: 1
   raffle: false
   core: false
+  gm_self_select: false
 
 two:
   session: morning
@@ -13,6 +14,7 @@ two:
   gms_needed: 2
   raffle: false
   core: false
+  gm_self_select: true
 
 core:
   session: morning
@@ -21,6 +23,7 @@ core:
   gms_needed: 1
   raffle: false
   core: true
+  gm_self_select: true
 
 raffle:
   session: morning
@@ -29,6 +32,7 @@ raffle:
   gms_needed: 1
   raffle: true
   core: false
+  gm_self_select: false
 
 premium:
   session: morning
@@ -38,15 +42,17 @@ premium:
   premium: true
   prereg_price:  20
   onsite_price: 30
+  gm_self_select: false
 
 premium_2:
   session: evening
-  scenario: scenario_one_five
+  scenario: scenario_two_seven
   max_players: 6
   gms_needed: 1
   premium: true
   prereg_price:  20
   onsite_price: 30
+  gm_self_select: false
 
 premium_pre:
   session: evening_pre
@@ -56,3 +62,4 @@ premium_pre:
   premium: true
   prereg_price:  20
   onsite_price: 30
+  gm_self_select: false
