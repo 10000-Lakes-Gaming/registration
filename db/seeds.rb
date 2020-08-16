@@ -12,15 +12,28 @@ sessions = Session.create!([{ event_id: event.id, name: "Session 1", start: even
                             { event_id: event.id, name: "Session 3", start: event_start + 24.hours,
                               end: event_start + 29.hours }])
 
-scenarios = Scenario.create!([{ type_of: "Scenario", tier: '6-8', season: 7, scenario_number: 98,
+scenarios = Scenario.create!([{ type_of: "Scenario", tier: '6-8', season: 7, scenario_number: 98, game_system: 'PFS',
                                 name: "Serpents Ire", description: "This is the description", pregen_only: true,
                                 hard_mode: false, author: 'John Compton',
                                 paizo_url: 'http://paizo.com/products/btpy9lzy?Pathfinder-Society-Scenario-7-98-Serpents-Ire' },
-                              { type_of: "Scenario", tier: '4-6', season: 7, scenario_number: 99,
+                              { type_of: "Scenario", tier: '4-6', season: 7, scenario_number: 99, game_system: 'PFS',
                                 name: "Through  Mailstrom Rift", description: "A Pathfinder Society Special designed for 6th-leve...",
                                 author: "Linda Zayas-Palmer",
                                 paizo_url: "http://paizo.com/products/btpy9mbd?Pathfinder-Society-Scenario-799-Through-Maelstrom-Rift",
-                                hard_mode: false, created_at: "2016-05-11 02:59:05", updated_at: "2016-05-11 02:59:05", pregen_only: true }])
+                                hard_mode: false, created_at: "2016-05-11 02:59:05", updated_at: "2016-05-11 02:59:05", pregen_only: true },
+                              { type_of: "Scenario", tier: '1-4', season: 1, scenario_number: 1, game_system: 'PFS2',
+                                name: "The Absalom Initiation", description: "A new era is beginning for the Pathfinder Society, with new recruits and new factions all excited to build connections and embark on grand adventures. The PCs are among these recruits invited to attend a welcoming party where they can meet both the old guard as well as the up-and-coming leaders. But the party's not all talk; the PCs learn of four exciting escapades in Absalom, through which they can kick off their adventuring careers!",
+                                author: "Lyz Liddell",
+                                paizo_url: "https://paizo.com/products/btq01znb?Pathfinder-Society-Scenario-101-The-Absalom-Initiation",
+                                hard_mode: false, created_at: "2019-07-11 02:59:05", updated_at: "2019-07-11 02:59:05", pregen_only: false },
+                              { type_of: "Quest", tier: '1-4', season: 1, scenario_number: 3, game_system: 'PFS2',
+                                name: "The Third Quest", description: "Questing for a third time!",
+                                author: "Kate Baker",
+                                hard_mode: false, created_at: "2019-07-11 02:59:05", updated_at: "2019-07-11 02:59:05", pregen_only: false },
+                              { type_of: "Bounty", tier: '1', season: 2, scenario_number: 3, game_system: 'PFS2',
+                                name: "The Quicker Picker-Upper", description: "Wipe up that spill, find the magic towel! Not necessarily in that order",
+                                author: "Kate Baker",
+                                hard_mode: false, created_at: "2019-07-11 02:59:05", updated_at: "2019-07-11 02:59:05", pregen_only: false }])
 
 tables = Table.create!([{ session_id: 1, scenario_id: 1, max_players: 6, premium: true, prereg_price: 10, onsite_price: 20 },
                         { session_id: 1, scenario_id: 2, max_players: 6 },

@@ -2,9 +2,20 @@
   <% if @game_master.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@game_master.errors.count, "error") %> prohibited this game_master from being saved:</h2>
-
       <ul>
         <% @game_master.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%# Warnings do not prevent saving %>
+  <% if @game_master.warnings.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@game_master.warnings.count, "warning") %> do not prevent this game master from being saved,
+        but will prevent users from accessing the online table:</h2>
+      <ul>
+        <% @game_master.warnings.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
