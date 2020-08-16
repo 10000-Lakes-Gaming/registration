@@ -26,6 +26,7 @@ describe ApplicationHelper do
     before(:each) do
       @event = events(:my_event)
     end
+
     it 'if event is false, then it should be false' do
       @event.gm_self_select = false
       expect(helper.self_select_allowed?).to be false
@@ -41,7 +42,5 @@ describe ApplicationHelper do
       @event.tables.each { |table| table.gm_self_select = false }
       expect(helper.self_select_allowed?).to be false
     end
-
-
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_12_021751) do
+ActiveRecord::Schema.define(version: 2020_08_14_033312) do
 
   create_table "additional_payments", force: :cascade do |t|
     t.string "category"
@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(version: 2020_08_12_021751) do
     t.boolean "non_pfs"
     t.string "information"
     t.boolean "gm_self_select", default: true
+    t.boolean "online", default: false
     t.index ["scenario_id"], name: "index_tables_on_scenario_id"
     t.index ["session_id"], name: "index_tables_on_session_id"
   end

@@ -48,6 +48,8 @@ class TablesController < ApplicationController
   def new
     prevent_non_admin
     @table = Table.new
+    # Default this based on if there is an online component
+    @table.online = @event.online
   end
 
   # GET /tables/1/edit
@@ -107,6 +109,6 @@ class TablesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def table_params
-    params.require(:table).permit(:session_id, :scenario_id, :max_players, :gms_needed, :gm_self_select, :raffle, :core, :disabled, :location, :premium, :prereg_price, :onsite_price, :non_pfs, :information)
+    params.require(:table).permit(:session_id, :scenario_id, :max_players, :gms_needed, :gm_self_select, :raffle, :core, :disabled, :location, :premium, :prereg_price, :onsite_price, :non_pfs, :information, :online)
   end
 end
