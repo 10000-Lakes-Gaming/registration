@@ -53,4 +53,33 @@ describe Table do
     expect(table.errors[:location]).to_not be_empty
   end
 
+  it 'If table is online, it can have no more than 1 GM' do
+    session = sessions(:other_session)
+    scenario = scenarios(:scenario_one_five)
+
+    table = Table.new
+    table.scenario = scenario
+    table.session = session
+    table.gms_needed = 2
+    table.max_players = 12
+
+    table.online = true
+    table.save
+    expect(table.errors[:gms_needed]).to_not be_empty
+  end
+
+  it 'If table is online, it can have no more than 6 Players' do
+    session = sessions(:other_session)
+    scenario = scenarios(:scenario_one_five)
+
+    table = Table.new
+    table.scenario = scenario
+    table.session = session
+    table.gms_needed = 1
+    table.max_players = 12
+
+    table.online = true
+    table.save
+    expect(table.errors[:max_players]).to_not be_empty
+  end
 end

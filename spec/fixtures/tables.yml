@@ -6,6 +6,7 @@ one:
   raffle: false
   core: false
   gm_self_select: false
+  online: false
 
 two:
   session: morning
@@ -47,8 +48,6 @@ premium:
 premium_2:
   session: evening
   scenario: scenario_two_seven
-  max_players: 6
-  gms_needed: 1
   premium: true
   prereg_price:  20
   onsite_price: 30
@@ -63,3 +62,11 @@ premium_pre:
   prereg_price:  20
   onsite_price: 30
   gm_self_select: false
+
+other_one:
+  session: other_session
+  scenario: scenario_two_seven
+  max_players: 6
+  gms_needed: 1
+  gm_self_select: true
+  online: true

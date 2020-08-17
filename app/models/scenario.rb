@@ -1,11 +1,13 @@
 class Scenario < ActiveRecord::Base
-
+  # TODO: Convert all of the naked strings into constants
   validates :game_system, :type_of, :name, :presence => true
   validates :scenario_number, presence: true, if: :scenario_number_needed?
   validates :season, presence: true, if: :season_needed?
   validates :tier, presence: true, if: :tier_needed?
 
-  # @type_list = ['Scenario', 'Quest', 'Module', 'Adventure Path', 'ACG']
+  # TODO: Use constants instead of these strings
+  TYPES = %w[Scenario Bounty Quest Module Adventure Path ACG]
+  SYSTEMS = %w[PFS2 SFS ACG Other PFS Playtest]
 
   def long_name
     if game_system == 'Other'
@@ -14,7 +16,14 @@ class Scenario < ActiveRecord::Base
       if scenario?
         "#{game_system} #{"%02d" % season}-#{"%02d" % scenario_number}: #{name}"
       elsif quest?
-        "#{game_system} Season #{"%02d" % season} Quests: #{name}"
+        if 'PFS2'.eql? self.game_system
+          "#{game_system} Quest #{scenario_number}: #{name}"
+        else
+          "#{game_system} Season #{"%02d" % season} Quest: #{name}"
+        end
+      elsif bounty?
+        # May have to add season if they add this in the future
+        "#{game_system} Bounty #{scenario_number}: #{name}"
       elsif AP?
         "#{game_system} AP #{"%d" % scenario_number}: #{name}"
       else
@@ -41,6 +50,10 @@ class Scenario < ActiveRecord::Base
 
   def quest?
     type_of == 'Quest'
+  end
+
+  def bounty?
+    type_of == 'Bounty'
   end
 
   def other_system?

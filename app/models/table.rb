@@ -9,11 +9,14 @@ class Table < ActiveRecord::Base
   delegate :prereg_ends, to: :session
   delegate :prereg_closed?, to: :session
   delegate :event, to: :session
-  validates :scenario_id, :session_id, :gms_needed, :presence => true
-  validates_numericality_of :gms_needed, greater_than: 0
   validate :validate_max_players
+  validates :scenario_id, :session_id, :gms_needed, :presence => true
+  # Online validations
   validate :validate_online
   validates_presence_of :location, if: :online, :message => 'required when table is online'
+  validates_numericality_of :gms_needed, greater_than: 0
+  validates_numericality_of :gms_needed, if: :online,  equal_to: 1
+  validates_numericality_of :max_players, if: :online,  less_than_or_equal_to: 6
 
   def validate_online
     if self.online?
@@ -25,7 +28,7 @@ class Table < ActiveRecord::Base
 
   def validate_max_players
     if session.event.tables_reg_offsite
-      self.max_players = 0 unless !self.max_players.blank?
+      self.max_players = 0 if self.max_players.blank?
     else
       if max_players.nil?
         errors[:max_players] << 'cannot be blank'
@@ -33,6 +36,18 @@ class Table < ActiveRecord::Base
         errors[:max_players] << 'must be greater than 0'
       end
     end
+  end
+
+  def vtt_type
+    game_masters.first&.vtt_type
+  end
+
+  def vtt_name
+    game_masters.first&.vtt_name
+  end
+
+  def vtt_url
+    game_masters.first&.vtt_url
   end
 
   def <=> (tab)

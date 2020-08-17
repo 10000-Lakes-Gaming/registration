@@ -2,7 +2,6 @@
   <% if @game_master.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@game_master.errors.count, "error") %> prohibited this game_master from being saved:</h2>
-
       <ul>
         <% @game_master.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -10,46 +9,34 @@
       </ul>
     </div>
   <% end %>
+  <%# Warnings do not prevent saving %>
+  <% if @game_master.warnings.any? %>
+    <div id="warning_explanation">
+      <h2 class="text-warning"><%= pluralize(@game_master.warnings.count, "warning") %> prevent users from accessing
+        table.</h2>
 
-
-  <h4>Online Game Information</h4>
-  <div class="panel panel-padded thin-border">
-  </div>
+      <div class="text-warning">
+        <div style="display: inline-block; vertical-align: top;">
+          <span class="glyphicon glyphicon-alert"></span>
+        </div>
+        <div style="display: inline-block; vertical-align: top;">
+          These errors do not prevent saving, but will prevent users from being able to access your tables.
+        </div>
+        <ul>
+          <% @game_master.warnings.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
 
   <%= f.hidden_field :table_id, :value => @table.id %>
 
   <%# this needs to be a dropdown of registered users -- which can be found from the user_events %>
   <% if event_host? %>
-    <h4>Host Contolled Information</h4>
+    <h3>Select Game Master</h3>
     <div class="panel panel-padded thin-border">
-      <div class="field">
-        <%= f.label :table_number %>
-        <div class="small">The table number/location for this GM.</div>
-        <%= f.text_field :table_number %>
-      </div>
-
-      <% unless @table.location.blank? %>
-        <div class="field">
-          <div>Table numbers used by other GMs for this Table</div>
-          <div>
-            <% @table.game_masters.each do |gm| %>
-              <% unless @game_master == gm %>
-                <%= gm.table_number %>
-              <% end %>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
-
-      <% unless @table.location.blank? %>
-        <div class="field">
-          <div>Location(s) of this table</div>
-          <div>
-            <%= @table.location %>
-          </div>
-        </div>
-      <% end %>
-
       <div class="field">
         <%= f.label :user_event_id, "Game Master" %>
         <% if @game_master.user_event
@@ -60,17 +47,45 @@
         <%# have to make user_event_id required. %>
         <%= f.select :user_event_id, options_for_select(@possible_gms.map { |user_event| [user_event.user.name, user_event.id] }.to_h, gm_id), include_blank: 'Select User...' %>
       </div>
+    </div>
+  <% end %>
 
-      <hr>
-      <div class="actions">
-        <%= f.submit "Save Game Master", :class => 'btn btn-warning   ' %>
+  <% if @table.online? %>
+    <h3>Additional Information for Online Games</h3>
+    <div class="panel panel-padded thin-border">
+      <p class="field">
+        <%= f.label :vtt_type, 'Which Virtual Table Top (VTT) will you be using?' %><br/>
+        <i>Such as Roll20, Fantasy Grounds, or Foundry</i><br>
+        <%= f.text_field :vtt_type, size: 50 %>
+      </p>
+      <p class="field">
+        <%= f.label :vtt_name, 'What is the name of your virtual table?' %><br/>
+        <i>What name did you give your <abbr title="Virtual Table Top">VTT</abbr> table?</i>
+        <%= f.text_field :vtt_name, size: 50 %>
+      </p>
+      <p class="field">
+      <div><%= f.label :vtt_url, 'What is the URL for players to join your VTT?' %><br>
+        <span class="panel-padded">
+          <div style="display: inline-block; vertical-align: top;">
+                <span class="text-danger glyphicon glyphicon-warning-sign"></span>
+          </div>
+            <i>Please use shortened URLs whenever possible.</i></span>
       </div>
+      <div><%= f.text_field :vtt_url, size: 100 %></div>
+      </p>
+    </div>
+  <% end %>
+
+  <hr>
+  <% if event_host? %>
+    <div class="actions">
+      <%= f.submit "Save Game Master", :class => 'btn btn-warning' %>
     </div>
   <% elsif @game_master.new_record? %>
-      <div class="actions">
-        <%= f.submit "Add me as GM to Table", :class => 'btn btn-warning' %>
-      </div>
-    <% else %>
+    <div class="actions">
+      <%= f.submit "Add me as GM to Table", :class => 'btn btn-warning' %>
+    </div>
+  <% else %>
     <div class="actions">
       <%= f.submit "Save", :class => 'btn btn-warning' %>
     </div>
