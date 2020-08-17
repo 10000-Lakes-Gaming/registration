@@ -8,6 +8,7 @@
   - [Database](#database)
     - [schema.rb](#schema.rb)
     - [SQLite3](#sqlite)
+  - [Windows Environment Setup](#windowssetup)
 - [Get Started](#getting-started)
 - [Testing](#testing)
 - [Code Standards](#code-standards)
@@ -16,6 +17,8 @@
 ----
 ## Setup
 The following assumes that you are doing your work on a Macintosh. It will try to be IDE/Editor agnostic. It also assumes that you have [Home Brew](https://brew.sh/) on your machine. At this point, for other development environments, I am not going to be able to give a lot of help.
+
+For Window's setup, see below.
 
 ### Make sure Home Brew is up to date
 Before you try doing any of these, you should make sure that your homebrew app is up to date, and cleaned up. Please run:
@@ -80,6 +83,14 @@ To run, you will need to have SQLite3 installed.
 `brew install sqlite3` 
 (or something like that.) 
 
+
+### WindowsSetup
+Follow theses instructions to setup Ubuntu: https://gorails.com/setup/windows/10
+
+Additional notes:
+1. No need to install a DB; the default sqllite is what is used.
+2. Be sure to install nodejs: sudo apt install nodejs
+3. The scripts are mac-specific; run the required commands within the script files instead.
 
 ---
 ## Getting Started
