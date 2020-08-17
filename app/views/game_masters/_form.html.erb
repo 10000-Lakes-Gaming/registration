@@ -55,10 +55,12 @@
     <div class="panel panel-padded thin-border">
       <p class="field">
         <%= f.label :vtt_type, 'Which Virtual Table Top (VTT) will you be using?' %><br/>
+        <i>Such as Roll20, Fantasy Grounds, or Foundry</i><br>
         <%= f.text_field :vtt_type, size: 50 %>
       </p>
       <p class="field">
         <%= f.label :vtt_name, 'What is the name of your virtual table?' %><br/>
+        <i>What name did you give your <abbr title="Virtual Table Top">VTT</abbr> table?</i>
         <%= f.text_field :vtt_name, size: 50 %>
       </p>
       <p class="field">
