@@ -1,43 +1,45 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-$black: #000;
-$blue: #008;
-$bright-green: #32cd32;
+$black: #1e1e24;
+$blue: #232ed1;
 $darkerGrey: #ccc;
 $darkestGrey: dimgrey;
-$darkPink: #f99;
-$evergreen: forestgreen;
 $lightGrey: #eee;
-$lightPink: #fdd;
-$maroon: #7a0019;
-$money: #99cc66;
-$cost-going-up: #f8a300;
-$orange: #fc9;
-$purple: #800080;
-$red: #f00;
-$white: #fff;
+$money: #de9e36;
+$cost-going-up: #de9e36;
+$orange: #de9e36;
+$red: #dc3545;
+$white: #f4f4f9;
+$trueWhite: #ffffff;
 
 $paleGray: #f2f2f2;
 $gray: #555555;
-$highlightGray: E0E0E0;
+$highlightGray: #E0E0E0;
 $backgroundGray: #f1f1f1;
-$lightBlue: #95bed0;
-$darkSkalBlue: #00121a;
+$lightBlue: #01b6fe;
 
-$inner-stripe-even: #fffafa;
-$inner-stripe-odd: #F5FFFA;
+$inner-stripe-even: $white;
+$inner-stripe-odd: $darkerGrey;
 
-$main-background: #FFFFFF;
-$social-media-background: #555555;
-$banner-background: #FFFFFF;
-$skal-gray: #555555;
-$info: #007294;
-$success: #398439;
-$unpaid: #B00100;
+$main-background: $white;
+$social-media-background: $white;
+$banner-background: $white;
+$info: $lightBlue;
+$success: $blue;
+$unpaid: $red;
 
 @mixin width {
   width: auto !important;
+}
+
+body {
+  background-color: $white;
+  color: $black;
+}
+
+a {
+  color: $blue;
 }
 
 table {
@@ -60,7 +62,7 @@ table {
 }
 
 .thin-border {
-  border: solid thin black
+  border: solid thin $black
 }
 
 dd.head, dt.head {
@@ -99,14 +101,13 @@ dd.padded {
 
 .footer-main {
   height: 60px;
-  background-color: $skal-gray;
+  background-color: $gray;
   color: $white;
+  padding: 10px;
 }
 
 .sidebar {
-  background-color: $lightBlue;
-  height: 100%;
-  // TODO make this dynamic?
+  background-color: $white;
 
   ul {
     list-style-type: none;
@@ -115,9 +116,10 @@ dd.padded {
     overflow: auto; /* Enable scrolling if the sidenav has too much content */
     li {
       text-align: center;
-      color: $blue;
+      color: $black;
       margin-bottom: 5px;
-      padding: 1px;
+      padding: 2px;
+      font-weight: bold;
     }
 
     li a {
@@ -126,14 +128,15 @@ dd.padded {
       -moz-border-radius: 10px;
       -border-radius: 10px;
       border-radius: 10px;
-      background-color: $paleGray;
-      color: $blue;
+      background-color: $lightBlue;
+      color: $black;
+      padding: 5px;
     }
 
     /* Change the link color on hover */
     li a:hover {
       background-color: $blue;
-      color: white;
+      color: $white;
       text-decoration: none;
     }
   }
@@ -151,8 +154,8 @@ div.bottom {
 }
 
 .header {
-  background-color: $darkestGrey;
-  color: yellow;
+  background-color: $black;
+  color: $white;
 }
 
 .no-pad {
@@ -161,15 +164,19 @@ div.bottom {
 }
 
 .active {
-  background-color: #4CAF50;
-  color: white;
+  background-color: $lightBlue;
+  color: $white;
 }
 
 .divider {
   color: $white;
   height: auto;
-  background-color: $skal-gray;
+  background-color: $gray;
   padding-left: 10px;
+
+  a {
+    color: $lightBlue;
+  }
 }
 
 .row {
@@ -179,7 +186,7 @@ div.bottom {
 }
 
 .striped-outer {
-  border-bottom: solid black thin;
+  border-bottom: solid $black thin;
   //padding-left: 1em;
 }
 
@@ -208,8 +215,8 @@ div.bottom {
 }
 
 .totals {
-  background: oldlace;
-  color: black;
+  background: $black;
+  color: $white;
 }
 
 .inline {
@@ -248,9 +255,9 @@ div.bottom {
 
   td.tableHeaderInfo {
     width: 100%;
-    color: #666666;
-    border: thin solid #CCCCCC;
-    background-color: #FFF2BF;
+    color: $gray;
+    border: thin solid $black;
+    background-color: $white;
     white-space: normal;
   }
 }
@@ -261,11 +268,11 @@ div.bottom {
 }
 
 .badge-core {
-  background-color: magenta;
+  background-color: $lightBlue;
 }
 
 .btn-core {
-  @include button-variant($white, magenta, magenta);
+  @include button-variant($black, $lightBlue, $lightBlue);
   font-weight: bold;
 }
 
@@ -279,29 +286,29 @@ div.bottom {
 }
 
 .badge-raffle {
-  background-color: $success;
+  background-color: $money;
 }
 
 .btn-raffle {
-  @include button-variant($white, brown, brown);
+  @include button-variant($white, $money, $money);
   font-weight: bold;
 }
 
 .badge-pregen {
-  background-color: $purple;
+  background-color: $lightBlue;
 }
 
 .btn-pregen {
-  @include button-variant($white, $purple, $purple);
+  @include button-variant($black, $lightBlue, $lightBlue);
   font-weight: bold;
 }
 
 .badge-hardmode {
-  background-color: $maroon;
+  background-color: $red;
 }
 
 .btn-hardmode {
-  @include button-variant($white, #560D00, #560D00);
+  @include button-variant($white, $red, $red);
   font-weight: bold;
 }
 
@@ -315,11 +322,11 @@ div.bottom {
 }
 
 .badge-player {
-  background-color: $maroon;
+  background-color: $red;
 }
 
 .badge-gm {
-  background-color: $bright-green;
+  background-color: $lightBlue;
 }
 
 .badge-premium {
@@ -333,7 +340,7 @@ div.bottom {
 
 .badge-cost {
   background-color: $money;
-  color: black;
+  color: $black;
 }
 
 .btn-cost {
@@ -343,7 +350,7 @@ div.bottom {
 
 .badge-cost-increasing {
   background-color: $cost-going-up;
-  color: black;
+  color: $black;
 }
 
 .btn-cost-increasing {
@@ -353,20 +360,20 @@ div.bottom {
 
 .badge-unpaid {
   background-color: $unpaid;
-  color: yellow;
+  color: $white;
 }
 
 .badge-evergreen {
-  background-color: $evergreen;
+  background-color: $orange;
 }
 
 .btn-evergreen {
-  @include button-variant($white, $evergreen, $evergreen);
+  @include button-variant($black, $orange, $orange);
   font-weight: bold;
 }
 
 .btn-more-info {
-  @include button-variant($white, #007294, #007294);
+  @include button-variant($black, $lightBlue, $lightBlue);
   font-weight: bold;
 }
 
@@ -391,8 +398,51 @@ div.bottom {
 }
 
 .btn-info {
-  @include button-variant($white, #007294, #007294);
+  @include button-variant($black, $lightBlue, $lightBlue);
 }
 
+.btn-success {
+  @include button-variant($white, $blue, $blue)
+}
+
+.btn-primary {
+  @include button-variant($black, $lightBlue, $lightBlue)
+}
+
+.btn-link {
+  color: $blue;
+}
+
+.bg-warning {
+  background-color: $trueWhite;
+  border: thick solid $orange;
+  padding: 10px;
+}
+
+.text-danger {
+  color: $red;
+}
+
+.bg-info {
+  color: $blue;
+  background-color: $trueWhite;
+  border: thin solid $blue;
+}
+
+.text-info {
+  color: $blue;
+}
+
+.text-warning {
+  color: $black;
+}
+
+.panel {
+  background-color: $white;
+}
+
+.well {
+  background-color: $trueWhite;
+}
 
 
