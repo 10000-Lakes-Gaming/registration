@@ -1,16 +1,17 @@
-
 event_start = DateTime.now.change({ hour: 12, min: 0, sec: 0 }) + 1.month
 
 event = Event.create!({ name: 'Initial Con!', start: event_start, end: event_start + 29.hours,
-                        rsvp_close: event_start - 1.day, prereg_ends: event_start - 1.week  ,
-                        location: 'Fantasy Realms' })
+                        rsvp_close: event_start - 1.day, prereg_ends: event_start - 1.week,
+                        location: 'Online Event', online: true, in_person: false,
+                        prereg_price: 10, onsite_price: 10, optional_fee: true, charity: true,
+                        chat_server: 'My Discord', chat_server_url: 'http://www.somediscord.com' })
 
-sessions = Session.create!([{ event_id: event.id, name: "Session 1", start: event_start,
-                              end: event_start + 5.hours },
-                            { event_id: event.id, name: "Session 2", start: event_start + 6.hours,
-                              end: event_start + 11.hours },
-                            { event_id: event.id, name: "Session 3", start: event_start + 24.hours,
-                              end: event_start + 29.hours }])
+Session.create!([{ event_id: event.id, name: "Session 1", start: event_start,
+                   end: event_start + 5.hours },
+                 { event_id: event.id, name: "Session 2", start: event_start + 6.hours,
+                   end: event_start + 11.hours },
+                 { event_id: event.id, name: "Session 3", start: event_start + 24.hours,
+                   end: event_start + 29.hours }])
 
 scenarios = Scenario.create!([{ type_of: "Scenario", tier: '6-8', season: 7, scenario_number: 98, game_system: 'PFS',
                                 name: "Serpents Ire", description: "This is the description", pregen_only: true,
@@ -35,28 +36,21 @@ scenarios = Scenario.create!([{ type_of: "Scenario", tier: '6-8', season: 7, sce
                                 author: "Kate Baker",
                                 hard_mode: false, created_at: "2019-07-11 02:59:05", updated_at: "2019-07-11 02:59:05", pregen_only: false }])
 
-tables = Table.create!([{ session_id: 1, scenario_id: 1, max_players: 6, premium: true, prereg_price: 10, onsite_price: 20 },
-                        { session_id: 1, scenario_id: 2, max_players: 6 },
-                        { session_id: 2, scenario_id: 1, max_players: 6 },
-                        { session_id: 3, scenario_id: 2, max_players: 6 }])
+Table.create!([{ session_id: 1, scenario_id: 1, online: true, max_players: 6, premium: true, prereg_price: 10, onsite_price: 20, location: 'Room 1' },
+               { session_id: 1, scenario_id: 2, online: true, max_players: 6, location: 'Room 2'  },
+               { session_id: 2, scenario_id: 1, online: true, max_players: 6 , location: 'Room 1' },
+               { session_id: 3, scenario_id: 2, online: true, max_players: 6 , location: 'Room 1' }])
 
 
 puts("Seeding users!")
-users = User.create!([{ name: "Jack Brown", pfs_number: 788, admin: true, email: "silbeg@gmail.com",
-                        password: 'password', password_confirmation: 'password' },
-                      { name: "A. User", pfs_number: 1234687, admin: false, email: "auser@gmail.com",
-                        password: 'password', password_confirmation: 'password' },
-                      { name: "Ryan Blomquist", pfs_number: 8769, admin: true, email: "blomquist.r@gmail.com",
-                        password: 'password', password_confirmation: 'password' }])
+user = User.create!({ name: "Jack Brown", pfs_number: 788, admin: true, email: "silbeg@gmail.com",
+                       password: 'password', password_confirmation: 'password' })
+User.create!([{ name: "A. User", pfs_number: 1234687, admin: false, email: "auser@gmail.com",
+                password: 'password', password_confirmation: 'password' },
+              { name: "Ryan Blomquist", pfs_number: 8769, admin: true, email: "blomquist.r@gmail.com",
+                password: 'password', password_confirmation: 'password' }])
 
-userEvent = UserEvent.create!([{ event_id: 1, user_id: 1 }])
+userEvent = UserEvent.create!({ event: event, user: user })
 
-registration_tables = RegistrationTable.create!([{ user_event_id: 1, table_id: 1, paid: true, payment_amount: 1000, payment_id: 'PAYMENTID' },
-                                                 { user_event_id: 1, table_id: 3 }])
-
-additional_payments = AdditionalPayment.create!([{ user_event_id: 1, category: 'auction', description: 'A really neat thingie!',
-                                                   charitable_donation: true, market_price: 2000, payment_price: 3000 },
-                                                 { user_event_id: 1, category: 'auction', description: 'Another really neat thingie!',
-                                                   charitable_donation: true, market_price: 2000, payment_price: 3000 },
-                                                 { user_event_id: 1, category: 'auction', description: 'Yes, another really neat thingie!',
-                                                   charitable_donation: true, market_price: 2000, payment_price: 3000 }])
+RegistrationTable.create!([{ user_event: userEvent, table_id: 1, paid: true, payment_amount: 1000, payment_id: 'PAYMENTID' },
+                           { user_event: userEvent, table_id: 3 }])

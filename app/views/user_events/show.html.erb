@@ -10,48 +10,36 @@
 
 <% player = @user_event.user %>
 <div class="panel panel-padded" style="border: solid thin black;">
-  <div class="row">
-    <div class="col-md-2 col-sm-3"><strong>Name:</strong></div>
-    <div class="col-md-6 col-sm-5"><%= player.name %></div>
-  </div>
-  <div class="row">
-    <div class="col-md-2 col-sm-3"><strong>PFS Number:</strong></div>
-    <div class="col-md-6 col-sm-5"><%= player.pfs_number %></div>
-  </div>
-  <div class="row">
-    <div class="col-md-2 col-sm-3"><strong>Email:</strong></div>
-    <div class="col-md-6 col-sm-5"><%= player.email %></div>
-  </div>
-  <div class="row">
-    <div class="col-md-2 col-sm-3"><strong>GM/HQ Only:</strong></div>
-    <div class="col-md-6 col-sm-5"><%= yes_no @user_event.vip? %></div>
-  </div>
 
-  <% if @event.price&.nonzero? %>
-    <% if @user_event.donation %>
-      <div class="row">
-        <div class="col-md-2 col-sm-3"><strong>
+  <dl class="dl-horizontal">
+    <dt>Name</dt>
+    <dd><%= player.name %></dd>
+    <dt>Organized Play ID</dt>
+    <dd><%= player.pfs_number %></dd>
+    <dt>Email</dt>
+    <dd><%= player.email %></dd>
+    <dt>GM/HQ Only</dt>
+    <dd><%= yes_no @user_event.vip? %></dd>
+    <% if @event.price&.nonzero? %>
+      <% if @user_event.donation %>
+        <dt>
           <% unless @user_event.paid? %>Pledged
-          <% end %>Donation:</strong></div>
-        <div class="col-md-6 col-sm-5"><%= number_to_currency @user_event.donation %>
+          <% end %>Donation:
+        </dt>
+        <dd><%= number_to_currency @user_event.donation %>
           <% unless @user_event.paid? %>
             <div><%= link_to 'Edit Pledged Donation', edit_event_user_event_path(@event, @user_event) %></div>
           <% end %>
-        </div>
-      </div>
-    <% end %>
-    <div class="row">
-      <div class="col-md-2 col-sm-3"><strong>Paid:</strong></div>
-      <div class="col-md-6 col-sm-5">
-        <% if @user_event.payment_ok? %>
-          Yes
-        <% else %>
-          No
-          <%= render partial: "registration_payment/registration_payment", locals: { event: @event, user_event: @user_event } %>
+        </dd>
+      <% end %>
+      <dt>Paid:</dt>
+      <dd><%= yes_no @user_event.payment_ok? %>
+        <% unless @user_event.payment_ok? %>
+          <div><%= render partial: "registration_payment/registration_payment", locals: { event: @event, user_event: @user_event } %></div>
         <% end %>
-      </div>
-    </div>
-  <% end %>
+      </dd>
+    <% end %>
+  </dl>
 </div>
 
 <hr>
