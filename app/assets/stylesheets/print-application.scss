@@ -32,9 +32,15 @@ $success: #398439;
   .no-print {
     display: none;
   }
+  .print-only {
+    display: block;
+  }
   div.pageinate {
     page-break-after: always;
-    page-break-inside: avoid;
+
+    .no-break {
+      page-break-inside: avoid;
+    }
   }
 
   [class*="col-sm-"] {
@@ -153,5 +159,4 @@ $success: #398439;
   ul.action-links {
     display: none !important;
   }
-
 }

@@ -2,4 +2,13 @@
     <title><%= @event.name %> Registration</title>
 <% end %>
 
+<!-- breadcrumbs -->
+<ol class="breadcrumb">
+  <li><%= link_to "#{@event.name}", event_path(@event) %></li>
+  <li>Receipt for <%= @event.name %></li>
+</ol>
+
+<h2>Receipt for <%= @event.name %></h2>
 <%= render partial:  'registration_receipt', locals: {event: @event, user_event: @user_event}%>
+
+<%= button_to "Return to #{@event.name}", event_path(@event), method: :get, :class => "btn btn-success" %>

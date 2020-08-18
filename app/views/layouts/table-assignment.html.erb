@@ -16,7 +16,6 @@
 </head>
 <body>
 
-
 <!--- Header info --->
 <div class="header-main hidden-print">
   <div class="social-media">
@@ -50,7 +49,9 @@
   </div>
 </div>
 <!-- navigation back home -- don't want to use our sidebar -->
-<div class="hidden-print divider"><%= link_to "Back to #{@event.name}", @event, :class => 'btn btn-primary'%></div>
+<div class="hidden-print divider">
+  <%= button_to "Back to #{@event.name}", @event, method: :get, :class => 'btn btn-primary'%>
+</div>
 
 
 <!--- Main Content --->
