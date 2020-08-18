@@ -409,6 +409,14 @@ div.bottom {
   @include button-variant($black, $lightBlue, $lightBlue)
 }
 
+.btn-warning {
+  @include button-variant($black, $orange, $orange)
+}
+
+.btn-danger {
+  @include button-variant($white, $red, $red)
+}
+
 .btn-link {
   color: $blue;
 }

@@ -22,18 +22,21 @@ class ApplicationController < ActionController::Base
     unless current_user.admin?
       redirect_to root_path
     end
+    true
   end
 
   def restrict_to_hosts
     unless event_host?
       redirect_to events_path
     end
+    true
   end
 
   def restrict_to_gamemaster
     unless event_host? || @game_master&.assigned(current_user)
       redirect_to events_path
     end
+    true
   end
 
   def force_to_current_user
