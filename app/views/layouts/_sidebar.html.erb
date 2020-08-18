@@ -1,4 +1,11 @@
 <ul class="sidebar">
+  <li>
+    <% if user_signed_in? %>
+      <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+    <% else %>
+      <%= link_to('Login', new_user_session_path) %>
+    <% end %>
+  </li>
   <% if user_signed_in? %>
     <li><%= link_to 'My Profile', user_path(current_user) %></li>
   <% end %>
@@ -72,13 +79,6 @@
     <li><%= link_to 'Users', users_path %></li>
     <li><%= link_to 'Users (JSON)', users_path(:format => :json) %></li>
   <% end %>
-  <li>
-    <% if user_signed_in? %>
-      <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
-    <% else %>
-      <%= link_to('Login', new_user_session_path) %>
-    <% end %>
-  </li>
   <li>
     <% unless user_signed_in? %>
       <a href="mailto:<%= ENV['GMAIL_SMTP_USERNAME'] %>">Contact Us!</a>
