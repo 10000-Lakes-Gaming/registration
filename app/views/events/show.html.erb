@@ -203,9 +203,9 @@
   </div>
 <% end %>
 
-
-<%= render partial: 'my_schedule', locals: { event: @event, user_event: @registration } if user_signed_in? %>
-
+<% unless @registration.nil? %>
+  <%= render partial: 'my_schedule', locals: { event: @event, user_event: @registration } if user_signed_in? %>
+<% end %>
 <div class="panel panel-padded sessionsOffered" style="border: solid thin black;">
   <h3><%= @event.name %> Game Sign-up</h3>
 
