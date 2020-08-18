@@ -7,7 +7,7 @@ describe Event, type: :model do
   fixtures :tables
 
   context '#tables' do
-    it 'my event has 6 tables' do
+    it 'my event has 11 tables' do
       event = events(:my_event)
       one = tables(:one)
       two = tables(:two)
@@ -15,17 +15,17 @@ describe Event, type: :model do
       raffle = tables(:raffle)
       premium = tables(:premium)
       premium2 = tables(:premium_2)
-      expect(event.tables.length).to be 6
+      expect(event.tables.length).to be 11
       expect(event.tables).to include(one, two, core, raffle, premium, premium2)
     end
   end
 
   context '#sessions' do
-    it 'my_event has 2 sessions' do
+    it 'my_event has 6 sessions' do
       event = events(:my_event)
       morning = sessions(:morning)
       evening = sessions(:evening)
-      expect(event.sessions.length).to be 2
+      expect(event.sessions.length).to be 6
       expect(event.sessions).to include(morning, evening)
     end
   end

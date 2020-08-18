@@ -128,5 +128,45 @@ class Table < ActiveRecord::Base
     tabs.sort_by { |x| x[/\d+/].to_i }.join(", ")
   end
 
+  def seats_available?
+    max_players > registration_tables.length
+  end
 
+  def overlaps?(other_table)
+    return false if other_table.nil?
+
+    # Wow... never even realized that I did that...
+    (self.start.utc < other_table.end.utc) && (self.end.utc > other_table.start.utc)
+  end
+
+  def tickets_overlap?(registration)
+    return false if registration.nil?
+
+    overlap = registration.registration_tables.any? { |ticket| overlaps?(ticket.table) }
+    overlap || registration.game_masters.any? { |gm| overlaps?(gm.table) }
+  end
+
+  def can_sign_up?(registration)
+    return false if registration.nil?
+
+    ok = !session.event.gm_select_only?
+    ok &&= !self.raffle?
+    ok &&= !session.event.closed?
+    ok &&= !session.event.online_sales_closed?
+    ok &&= !session.event.tables_reg_offsite?
+    ok &&= game_masters.present?
+    ok &&= registration.payment_ok?
+    ok && !tickets_overlap?(registration)
+  end
+
+  def can_gm_select?(registration)
+    return false if registration.nil?
+
+    ok = !session.event.closed?
+    ok &&= !session.event.online_sales_closed?
+    ok &&= gm_self_select?
+    ok &&= need_gms?
+    ok &&= registration.payment_ok?
+    ok && !tickets_overlap?(registration)
+  end
 end

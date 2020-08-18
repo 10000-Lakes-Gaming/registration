@@ -3,5 +3,9 @@ gm_admin_one:
   table: one
 
 gm_admin_two:
-   user_event: admin_my_event
-   table: two
+  user_event: admin_my_event
+  table: two
+
+gm_game_master:
+  user_event: gamemaster_event
+  table: one

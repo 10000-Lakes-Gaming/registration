@@ -2,6 +2,8 @@ class GameMaster < ActiveRecord::Base
   belongs_to :table
   belongs_to :user_event
   delegate :online, :online?, to: :table
+  delegate :start, to: :table
+  delegate :end, to: :table
   validates :table_id, :presence => true, :uniqueness => { :scope => :user_event_id }
   validates :user_event_id, :presence => true, :uniqueness => { :scope => :table_id }
   validate :check_gm_count
