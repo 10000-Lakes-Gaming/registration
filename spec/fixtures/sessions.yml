@@ -6,6 +6,30 @@ morning:
   start: 2017-05-08 08:00:00
   end: 2017-05-08 13:00:00
 
+quest_one:
+  event: my_event
+  name: quest 1
+  start: 2017-05-08 07:00:00
+  end: 2017-05-08 09:00:00
+
+quest_two:
+  event: my_event
+  name: quest 2
+  start: 2017-05-08 12:00:00
+  end: 2017-05-08 14:00:00
+
+quest_three:
+  event: my_event
+  name: quest 3
+  start: 2017-05-08 11:00:00
+  end: 2017-05-08 13:00:00
+
+quest_four:
+  event: my_event
+  name: quest 4
+  start: 2017-05-08 13:00:00
+  end: 2017-05-08 14:00:00
+
 evening:
   event: my_event
   name: Evening Slot

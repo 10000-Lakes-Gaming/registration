@@ -14,7 +14,7 @@ class EventsController < ApplicationController
   def get_events
     all = params[:all]
     if all.nil? || all != true
-      @events = Event.where("rsvp_close >= :current", {current: Date.today})
+      @events = Event.where("rsvp_close >= :current", { current: Date.today })
     else
       @events = Event.all
     end
@@ -25,7 +25,7 @@ class EventsController < ApplicationController
   end
 
   def get_my_events
-    events         = get_events
+    events = get_events
     current_events = []
     events.each do |event|
       current_events.push event.id
@@ -33,7 +33,7 @@ class EventsController < ApplicationController
     logger.info "current events => #{current_events}"
 
     @my_registrations = []
-    @my_events        = []
+    @my_events = []
 
     if user_signed_in?
       user_events = UserEvent.where(user_id: current_user.id, event_id: current_events)
@@ -43,7 +43,6 @@ class EventsController < ApplicationController
       end
     end
   end
-
 
   def gms_by_scenario
 
@@ -56,11 +55,11 @@ class EventsController < ApplicationController
     if user_signed_in?
       @registration = @event.user_events.where(user_id: current_user.id).first
       if @registration
-        @sessions        = []
-        @tables          = []
-        @gm_tables       = []
-        @gm_sessions     = []
-        @reg_tables      = @registration.registration_tables
+        @sessions = []
+        @tables = []
+        @gm_tables = []
+        @gm_sessions = []
+        @reg_tables = @registration.registration_tables
         @reg_tables_hash = {}
 
         @reg_tables.each do |reg_table|
@@ -81,7 +80,7 @@ class EventsController < ApplicationController
   def new
     return unless restrict_to_admin
 
-    @event      = Event.new
+    @event = Event.new
     @user_event = UserEvent.new
   end
 
@@ -98,11 +97,11 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
-        format.html {redirect_to @event, notice: 'Event was successfully created.'}
-        format.json {render :show, status: :created, location: @event}
+        format.html { redirect_to @event, notice: 'Event was successfully created.' }
+        format.json { render :show, status: :created, location: @event }
       else
-        format.html {render :new}
-        format.json {render json: @event.errors, status: :unprocessable_entity}
+        format.html { render :new }
+        format.json { render json: @event.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -113,11 +112,11 @@ class EventsController < ApplicationController
     return unless restrict_to_admin
     respond_to do |format|
       if @event.update(event_params)
-        format.html {redirect_to @event, notice: 'Event was successfully updated.'}
-        format.json {render :show, status: :ok, location: @event}
+        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
+        format.json { render :show, status: :ok, location: @event }
       else
-        format.html {render :edit}
-        format.json {render json: @event.errors, status: :unprocessable_entity}
+        format.html { render :edit }
+        format.json { render json: @event.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -128,13 +127,13 @@ class EventsController < ApplicationController
     return unless restrict_to_admin
     @event.destroy
     respond_to do |format|
-      format.html {redirect_to events_url, notice: 'Event was successfully destroyed.'}
-      format.json {head :no_content}
+      format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 
-
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_event
     @event = Event.find(params[:id])
@@ -144,8 +143,8 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event).permit(:name, :start, :end, :location, :rsvp_close, :prereg_ends, :charity,
                                   :prereg_price, :onsite_price, :info, :gm_volunteer_link, :tables_reg_offsite,
-                                  :external_url, :event_number, :online_sales_end, :online, :in_person, 
-                                  :chat_server, :chat_server_url, :optional_fee, :gm_self_select)
+                                  :external_url, :event_number, :online_sales_end, :online, :in_person,
+                                  :chat_server, :chat_server_url, :optional_fee, :gm_self_select, :gm_select_only)
   end
 
 end

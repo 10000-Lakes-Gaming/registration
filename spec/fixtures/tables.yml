@@ -63,6 +63,39 @@ premium_pre:
   onsite_price: 30
   gm_self_select: false
 
+full:
+  session: morning
+  scenario: scenario_two_seven
+  max_players: 1
+  gms_needed: 1
+  raffle: false
+  core: false
+  gm_self_select: true
+
+quest_one_table:
+  session: quest_one
+  scenario: special_one_two
+  max_players: 4
+  gms_needed: 1
+
+quest_two_table:
+  session: quest_two
+  scenario: special_one_two
+  max_players: 4
+  gms_needed: 1
+
+quest_three_table:
+  session: quest_three
+  scenario: special_one_two
+  max_players: 4
+  gms_needed: 1
+
+quest_four_table:
+  session: quest_four
+  scenario: special_one_two
+  max_players: 4
+  gms_needed: 1
+
 other_one:
   session: other_session
   scenario: scenario_two_seven

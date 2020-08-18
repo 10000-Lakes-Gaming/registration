@@ -3,6 +3,7 @@ class RegistrationTable < ActiveRecord::Base
   belongs_to :table
   delegate :name, to: :table
   delegate :start, to: :table
+  delegate :end, to: :table
   delegate :price, to: :table
   validates :table_id, :presence => true, :uniqueness => { :scope => :user_event_id }
   validates :user_event_id, :presence => true, :uniqueness => { :scope => :table_id }
