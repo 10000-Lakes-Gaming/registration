@@ -6,11 +6,6 @@ class EventReceiptController < ApplicationController
     render layout: "table-assignment"
   end
 
-  def show
-    render layout: "table-assignment"
-  end
-
-
   def get_user_event
     @user_event = UserEvent.find(params[:id])
   end
