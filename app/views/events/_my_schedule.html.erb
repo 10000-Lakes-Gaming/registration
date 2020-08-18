@@ -77,6 +77,11 @@
             <td>
               <% if selection.is_a? RegistrationTable %>
                 Player
+                <% if selection.table.premium %>
+                  <%= button_to 'Return!', [@event, session, selection.table, selection], data: { confirm: "Are you sure you want to return your ticket for #{selection.table.long_name}? Returning your ticket will not refund your money." }, :class => 'btn btn-xs btn-danger', method: :delete %>
+                <% else %>
+                  <%= button_to 'Return!', [@event, session, selection.table, selection], data: { confirm: "Are you sure you want to return your ticket for #{selection.table.long_name}?" }, :class => 'btn btn-xs btn-danger', method: :delete %>
+                <% end %>
               <% elsif selection.is_a? GameMaster %>
                 GM
               <% end %>
