@@ -1,28 +1,79 @@
-<h2>Sign up</h2>
+<h2>Sign Up for 10,000 Lakes Gaming's Event Registration</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  <div class="well">
+    <div class="bg-warning">
+      <div class="lead text-danger"><b>Do not use an alias!</b>.</div>
+      <div>Please enter your complete first and last name into the name field.<br/>
+        Using anything other than your full name will prevent admins from confirming your paid status within the
+        application.
+      </div>
+    </div>
+  </div>
+
+  <div class="well">
+    <div class="bg-warning">
+      <div class="lead text-danger"><b>Important Note:</b>.</div>
+      <div>
+        <p>Creating an account on this application will not register you for any events. This application can and will
+          support many events, so you will need to register for the specific event (convention/game day/etc) that you
+          wish to attend.
+        </p>
+        <p>This is done by clicking the <span class="btn btn-warning">Register</span> button next to the event on the
+          events listing.</p>
+      </div>
+    </div>
   </div>
 
   <div class="field">
+    <%= f.label :name, 'Full name'%>
+    <div><em>Please use your full <b>real</b> first name and last name.
+      <br>Anything else can cause problems verifying your registrations, payments, or scenario requests for conventions.</em>
+    </div>
+    <%= f.text_field :name %>
+  </div>
+  <br>
+
+  <div class="field">
+    <%= f.label :pfs_number, 'Paizo Organized Play Number' %> <br>
+    <%= f.number_field :pfs_number %>
+  </div>
+  <p><em>and/or</em></p>
+  <div class="field">
+    <%= f.label :dci_number, 'DCI Number' %> <br>
+    <%= f.number_field :dci_number %>
+  </div>
+  <br/>
+
+  <div class="field">
+    <%= f.label :forum_username, "Username used on Paizo Forums, if any" %> <br>
+    <%= f.text_field :forum_username %>
+  </div>
+  <br>
+
+  <p class="field">
+    <%= f.label :email %> <br><em>Please use the email address that you registered with paizo.com, if
+    possible.</em><br/>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </p>
+  <hr>
+  <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
+      <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br/>
     <%= f.password_field :password, autocomplete: "new-password" %>
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation %><br />
+    <%= f.label :password_confirmation %><br/>
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Sign up" %>
+    <%= f.submit "Register" %>
   </div>
 <% end %>
 
