@@ -9,6 +9,10 @@ class Scenario < ActiveRecord::Base
   TYPES = %w[Scenario Bounty Quest Module Adventure Path ACG]
   SYSTEMS = %w[PFS2 SFS ACG Other PFS Playtest]
 
+  def group
+    "#{game_system} Season #{season} #{type_of}"
+  end
+
   def long_name
     if game_system == 'Other'
       name
