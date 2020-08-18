@@ -29,7 +29,7 @@
 
   <tbody>
 
-  <% @scenarios.each do |scenario| %>
+  <% @scenarios.sort.each do |scenario| %>
       <tr>
         <td><%= scenario.type_of %></td>
         <td><%= scenario.long_name %></td>
