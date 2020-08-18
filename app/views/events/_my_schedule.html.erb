@@ -9,13 +9,9 @@
       table_sessions[session] = nil
     end
 
-    user_event.registration_tables.each do |reg_table|
-      session = reg_table.table.session
-      table_sessions[session] = reg_table
-    end
-    user_event.game_masters.each do |game_master|
-      session = game_master.table.session
-      table_sessions[session] = game_master
+    user_event&.all_tables.each do |reg_table|
+      session = reg_table.session
+      tables[session] = reg_table
     end
 %>
 
