@@ -141,7 +141,16 @@ class Scenario < ActiveRecord::Base
         return -1
       end
     end
-    long_name <=> scenario.long_name
+
+    if self.game_system.eql? scenario.game_system
+      if type_of.eql? scenario.type_of
+        long_name <=> scenario.long_name
+      else
+        TYPES.find_index(self.type_of) <=> TYPES.find_index(scenario.type_of)
+      end
+    else
+      SYSTEMS.find_index(self.game_system) <=> SYSTEMS.find_index(scenario.game_system)
+    end
   end
 
 end
