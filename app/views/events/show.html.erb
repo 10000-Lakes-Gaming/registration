@@ -414,7 +414,7 @@
     </div>
   <% else %>
     <% if user_signed_in? %>
-      <% unless event.closed? %>
+      <% unless @event.closed? %>
         <%= button_to "Register for #{@event.name}?", new_event_user_event_path(@event), :class => 'btn btn-warning', method: :get %>
       <% end %>
     <% else %>
