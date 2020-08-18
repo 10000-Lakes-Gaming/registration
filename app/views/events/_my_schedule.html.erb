@@ -9,7 +9,7 @@
       table_sessions[session] = nil
     end
 
-    user_event&.all_tables.each do |reg_table|
+    user_event&.all_tables&.each do |reg_table|
       session = reg_table.session
       tables[session] = reg_table
     end
