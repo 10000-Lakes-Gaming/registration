@@ -11,7 +11,7 @@
 
     user_event&.all_tables&.each do |reg_table|
       session = reg_table.session
-      tables[session] = reg_table
+      table_sessions[session] = reg_table
     end
 %>
 
