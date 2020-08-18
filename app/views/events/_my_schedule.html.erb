@@ -13,7 +13,6 @@
     user_event.registration_tables.each do |reg_table|
       session = reg_table.table.session
       table_sessions[session] = reg_table
-      hasSession = true
     end
     user_event.game_masters.each do |game_master|
       session = game_master.table.session
