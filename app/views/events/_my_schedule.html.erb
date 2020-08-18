@@ -71,7 +71,7 @@
       </tr>
       </thead>
       <tbody>
-      <% if !hasSession %>
+      <% if user_event.all_tables.empty? %>
         <tr>
           <td>You are not signed up for any sessions!</td>
         </tr>
