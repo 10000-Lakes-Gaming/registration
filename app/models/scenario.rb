@@ -143,14 +143,19 @@ class Scenario < ActiveRecord::Base
     end
 
     if self.game_system.eql? scenario.game_system
-      if type_of.eql? scenario.type_of
-        long_name <=> scenario.long_name
+      if self.type_of.nil?
+        return 1
+      elsif scenario.type_of.nil?
+        return -1
       else
-        TYPES.find_index(self.type_of) <=> TYPES.find_index(scenario.type_of)
+        if type_of.eql? scenario.type_of
+          long_name <=> scenario.long_name
+        else
+          TYPES.find_index(self.type_of) <=> TYPES.find_index(scenario.type_of)
+        end
       end
     else
       SYSTEMS.find_index(self.game_system) <=> SYSTEMS.find_index(scenario.game_system)
     end
   end
-
 end
