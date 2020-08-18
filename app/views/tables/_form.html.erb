@@ -18,8 +18,7 @@
       </td>
       <td>
         <%# add default row %>
-        <%= f.select :scenario_id, option_groups_from_collection_for_select(scenario_groups, :scenarios, :group, :id, :long_name, nil)
-        %>
+        <%= f.select :scenario_id, options_for_select(@scenarios.sort.map { |scenario| [scenario.long_name, scenario.id] }, @table.scenario_id), { include_blank: true } %>
       </td>
     </tr>
 

@@ -28,7 +28,7 @@ class Scenario < ActiveRecord::Base
       elsif bounty?
         # May have to add season if they add this in the future
         "#{game_system} Bounty #{scenario_number}: #{name}"
-      elsif AP?
+      elsif AP?n
         "#{game_system} AP #{"%d" % scenario_number}: #{name}"
       else
         "#{game_system} #{name}"
