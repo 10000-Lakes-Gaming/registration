@@ -15,3 +15,9 @@ dude1:
   pfs_number: 339944
   admin: false
   email: dude1@email.com
+
+gamemaster:
+  name: Game Master
+  pfs_number: 777
+  admin: false
+  email: gamemaster@email.com

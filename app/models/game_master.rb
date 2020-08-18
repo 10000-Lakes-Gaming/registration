@@ -1,13 +1,43 @@
 class GameMaster < ActiveRecord::Base
   belongs_to :table
   belongs_to :user_event
+  delegate :online, :online?, to: :table
+  delegate :start, to: :table
+  delegate :end, to: :table
   validates :table_id, :presence => true, :uniqueness => { :scope => :user_event_id }
   validates :user_event_id, :presence => true, :uniqueness => { :scope => :table_id }
   validate :check_gm_count
+  validate :validate_vtt_fields
+
+  attr_accessor :save_despite_warnings
+  before_save :check_for_warnings
+  before_update :check_for_warnings
+  before_create :check_for_warnings
+
+  def warnings
+    @warnings ||= ActiveModel::Errors.new(self)
+  end
+
+  def check_for_warnings
+    # warnings.add(:notes, :too_long, count: 120) if notes.to_s.length > 120
+    !!save_despite_warnings
+  end
+
+  def validate_vtt_fields
+    if online?
+      warnings.add(:vtt_type, :required) if vtt_type.blank?
+      warnings.add(:vtt_name, :required) if vtt_name.blank?
+      warnings.add(:vtt_url, :required) if vtt_url.blank?
+    else
+      errors[:vtt_type] << 'is not allowed for in-person table' if vtt_type.present?
+      errors[:vtt_name] << 'is not allowed for in-person table' if vtt_name.present?
+      errors[:vtt_url] << 'is not allowed for in-person table' if vtt_url.present?
+    end
+  end
 
   def check_gm_count
     # first check to see if this GM is already in the table's game masters.
-    unless table.game_masters.include? (self)
+    unless table.game_masters.include?(self)
       errors.add :game_masters, "Max GMs Exceeded" if table.game_masters.count >= table.gms_needed
     end
   end

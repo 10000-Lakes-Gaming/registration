@@ -25,7 +25,8 @@
     </dd>
     <% if @event.chat_server? %>
       <dt class="head">Chat Server:</dt>
-      <dd class="head text-info"><a class="ul" target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a></dd>
+      <dd class="head text-info">
+        <a class="ul" target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a></dd>
     <% end %>
   </dl>
 </div>
@@ -35,6 +36,12 @@
   <% if @event.closed? %>
     <div class="alert-danger lead">Online Registration is closed!</div>
   <% else %>
+    <% if @event.gm_select_only? %>
+      <div class="text-info">
+        <span class="lead">Game Sign-Ups are currently restricted to <abbr title="Game Masters">GMs</abbr> volunteering to run games.
+      </span>
+      </div>
+    <% end %>
     <% if @event.early_bird? %>
       <% unless @event.prereg_closed? %>
         <div class="text-warning">
@@ -73,11 +80,11 @@
       <div class="row">
         <div class="col-md-2">
           <strong>
-          <% if @event.optional_fee? %>
-          Suggested Donation:
-          <% else %>
-          Event Ticket Price:
-          <% end %>
+            <% if @event.optional_fee? %>
+              Suggested Donation:
+            <% else %>
+              Event Ticket Price:
+            <% end %>
           </strong>
         </div>
         <div class="col-md-6">
@@ -352,32 +359,22 @@
                         <% end %>
                       <% end %>
 
-                      <%# Add helper to check for times as well... %>
-                      <% registered_this_session = @sessions.include?(session) || @gm_sessions.include?(session) %>
-                      <% if !registered_this_session && registrations_available && @registration.payment_ok? %>
-
-                        <% unless table.raffle? or @event.closed? or online_sales_closed? or @event.tables_reg_offsite %>
-                          <% unless table.premium? %>
-                            <%# TODO - make this something like "ENOUGH" GMs present... i.e., 1 GM per 6 player %>
-                            <% if table.game_masters.present? %>
-                              <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table),
-                                            :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.closed? %>
-                            <% end %>
-                          <% else %>
-                            <%= button_to "Buy Ticket for #{number_to_currency table.price}", new_event_session_table_registration_table_path(@event, session, table),
-                                          :class => "btn btn-xs btn-success", :method => :get, :disabled => table.closed?,
-                                          data: { confirm: "This is a premium event with a price of #{number_to_currency table.price}. You will have 1 hour to pay for this ticket." }
-                            %>
-                          <% end %>
+                      <% if table.can_sign_up?(@registration) %>
+                        <% if table.premium? %>
+                          <%= button_to "Buy Ticket for #{number_to_currency table.price}", new_event_session_table_registration_table_path(@event, session, table),
+                                        :class => "btn btn-xs btn-success", :method => :get, :disabled => table.closed?,
+                                        data: { confirm: "This is a premium event with a price of #{number_to_currency table.price}. You will have 1 hour to pay for this ticket." }
+                          %>
+                        <% else %>
+                          <%= button_to 'Sign Up', new_event_session_table_registration_table_path(@event, session, table),
+                                        :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.closed? %>
                         <% end %>
                       <% end %>
 
-                      <% if !registered_this_session && table.gm_self_select? && table.need_gms? %>
+                      <% if table.can_gm_select?(@registration) %>
                         <%= button_to 'I will GM!', new_event_session_table_game_master_path(@event, session, table),
-                                      :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.closed? if self_select_allowed?%>
+                                      :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.closed? if self_select_allowed? %>
                       <% end %>
-
-
                     </div>
 
                   <% else %>
@@ -403,26 +400,26 @@
   <hr>
 
   <% if @registration %>
-  <div>
-    <%= link_to raw("<span class='glyphicon glyphicon-warning-sign' aria-hidden='true'></span> Unregister for #{@registration.event.name}"),
-                [@event, @registration],
-                method: :delete,
-                data: { confirm: 'Are you sure? Unregistering for the event will remove you from all tables, and will not refund your payment.' },
-                :class => 'btn btn-danger' %>
+    <div>
+      <%= link_to raw("<span class='glyphicon glyphicon-warning-sign' aria-hidden='true'></span> Unregister for #{@registration.event.name}"),
+                  [@event, @registration],
+                  method: :delete,
+                  data: { confirm: 'Are you sure? Unregistering for the event will remove you from all tables, and will not refund your payment.' },
+                  :class => 'btn btn-danger' %>
 
-    <% if @registration && @registration.paid? %>
-      <em>Note: unregistering will not refund your payment(s).</em>
-    <% end %>
-  </div>
-<% else %>
-  <div><%= button_to "Register for #{@event.name}?", new_event_user_event_path(@event), :class => 'btn btn-warning', method: :get %></div>
-<% end %>
-<hr>
-<% if event_host? %>
-  <%= button_to 'Add Session', new_event_session_path(@event), :class => 'btn btn-warning', :method => :get %>
-<% end %>
-<% if admin? %>
-  <%= button_to 'Edit', edit_event_path(@event), :class => 'btn btn-primary', :method => :get %>
-<% end %>
-<%= button_to 'Back', events_path, :class => 'btn btn-success', :method => :get %>
+      <% if @registration && @registration.paid? %>
+        <em>Note: unregistering will not refund your payment(s).</em>
+      <% end %>
+    </div>
+  <% else %>
+    <div><%= button_to "Register for #{@event.name}?", new_event_user_event_path(@event), :class => 'btn btn-warning', method: :get %></div>
+  <% end %>
+  <hr>
+  <% if event_host? %>
+    <%= button_to 'Add Session', new_event_session_path(@event), :class => 'btn btn-warning', :method => :get %>
+  <% end %>
+  <% if admin? %>
+    <%= button_to 'Edit', edit_event_path(@event), :class => 'btn btn-primary', :method => :get %>
+  <% end %>
+  <%= button_to 'Back', events_path, :class => 'btn btn-success', :method => :get %>
 </div>

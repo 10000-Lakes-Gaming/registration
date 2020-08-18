@@ -9,11 +9,14 @@ class Table < ActiveRecord::Base
   delegate :prereg_ends, to: :session
   delegate :prereg_closed?, to: :session
   delegate :event, to: :session
-  validates :scenario_id, :session_id, :gms_needed, :presence => true
-  validates_numericality_of :gms_needed, greater_than: 0
   validate :validate_max_players
+  validates :scenario_id, :session_id, :gms_needed, :presence => true
+  # Online validations
   validate :validate_online
   validates_presence_of :location, if: :online, :message => 'required when table is online'
+  validates_numericality_of :gms_needed, greater_than: 0
+  validates_numericality_of :gms_needed, if: :online,  equal_to: 1
+  validates_numericality_of :max_players, if: :online,  less_than_or_equal_to: 6
 
   def validate_online
     if self.online?
@@ -25,7 +28,7 @@ class Table < ActiveRecord::Base
 
   def validate_max_players
     if session.event.tables_reg_offsite
-      self.max_players = 0 unless !self.max_players.blank?
+      self.max_players = 0 if self.max_players.blank?
     else
       if max_players.nil?
         errors[:max_players] << 'cannot be blank'
@@ -33,6 +36,18 @@ class Table < ActiveRecord::Base
         errors[:max_players] << 'must be greater than 0'
       end
     end
+  end
+
+  def vtt_type
+    game_masters.first&.vtt_type
+  end
+
+  def vtt_name
+    game_masters.first&.vtt_name
+  end
+
+  def vtt_url
+    game_masters.first&.vtt_url
   end
 
   def <=> (tab)
@@ -113,5 +128,45 @@ class Table < ActiveRecord::Base
     tabs.sort_by { |x| x[/\d+/].to_i }.join(", ")
   end
 
+  def seats_available?
+    max_players > registration_tables.length
+  end
 
+  def overlaps?(other_table)
+    return false if other_table.nil?
+
+    # Wow... never even realized that I did that...
+    (self.start.utc < other_table.end.utc) && (self.end.utc > other_table.start.utc)
+  end
+
+  def tickets_overlap?(registration)
+    return false if registration.nil?
+
+    overlap = registration.registration_tables.any? { |ticket| overlaps?(ticket.table) }
+    overlap || registration.game_masters.any? { |gm| overlaps?(gm.table) }
+  end
+
+  def can_sign_up?(registration)
+    return false if registration.nil?
+
+    ok = !session.event.gm_select_only?
+    ok &&= !self.raffle?
+    ok &&= !session.event.closed?
+    ok &&= !session.event.online_sales_closed?
+    ok &&= !session.event.tables_reg_offsite?
+    ok &&= game_masters.present?
+    ok &&= registration.payment_ok?
+    ok && !tickets_overlap?(registration)
+  end
+
+  def can_gm_select?(registration)
+    return false if registration.nil?
+
+    ok = !session.event.closed?
+    ok &&= !session.event.online_sales_closed?
+    ok &&= gm_self_select?
+    ok &&= need_gms?
+    ok &&= registration.payment_ok?
+    ok && !tickets_overlap?(registration)
+  end
 end

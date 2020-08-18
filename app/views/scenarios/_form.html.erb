@@ -13,12 +13,12 @@
 
   <div class="field">
     <%= f.label :game_system %><br>
-    <%= f.select :game_system, %w(PFS2 SFS ACG Other PFS Playtest) %>
+    <%= f.select :game_system, Scenario::SYSTEMS %>
   </div>
 
   <div class="field">
     <%= f.label :type_of %><br>
-    <%= f.select :type_of, ['Scenario', 'Quest', 'Module', 'Adventure Path', 'ACG', 'Other'] %>
+    <%= f.select :type_of, Scenario::TYPES %>
   </div>
   <div class="field">
     <%= f.label :season %><br>

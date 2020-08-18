@@ -10,6 +10,11 @@ normal_guy_my_event:
   event: my_event
   paid: true
 
+gamemaster_event:
+  user: gamemaster
+  event: my_event
+  paid: true
+
 admin_other_event:
   user: admin
   event: other

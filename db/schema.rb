@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_14_033312) do
+ActiveRecord::Schema.define(version: 2020_08_17_222123) do
 
   create_table "additional_payments", force: :cascade do |t|
     t.string "category"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 2020_08_14_033312) do
     t.string "chat_server_url"
     t.boolean "optional_fee"
     t.boolean "gm_self_select", default: true
+    t.boolean "gm_select_only"
   end
 
   create_table "game_masters", force: :cascade do |t|
@@ -70,6 +71,9 @@ ActiveRecord::Schema.define(version: 2020_08_14_033312) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "table_number"
+    t.string "vtt_type"
+    t.string "vtt_name"
+    t.string "vtt_url"
     t.index ["table_id"], name: "index_game_masters_on_table_id"
     t.index ["user_event_id"], name: "index_game_masters_on_user_event_id"
   end
@@ -102,7 +106,7 @@ ActiveRecord::Schema.define(version: 2020_08_14_033312) do
     t.boolean "pregen_only"
     t.string "tier"
     t.boolean "retired", default: false
-    t.string "game_system", default: "PFS"
+    t.string "game_system"
     t.boolean "evergreen"
     t.string "catalog_number"
   end

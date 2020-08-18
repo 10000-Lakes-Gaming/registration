@@ -1,10 +1,10 @@
 one:
-  table:
-  user_event:
+  table: one
+  user_event: normal_guy_my_event
 
 two:
-  table:
-  user_event:
+  table: premium_2
+  user_event: normal_guy_my_event
 
 three:
   table:
@@ -27,3 +27,8 @@ premium_unpaid:
   paid: false
   payment_amount:
   payment_id:
+
+full_table_ticket:
+  table:  full
+  user_event: paid_user_event
+

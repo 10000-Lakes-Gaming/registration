@@ -67,5 +67,19 @@ module ApplicationHelper
     end
   end
 
+  def scenario_groups
+    groups = {}
+    @scenarios.each do |scenario|
+      if groups.key? scenario.group
+        group = groups[scenario.group]
+      else
+        group = ScenarioGroup.new
+        group.group = scenario.group
+      end
+      group.scenarios.append(scenario)
+      groups[group.group] = group
+    end
+    groups.values.sort
+  end
 end
 

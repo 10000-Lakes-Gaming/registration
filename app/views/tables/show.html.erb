@@ -25,14 +25,16 @@
     </dl>
   </div>
 
+
   <% if @table.online? %>
     <h3>Online Game Details</h3>
     <div class="well">
       <dl class="dl-horizontal">
-        <dt class="head">Virtual Table Top</dt>
-        <dd class="head text-info">TBD</dd>
-        <dt class="head">VTT URL:</dt>
-        <dd class="head text-info"><a class="ul" target="_blank" href="http://www.roll20.net">TBS</a></dd>
+        <dt class="head"><abbr title="Virtual Table Top">VTT</abbr></dt>
+        <dd class="head text-info"><%= @table.vtt_type %></dd>
+        <dt class="head"><abbr title="Virtual Table Top">VTT</abbr> Location:</dt>
+        <dd class="head text-info">
+          <a class="ul" target="_blank" href="<%= @table.vtt_url %>>"><%= @table.vtt_name %></a></dd>
         <dt class="head">Event Chat Server:</dt>
         <dd class="head text-info">
           <a class="ul" target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a></dd>
