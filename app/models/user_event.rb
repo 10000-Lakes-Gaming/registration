@@ -13,6 +13,12 @@ class UserEvent < ActiveRecord::Base
     self.user <=> other.user
   end
 
+  def all_tickets
+    tickets = []
+    tickets.concat registration_tables
+    tickets.concat game_masters
+  end
+
   def all_tables
     tables = []
     registration_tables.each do |reg_table|
@@ -38,7 +44,7 @@ class UserEvent < ActiveRecord::Base
   end
 
   def unpaid_additional_payments?
-    additional_payments.any? {|payment| payment.payment_id.nil?}
+    additional_payments.any? { |payment| payment.payment_id.nil? }
   end
 
   def registration_cost
@@ -69,7 +75,7 @@ class UserEvent < ActiveRecord::Base
   end
 
   def has_charitable_donation?
-    self.additional_payments.any? {|payment| payment.charitable_donation?}
+    self.additional_payments.any? { |payment| payment.charitable_donation? }
   end
 
   def past

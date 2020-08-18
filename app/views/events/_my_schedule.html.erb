@@ -9,9 +9,9 @@
       table_sessions[session] = nil
     end
 
-    user_event&.all_tables&.each do |reg_table|
-      session = reg_table.session
-      table_sessions[session] = reg_table
+    user_event&.all_tickets&.each do |ticket|
+      session = ticket.session
+      table_sessions[session] = ticket
     end
 %>
 
@@ -78,7 +78,7 @@
               <td>
                 <% if selection.is_a? RegistrationTable %>
                   Player
-                  <% if selection.table.premium %>
+                  <% if selection.premium %>
                     <%= button_to 'Return!', [@event, session, selection.table, selection], data: { confirm: "Are you sure you want to return your ticket for #{selection.table.long_name}? Returning your ticket will not refund your money." }, :class => 'btn btn-xs btn-danger', method: :delete %>
                   <% else %>
                     <%= button_to 'Return!', [@event, session, selection.table, selection], data: { confirm: "Are you sure you want to return your ticket for #{selection.table.long_name}?" }, :class => 'btn btn-xs btn-danger', method: :delete %>
