@@ -19,7 +19,7 @@
     end
 %>
 
-<div class="panel panel-padded" style="border: solid thin black;">
+<div class="panel panel-padded border-thin">
   <% if event.online? %>
     <h3>My <%= event.name %> Schedule</h3>
     <!-- Add some padding on the elements below-->
@@ -68,52 +68,58 @@
       </tr>
       </thead>
       <tbody>
-      <% sessions.each do |session| %>
-        <% selection = table_sessions[session] %>
-        <% unless selection.blank? %>
-          <tr>
-            <td><%= session.timeslot %></td>
-            <td><%= selection.table.scenario.long_name %></td>
-            <td>
-              <% if selection.is_a? RegistrationTable %>
-                Player
-                <% if selection.table.premium %>
-                  <%= button_to 'Return!', [@event, session, selection.table, selection], data: { confirm: "Are you sure you want to return your ticket for #{selection.table.long_name}? Returning your ticket will not refund your money." }, :class => 'btn btn-xs btn-danger', method: :delete %>
-                <% else %>
-                  <%= button_to 'Return!', [@event, session, selection.table, selection], data: { confirm: "Are you sure you want to return your ticket for #{selection.table.long_name}?" }, :class => 'btn btn-xs btn-danger', method: :delete %>
-                <% end %>
-              <% elsif selection.is_a? GameMaster %>
-                GM
-              <% end %>
-            </td>
-            <td>
-              <%# handle online differently %>
-              <%= (selection.is_a? GameMaster) ? selection.table.location : 'See Musterer' %>
-            </td>
-            <td>
-              <div style="display: inline-block"><%= link_to 'View Table Details', event_session_table_path(event, session, selection.table) %></div>
-            </td>
-            <% if user_event.gamemaster? %>
+      <% if user_event.all_tables.empty? %>
+        <tr>
+          <td>You are not signed up for any sessions!</td>
+        </tr>
+      <% else %>
+        <% sessions.each do |session| %>
+          <% selection = table_sessions[session] %>
+          <% unless selection.blank? %>
+            <tr>
+              <td><%= session.timeslot %></td>
+              <td><%= selection.table.scenario.long_name %></td>
               <td>
-                <% if selection.is_a? GameMaster %>
-                  <div style="display: inline-block"><%= link_to 'Edit Table Details', edit_event_session_table_game_master_path(event, session, selection.table, selection) %></div>
-                <% end %>
-            <% end %>
-            </td>
-            <% if selection.is_a? RegistrationTable %>
-              <td>
-                <% unless selection.payment_ok? %>
-                  <div style="display: inline-block">
-                    <%= render partial: "table_payment/table_payment", locals: { event: event, registration_table: selection, button_label: "Pay for #{number_to_currency(selection.table.price)} Ticket" } %>
-                  </div>
+                <% if selection.is_a? RegistrationTable %>
+                  Player
+                  <% if selection.table.premium %>
+                    <%= button_to 'Return!', [@event, session, selection.table, selection], data: { confirm: "Are you sure you want to return your ticket for #{selection.table.long_name}? Returning your ticket will not refund your money." }, :class => 'btn btn-xs btn-danger', method: :delete %>
+                  <% else %>
+                    <%= button_to 'Return!', [@event, session, selection.table, selection], data: { confirm: "Are you sure you want to return your ticket for #{selection.table.long_name}?" }, :class => 'btn btn-xs btn-danger', method: :delete %>
+                  <% end %>
+                <% elsif selection.is_a? GameMaster %>
+                  GM
                 <% end %>
               </td>
-            <% elsif selection.is_a? GameMaster %>
-              <td></td>
+              <td>
+                <%# handle online differently %>
+                <%= (selection.is_a? GameMaster) ? selection.table.location : 'See Musterer' %>
+              </td>
+              <td>
+                <div style="display: inline-block"><%= link_to 'View Table Details', event_session_table_path(event, session, selection.table) %></div>
+              </td>
+              <% if user_event.gamemaster? %>
+                <td>
+                  <% if selection.is_a? GameMaster %>
+                    <div style="display: inline-block"><%= link_to 'Edit Table Details', edit_event_session_table_game_master_path(event, session, selection.table, selection) %></div>
+                  <% end %>
+              <% end %>
+              </td>
+              <% if selection.is_a? RegistrationTable %>
+                <td>
+                  <% unless selection.payment_ok? %>
+                    <div style="display: inline-block">
+                      <%= render partial: "table_payment/table_payment", locals: { event: event, registration_table: selection, button_label: "Pay for #{number_to_currency(selection.table.price)} Ticket" } %>
+                    </div>
+                  <% end %>
+                </td>
+              <% elsif selection.is_a? GameMaster %>
+                <td></td>
+              <% end %>
             <% end %>
+            </tr>
+          <% end %>
         <% end %>
-        </tr>
-      <% end %>
       </tbody>
     </table>
   </div>
