@@ -1,40 +1,64 @@
-<h3>Registration for <%= event.name %></h3>
 <% player = user_event.user %>
 <% @user_event = user_event %>
 <div class="pageinate">
   <div class="well">
-    <div class="row">
-      <div class="col-md-2 col-sm-3"><strong>Name:</strong></div>
-      <div class="col-md-6 col-sm-5"><%= player.name %></div>
-    </div>
-    <div class="row">
-      <div class="col-md-2 col-sm-3"><strong>PFS Number:</strong></div>
-      <div class="col-md-6 col-sm-5"><%= player.pfs_number %></div>
-    </div>
-    <div class="row">
-      <div class="col-md-2 col-sm-3"><strong>Email:</strong></div>
-      <div class="col-md-6 col-sm-5"><%= player.email %></div>
-    </div>
-    <% if @event.price&.nonzero? %>
-        <div class="row">
-          <div class="col-md-2 col-sm-3"><strong>Paid:</strong></div>
-          <div class="col-md-6 col-sm-5">
-            <% if user_event.payment_ok? %>
-                Yes
-            <% else %>
-                No
-            <% end %>
+    <h3>Event Details</h3>
+    <dl class="dl-horizontal">
+      <dt>Location:</dt>
+      <dd class="text-info"><%= @event.location %></dd>
+      <dt>Dates:</dt>
+      <dd class="text-info"><%= @event.start.localtime.to_formatted_s(:long) %>
+        to <%= @event.end.localtime.to_formatted_s(:long) %></dd>
+      <% if @event.event_number? %>
+        <dt>Event Number:</dt>
+        <dd class="text-info"><%= @event.event_number %></dd>
+      <% end %>
+      <dt>Event Type:</dt>
+      <dd class="text-info">
+        <% if @event.in_person? %>In person
+        <% end %>
+        <% if @event.in_person? && @event.online? %>and online
+        <% elsif @event.online? %>Online
+        <% end %>
+      </dd>
+      <% if @event.chat_server? %>
+        <dt>Chat Server:</dt>
+        <dd class="text-info">
+          <a class="ul" target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a></dd>
+      <% end %>
+    </dl>
+  </div>
 
-          </div>
-        </div>
-    <% end %>
+  <hr>
+
+  <div class="well">
+    <h3>Player Details</h3>
+    <dl class="dl-horizontal">
+      <dt>Name:</dt>
+      <dd class="text-info"><%= player.name %></dd>
+      <dt>PFS Number:</dt>
+      <dd class="text-info"><%= player.pfs_number %></dd>
+      <dt>Name:</dt>
+      <dd class="text-info"><%= player.email %></dd>
+
+      <% if @event.price&.nonzero? %>
+        <dt>Paid:</dt>
+        <dd class="text-info">
+          <%= yes_no user_event.payment_ok? %>
+        </dd>
+      <% end %>
+    </dl>
   </div>
 
   <% if user_event.total_paid > 0 %>
-      <hr>
-      <%= render partial: 'user_events/all_payments_table', locals: {event: @event, user_event: @user_event} %>
+    <hr>
+    <div class="no-break">
+      <%= render partial: 'user_events/all_payments_table', locals: { event: @event, user_event: @user_event } %>
+    </div>
   <% end %>
   <hr>
 
-  <%= render  partial: 'event_tables', locals: {event: @event, user_event: @user_event} %>
+  <div class="no-break">
+    <%= render partial: 'events/my_schedule', locals: { event: @event, user_event: @user_event } %>
+  </div>
 </div>

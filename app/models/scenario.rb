@@ -6,7 +6,7 @@ class Scenario < ActiveRecord::Base
   validates :tier, presence: true, if: :tier_needed?
 
   # TODO: Use constants instead of these strings
-  TYPES = %w[Scenario Bounty Quest Module Adventure Path ACG]
+  TYPES = ['Scenario', 'Bounty', 'Quest', 'Module', 'Adventure Path', 'ACG', 'Other']
   SYSTEMS = %w[PFS2 SFS ACG Other PFS Playtest]
 
   def group
@@ -142,20 +142,20 @@ class Scenario < ActiveRecord::Base
       end
     end
 
-    # if self.game_system.eql? scenario.game_system
-    #   if self.type_of.nil?
-    #     return 1
-    #   elsif scenario.type_of.nil?
-    #     return -1
-    #   else
-    #     if type_of.eql? scenario.type_of
-    long_name <=> scenario.long_name
-    # else
-    #   TYPES.find_index(self.type_of) <=> TYPES.find_index(scenario.type_of)
-    # end
-    # end
-    # else
-    #   SYSTEMS.find_index(self.game_system) <=> SYSTEMS.find_index(scenario.game_system)
-    # end
+    if self.game_system.eql? scenario.game_system
+      if self.type_of.nil?
+        return 1
+      elsif scenario.type_of.nil?
+        return -1
+      else
+        if type_of.eql? scenario.type_of
+          long_name <=> scenario.long_name
+        else
+          TYPES.find_index(self.type_of) <=> TYPES.find_index(scenario.type_of)
+        end
+      end
+    else
+      SYSTEMS.find_index(self.game_system) <=> SYSTEMS.find_index(scenario.game_system)
+    end
   end
 end
