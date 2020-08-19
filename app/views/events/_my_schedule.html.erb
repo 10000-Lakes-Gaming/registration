@@ -9,13 +9,9 @@
       table_sessions[session] = nil
     end
 
-    user_event.registration_tables.each do |reg_table|
-      session = reg_table.table.session
-      table_sessions[session] = reg_table
-    end
-    user_event.game_masters.each do |game_master|
-      session = game_master.table.session
-      table_sessions[session] = game_master
+    user_event&.all_tickets&.each do |ticket|
+      session = ticket.session
+      table_sessions[session] = ticket
     end
 %>
 
@@ -39,7 +35,7 @@
       </div>
     </div>
 
-    <% if user_event.gamemaster? %>
+    <% if user_event&.gamemaster? %>
       <div class="bg-warning text-danger top-buffer">
         <div style="display: inline-block; vertical-align: top; font-size: 1.5em;">
           <span class="text-danger glyphicon glyphicon-warning-sign"></span>
@@ -61,14 +57,14 @@
         <th scope="col">Ticket Type</th>
         <th scope="col">Location</th>
         <th scope="col">Table Details</th>
-        <% if user_event.gamemaster? %>
+        <% if user_event&.gamemaster? %>
           <th scope="col">GM Setup</th>
         <% end %>
         <th scope="col">Payment Due?</th>
       </tr>
       </thead>
       <tbody>
-      <% if user_event.all_tables.empty? %>
+      <% if user_event&.all_tables&.empty? %>
         <tr>
           <td>You are not signed up for any sessions!</td>
         </tr>
@@ -82,7 +78,7 @@
               <td>
                 <% if selection.is_a? RegistrationTable %>
                   Player
-                  <% if selection.table.premium %>
+                  <% if selection.premium %>
                     <%= button_to 'Return!', [@event, session, selection.table, selection], data: { confirm: "Are you sure you want to return your ticket for #{selection.table.long_name}? Returning your ticket will not refund your money." }, :class => 'btn btn-xs btn-danger', method: :delete %>
                   <% else %>
                     <%= button_to 'Return!', [@event, session, selection.table, selection], data: { confirm: "Are you sure you want to return your ticket for #{selection.table.long_name}?" }, :class => 'btn btn-xs btn-danger', method: :delete %>
