@@ -309,7 +309,7 @@
                                   <strong>Written by:</strong> <%= scenario.author %>
                                 </div>
                                 <div>
-                                  <% unless table.scenario.paizo_url.nil? %>
+                                  <% unless table.scenario.paizo_url.blank? %>
                                     <a href="<%= scenario.paizo_url %>" target="_blank">Click to see on Paizo's
                                       site</a>.
                                   <% end %>
