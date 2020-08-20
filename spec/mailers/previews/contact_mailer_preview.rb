@@ -66,7 +66,7 @@ class ContactMailerPreview < ActionMailer::Preview
     @user = User.first
 
     message = Message.new
-    message.subject = "The physical SkalCon 2020 convention is cancelled"
+    message.subject = "SkalCon Online Registration Is Officially Open!"
 
     ContactMailer.skalcon_announcement(message, @user )
   end
