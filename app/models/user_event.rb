@@ -13,10 +13,21 @@ class UserEvent < ActiveRecord::Base
     self.user <=> other.user
   end
 
-  def all_tickets
-    tickets = []
-    tickets.concat registration_tables
-    tickets.concat game_masters
+  def sessions
+    all_tickets_by_session.keys.sort
+  end
+
+  def all_tickets_by_session
+    return @tickets_by_session unless @tickets_by_session.nil?
+
+    @tickets_by_session = {}
+    registration_tables.each do |ticket|
+      @tickets_by_session[ticket.table.session] = ticket
+    end
+    game_masters.each do |gm|
+      @tickets_by_session[gm.table.session] = gm
+    end
+    @tickets_by_session
   end
 
   def all_tables

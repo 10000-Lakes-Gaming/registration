@@ -50,7 +50,7 @@ User.create!([{ name: "A. User", pfs_number: 1234687, admin: false, email: "ause
               { name: "Ryan Blomquist", pfs_number: 8769, admin: true, email: "blomquist.r@gmail.com",
                 password: 'password', password_confirmation: 'password' }])
 
-userEvent = UserEvent.create!({ event: event, user: user })
+user_event = UserEvent.create!({ event: event, user: user })
 
-RegistrationTable.create!([{ user_event: userEvent, table_id: 1, paid: true, payment_amount: 1000, payment_id: 'PAYMENTID' },
-                           { user_event: userEvent, table_id: 3 }])
+RegistrationTable.create!([{ user_event: user_event, table_id: 1, paid: true, payment_amount: 1000, payment_id: 'PAYMENTID' }])
+GameMaster.create!({user_event: user_event, table_id: 3})

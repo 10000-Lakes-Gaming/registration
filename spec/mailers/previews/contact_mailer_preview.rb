@@ -16,8 +16,8 @@ class ContactMailerPreview < ActionMailer::Preview
   end
 
   def game_master_add_preview
-    @event = Event.first
-    @user = User.first
+    @event = Event.find(1)
+    @user = User.find(1)
     user_event = @user.user_events.first
     game_master = user_event.game_masters.first
     message = Message.new

@@ -1,18 +1,22 @@
 <%
     # Consider moving all of this to a helper
     # Also move this to a partial, so that we can include it on the Events page.
-    sessions = event.sessions
-    sessions = sessions.sort
-    table_sessions = {}
+    # sessions = event.sessions
+    # sessions = sessions.sort
+    # table_sessions = {}
 
-    sessions.each do |session|
-      table_sessions[session] = nil
-    end
-
-    user_event&.all_tickets&.each do |ticket|
-      session = ticket.session
-      table_sessions[session] = ticket
-    end
+    # sessions.each do |session|
+    #   table_sessions[session] = nil
+    # end
+    # byebug
+    # user_event&.all_tickets&.each do |ticket|
+    #   session = ticket.session
+    #   byebug
+    #   table_sessions[session] = ticket
+    # end
+    # byebug
+    table_sessions = user_event.all_tickets_by_session
+    sessions = user_event.sessions
 %>
 
 <div class="panel panel-padded border-thin">
@@ -78,7 +82,7 @@
               <td>
                 <% if selection.is_a? RegistrationTable %>
                   Player
-                  <% if selection.premium %>
+                  <% if selection.table.premium %>
                     <%= button_to 'Return!', [@event, session, selection.table, selection], data: { confirm: "Are you sure you want to return your ticket for #{selection.table.long_name}? Returning your ticket will not refund your money." }, :class => 'btn btn-xs btn-danger', method: :delete %>
                   <% else %>
                     <%= button_to 'Return!', [@event, session, selection.table, selection], data: { confirm: "Are you sure you want to return your ticket for #{selection.table.long_name}?" }, :class => 'btn btn-xs btn-danger', method: :delete %>

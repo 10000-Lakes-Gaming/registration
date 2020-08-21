@@ -29,30 +29,20 @@
   <% end %>
   <hr>
 
-  <h2 class="alert-primary">Your schedule at <%= @event.name %> as of <%= DateTime.now.localtime.to_formatted_s(:long) %></h2>
+  <h2 class="alert-primary">Your schedule at <%= @event.name %> as
+    of <%= DateTime.now.localtime.to_formatted_s(:long) %></h2>
   <%# http://pfs-registration.herokuapp.com/events/8/user_events/433 %>
-  <div>Please see <%= link_to "Your Registration", [@event, @game_master.user_event] %> for your up to the minute assignments.</div>
+  <div>Please see <%= link_to "Your Registration", [@event, @game_master.user_event] %> for your up to the minute
+    assignments.
+  </div>
 
   <%
-    @sessions = @event.sessions
-    @sessions = @sessions.sort
 
-    @table_sessions = {}
+      user_event = @game_master.user_event
+      event = user_event.event
 
-    @sessions.each do |session|
-      @table_sessions[session] = nil
-    end
-
-    user_event = @game_master.user_event
-
-    user_event.registration_tables.each do |reg_table|
-      session                  = reg_table.table.session
-      @table_sessions[session] = reg_table
-    end
-    user_event.game_masters.each do |game_master|
-      session                  = game_master.table.session
-      @table_sessions[session] = game_master
-    end
+      @table_sessions = user_event.all_tickets_by_session
+      @sessions = user_event.sessions
   %>
   <div class="well">
     <table class="table table-striped">
@@ -88,14 +78,18 @@
               <% end %>
             </td>
             <% if selection.is_a? RegistrationTable %>
-              <td>Player</td>
+              <td>Player
+                <div><%= link_to 'View Table Details', event_session_table_url(event, session, selection.table), target: "_blank"%></div></td>
               <td>
                 <% unless selection.payment_ok? %>
                   <%= number_to_currency(selection.table.price) %>
                 <% end %>
               </td>
             <% elsif selection.is_a? GameMaster %>
-              <td>GM</td>
+              <td>
+                GM
+                <div><%= link_to 'Edit Table Details', edit_event_session_table_game_master_url(event, session, selection.table, selection), target: "_blank" %></div>
+              </td>
               <td></td>
             <% end %>
           <% end %>
@@ -110,7 +104,6 @@
     inconvenience this may cause.
   </div>
 
-
   <hr>
 
   <h2>Volunteer Information</h2>
@@ -123,35 +116,61 @@
     <li>As a volunteer, you are the eyes, ears, face, and voice of Paizo. We expect each of you to maintain a positive
       attitude, professional behavior, and good hygiene.
     </li>
-    <li>The Player Boon token rolls remain the same. 10% chance per token turned in, 5 tokens max per roll. Winners roll
-      randomly on which boon received. GM boons can be claimed when turning in your first session reporting sheet.
-    </li>
+    <% if event.in_person? %>
+      <li>The Player Boon token rolls remain the same. 10% chance per token turned in, 5 tokens max per roll. Winners
+        roll randomly on which boon received. GM boons can be claimed when turning in your first session reporting sheet.
+      </li>
+    <% end %>
+    <% if event.online? %>
+      <li>We will notify GMs on how we are handling boon rolls soon.</li>
+    <% end %>
   </ul>
   <hr>
-
 
   <h2>Logistics:</h2>
-  <ul>
-    <li>Each GM is responsible to provide their own maps, miniatures, handouts, and scenario-specific pre-generated
-      characters (if your scenario requires them such as in Serpent's Ire).
-    </li>
-    <li>Each GM is responsible for having a reliable copy of the scenario they are running. Power outlets are scarce
-      in the room so GMs must have a backup option in case their computer or tablet runs out of power.
-      For safety reasons, we cannot allow extension cords to be run across the room.
-    </li>
-    <li>Chronicles and session reporting sheets will be provided.</li>
-    <li>The HQ has a supply of New Player Packets and pre-generated iconic characters (this does not include scenario-specific
-      pre-generated characters, such as in Serpent's Ire).
-    </li>
-    <li>Do not leave your assigned table until HQ has released or reassigned you. HQ may assign you to additional tasks.</li>
-    <li>No personal items may be left in the HQ area.</li>
-    <li>The convention room will be closed to all players 30 minutes prior to the the running of interactive specials
-      for the GM pre-special meeting. All GM’s running the specials are expected to be at this meeting, and should
-      report at least 30 minutes prior to the session start time. Please be on time, as we will be discussing signaling
-      and the like.
-    </li>
-  </ul>
-  <hr>
+  <% if event.online? %>
+    <h3>For Online Tables</h3>
+    <ul>
+      <li>Each GM will need to create their Virtual Table Top and add invites to it their table (such as by clicking
+        the "Edit Table Details" in the schedule above).</li>
+      <li>Please have your VTT ready for player sign-in as soon as possible.</li>
+      <li>You will be assigned a room in our <%= link_to @event.chat_server, @event.chat_server_url %> chat server. You will need to use this as your voice channel.</li>
+      <li>Please be at your VTT room and chat room at least 15 minutes prior to your game's start.</li>
+      <li>Game Masters will be required to collect sign in information for their players so that they can report
+        the games and create their chronicle sheets.</li>
+      <li>Please use a separate sign-in form for each game.</li>
+      <li><%= @event.name %> will be sending out sample sign-in forms for you to use.</li>
+      <li>Games should be reported as soon as possible after the game completes.</li>
+      <li><b>Chronicles must be sent to players as soon as possible, preferable within one hour.</b>
+        This is so that players can play their characters in back-to-back slots.</li>
+      <li><b>Do not leave your assigned table until HQ has released or reassigned you.</b></li>
+    </ul>
+  <% end %>
+  <% if event.in_person? %>
+    <h3>For In-Person Tables</h3>
+    <ul>
+      <li>Each GM is responsible to provide their own maps, miniatures, handouts, and scenario-specific pre-generated
+        characters.
+      </li>
+      <li>Each GM is responsible for having a reliable copy of the scenario they are running. Power outlets are scarce
+        in the room so GMs must have a backup option in case their computer or tablet runs out of power.
+        For safety reasons, we cannot allow extension cords to be run across the room.
+      </li>
+      <li>Chronicles and session reporting sheets will be provided.</li>
+      <li>The HQ has a supply of New Player Packets and pre-generated iconic characters.</li>
+      <li><b>Do not leave your assigned room until HQ has released or reassigned you.</b> HQ may assign you to
+        additional tasks.
+      </li>
+      <li>No personal items may be left in the HQ area.</li>
+      <%# Find a way to to see if we are running a special from the app? %>
+      <li>The convention room will be closed to all players 30 minutes prior to the the running of interactive specials
+        for the GM pre-special meeting. All GM’s running the specials are expected to be at this meeting, and should
+        report at least 30 minutes prior to the session start time. Please be on time, as we will be discussing
+        signaling and the like.
+      </li>
+    </ul>
+    <hr>
+  <% end %>
 
   <p>Thank you for making <%= @event.name %> a success!</p>
 
