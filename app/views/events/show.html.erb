@@ -241,12 +241,29 @@
       <div class="card">
         <% sessionList.each do |session| %>
           <div class="card-header striped-outer" id="session-header-<%= session.id %>">
-            <h2 class="mb-0">
-              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#session-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
-                <%= session.name %>: <%= session.timeslot %>
-              </button>
-            </h2>
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#session-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
+                  <%= session.name %>: <%= session.timeslot %>
+                </button>
+              </div>
+              <div class="col-md-1 no-pad"></div>
+              <div class="col-md-2 no-pad ">
+              <span class="text-primary"><%= session.total_max_players - session.players_count %>
+                of <%= session.total_max_players %> player seats left</span></div>
+
+              <% if session.gm_count == session.total_gms_needed %>
+                <% klass = 'text-primary' %>
+              <% else %>
+                <% klass = 'text-danger' %>
+              <% end %>
+              <div class="col-md-2 no-pad"></div>
+              <div class="col-md-2 no-pad"><span class="<%= klass %>"><%= session.total_gms_needed - session.gm_count %>
+                of <%= session.total_gms_needed %> GMs needed</span>
+              </div>
+            </div>
           </div>
+
 
           <div id="session-<%= session.id %>" class="collapse" aria-labelledby="session-header-<%= session.id %>" data-parent="#session-signup">
             <div class="card-body">
@@ -404,8 +421,7 @@
           </div>
         <% end %>
       </div>
-    </div>
-  <% end %>  
+  <% end %>
   <hr>
 
   <% if @registration %>
@@ -437,4 +453,4 @@
     <%= button_to 'Edit', edit_event_path(@event), :class => 'btn btn-primary', :method => :get %>
   <% end %>
   <%= button_to 'Back', events_path, :class => 'btn btn-success', :method => :get %>
-</div>
+  </div>
