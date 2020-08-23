@@ -18,8 +18,8 @@
   <% @sessions.sort {|a, b| a.start <=> b.start}.each do |session| %>
     <tr>
       <td><%= session.name %></td>
-      <td><%= session.start.to_s(:long) %></td>
-      <td><%= session.end.to_s(:long) %></td>
+      <td><%= session.formatted_start %></td>
+      <td><%= session.formatted_end %></td>
       <td><%= link_to 'Show', [@event, session], :class => 'btn btn-info' %>
         <% if event_host? %>
           <%= link_to 'Edit', edit_event_session_path(@event, session), :class => 'btn btn-primary' %>

@@ -4,12 +4,24 @@ class Session < ActiveRecord::Base
   delegate :prereg_ends, to: :event
   delegate :prereg_closed?, to: :event
 
+  TIMESLOT_DATE_FORMAT = "%a %H:%M %Z"
+  DATETIME_FORMAT = "%B %d, %Y %H:%M %Z"
+
   def long_name
     self.name + " " + self.timeslot
   end
 
+
   def timeslot
-    self.start.strftime("%a %H:%M") + " to " + self.end.strftime("%a %H:%M")
+    self.start.strftime(TIMESLOT_DATE_FORMAT) + " to " + self.end.strftime(TIMESLOT_DATE_FORMAT)
+  end
+
+  def formatted_start
+    self.start.strftime(DATETIME_FORMAT)
+  end
+
+  def formatted_end
+    self.end.strftime(DATETIME_FORMAT)
   end
 
   def premium_tables?
