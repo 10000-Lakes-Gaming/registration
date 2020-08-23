@@ -17,6 +17,32 @@ class Event < ActiveRecord::Base
     user_event.donation = price
   end
 
+  def timeslot
+    self.start.strftime(Session::DATETIME_FORMAT) + " to " + self.end.strftime(Session::DATETIME_FORMAT)
+  end
+
+  def formatted_start
+    self.start.strftime(Session::DATETIME_FORMAT)
+  end
+
+  def formatted_end
+    self.end.strftime(Session::DATETIME_FORMAT)
+  end
+
+  def formatted_rsvp_close
+    self.rsvp_close.strftime(Session::DATETIME_FORMAT)
+  end
+
+  def formatted_prereg_ends
+    self.prereg_ends.strftime(Session::DATETIME_FORMAT)
+  end
+
+  def formatted_online_sales_end
+    self.online_sales_end.strftime(Session::DATETIME_FORMAT)
+  end
+
+
+
   def chat_server_validator
     errors[:chat_server].push 'must have both a name and a valid URL' unless self.valid_chat_server
   end

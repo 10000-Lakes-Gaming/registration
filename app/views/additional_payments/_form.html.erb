@@ -97,7 +97,7 @@
       <% elsif @additional_payment.payment_date.nil? %>
           (unpaid)
       <% else %>
-          <%= @additional_payment.payment_date.localtime.to_formatted_s(:long) %>
+          <%= @additional_payment.formatted_payment_date %>
       <% end %>
     </div>
 

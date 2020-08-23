@@ -18,7 +18,7 @@
         <div class="col-md-2 col-sm-2"><%= number_to_currency(@user_event.payment_amount.to_f / 100) %></div>
         <div class="col-md-2 col-sm-2">
           <% if @user_event.payment_date %>
-              <%= @user_event.payment_date.localtime.to_formatted_s(:long) %>
+              <%= @user_event.formatted_payment_date %>
           <% end %>
         </div>
       </div>
@@ -33,7 +33,7 @@
             <div class="col-md-2 col-sm-2"><%= number_to_currency(reg_table.payment_amount.to_f / 100) %></div>
             <div class="col-md-2 col-sm-2">
               <% if reg_table.payment_date %>
-                  <%= reg_table.payment_date.localtime.to_formatted_s(:long) %>
+                  <%= reg_table.formatted_payment_date %>
               <% end %>
             </div>
           </div>
@@ -47,7 +47,7 @@
             <div class="col-md-2 col-sm-2"><%= number_to_currency(payment.payment_amount.to_f / 100) %></div>
             <div class="col-md-2 col-sm-2">
               <% if payment.payment_date %>
-                  <%= payment.payment_date.localtime.to_formatted_s(:long) %>
+                  <%= payment.formatted_payment_date %>
               <% end %>
             </div>
             <% if payment.market_price&.nonzero? %>
