@@ -245,8 +245,8 @@
           <div class="card-header striped-outer" id="session-header-<%= session.id %>">
             <div class="row mb-0">
               <div class="col-md-5">
-                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#session-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
-                  <%= session.name %>: <%= session.timeslot %>
+                <button class="btn btn-link accordion-toggle collapsed" type="button" data-toggle="collapse" data-target="#session-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
+                  <span class="accordion-text"><%= session.name %>: <%= session.timeslot %></span>
                 </button>
                 <em>(Click to see
                   <% if session.premium_tables? %>non-charity

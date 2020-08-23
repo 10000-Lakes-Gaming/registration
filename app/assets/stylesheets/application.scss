@@ -463,4 +463,22 @@ div.bottom {
   display: none;
 }
 
+.accordion-toggle {
+  @extend .glyphicon;
+  @extend .glyphicon-chevron-down;
 
+  float: left;
+  color: $black;
+}
+
+.accordion-toggle.collapsed {
+  @extend .glyphicon;
+  @extend .glyphicon-chevron-right;
+
+  float: left;
+  color: $black;
+}
+
+.accordion-text {
+  @extend body;
+}
