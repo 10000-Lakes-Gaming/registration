@@ -12,6 +12,21 @@ class Session < ActiveRecord::Base
     self.start.strftime("%a %H:%M") + " to " + self.end.strftime("%a %H:%M")
   end
 
+  def premium_tables?
+    tables.any?(&:premium?)
+  end
+
+  def premium_tables
+    #noinspection RubyArgCount
+    premium_tables = tables.select(&:premium?)
+    premium_tables.sort_by { |table| [table.scenario] }
+  end
+  def nonpremium_tables
+    #noinspection RubyArgCount
+    nonpremium_tables = tables.reject(&:premium?)
+    nonpremium_tables.sort_by { |table| [table.scenario] }
+  end
+
   def players
     players = []
     self.tables.each do |table|
@@ -62,7 +77,6 @@ class Session < ActiveRecord::Base
     end
     total_max_gms
   end
-
 
   def <=> (other)
     sort = self.start <=> other.start

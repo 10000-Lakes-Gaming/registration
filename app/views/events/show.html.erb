@@ -11,6 +11,8 @@
     <dt class="head">Dates:</dt>
     <dd class="head text-info"><%= @event.start.localtime.to_formatted_s(:long) %>
       to <%= @event.end.localtime.to_formatted_s(:long) %></dd>
+    <dt class="head">Time Zone:</dt>
+    <dd class="head text-info"><%= Time.zone.name %> (UTC<%= Time.zone.utc_offset / 60 / 60 %>)</dd>
     <% if @event.event_number? %>
       <dt class="head">Event Number:</dt>
       <dd class="head text-info"><%= @event.event_number %></dd>
@@ -246,6 +248,7 @@
                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#session-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
                   <%= session.name %>: <%= session.timeslot %>
                 </button>
+                <em>(Click to see games offered)</em>
               </div>
               <div class="col-md-1 no-pad"></div>
               <div class="col-md-2 no-pad ">
@@ -264,6 +267,27 @@
             </div>
           </div>
 
+          <% if session.premium_tables? %>
+            <div class="card-body">
+              <div class="row no-pad">
+                <div class="col-md-5 header-premium no-pad">Charity Tables:</div>
+                <div class="col-md-1 header-premium no-pad">Details</div>
+                <div class="col-md-2 header-premium no-pad">Seats Remaining</div>
+                <div class="col-md-2 header-premium no-pad" style="padding-left: 1em;">RSVP</div>
+                <div class="col-md-2 header-premium no-pad" style="padding-right: 2px;">GMs Needed</div>
+              </div>
+
+              <% session.premium_tables.each do |table| %>
+                <%= render partial: "events/event_table", locals: { event: @event, table: table,
+                                                                    registration: @registration,
+                                                                    reg_tables: @reg_tables,
+                                                                    gm_tables: @gm_tables,
+                                                                    tables: @tables, reg_tables_hash: @reg_tables_hash } %>
+              <% end %>
+            </div>
+            <hr/>
+          <% end %>
+
 
           <div id="session-<%= session.id %>" class="collapse" aria-labelledby="session-header-<%= session.id %>" data-parent="#session-signup">
             <div class="card-body">
@@ -275,18 +299,24 @@
                 <div class="col-md-2 header no-pad" style="padding-right: 2px;">GMs Needed</div>
               </div>
 
-              <% tables = session.tables %>
+              <% tables = session.nonpremium_tables %>
               <% tables = tables.sort_by { |table| [table.scenario] } %>
               <% if tables.empty? %>
                 <div class="row no-pad striped-inner">
-                  <div class="col-md-12">There are no tables during this session!</div>
+                  <div class="col-md-12">
+                    <% if session.premium_tables? %>
+                    There are no non-charity tables this session!
+                    <% else %>
+                      There are no tables during this session!
+                    <% end %>
+                  </div>
                 </div>
               <% else %>
                 <% tables.each do |table| %>
                   <%= render partial: "events/event_table", locals: { event: @event, session: @session, table: table,
                                                                       registration: @registration, reg_tables: @reg_tables,
                                                                       gm_tables: @gm_tables, tables: @tables,
-                                                                      reg_tables_hash: @reg_tables_hash} %>
+                                                                      reg_tables_hash: @reg_tables_hash } %>
                 <% end %>
               <% end %>
             </div>

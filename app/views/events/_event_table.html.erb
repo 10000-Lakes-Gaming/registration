@@ -90,14 +90,14 @@
           <% unless event.closed? %>
             <% if reg_tables.include?(reg_table) %>
               <% if reg_table.table.premium %>
-                <%= button_to 'Return', event_session_table_registration_table_path(reg_table.table.session.event,
+                <%= button_to 'Return', event_session_table_registration_table_path(event,
                                                                                     reg_table.table.session,
                                                                                     reg_table.table,
                                                                                     reg_table),
                               data: { confirm: "Are you sure you want to return your ticket for #{reg_table.table.long_name}? Returning your ticket will not refund your money." },
                               :class => 'btn btn-xs btn-danger', method: :delete %>
               <% else %>
-                <%= button_to 'Return', [event, session, table, reg_table], data: { confirm: "Are you sure you want to return your ticket for #{reg_table.table.long_name}?" }, :class => 'btn btn-xs btn-danger', method: :delete %>
+                <%= button_to 'Return', [event, table.session, table, reg_table], data: { confirm: "Are you sure you want to return your ticket for #{reg_table.table.long_name}?" }, :class => 'btn btn-xs btn-danger', method: :delete %>
               <% end %>
             <% end %>
           <% end %>
@@ -106,18 +106,18 @@
 
       <% if table.can_sign_up?(registration) %>
         <% if table.premium? %>
-          <%= button_to "Buy Ticket for #{number_to_currency table.price}", new_event_session_table_registration_table_path(event, session, table),
+          <%= button_to "Buy Ticket for #{number_to_currency table.price}", new_event_session_table_registration_table_path(event, table.session, table),
                         :class => "btn btn-xs btn-success", :method => :get, :disabled => table.closed?,
                         data: { confirm: "This is a premium event with a price of #{number_to_currency table.price}. You will have 1 hour to pay for this ticket." }
           %>
         <% else %>
-          <%= button_to 'Sign Up', new_event_session_table_registration_table_path(event, session, table),
+          <%= button_to 'Sign Up', new_event_session_table_registration_table_path(event, table.session, table),
                         :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.closed? %>
         <% end %>
       <% end %>
 
       <% if table.can_gm_select?(registration) %>
-        <%= button_to 'I will GM!', new_event_session_table_game_master_path(event, session, table),
+        <%= button_to 'I will GM!', new_event_session_table_game_master_path(event, table.session, table),
                       :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.closed? if self_select_allowed? %>
       <% end %>
     </div>
