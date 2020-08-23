@@ -242,8 +242,8 @@
         <% sessionList.each do |session| %>
           <div class="card-header striped-outer" id="session-header-<%= session.id %>">
             <div class="row mb-0">
-              <div class="col-md-5">
-                <%= session.name %>: <%= session.timeslot %>
+              <div class="col-md-5 h4">
+                <%= session.long_name %>
               </div>
               <div class="col-md-1 no-pad"></div>
               <div class="col-md-2 no-pad ">
