@@ -5,8 +5,7 @@
     <%= scenario.long_name %>
     <% if table.premium? && !table.game_masters[0].nil? %>
       with
-      <% authors = table.game_masters.map { |gm| gm.user_event.user.formal_name }.join(" & ") %>
-      <%= authors %>
+      <%= table.game_masters.map { |gm| gm.user_event.user.formal_name }.join(" & ") %>
     <% end %>
     <div>
       <%= render 'table_badges', table: table %>

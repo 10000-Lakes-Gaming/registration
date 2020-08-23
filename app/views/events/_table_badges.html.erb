@@ -24,231 +24,237 @@
 </div>
 
 <% if table.scenario.pregen_only? %>
-    <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-round-xs btn-pregen btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_pregen">Pregen</button>
-    <!-- Modal -->
-    <div id="table_<%= table.id %>_pregen" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Pregenerated Characters Only</h4>
-          </div>
-          <div class="modal-body">
-            <p>This scenario is only played with provided pregenerated characters.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-round-xs btn-pregen btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_pregen">Pregen</button>
+  <!-- Modal -->
+  <div id="table_<%= table.id %>_pregen" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Pregenerated Characters Only</h4>
+        </div>
+        <div class="modal-body">
+          <p>This scenario is only played with provided pregenerated characters.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
+  </div>
 
 
 <% end %>
 <% if table.scenario.evergreen? %>
-    <button type="button" class="btn btn-round-xs btn-evergreen btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_evergreen"><%= table.scenario.replayable_display %></button>
-    <!-- Modal -->
-    <div id="table_<%= table.id %>_evergreen" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title"><%= table.scenario.replayable_display %> Scenario</h4>
-          </div>
-          <div class="modal-body">
-            <p>You may replay this scenario with different characters. See the relevant Society RPG Guide for
-              details.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+  <button type="button" class="btn btn-round-xs btn-evergreen btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_evergreen"><%= table.scenario.replayable_display %></button>
+  <!-- Modal -->
+  <div id="table_<%= table.id %>_evergreen" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><%= table.scenario.replayable_display %> Scenario</h4>
+        </div>
+        <div class="modal-body">
+          <p>You may replay this scenario with different characters. See the relevant Society RPG Guide for
+            details.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
+  </div>
 <% end %>
 
 <% if table.scenario.hard_mode? %>
-    <button type="button" class="btn btn-round-xs btn-hardmode btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_hard">Hard
-      Mode
-    </button>
-    <!-- Modal -->
-    <div id="table_<%= table.id %>_hard" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Hard Mode Exists</h4>
-          </div>
-          <div class="modal-body">
-            <p>This scenario has an optional "Hard Mode" for extra challenge (but no additional reward other than
-              bragging rights).</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+  <button type="button" class="btn btn-round-xs btn-hardmode btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_hard">Hard
+    Mode
+  </button>
+  <!-- Modal -->
+  <div id="table_<%= table.id %>_hard" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Hard Mode Exists</h4>
+        </div>
+        <div class="modal-body">
+          <p>This scenario has an optional "Hard Mode" for extra challenge (but no additional reward other than
+            bragging rights).</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
+  </div>
 <% end %>
 <% if table.scenario.retired? %>
-    <button type="button" class="btn btn-round-xs btn-retired btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_retired">Retired</button>
-    <!-- Modal -->
-    <div id="table_<%= table.id %>_retired" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Retired Scenario</h4>
-          </div>
-          <div class="modal-body">
-            <p>This scenario has been retired from organized play. It normally is not available to be played for credit.
-              If this event is not additionally marked with "No Society Credit", you will receive credit for this
-              scenario as a bonus!</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+  <button type="button" class="btn btn-round-xs btn-retired btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_retired">Retired</button>
+  <!-- Modal -->
+  <div id="table_<%= table.id %>_retired" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Retired Scenario</h4>
+        </div>
+        <div class="modal-body">
+          <p>This scenario has been retired from organized play. It normally is not available to be played for credit.
+            If this event is not additionally marked with "No Society Credit", you will receive credit for this
+            scenario as a bonus!</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
+  </div>
 <% end %>
 <% if table.core? %>
-    <button type="button" class="btn btn-round-xs btn-core btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_core">Core</button>
-    <!-- Modal -->
-    <div id="table_<%= table.id %>_core" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Core Campaign</h4>
-          </div>
-          <div class="modal-body">
-            <p>This table is being offered as a Core Campaign game. You must have a Core Campaign character in order to
-              play, unless you would like play a Core pregen.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+  <button type="button" class="btn btn-round-xs btn-core btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_core">Core</button>
+  <!-- Modal -->
+  <div id="table_<%= table.id %>_core" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Core Campaign</h4>
+        </div>
+        <div class="modal-body">
+          <p>This table is being offered as a Core Campaign game. You must have a Core Campaign character in order to
+            play, unless you would like play a Core pregen.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
+  </div>
 <% end %>
 <% if table.non_pfs? %>
-    <button type="button" class="btn btn-round-xs btn-non-pfs btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_nonpfs">No
-      Society Credit
-    </button>
-    <!-- Modal -->
-    <div id="table_<%= table.id %>_nonpfs" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">No Society Credit</h4>
-          </div>
-          <div class="modal-body">
-            <p>This scenario is not being run for organized play credit &mdash; you will not receive a chronicle for playing.
-              See "More Info!" for details on if characters are provided, or if you should bring your own.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+  <button type="button" class="btn btn-round-xs btn-non-pfs btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_nonpfs">No
+    Society Credit
+  </button>
+  <!-- Modal -->
+  <div id="table_<%= table.id %>_nonpfs" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">No Society Credit</h4>
+        </div>
+        <div class="modal-body">
+          <p>This scenario is not being run for organized play credit &mdash; you will not receive a chronicle for
+            playing.
+            See "More Info!" for details on if characters are provided, or if you should bring your own.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
+  </div>
 <% end %>
 <% if table.raffle? %>
-    <button type="button" class="btn btn-round-xs btn-raffle btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_raffle">Raffle</button>
-    <!-- Modal -->
-    <div id="table_<%= table.id %>_raffle" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Raffle</h4>
-          </div>
-          <div class="modal-body">
-            <p>This table will be offered as a raffle during the event. You will need purchase raffle tickets, which
-              will be drawn prior to the session. See "More Info!" for mode details on when the raffle will happen, and
-              for the raffle ticket price.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+  <button type="button" class="btn btn-round-xs btn-raffle btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_raffle">Raffle</button>
+  <!-- Modal -->
+  <div id="table_<%= table.id %>_raffle" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Raffle</h4>
+        </div>
+        <div class="modal-body">
+          <p>This table will be offered as a raffle during the event. You will need purchase raffle tickets, which
+            will be drawn prior to the session. See "More Info!" for mode details on when the raffle will happen, and
+            for the raffle ticket price.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
+  </div>
 <% end %>
 
 
 <% if table.premium? %>
-    <button type="button" class="btn btn-round-xs btn-premium btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_premium">Premium</button>
-    <!-- Modal -->
-    <div id="table_<%= table.id %>_premium" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Premium Table</h4>
-          </div>
-          <div class="modal-body">
-            <p>This is a premium table, with a VIP Game Master!
-              This table will cost an additional <%= number_to_currency table.price %> to play
-              at, with the proceeds going <%= table.session.event.name %>'s charity.
-              <% if table.early_bird_discount? %>
-                  After <%= table.prereg_ends.localtime.to_formatted_s(:short) %> the price will rise
-                  to  <%= number_to_currency table.onsite_price %>.
-              <% end %>
-            </p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+  <button type="button" class="btn btn-round-xs btn-premium btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_premium">Premium</button>
+  <!-- Modal -->
+  <div id="table_<%= table.id %>_premium" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Charity Table</h4>
+        </div>
+        <div class="modal-body">
+          <p>This is a charity table,
+            <% if table.game_masters.blank? %>
+              with a VIP Game Master!
+            <% else %>
+              with <%= table.game_masters.map { |gm| gm.user_event.user.formal_name }.join(" & ") %>
+            <% end %>
+            This table will cost an additional <%= number_to_currency table.price %> to play
+            at, with the proceeds going <%= table.session.event.name %>'s charity.
+            <% if table.early_bird_discount? %>
+              After <%= table.prereg_ends.localtime.to_formatted_s(:short) %> the price will rise
+              to  <%= number_to_currency table.onsite_price %>.
+            <% end %>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
+  </div>
 
-    <button type="button" class="btn btn-round-xs btn-cost btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_premium"><%= number_to_currency table.price %></button>
+  <button type="button" class="btn btn-round-xs btn-cost btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_premium"><%= number_to_currency table.price %></button>
 
-    <% if table.early_bird_discount? %>
-        <button type="button" class="btn btn-round-xs btn-cost-increasing btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_premium">
-          <span class='glyphicon glyphicon-warning-sign'></span> <%= number_to_currency table.onsite_price %>
-          after <%= table.prereg_ends.localtime.to_formatted_s(:short) %></button>
+  <% if table.early_bird_discount? %>
+    <button type="button" class="btn btn-round-xs btn-cost-increasing btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_premium">
+      <span class='glyphicon glyphicon-warning-sign'></span> <%= number_to_currency table.onsite_price %>
+      after <%= table.prereg_ends.localtime.to_formatted_s(:short) %></button>
 
-    <% end %>
+  <% end %>
 
 <% end %>
 
 <% unless table.information.blank? %>
-    <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-more-info  btn-round-xs btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_info">More
-      Info!
-    </button>
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-more-info  btn-round-xs btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_info">More
+    Info!
+  </button>
 
-    <!-- Modal -->
-    <div id="table_<%= table.id %>_info" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title"><%= table.long_name %> Information</h4>
-          </div>
-          <div class="modal-body">
-            <p><%= table.information %></p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+  <!-- Modal -->
+  <div id="table_<%= table.id %>_info" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><%= table.long_name %> Information</h4>
+        </div>
+        <div class="modal-body">
+          <p><%= table.information %></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
+  </div>
 <% end %>
