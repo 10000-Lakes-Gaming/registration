@@ -6,6 +6,10 @@ class AdditionalPayment < ApplicationRecord
   validates :payment_price, presence: true
   validates :payment_id, :presence => true, :if => :payment_amount
 
+  def formatted_payment_date
+    payment_date&.strftime(Session::DATETIME_FORMAT)
+  end
+
   def price
     payment_price
   end

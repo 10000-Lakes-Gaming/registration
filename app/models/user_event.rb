@@ -13,6 +13,10 @@ class UserEvent < ActiveRecord::Base
     self.user <=> other.user
   end
 
+  def formatted_payment_date
+    self.payment_date&.strftime(Session::DATETIME_FORMAT)
+  end
+
   def sessions
     all_tickets_by_session.keys.sort
   end

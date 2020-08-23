@@ -9,8 +9,7 @@
     <dt class="head">Location:</dt>
     <dd class="head text-info"><%= @event.location %></dd>
     <dt class="head">Dates:</dt>
-    <dd class="head text-info"><%= @event.start.localtime.to_formatted_s(:long) %>
-      to <%= @event.end.localtime.to_formatted_s(:long) %></dd>
+    <dd class="head text-info"><%= @event.timeslot %></dd>
     <dt class="head">Time Zone:</dt>
     <dd class="head text-info"><%= Time.zone.name %> (UTC<%= Time.zone.utc_offset / 60 / 60 %>)</dd>
     <% if @event.event_number? %>
@@ -47,17 +46,16 @@
     <% if @event.early_bird? %>
       <% unless @event.prereg_closed? %>
         <div class="text-warning">
-          <span class="lead">Early Bird/Pre-registration closes: <%= @event.prereg_ends.localtime.to_formatted_s(:long_ordinal) %></span>
+          <span class="lead">Early Bird/Pre-registration closes: <%= @event.formatted_prereg_ends %></span>
         </div>
       <% end %>
     <% end %>
     <% unless @event.online_sales_end.nil? %>
       <div class="text-warning"><span class="lead">Online table selection and ticket sales
-        closes: <%= @event.online_sales_end.localtime.to_formatted_s(:long_ordinal) %></span></div>
+        closes: <%= @event.formatted_online_sales_end %></span></div>
     <% end %>
     <% unless @event.rsvp_close.nil? %>
-      <div class="text-warning"><span class="lead">Registration
-        closes: <%= @event.rsvp_close.localtime.to_formatted_s(:long_ordinal) %></span></div>
+      <div class="text-warning"><span class="lead">Registration closes: <%= @event.formatted_rsvp_close %></span></div>
     <% end %>
   <% end %>
 </div>
@@ -93,7 +91,7 @@
           <% unless @event.prereg_closed? %>
             <%= number_to_currency(@event.prereg_price) %>
             <% unless @event.prereg_ends.nil? %>
-              (after <%= @event.prereg_ends.localtime.to_formatted_s(:long_ordinal) %> it will
+              (after <%= @event.formatted_prereg_ends %> it will
               be <%= number_to_currency @event.onsite_price %>)
             <% end %>
           <% else %>
@@ -161,7 +159,7 @@
           <div class="col-md-6">
             Yes (<%= number_to_currency (@registration.payment_amount.to_f / 100) %>
             <% if @registration.payment_date %>
-              on <%= @registration.payment_date.localtime.to_formatted_s(:long_ordinal) %>
+              on <%= @registration.payment_date&.strftime(Session::DATETIME_FORMAT) %>
             <% end %>)
           </div>
         <% else %>
@@ -244,13 +242,8 @@
         <% sessionList.each do |session| %>
           <div class="card-header striped-outer" id="session-header-<%= session.id %>">
             <div class="row mb-0">
-              <div class="col-md-5">
-                <button class="btn btn-link accordion-toggle collapsed" type="button" data-toggle="collapse" data-target="#session-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
-                  <span class="accordion-text"><%= session.name %>: <%= session.timeslot %></span>
-                </button>
-                <em>(Click to see
-                  <% if session.premium_tables? %>non-charity
-                  <% end %>games offered)</em>
+              <div class="col-md-5 h4">
+                <%= session.long_name %>
               </div>
               <div class="col-md-1 no-pad"></div>
               <div class="col-md-2 no-pad ">
@@ -272,7 +265,7 @@
           <% if session.premium_tables? %>
             <div class="card-body">
               <div class="row no-pad">
-                <div class="col-md-5 header-premium no-pad">Charity Tables:</div>
+                <div class="col-md-5 header-premium no-pad">Charity Tables for <%= session.name %>:</div>
                 <div class="col-md-1 header-premium no-pad">Details</div>
                 <div class="col-md-2 header-premium no-pad">Seats Remaining</div>
                 <div class="col-md-2 header-premium no-pad" style="padding-left: 1em;">RSVP</div>
@@ -287,14 +280,15 @@
                                                                     tables: @tables, reg_tables_hash: @reg_tables_hash } %>
               <% end %>
             </div>
-            <hr/>
           <% end %>
 
-
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#session-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
+            Click to show regular tables for <%= session.name %>
+          </button>
           <div id="session-<%= session.id %>" class="collapse" aria-labelledby="session-header-<%= session.id %>" data-parent="#session-signup">
             <div class="card-body">
               <div class="row no-pad">
-                <div class="col-md-5 header no-pad">Scenario:</div>
+                <div class="col-md-5 header no-pad">Regular Tables for <%= session.name %>:</div>
                 <div class="col-md-1 header no-pad">Details</div>
                 <div class="col-md-2 header no-pad">Seats Remaining</div>
                 <div class="col-md-2 header no-pad" style="padding-left: 1em;">RSVP</div>
@@ -302,6 +296,7 @@
               </div>
 
               <% tables = session.nonpremium_tables %>
+
               <% tables = tables.sort_by { |table| [table.scenario] } %>
               <% if tables.empty? %>
                 <div class="row no-pad striped-inner">
