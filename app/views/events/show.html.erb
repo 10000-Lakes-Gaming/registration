@@ -240,7 +240,7 @@
     <div class="accordian" id="session-signup">
       <div class="card">
         <% sessionList.each do |session| %>
-          <div class="card-header striped-outer" id="session-header-<%= session.id %>">
+          <div class="card-header striped-outer session-header" id="session-header-<%= session.id %>">
             <div class="row mb-0">
               <div class="col-md-5 h4">
                 <%= session.long_name %>
@@ -265,7 +265,7 @@
           <% if session.premium_tables? %>
             <div class="card-body">
               <div class="row no-pad">
-                <div class="col-md-5 header-premium no-pad">Charity Tables for <%= session.name %>:</div>
+                <div class="col-md-5 header-premium no-pad">Charity Tables for <%= session.name %></div>
                 <div class="col-md-1 header-premium no-pad">Details</div>
                 <div class="col-md-2 header-premium no-pad">Seats Remaining</div>
                 <div class="col-md-2 header-premium no-pad" style="padding-left: 1em;">RSVP</div>
@@ -282,13 +282,16 @@
             </div>
           <% end %>
 
-          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#session-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
-            Click to show regular tables for <%= session.name %>
-          </button>
+          <div class="row">
+            <button class="btn btn-link accordion-toggle collapsed" type="button" data-toggle="collapse" data-target="#session-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
+              <span class="accordion-text">View <% if session.premium_tables? %>standard<% end %> tables for <%= session.name %></span>
+            </button>
+          </div>
+          
           <div id="session-<%= session.id %>" class="collapse" aria-labelledby="session-header-<%= session.id %>" data-parent="#session-signup">
             <div class="card-body">
               <div class="row no-pad">
-                <div class="col-md-5 header no-pad">Regular Tables for <%= session.name %>:</div>
+                <div class="col-md-5 header no-pad">Standard Tables for <%= session.name %></div>
                 <div class="col-md-1 header no-pad">Details</div>
                 <div class="col-md-2 header no-pad">Seats Remaining</div>
                 <div class="col-md-2 header no-pad" style="padding-left: 1em;">RSVP</div>
@@ -302,7 +305,7 @@
                 <div class="row no-pad striped-inner">
                   <div class="col-md-12">
                     <% if session.premium_tables? %>
-                      There are no non-charity tables this session!
+                      There are no standard tables this session!
                     <% else %>
                       There are no tables during this session!
                     <% end %>
@@ -321,6 +324,7 @@
         <% end %>
       </div>
   <% end %>
+
   <hr>
 
   <% if @registration %>
@@ -338,7 +342,7 @@
   <% else %>
     <% if user_signed_in? %>
       <% unless @event.closed? %>
-        <%= button_to "Register for #{@event.name}?", new_event_user_event_path(@event), :class => 'btn btn-warning', method: :get %>
+        <%= button_to "Register for #{@event.name}", new_event_user_event_path(@event), :class => 'btn btn-warning', method: :get %>
       <% end %>
     <% else %>
       <%= link_to 'Login to register!', new_user_session_path, :class => 'btn btn-info' %>

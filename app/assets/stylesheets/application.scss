@@ -463,6 +463,10 @@ div.bottom {
   display: none;
 }
 
+.session-header {
+  margin-top: 30px;
+}
+
 .accordion-toggle {
   @extend .glyphicon;
   @extend .glyphicon-chevron-down;
@@ -481,4 +485,5 @@ div.bottom {
 
 .accordion-text {
   @extend body;
+  font-weight: bold;
 }
