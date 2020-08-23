@@ -248,7 +248,9 @@
                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#session-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
                   <%= session.name %>: <%= session.timeslot %>
                 </button>
-                <em>(Click to see games offered)</em>
+                <em>(Click to see
+                  <% if session.premium_tables? %>non-charity
+                  <% end %>games offered)</em>
               </div>
               <div class="col-md-1 no-pad"></div>
               <div class="col-md-2 no-pad ">
@@ -305,7 +307,7 @@
                 <div class="row no-pad striped-inner">
                   <div class="col-md-12">
                     <% if session.premium_tables? %>
-                    There are no non-charity tables this session!
+                      There are no non-charity tables this session!
                     <% else %>
                       There are no tables during this session!
                     <% end %>
