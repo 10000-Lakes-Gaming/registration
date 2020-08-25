@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_17_222123) do
+ActiveRecord::Schema.define(version: 2020_08_25_233333) do
 
   create_table "additional_payments", force: :cascade do |t|
     t.string "category"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 2020_08_17_222123) do
     t.boolean "optional_fee"
     t.boolean "gm_self_select", default: true
     t.boolean "gm_select_only"
+    t.boolean "gm_signup"
   end
 
   create_table "game_masters", force: :cascade do |t|

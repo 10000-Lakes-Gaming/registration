@@ -74,7 +74,6 @@ class GameMastersController < ApplicationController
     @game_master = GameMaster.new(game_master_params)
     if current_user.admin?
       @user_event = @game_master.user_event
-      puts @user_event
       user = @user_event.user
     else
       # for the user event to the current user's

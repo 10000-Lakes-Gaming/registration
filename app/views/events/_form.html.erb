@@ -37,6 +37,11 @@
     <%= f.label :gm_select_only, 'Sign-ups are restricted to volunteering to GM:' %>
   </div>
 
+  <div class="field">
+    <%= f.check_box :gm_signup %>
+    <%= f.label :gm_signup, 'GMs that have volunteered may sign-up for games' %>
+  </div>
+
   <hr/>
   <%# let's put this in some sort of container %>
   <div class="field">
