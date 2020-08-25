@@ -15,8 +15,8 @@ class Table < ActiveRecord::Base
   validate :validate_online
   validates_presence_of :location, if: :online, :message => 'required when table is online'
   validates_numericality_of :gms_needed, greater_than: 0
-  validates_numericality_of :gms_needed, if: :online,  equal_to: 1
-  validates_numericality_of :max_players, if: :online,  less_than_or_equal_to: 6
+  validates_numericality_of :gms_needed, if: :online, equal_to: 1
+  validates_numericality_of :max_players, if: :online, less_than_or_equal_to: 6
 
   def validate_online
     if self.online?
@@ -149,7 +149,7 @@ class Table < ActiveRecord::Base
   def can_sign_up?(registration)
     return false if registration.nil?
 
-    ok = (!session.event.gm_select_only? || session.event.gm_signup? && registration.gamemaster?)
+    ok = (!session.event.gm_select_only? || (session.event.gm_signup? && registration.gamemaster?))
     ok &&= !self.raffle?
     ok &&= !session.event.closed?
     ok &&= !session.event.online_sales_closed?
