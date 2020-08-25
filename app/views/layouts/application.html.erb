@@ -36,34 +36,41 @@
 <body>
 <!--- Header info --->
 <div class="header-main no-print">
-  <div class="social-media">
-    <a style="padding: 5px;" href="https://www.facebook.com/pfsskalcon/">
-      <%= image_tag("FB-f-Logo__blue_58.png", alt: "SkalCon Facebook", height: "40") %>
-    </a>
-    <a style="padding: 5px; flex-grow: 1;" href="https://twitter.com/SkalConMN">
-      <%= image_tag("TwitterLogo_55acee.png", alt: "SkalCon Twitter", height: "40") %>
-    </a>
-    <div style="padding: 5px; flex-grow: 2"></div>
-  </div>
   <div class="banner">
     <div class="bannerimg">
       <%= image_tag("skalbanner.png", size: "250x100", alt: "SkålCon") %>
     </div>
   </div>
   <div class="divider">
-    <% if user_signed_in? %>
-        <div>
-          Logged in as: <%= current_user.name %> (<%= current_user.email %>)
-          <% if admin? %>[ADMIN]
+    <div class="navbar">
+      <div class="container">
+        <nav class="nav navbar-nav navbar-left">
+          <% if user_signed_in? %>
+              <div>
+                Logged in as: <%= current_user.name %> (<%= current_user.email %>)
+                <% if admin? %>[ADMIN]
+                <% end %>
+                <% unless current_user.forum_username.nil? %>{<%= current_user.forum_username %>}
+                <% end %>
+              </div>
+          <% else %>
+              <div>
+                <%= link_to('Login', new_user_session_path) %>
+              </div>
           <% end %>
-          <% unless current_user.forum_username.nil? %>{<%= current_user.forum_username %>}
-          <% end %>
-        </div>
-    <% else %>
-        <div>
-          <%= link_to('Login', new_user_session_path) %>
-        </div>
-    <% end %>
+        </nav>
+        <nav>
+          <ul class="nav navbar-nav navbar-right">
+            <a style="padding: 5px;" class="no-underline-link" href="https://www.facebook.com/pfsskalcon/">
+              <%= image_tag("FB-f-Logo__blue_58.png", alt: "SkalCon Facebook", height: "40") %>
+            </a>
+            <a style="padding: 5px; flex-grow: 1;" href="https://twitter.com/SkalConMN">
+              <%= image_tag("TwitterLogo_55acee.png", alt: "SkalCon Twitter", height: "40") %>
+            </a>
+          </ul>
+        </nav>
+      </div>
+    </div>
   </div>
   <div class="divider"></div>
 </div>
