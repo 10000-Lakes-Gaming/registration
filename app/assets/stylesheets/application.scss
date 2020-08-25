@@ -463,4 +463,27 @@ div.bottom {
   display: none;
 }
 
+.session-header {
+  margin-top: 30px;
+}
 
+.accordion-toggle {
+  @extend .glyphicon;
+  @extend .glyphicon-chevron-down;
+
+  float: left;
+  color: $black;
+}
+
+.accordion-toggle.collapsed {
+  @extend .glyphicon;
+  @extend .glyphicon-chevron-right;
+
+  float: left;
+  color: $black;
+}
+
+.accordion-text {
+  @extend body;
+  font-weight: bold;
+}
