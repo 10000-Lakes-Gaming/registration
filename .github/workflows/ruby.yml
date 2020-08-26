@@ -17,5 +17,8 @@ jobs:
         run: |
           gem install bundler
           bundle install --jobs 4 --retry 3
+      - name: Setup
+        trun: |
+          RAILS_ENV=test bundle exec rails db:migrate
       - name: Test
         run: bundle exec rspec
