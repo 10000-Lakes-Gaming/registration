@@ -4,14 +4,9 @@ class GmsByScenarioController < ApplicationController
   def index
     # have to put things in a hash, so that we can deal with it.
     @tables_by_scenario = {}
-    @event.sessions.each do |session|
-      session.tables.each do |table|
-        scenario = table.scenario
-        unless @tables_by_scenario.key? scenario
-          @tables_by_scenario[scenario] = []
-        end
-        @tables_by_scenario[scenario] << table
-      end
+    @event.scenarios.each { |scenario| @tables_by_scenario[scenario] = [] }
+    @event.tables.each do |table|
+       @tables_by_scenario[table.scenario] << table
     end
 
     respond_to do |format|

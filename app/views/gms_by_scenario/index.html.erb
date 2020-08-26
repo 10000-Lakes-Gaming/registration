@@ -25,7 +25,7 @@
   <% total_gms_assigned = 0 %>
   <% total_players_needed = 0 %>
   <% total_players_signed_up = 0 %>
-  <% @tables_by_scenario.each do |scenario, tables| %>
+  <% @tables_by_scenario.sort.each do |scenario, tables| %>
     <tr>
       <td><%= scenario.long_name %></td>
       <% table_count = 0; %>
