@@ -9,6 +9,7 @@
     <th>OPF number</th>
     <th>Paizo Forum Username</th>
     <th>Opted Out?</th>
+    <th>VO?</th>
     <th>Admin</th>
     <th colspan="3"></th>
   </tr>
@@ -29,6 +30,11 @@
       </td>
       <td><%= user.forum_username %></td>
       <td><%= yes_no(user.opt_out?) %></td>
+      <td>
+        <% if user.venture_officer? %>
+          <span class="glyphicon glyphicon-tower"></span>
+        <% end %>
+      </td>
       <td>
         <% if user.admin? %>
           <span class="glyphicon glyphicon-user"></span>
