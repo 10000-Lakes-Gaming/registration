@@ -4,7 +4,7 @@ class AddScenarioRequestedToGameMaster < ActiveRecord::Migration[5.2]
 
     # To support this, we need to better define venture officer.
     User.all.each do |user|
-      if VO_TITLES.include? user.title
+      if User::VO_TITLES.include? user.title
         user.venture_officer = true
       else
         user.venture_officer = false
