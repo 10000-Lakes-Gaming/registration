@@ -29,18 +29,18 @@ describe ApplicationHelper do
 
     it 'if event is false, then it should be false' do
       @event.gm_self_select = false
-      expect(helper.self_select_allowed?).to be false
+      expect(helper.self_select_allowed?(@event)).to be false
     end
 
     it 'if event is true, then it should be true if ANY table is set to true' do
       @event.gm_self_select = true
-      expect(helper.self_select_allowed?).to be true
+      expect(helper.self_select_allowed?(@event)).to be true
     end
 
     it 'if event is true, then it should be falke if all tables are set to false' do
       @event.gm_self_select = true
       @event.tables.each { |table| table.gm_self_select = false }
-      expect(helper.self_select_allowed?).to be false
+      expect(helper.self_select_allowed?(@event)).to be false
     end
   end
 end

@@ -178,7 +178,7 @@
 </div>
 
 <%# TODO - for future, maybe make this a little more dynamic - and have a custom message %>
-<% unless self_select_allowed? %>
+<% unless self_select_allowed?(@event) %>
   <div class="panel panel-padded" id="gm_info" style="border: solid thin black;">
     <h3 class="text-danger">Attention GMs!</h3>
 

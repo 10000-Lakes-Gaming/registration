@@ -117,7 +117,7 @@
 
       <% if table.can_gm_select?(registration) %>
         <%= button_to 'I will GM!', new_event_session_table_game_master_path(event, table.session, table),
-                      :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.closed? if self_select_allowed? %>
+                      :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.closed? if self_select_allowed?(event) %>
       <% end %>
     </div>
 

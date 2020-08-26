@@ -47,9 +47,10 @@ module ApplicationHelper
     unpaid_payments
   end
 
-  def self_select_allowed?
-    allowed = @event.gm_self_select?
-    allowed && @event.tables.any? { |table| table.gm_self_select? }
+  def self_select_allowed?(event)
+    return false unless event.present?
+
+    event.gm_self_select? && event.tables.any? { |table| table.gm_self_select? }
   end
 
   def online_sales_closed?
