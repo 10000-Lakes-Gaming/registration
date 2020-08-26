@@ -49,6 +49,23 @@ class GameMaster < ActiveRecord::Base
     registration.game_masters.include? self
   end
 
+  def self.to_request_csv(game_masters)
+    attributes = ['GM Name', 'Email used on Paizo.com', 'Forum Username', 'Scenario PZO', 'Scenario Name', ' ', 'Convention Name']
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+      game_masters.each do |gm|
+        csv << [gm.user_event.user.name,
+                gm.user_event.user.email,
+                gm.user_event.user.forum_username,
+                gm.scenario.catalog_number,
+                gm.scenario.long_name,
+                '',
+                gm.user_event.event.name
+        ]
+      end
+    end
+  end
+
   def self.to_csv(game_masters)
     attributes = %w{event_name, session_name, session_start, session_end, scenario, gm_name, gm_pfs_number, gm_email, gm_forum_username, gm_title, table_assignment}
 

@@ -64,6 +64,9 @@ class EventsController < ApplicationController
     respond_to do |format|
       format.json { render :scenario_request_form, status: :ok }
       # check for CSV, and make the default format, perhaps
+      format.csv {
+        send_data GameMaster.to_request_csv(@game_masters), filename: "scenario_request.csv"
+      }
     end
   end
 
