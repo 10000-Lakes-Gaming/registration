@@ -13,6 +13,25 @@ describe UserEvent, type: :model do
   let(:my_event) { events(:my_event) }
   let(:empty_reg_tables) { user_events(:empty_registration_tables) }
 
+  context '#unique_scenarios' do
+    it 'admin_my_event has 2 unique scenarios' do
+      table1 = tables(:one)
+      table2 = tables(:two)
+      expect(admin_my_event.unique_scenarios).to contain_exactly(table1.scenario, table2.scenario)
+    end
+
+    it 'gamemaster_event has 1 unique scenarios' do
+      gamemaster_event = user_events(:gamemaster_event)
+      table1 = tables(:one)
+      expect(gamemaster_event.unique_scenarios).to contain_exactly(table1.scenario)
+    end
+
+    it 'admin_other_event has 0 unique scenarios' do
+      gamemaster_event = user_events(:admin_other_event)
+      expect(gamemaster_event.unique_scenarios).to be_empty
+    end
+  end
+
   ## These were copied in from the old tests
   context 'tests copied from the minitest tests' do
     it "@empty_reg_tables  has no table signups!" do
