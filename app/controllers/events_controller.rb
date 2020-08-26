@@ -54,11 +54,15 @@ class EventsController < ApplicationController
       list = mapping[gm.scenario]
       reg = gm.user_event
       # Skip VO requests for now. If we do modules, we may need to update this.
+      Rails.logger.info "Checking GM #{gm.user_event.user.name} to see if they are a VO. #{gm.user_event.user.venture_officer?}"
       unless gm.user_event.user.venture_officer?
-        unless list.none? { |check| check.user_event.id = reg.id }
-          # Mark gm as requested
-          Rails.logger.info "action=scenario_request_form message='Adding #{gm.to_json}'"
-          list << gm
+        Rails.logger.info "User is not a VO. Checking if they have already gotten in: #{gm.scenario_requested?}"
+        unless gm.scenario_requested?
+          if list.none? { |check| check.user_event.id = reg.id }
+            # Mark gm as requested
+            Rails.logger.info "action=scenario_request_form message='Adding #{gm.to_json}'"
+            list << gm
+          end
         end
         gm.scenario_requested = DateTime.now
       end

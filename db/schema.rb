@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_233333) do
+ActiveRecord::Schema.define(version: 2020_08_26_140859) do
 
   create_table "additional_payments", force: :cascade do |t|
     t.string "category"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 2020_08_25_233333) do
     t.string "vtt_type"
     t.string "vtt_name"
     t.string "vtt_url"
+    t.date "scenario_requested"
     t.index ["table_id"], name: "index_game_masters_on_table_id"
     t.index ["user_event_id"], name: "index_game_masters_on_user_event_id"
   end
