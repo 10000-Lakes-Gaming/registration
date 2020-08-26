@@ -64,6 +64,10 @@ class Scenario < ActiveRecord::Base
     game_system == 'Other'
   end
 
+  def opf_type?
+    ['PFS', 'PFS2', 'SFS'].include? game_system
+  end
+
   # noinspection RubyInstanceMethodNamingConvention
   def AP?
     type_of == 'Adventure Path'

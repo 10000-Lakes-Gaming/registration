@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   resources :admin
 
   resources :events do
+    member do
+      get 'scenario_request_form', defaults: { format: :json }
+    end
     resources :event_hosts
     resources :gm_list
     resources :gms_by_scenario

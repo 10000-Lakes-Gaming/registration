@@ -4,6 +4,7 @@ class GameMaster < ActiveRecord::Base
   delegate :online, :online?, to: :table
   delegate :start, to: :table
   delegate :end, to: :table
+  delegate :scenario, to: :table
   validates :table_id, :presence => true, :uniqueness => { :scope => :user_event_id }
   validates :user_event_id, :presence => true, :uniqueness => { :scope => :table_id }
   validate :check_gm_count
@@ -13,6 +14,16 @@ class GameMaster < ActiveRecord::Base
   before_save :check_for_warnings
   before_update :check_for_warnings
   before_create :check_for_warnings
+
+  def scenario_requested?
+    self.scenario_requested.present?
+  end
+
+  def requestable_scenario?
+    # Must be campaign PFS, PFS2, or SFS, and have a PZO number
+    # Also, user must not be VO
+    scenario.opf_type? && scenario.catalog_number.present? && user_event.user.venture_officer?
+  end
 
   def warnings
     @warnings ||= ActiveModel::Errors.new(self)
@@ -46,6 +57,23 @@ class GameMaster < ActiveRecord::Base
     event = table&.session&.event
     registration = user.registration_for_event event
     registration.game_masters.include? self
+  end
+
+  def self.to_request_csv(game_masters)
+    attributes = ['GM Name', 'Email used on Paizo.com', 'Forum Username', 'Scenario PZO', 'Scenario Name', ' ', 'Convention Name']
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+      game_masters.each do |gm|
+        csv << [gm.user_event.user.name,
+                gm.user_event.user.email,
+                gm.user_event.user.forum_username,
+                gm.scenario.catalog_number,
+                gm.scenario.long_name,
+                '',
+                gm.user_event.event.name
+        ]
+      end
+    end
   end
 
   def self.to_csv(game_masters)

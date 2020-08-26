@@ -9,3 +9,7 @@ gm_admin_two:
 gm_game_master:
   user_event: gamemaster_event
   table: one
+
+gm_game_master2:
+  user_event: gamemaster_event
+  table: core

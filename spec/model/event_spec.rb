@@ -4,7 +4,9 @@ describe Event, type: :model do
   fixtures :events
   fixtures :users
   fixtures :sessions
+  fixtures :scenarios
   fixtures :tables
+  fixtures :game_masters
 
   context '#tables' do
     it 'my event has 11 tables' do
@@ -27,6 +29,27 @@ describe Event, type: :model do
       evening = sessions(:evening)
       expect(event.sessions.length).to be 6
       expect(event.sessions).to include(morning, evening)
+    end
+  end
+
+  context '#unique_scenarios' do
+    it 'my_event has 3 scenarios' do
+      event = events(:my_event)
+
+      expect(event.unique_scenarios.size).to be 3
+    end
+  end
+
+  context '#game_masters' do
+    it 'my_event has a total of 4 non-unique game_masters' do
+      event = events(:my_event)
+      gm_admin_one = game_masters(:gm_admin_one)
+      gm_admin_two = game_masters(:gm_admin_two)
+      gm_game_master = game_masters(:gm_game_master)
+      gm_game_master2 = game_masters(:gm_game_master2)
+
+      expect(event.game_masters.size).to be 4
+      expect(event.game_masters).to contain_exactly(gm_admin_one, gm_admin_two, gm_game_master, gm_game_master2)
     end
   end
 
@@ -367,7 +390,7 @@ describe Event, type: :model do
       event = events(:charity_event)
       user = users(:dude1)
 
-      user_event= UserEvent.new
+      user_event = UserEvent.new
       user_event.user = user
       user_event.event = event
       event.user_events << user_event
@@ -380,7 +403,7 @@ describe Event, type: :model do
       event = events(:charity_event)
       user = users(:dude1)
 
-      user_event= UserEvent.new
+      user_event = UserEvent.new
       user_event.donation = 50
       user_event.user = user
       user_event.event = event

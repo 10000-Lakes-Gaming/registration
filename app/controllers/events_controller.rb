@@ -2,8 +2,9 @@ class EventsController < ApplicationController
   include ApplicationHelper
 
   skip_before_action :authenticate_user!, only: %i[index show]
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :gms_by_scenario]
-  before_action :restrict_to_admin, except: [:show, :index]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :scenario_request_form]
+  before_action :restrict_to_admin, except: [:show, :index, :scenario_request_form]
+  before_action :restrict_to_hosts, only: [:scenario_request_form]
   before_action :get_events, :get_my_events
 
   # GET /events
@@ -44,9 +45,32 @@ class EventsController < ApplicationController
     end
   end
 
-  def gms_by_scenario
-
-
+  # This will get a CSV of GMs to scenarios needed.
+  def scenario_request_form
+    # TODO: move somewhere?
+    mapping = {}
+    @event.unique_scenarios.each { |scenario| mapping[scenario] = [] }
+    @event.game_masters.each do |gm|
+      list = mapping[gm.scenario]
+      reg = gm.user_event
+      # Skip VO requests for now. If we do modules, we may need to update this.
+      unless gm.user_event.user.venture_officer?
+        unless list.none? { |check| check.user_event.id = reg.id }
+          # Mark gm as requested
+          Rails.logger.info "action=scenario_request_form message='Adding #{gm.to_json}'"
+          list << gm
+        end
+        gm.scenario_requested = DateTime.now
+      end
+    end
+    @game_masters = mapping.values.flatten
+    respond_to do |format|
+      format.json { render :scenario_request_form, status: :ok }
+      # check for CSV, and make the default format, perhaps
+      format.csv {
+        send_data GameMaster.to_request_csv(@game_masters), filename: "scenario_request.csv"
+      }
+    end
   end
 
   # GET /events/1
