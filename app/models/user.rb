@@ -14,6 +14,20 @@ class User < ActiveRecord::Base
   # TODO: Add validation that name is 2 words, min
   validate :pfs_or_dci_number_exists
 
+  TITLES =  ["Venture-Agent", "Venture-Lieutenant", "Venture-Captain",
+             "Regional Venture-Coordinator",
+             "Organized Play Manager", "Organized Play Associate",
+             "PFS Developer", "SFS Developer", "Paizo Developer",
+             "Author", "Publisher" ]
+
+  SHORT_TITLES = {}
+
+  # Note these aren't all necessarily truly VOs, but folks that don't need scenarios, which is the goal
+  VO_TITLES = ["Venture-Agent", "Venture-Lieutenant", "Venture-Captain",
+               "Regional Venture-Coordinator",
+               "Organized Play Manager", "Organized Play Associate",
+               "PFS Developer", "SFS Developer", "Paizo Developer"]
+
   def pfs_or_dci_number_exists
     if pfs_number_blank? && dci_number_blank?
       errors.add(:base, 'You must enter either a Paizo Organized Play number or a DCI Number')

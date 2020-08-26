@@ -53,11 +53,14 @@ class EventsController < ApplicationController
     @event.game_masters.each do |gm|
       list = mapping[gm.scenario]
       reg = gm.user_event
-      if list.any? { |check| check.user_event.id = reg.id }
-        # Mark gm as requested
-      else
-        Rails.logger.info "Adding #{gm}"
-        list << gm
+      # Skip VO requests for now. If we do modules, we may need to update this.
+      unless gm.user_event.user.venture_officer?
+        unless list.none? { |check| check.user_event.id = reg.id }
+          # Mark gm as requested
+          Rails.logger.info "action=scenario_request_form message='Adding #{gm.to_json}'"
+          list << gm
+        end
+        gm.scenario_requested = DateTime.now
       end
     end
     @game_masters = mapping.values.flatten

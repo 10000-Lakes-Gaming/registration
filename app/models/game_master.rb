@@ -15,6 +15,16 @@ class GameMaster < ActiveRecord::Base
   before_update :check_for_warnings
   before_create :check_for_warnings
 
+  def scenario_requested?
+    self.scenario_requested.present?
+  end
+
+  def requestable_scenario?
+    # Must be campaign PFS, PFS2, or SFS, and have a PZO number
+    # Also, user must not be VO
+    scenario.opf_type? && scenario.catalog_number.present? && user_event.user.venture_officer?
+  end
+
   def warnings
     @warnings ||= ActiveModel::Errors.new(self)
   end
