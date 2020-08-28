@@ -43,12 +43,12 @@
   </div>
   <div class="divider">
     <div class="navbar">
-      <div class="container">
+      <div class="container-fluid">
         <nav class="nav navbar-nav navbar-left">
           <% if user_signed_in? %>
-              <div>
+              <div style="vertical-align: bottom">
                 Logged in as: <%= current_user.name %> (<%= current_user.email %>)
-                <% if admin? %>[ADMIN]
+                <% if admin? %><div>[ADMIN]</div>   
                 <% end %>
                 <% unless current_user.forum_username.nil? %>{<%= current_user.forum_username %>}
                 <% end %>
