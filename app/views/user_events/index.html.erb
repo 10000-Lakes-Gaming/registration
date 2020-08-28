@@ -40,7 +40,7 @@
 
 <div>Total Registrations: <%= @user_events.size %></div>
 <div>Total Paid: <%= @paid %></div>
-<div>Total Collection Donation <%= number_to_currency(@user_event.sum(&:payment_amount) / 100) %></div>
+<div>Total Collection Donation <%= number_to_currency(@user_events.sum(&:payment_amount) / 100) %></div>
 
 <br>
 <%= link_to "Back to #{@event.name}", event_path(@event), :class => 'btn btn-success' %>
