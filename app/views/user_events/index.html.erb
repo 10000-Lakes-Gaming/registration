@@ -15,31 +15,32 @@
 
   <tbody>
   <% @user_events.each do |user_event| %>
-      <tr>
-        <td><%= user_event.user.name %></td>
-        <td><%= user_event.user.email %></td>
-        <td><%= user_event.user.pfs_number %></td>
-        <td>
-          <% if user_event.paid? %>
-              <span class="glyphicon glyphicon-ok-circle"></span>
-          <% end %>
-        </td>
-        <td>
-          <%= link_to 'Show', event_user_event_path(@event, user_event), :class => 'btn btn-info' %>
-          <%= link_to 'Edit', edit_event_user_event_path(@event, user_event), :class => 'btn btn-primary' %>
-          <%= link_to 'Print Receipt', event_user_event_path(@event, user_event), :class => 'btn btn-success' %>
-          <% if admin? %>
-            <%= link_to 'Add Additional Payment', new_event_user_event_additional_payment_path(@event, user_event), :class => 'btn btn-primary' %>
-          <% end %>
-          <%= link_to 'Unregister', [@event, user_event], method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %>
-        </td>
-      </tr>
+    <tr>
+      <td><%= user_event.user.name %></td>
+      <td><%= user_event.user.email %></td>
+      <td><%= user_event.user.pfs_number %></td>
+      <td>
+        <% if user_event.paid? %>
+          <span class="glyphicon glyphicon-ok-circle"></span>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to 'Show', event_user_event_path(@event, user_event), :class => 'btn btn-info' %>
+        <%= link_to 'Edit', edit_event_user_event_path(@event, user_event), :class => 'btn btn-primary' %>
+        <%= link_to 'Print Receipt', event_user_event_path(@event, user_event), :class => 'btn btn-success' %>
+        <% if admin? %>
+          <%= link_to 'Add Additional Payment', new_event_user_event_additional_payment_path(@event, user_event), :class => 'btn btn-primary' %>
+        <% end %>
+        <%= link_to 'Unregister', [@event, user_event], method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %>
+      </td>
+    </tr>
   <% end %>
   </tbody>
 </table>
 
 <div>Total Registrations: <%= @user_events.size %></div>
 <div>Total Paid: <%= @paid %></div>
+<div>Total Collection Donation <%= number_to_currency(@user_event.sum(&:payment_amount) / 100) %></div>
 
 <br>
 <%= link_to "Back to #{@event.name}", event_path(@event), :class => 'btn btn-success' %>
