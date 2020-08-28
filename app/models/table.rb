@@ -149,7 +149,7 @@ class Table < ActiveRecord::Base
   def can_sign_up?(registration)
     return false if registration.nil?
 
-    ok = (!session.event.gm_select_only? || (session.event.gm_signup? && registration.gamemaster?))
+    ok = !session.event.gm_select_only? || gm_can_signup?(registration)
     ok &&= !self.raffle?
     ok &&= !session.event.closed?
     ok &&= !session.event.online_sales_closed?
@@ -157,6 +157,13 @@ class Table < ActiveRecord::Base
     ok &&= game_masters.present?
     ok &&= registration.payment_ok?
     ok && !tickets_overlap?(registration)
+  end
+
+  def gm_can_signup?(registration)
+    can_signup = session.event.gm_signup?
+    can_signup &&= registration.gamemaster?
+    # must have at least as many GM as player
+    can_signup && registration.game_masters.length > registration.registration_tables.length
   end
 
   def can_gm_select?(registration)
