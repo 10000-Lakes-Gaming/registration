@@ -19,6 +19,10 @@ class RegistrationTable < ActiveRecord::Base
     self.paid? || self.table.price.nil? || self.table.price <= 0
   end
 
+  def formatted_payment_date
+    payment_date&.strftime(Session::DATETIME_FORMAT)
+  end
+
   def <=> (other)
     # sort by user
     sorted = self.user_event <=> other.user_event
