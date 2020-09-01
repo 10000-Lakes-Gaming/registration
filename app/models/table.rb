@@ -50,6 +50,10 @@ class Table < ActiveRecord::Base
     game_masters.first&.vtt_url
   end
 
+  def sign_in_url
+    game_masters.first&.sign_in_url
+  end
+
   def <=> (tab)
     # Remove "Table"  and sort by number, if possible.
     myloc = self.location.to_s.downcase[/\d+/]
