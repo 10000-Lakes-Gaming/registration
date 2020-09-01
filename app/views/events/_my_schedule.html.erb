@@ -93,7 +93,7 @@
               </td>
               <td>
                 <%# handle online differently %>
-                <%= (selection.is_a? GameMaster) ? selection.table.location : 'See Musterer' %>
+                <%= ((selection.is_a? GameMaster) || selection.table.online?) ? selection.table.location : 'See Musterer' %>
               </td>
               <td>
                 <div style="display: inline-block"><%= link_to 'View Table Details', event_session_table_path(event, session, selection.table) %></div>
