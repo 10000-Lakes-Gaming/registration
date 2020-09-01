@@ -39,10 +39,12 @@ class GameMaster < ActiveRecord::Base
       warnings.add(:vtt_type, :required) if vtt_type.blank?
       warnings.add(:vtt_name, :required) if vtt_name.blank?
       warnings.add(:vtt_url, :required) if vtt_url.blank?
+      warnings.add(:sign_in_url, :required) if sign_in_url.blank?
     else
       errors[:vtt_type] << 'is not allowed for in-person table' if vtt_type.present?
       errors[:vtt_name] << 'is not allowed for in-person table' if vtt_name.present?
       errors[:vtt_url] << 'is not allowed for in-person table' if vtt_url.present?
+      errors[:sign_in_url] << 'is not allowed for in-person table' if sign_in_url.present?
     end
   end
 
