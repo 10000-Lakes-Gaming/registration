@@ -7,8 +7,8 @@ $darkerGrey: #ccc;
 $darkestGrey: dimgrey;
 $lightGrey: #eee;
 $money: #de9e36;
-$cost-going-up: #de9e36;
 $orange: #de9e36;
+$cost-going-up: $orange;
 $red: #dc3545;
 $white: #f4f4f9;
 $trueWhite: #ffffff;
@@ -351,6 +351,16 @@ div.bottom {
 
 .btn-cost {
   @include button-variant($black, $money, $money);
+  font-weight: bold;
+}
+
+.badge-vtt {
+  background-color: $red;
+  color: $white;
+}
+
+.btn-vtt {
+  @include button-variant($white, $red, $red);
   font-weight: bold;
 }
 
