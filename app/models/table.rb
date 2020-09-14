@@ -153,7 +153,8 @@ class Table < ActiveRecord::Base
   def can_sign_up?(registration)
     return false if registration.nil?
 
-    ok = !session.event.gm_select_only? || gm_can_signup?(registration)
+    ok = seats_available?
+    ok &&= !session.event.gm_select_only? || gm_can_signup?(registration)
     ok &&= !self.raffle?
     ok &&= !session.event.closed?
     ok &&= !session.event.online_sales_closed?

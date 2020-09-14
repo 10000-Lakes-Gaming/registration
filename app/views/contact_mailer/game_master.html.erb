@@ -6,7 +6,6 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
         integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
           integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
           crossorigin="anonymous"></script>
@@ -16,6 +15,9 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
           integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
           crossorigin="anonymous"></script>
+
+  <%= stylesheet_link_tag 'application', media: 'screen, projection', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'print-application', media: 'print' %>
 </head>
 <body>
 
@@ -36,68 +38,7 @@
     assignments.
   </div>
 
-  <%
-
-      user_event = @game_master.user_event
-      event = user_event.event
-
-      @table_sessions = user_event.all_tickets_by_session
-      @sessions = user_event.sessions
-  %>
-  <div class="well">
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th scope="col">Session</th>
-        <th scope="col">Time</th>
-        <th scope="col">Scenario</th>
-        <th scope="col">Location</th>
-        <th scope="col">Signup Type</th>
-        <th scope="col">Payment Due?</th>
-      </tr>
-      </thead>
-      <tbody>
-      <% @sessions.each do |session| %>
-        <% selection = @table_sessions[session] %>
-        <tr>
-          <td><%= session.name %></td>
-          <td><%= session.timeslot %></td>
-          <% if selection.nil? %>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          <% else %>
-            <td><%= selection.table.scenario.long_name %></td>
-            <td>
-              <%= selection.table.location %>
-              <% if selection.is_a? GameMaster %>
-                <% unless selection.table_number.blank? %>
-                  (<%= selection.table_number.strip %>)
-                <% end %>
-              <% end %>
-            </td>
-            <% if selection.is_a? RegistrationTable %>
-              <td>Player
-                <div><%= link_to 'View Table Details', event_session_table_url(event, session, selection.table), target: "_blank"%></div></td>
-              <td>
-                <% unless selection.payment_ok? %>
-                  <%= number_to_currency(selection.table.price) %>
-                <% end %>
-              </td>
-            <% elsif selection.is_a? GameMaster %>
-              <td>
-                GM
-                <div><%= link_to 'Edit Table Details', edit_event_session_table_game_master_url(event, session, selection.table, selection), target: "_blank" %></div>
-              </td>
-              <td></td>
-            <% end %>
-          <% end %>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
+  <%= render partial: 'my_schedule', locals: { event: @event, user_event: @game_master.user_event } %>
 
   <div class="alert-warning">If you need to drop a table that you have volunteered to GM, please reply to this email
     requesting to be removed. Convention organizers will attempt to find a replacement for you. We apologize for any
@@ -116,38 +57,47 @@
     <li>As a volunteer, you are the eyes, ears, face, and voice of Paizo. We expect each of you to maintain a positive
       attitude, professional behavior, and good hygiene.
     </li>
-    <% if event.in_person? %>
+    <% if @event.in_person? %>
       <li>The Player Boon token rolls remain the same. 10% chance per token turned in, 5 tokens max per roll. Winners
-        roll randomly on which boon received. GM boons can be claimed when turning in your first session reporting sheet.
+        roll randomly on which boon received. GM boons can be claimed when turning in your first session reporting
+        sheet.
       </li>
     <% end %>
-    <% if event.online? %>
+    <% if @event.online? %>
       <li>We will notify GMs on how we are handling boon rolls soon.</li>
     <% end %>
   </ul>
   <hr>
 
   <h2>Logistics:</h2>
-  <% if event.online? %>
+  <% if @event.online? %>
     <h3>For Online Tables</h3>
     <ul>
-      <li>Each GM will need to create their Virtual Table Top and add invites to it their table (such as by clicking
-        the "Edit Table Details" in the schedule above).</li>
+      <li>Each GM will need to create their Virtual Table Top and link to it on their table (such as by clicking
+        the "Edit Table Details" in the schedule above).
+      </li>
       <li>Please have your VTT ready for player sign-in as soon as possible.</li>
-      <li>Have appropriate tier pregens ready for your players, if there are any in tier.</li>
-      <li>You will be assigned a room in our <%= link_to @event.chat_server, @event.chat_server_url %> chat server. You will need to use this as your voice channel.</li>
-      <li>Please be at your VTT room and chat room at least 15 minutes prior to your game's start.</li>
       <li>Game Masters will be required to collect sign in information for their players so that they can report
-        the games and create their chronicle sheets.</li>
-      <li>Please use a separate sign-in form for each game.</li>
+        the games and create their chronicle sheets.
+      </li>
+      <li>Please have your sign-in sheet ready for player sign-in as soon as possible.</li>
+      <li>Have appropriate tier pregens ready for your players, if there are any in tier.</li>
+      <li>You will be assigned a room in our <%= link_to @event.chat_server, @event.chat_server_url %> chat server.
+        You will need to use this as your voice channel/.
+      </li>
+      <li>Please be at your VTT room and chat room at least 15 minutes prior to your game's start.</li>
+      <li><b>Please use a separate sign-in form for each game.</b>b></li>
       <li><%= @event.name %> will be sending out sample sign-in forms for you to use.</li>
-      <li>Games should be reported as soon as possible after the game completes.</li>
+      <li>Games should be reported as soon as possible after the game completes through the form provided
+        by <%= @event.name %> %>.
+      </li>
       <li><b>Chronicles must be sent to players as soon as possible, preferable within one hour.</b>
-        This is so that players can play their characters in back-to-back slots.</li>
+        This is so that players can play their characters in back-to-back slots.
+      </li>
       <li><b>Do not leave your assigned table until HQ has released or reassigned you.</b></li>
     </ul>
   <% end %>
-  <% if event.in_person? %>
+  <% if @event.in_person? %>
     <h3>For In-Person Tables</h3>
     <ul>
       <li>Each GM is responsible to provide their own maps, miniatures, handouts, and scenario-specific pre-generated
