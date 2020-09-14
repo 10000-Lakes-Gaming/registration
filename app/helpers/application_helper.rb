@@ -61,7 +61,7 @@ module ApplicationHelper
     fees = (starting..(starting + elements * increment)).step(increment).to_a
   end
 
-  def donations_options(elements = 20, increment = 5, starting = 0)
+  def donations_options(elements = 50, increment = 5, starting = 0)
     fees = optional_fee_list elements, increment, starting
     fees.map do |fee|
       [number_to_currency(fee), fee]
