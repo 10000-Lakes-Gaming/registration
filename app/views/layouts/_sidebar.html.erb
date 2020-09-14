@@ -71,6 +71,8 @@
         <li><%= link_to "GM List (CSV)", event_gm_list_index_path(@event, :format => :csv) %></li>
         <li><%= link_to 'Event Tables (JSON)', event_path(@event, :format => :json) %></li>
         <li><%= link_to "Tickets (CSV)", event_tickets_path(@event, :format => :csv) %></li>
+        <li><%= link_to "Scenario Request Form (CSV)", scenario_request_form_event_path(@event, :format => :csv),
+                        data: {confirm: 'Please make sure you save this file as all GMs will be marked as having received their scenarios.'} %></li>
       <% end %>
     <% end %>
     <li style="padding-top: 1em;"><u>Other</u></li>

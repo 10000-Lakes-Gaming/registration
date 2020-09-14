@@ -66,8 +66,8 @@ class EventsController < ApplicationController
            end
         end
         gm.scenario_requested = DateTime.now
-        Rails.logger.info "GMs request for #{gm.scenario_requested?} are #{list}"
-        # gm.save
+        # Rails.logger.info "GMs request for #{gm.scenario_requested?} are #{list}"
+        gm.save
       end
     end
     @game_masters = mapping.values.flatten
