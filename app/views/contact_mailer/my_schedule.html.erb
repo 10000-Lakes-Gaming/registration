@@ -22,13 +22,8 @@
 <body>
 
 <div class="container-fluid">
-  <h1 class="alert-success">Confirmation of Table GM Assignment Change</h1>
+  <h1 class="alert-success">My <%=  %></h1>
   <h2><%= @game_master.user_event.user.formal_name %>,</h2>
-  <% if @adding %>
-    Thank you for volunteering to be the GM for: <%= @game_master.table.long_name %> at <%= @event.name %>!
-  <% else %>
-    You are no longer assigned to GM:  <%= @game_master.table.long_name %> at <%= @event.name %>.
-  <% end %>
   <hr>
 
   <h2 class="alert-primary">Your schedule at <%= @event.name %> as

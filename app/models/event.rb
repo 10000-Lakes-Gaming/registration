@@ -20,6 +20,7 @@ class Event < ActiveRecord::Base
 
   def unique_scenarios
     scenarios.uniq
+    # scenarios
   end
 
   def timeslot
@@ -45,8 +46,6 @@ class Event < ActiveRecord::Base
   def formatted_online_sales_end
     self.online_sales_end.strftime(Session::DATETIME_FORMAT)
   end
-
-
 
   def chat_server_validator
     errors[:chat_server].push 'must have both a name and a valid URL' unless self.valid_chat_server
