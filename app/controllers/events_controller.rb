@@ -71,7 +71,7 @@ class EventsController < ApplicationController
           # end
         end
         gm.scenario_requested = DateTime.now
-        gm.save
+        # gm.save
       end
     end
     @game_masters = mapping.values.flatten
