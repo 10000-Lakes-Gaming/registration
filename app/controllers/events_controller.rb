@@ -60,8 +60,8 @@ class EventsController < ApplicationController
         Rails.logger.info "User is not a VO. Checking if they have already gotten it: #{gm.scenario_requested?}"
         unless gm.scenario_requested?
           Rails.logger.info "GMs with this: #{list}"
-          Rails.logger.info "This GM's registration ID: #{reg.id}"
-          if list.none? { |check| check.user_event.id = reg.id }
+          Rails.logger.info "GM #{gm.user_event.user.name} registration ID: #{reg.id}"
+          if list.none? { |check| check.user_event.id == reg.id }
             # Mark gm as requested
             Rails.logger.info "action=scenario_request_form message='Adding #{gm.to_json}'"
             list << gm
