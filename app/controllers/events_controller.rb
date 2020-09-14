@@ -53,24 +53,20 @@ class EventsController < ApplicationController
     @event.game_masters.each do |gm|
       Rails.logger.info "Looking at GM #{gm.user_event.user.name} and scenario #{gm.scenario.long_name}"
       list = mapping[gm.scenario]
-      reg = gm.user_event
       # Skip VO requests for now. If we do modules, we may need to update this.
       Rails.logger.info "Checking GM #{gm.user_event.user.name} to see if they are a VO. #{gm.user_event.user.venture_officer?}"
       unless gm.user_event.user.venture_officer?
         Rails.logger.info "User is not a VO. Checking if they have already gotten it: #{gm.scenario_requested?}"
         unless gm.scenario_requested?
-          Rails.logger.info "GMs with this: #{list}"
-          Rails.logger.info "GM #{gm.user_event.user.name} registration ID: #{reg.id}"
-          list.each do |gm|
-            Rails.logger.info "Does #{gm.user_event.id} equal #{reg.id}? #{gm.user_event.id == reg.id}"
-          end
-          # if list.none? { |check| check.user_event.id == reg.id }
-          #   Mark gm as requested
-          # Rails.logger.info "action=scenario_request_form message='Adding #{gm.to_json}'"
-          # list << gm
-          # end
+          Rails.logger.info "GM #{gm.user_event.user.name} registration ID: #{gm.user_event.id}"
+          registration_id = gm.user_event.id
+          unless list.any? { |other| registration_id == other.user_event.id }
+            Rails.logger.info "Adding #{gm.to_json} to the list"
+            list << gm
+           end
         end
         gm.scenario_requested = DateTime.now
+        Rails.logger.info "GMs request for #{gm.scenario_requested?} are #{list}"
         # gm.save
       end
     end
