@@ -30,7 +30,7 @@
         <a class="ul" target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a></dd>
 
     <% end %>
-    <% if @registration&.gamemaster? %>
+    <% if @registration&.gamemaster? && @event.reporting_url.present? %>
       <dt class="head">Reporting Form:</dt>
       <dd class="head text-info">
         <a class="ul" target="_blank" href="<%= @event.reporting_url %>"><%= @event.name %> Reporting Form</a></dd>
