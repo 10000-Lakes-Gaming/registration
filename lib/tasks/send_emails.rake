@@ -51,7 +51,7 @@ task :send_skalcon_announcement => :environment do
 end
 
 # usage - `bundle exec rake send_all_gm_schedules EVENT_ID=[EVENT_ID]`
-# This now works for any event. 
+# This now works for any event.
 task :send_all_gm_schedules  => :environment do
   event_number = ENV['EVENT_ID']
   abort "Missing EVENT_ID!" unless event_number.present?

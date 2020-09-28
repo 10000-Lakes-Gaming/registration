@@ -18,6 +18,8 @@
 ## Setup
 The following assumes that you are doing your work on a Macintosh. It will try to be IDE/Editor agnostic. It also assumes that you have [Home Brew](https://brew.sh/) on your machine. At this point, for other development environments, I am not going to be able to give a lot of help.
 
+We are looking forward to having a docker container available soon for development purposes.
+
 For Window's setup, see below.
 
 ### Make sure Home Brew is up to date
