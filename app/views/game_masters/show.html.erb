@@ -7,6 +7,8 @@
   <li>Game Master Information</li>
 </ol>
 
+<% table_gm = @game_master.assigned current_user %>
+
 <h2>Table Details</h2>
 <div class="panel ">
   <dl class="dl-horizontal">
@@ -23,25 +25,47 @@
   </dl>
 </div>
 
+
 <% if @table.online? %>
   <h3>Online Game Details</h3>
   <div class="well">
     <dl class="dl-horizontal">
       <dt class="head"><abbr title="Virtual Table Top">VTT</abbr></dt>
-      <dd class="head text-info"><%= @table.vtt_type %></dd>
+      <dd class="head text-info">
+        <% if table_gm && @table.vtt_type.blank? %>
+          <span class="text-danger glyphicon glyphicon-alert "></span>
+          GM Please Provide!
+        <% end %>
+        <%= @table.vtt_type %>
+      </dd>
       <dt class="head"><abbr title="Virtual Table Top">VTT</abbr> Location:</dt>
       <dd class="head text-info">
+        <% if table_gm && @table.vtt_type.blank? %>
+          <span class="text-danger glyphicon glyphicon-alert "></span>
+          GM Please Provide!
+        <% end %>
         <a class="ul" target="_blank" href="<%= @table&.vtt_url %>"><%= @table&.vtt_name %></a>
       </dd>
       <dt class="head">Sign In Sheet:</dt>
       <dd class="head text-info">
-        <a class="ul" target="_blank" href="<%= @table&.sign_in_url %>">Sign In</a>
+        <% if @table&.sign_in_url.present? %>
+          <a class="ul" target="_blank" href="<%= @table&.sign_in_url %>">Sign In</a>
+        <% else %>
+          <span class="text-danger glyphicon glyphicon-alert "></span>
+          GM Please Provide!
+        <% end %>
       </dd>
       <dt class="head">Event Chat Server:</dt>
       <dd class="head text-info">
         <a class="ul" target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a></dd>
       <dt class="head">Game Chat Room:</dt>
       <dd class="head text-info"><%= @table.location %></dd>
+
+      <% if @event.reporting_url.present? %>
+        <dt class="head">Reporting Form:</dt>
+        <dd class="head text-info">
+          <a class="ul" target="_blank" href="<%= @event.reporting_url %>"><%= @event.name %> reporting form</a></dd>
+      <% end %>
     </dl>
   </div>
 <% end %>

@@ -181,4 +181,8 @@ class Table < ActiveRecord::Base
     ok &&= registration.payment_ok?
     ok && !tickets_overlap?(registration)
   end
+
+  def table_gm? (user)
+    self.game_masters.any? {|gm| gm&.user_event&.user_id == user.id}
+  end
 end

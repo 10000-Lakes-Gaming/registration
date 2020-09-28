@@ -34,7 +34,11 @@
         </dd>
         <dt class="head">Sign In Sheet:</dt>
         <dd class="head text-info">
-          <a class="ul" target="_blank" href="<%= @table&.sign_in_url %>">Sign In</a>
+          <% if @table&.sign_in_url.present? %>
+            <a class="ul" target="_blank" href="<%= @table&.sign_in_url %>">Sign In</a>
+          <% else %>
+            TBD
+          <% end %>
         </dd>
         <dt class="head">Event Chat Server:</dt>
         <dd class="head text-info">
