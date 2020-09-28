@@ -34,8 +34,9 @@ class ContactMailer < ApplicationMailer
   end
 
   # Email sent to GMs when they are added/dropped from a table
-  def game_master(message, email, event, game_master, adding)
+  def game_master(message, email, event, game_master, adding, reminder=false)
     @adding = adding
+    @reminder = reminder
     @message = message
     @event = event
     @game_master = game_master

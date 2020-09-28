@@ -27,6 +27,18 @@ class ContactMailerPreview < ActionMailer::Preview
 
     ContactMailer.game_master(message, email, @event, game_master, true)
   end
+  def game_master_reminder_preview
+    @event = Event.find(1)
+    @user = User.find(1)
+    user_event = @user.user_events.first
+    game_master = user_event.game_masters.first
+    message = Message.new
+    message.subject = "GM assignment Reminder for #{@event.name}"
+
+    email = @user.email
+
+    ContactMailer.game_master(message, email, @event, game_master, false, true)
+  end
 
 
   def game_master_delete_preview

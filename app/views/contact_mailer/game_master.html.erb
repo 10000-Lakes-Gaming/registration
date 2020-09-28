@@ -22,12 +22,19 @@
 <body>
 
 <div class="container-fluid">
-  <h1 class="alert-success">Confirmation of Table GM Assignment Change</h1>
-  <h2><%= @game_master.user_event.user.formal_name %>,</h2>
-  <% if @adding %>
-    Thank you for volunteering to be the GM for: <%= @game_master.table.long_name %> at <%= @event.name %>!
+  <% if @reminder %>
+    <h1 class="alert-success">Reminder of Table GM Assignments</h1>
+    <h2><%= @game_master.user_event.user.formal_name %>,</h2>
+    Thank you for volunteering to be a GM at <%= @event.name %>.<br>
+    This email is a reminder of your schedule, and of any missing table set up.
   <% else %>
-    You are no longer assigned to GM:  <%= @game_master.table.long_name %> at <%= @event.name %>.
+    <h1 class="alert-success">Confirmation of Table GM Assignment Change</h1>
+    <h2><%= @game_master.user_event.user.formal_name %>,</h2>
+    <% if @adding %>
+      Thank you for volunteering to be the GM for: <%= @game_master.table.long_name %> at <%= @event.name %>!
+    <% else %>
+      You are no longer assigned to GM:  <%= @game_master.table.long_name %> at <%= @event.name %>.
+    <% end %>
   <% end %>
   <hr>
 
@@ -76,19 +83,24 @@
     <div>This example uses a google form. To protect player information, please do not use a spreadsheet that lists all
       players for all of your games. It is preferred that you use a form that only you can see the player information.
     </div>
-    <div>SkålCon Online 2020's example <a target="_blank" class="ul" href="https://forms.gle/PosB6PQCQqujhn4U6">Sign-in Form</a></div>
+    <div>SkålCon Online 2020's example
+      <a target="_blank" class="ul" href="https://forms.gle/PosB6PQCQqujhn4U6">Sign-in Form</a></div>
     <h3>How To Use</h3>
     <ul>
-      <li>You will need to make a copy by selecting the <span class="glyphicon glyphicon-option-vertical"></span> button in
-        the upper right.</li>
-        <li>Then select "Make a Copy" to copy into your google drive.</li>
+      <li>You will need to make a copy by selecting the <span class="glyphicon glyphicon-option-vertical"></span> button
+        in
+        the upper right.
+      </li>
+      <li>Then select "Make a Copy" to copy into your google drive.</li>
       <li>Create a new copy for each of your games, changing the title appropriately.</li>
-      <li>Click the purple "Send" button, and select the <span class="glyphicon glyphicon-link"></span> link button.</li>
+      <li>Click the purple "Send" button, and select the <span class="glyphicon glyphicon-link"></span> link button.
+      </li>
       <li>Copy that URL into the "Sign In Form" for your table.</li>
     </ul>
 
     <h2>Reporting URL</h2>
-    <div>Please report all games to <a href="<%= @event.reporting_url %>" target="_blank" class="ul"><%= @event.name %>'s session reporting form</a>
+    <div>Please report all games to
+      <a href="<%= @event.reporting_url %>" target="_blank" class="ul"><%= @event.name %>'s session reporting form</a>
       immediately after your game is completed, so that HQ can get the games promptly reported.
 
       This URL will also be on each of your tables (either in the view or edit), as well as the event's main page.
@@ -106,12 +118,15 @@
       <li>Game Masters will be required to collect sign in information for their players so that they can report
         the games and create their chronicle sheets.
       </li>
-      <li>Please have your <a  class="ul" href="#signin">sign-in sheet</a> ready for player sign-in as soon as possible.</li>
+      <li>Please have your <a class="ul" href="#signin">sign-in sheet</a> ready for player sign-in as soon as possible.
+      </li>
       <li>For privacy issues, please have a separate sign-in sheet for each game.</li>
       <li>Have appropriate tier pregens ready for your players, if there are any in tier.<br>
-      Pregens can be found at the
-        <a class="ul" href="https://docs.google.com/spreadsheets/d/1Nd52mCOniHmDwW1b7tcLUTYcI4uYoJ5idPHzcs2gCc0/edit?usp=sharing">GM Sharing Library</a>.This is maintained by online GM volunteers, and there are instructions.<br>
-              If you have questions, please ask HQ in the #support channel at <a class="ul" target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a>
+        Pregens can be found at the
+        <a class="ul" href="https://docs.google.com/spreadsheets/d/1Nd52mCOniHmDwW1b7tcLUTYcI4uYoJ5idPHzcs2gCc0/edit?usp=sharing">GM
+          Sharing Library</a>.This is maintained by online GM volunteers, and there are instructions.<br>
+        If you have questions, please ask HQ in the #support channel at
+        <a class="ul" target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a>
       </li>
       <li>You will be assigned a room in our <%= link_to @event.chat_server, @event.chat_server_url %> chat server.
         You will need to use this as your voice channel.
@@ -125,7 +140,8 @@
       <li><b>Chronicles must be sent to players as soon as possible, preferable within one hour.</b><br>
         This is so that players can play their characters in back-to-back slots.
       </li>
-      <li><b>If your game does not fire, do not leave your assigned table until HQ has released or reassigned you.</b><br>
+      <li>
+        <b>If your game does not fire, do not leave your assigned table until HQ has released or reassigned you.</b><br>
         HQ may assign you to additional tasks.
       </li>
     </ul>

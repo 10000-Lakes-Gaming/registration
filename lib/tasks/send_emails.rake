@@ -49,3 +49,24 @@ task :send_skalcon_announcement => :environment do
   end
   puts "#{count} skalcon_announcement emails were sent."
 end
+
+# usage - `bundle exec rake send_all_gm_schedules EVENT_ID=[EVENT_ID]`
+# This now works for any event. 
+task :send_all_gm_schedules  => :environment do
+  event_number = ENV['EVENT_ID']
+  abort "Missing EVENT_ID!" unless event_number.present?
+
+  event = Event.find(event_number)
+  puts "Sending out GM schedules for #{event.name}"
+
+  message = Message.new
+  message.subject = "Game Master Schedule for #{event.name}"
+
+  event.game_masters.each do |gm|
+    user = gm.user_event.user
+    email = user.email
+    unless user.opt_out?
+      ContactMailer.game_master(message, email, event, gm, false, true).deliver
+    end
+  end
+end
