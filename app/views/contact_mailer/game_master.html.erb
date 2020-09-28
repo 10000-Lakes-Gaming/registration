@@ -51,10 +51,12 @@
   <ul>
     <li>Even if you have volunteered previously, please read through this section thoroughly as instructions may have
       changed some from previous conventions. it anyway as some things have changed. If this is your first time
-      volunteering, these guidelines will help answer your questions and guide you through this important part of Paizo
-      Organized Play.
+      volunteering, these guidelines will help answer your questions and guide you through this important part of
+      Paizo Organized Play.
     </li>
-    <li>As a volunteer, you are the eyes, ears, face, and voice of Paizo. We expect each of you to maintain a positive
+    <li>As a volunteer, you are the eyes, ears, face, and voice of the Organized Play Foundation. We expect each of
+      you
+      to maintain a positive
       attitude, professional behavior, and good hygiene.
     </li>
     <% if @event.in_person? %>
@@ -64,10 +66,34 @@
       </li>
     <% end %>
     <% if @event.online? %>
-      <li>We will notify GMs on how we are handling boon rolls soon.</li>
+      <li><%= @event.name %> will handle all boon and gift voucher rolls, and will be contacting the winners directly.
+      </li>
     <% end %>
   </ul>
   <hr>
+  <% if @event.online? %>
+    <h2><a name="signin">Example Player Sign-in sheet</a></h2>
+    <div>This example uses a google form. To protect player information, please do not use a spreadsheet that lists all
+      players for all of your games. It is preferred that you use a form that only you can see the player information.
+    </div>
+    <div>SkålCon Online 2020's example <a target="_blank" class="ul" href="https://forms.gle/PosB6PQCQqujhn4U6">Sign-in Form</a></div>
+    <h3>How To Use</h3>
+    <ul>
+      <li>You will need to make a copy by selecting the <span class="glyphicon glyphicon-option-vertical"></span> button in
+        the upper right.</li>
+        <li>Then select "Make a Copy" to copy into your google drive.</li>
+      <li>Create a new copy for each of your games, changing the title appropriately.</li>
+      <li>Click the purple "Send" button, and select the <span class="glyphicon glyphicon-link"></span> link button.</li>
+      <li>Copy that URL into the "Sign In Form" for your table.</li>
+    </ul>
+
+    <h2>Reporting URL</h2>
+    <div>Please report all games to <a href="<%= @event.reporting_url %>" target="_blank" class="ul"><%= @event.name %>'s session reporting form</a>
+      immediately after your game is completed, so that HQ can get the games promptly reported.
+
+      This URL will also be on each of your tables (either in the view or edit), as well as the event's main page.
+    </div>
+  <% end %>
 
   <h2>Logistics:</h2>
   <% if @event.online? %>
@@ -80,25 +106,31 @@
       <li>Game Masters will be required to collect sign in information for their players so that they can report
         the games and create their chronicle sheets.
       </li>
-      <li>Please have your sign-in sheet ready for player sign-in as soon as possible.</li>
+      <li>Please have your <a  class="ul" href="#signin">sign-in sheet</a> ready for player sign-in as soon as possible.</li>
       <li>For privacy issues, please have a separate sign-in sheet for each game.</li>
-      <li>Have appropriate tier pregens ready for your players, if there are any in tier.</li>
+      <li>Have appropriate tier pregens ready for your players, if there are any in tier.<br>
+      Pregens can be found at the
+        <a class="ul" href="https://docs.google.com/spreadsheets/d/1Nd52mCOniHmDwW1b7tcLUTYcI4uYoJ5idPHzcs2gCc0/edit?usp=sharing">GM Sharing Library</a>.This is maintained by online GM volunteers, and there are instructions.<br>
+              If you have questions, please ask HQ in the #support channel at <a class="ul" target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a>
+      </li>
       <li>You will be assigned a room in our <%= link_to @event.chat_server, @event.chat_server_url %> chat server.
         You will need to use this as your voice channel.
       </li>
       <li>Please be at your VTT room and chat room at least 15 minutes prior to your game's start.</li>
-      <li><b>Please use a separate sign-in form for each game.</b>b></li>
+      <li><b>Please use a separate sign-in form for each game.</b></li>
       <li><%= @event.name %> will be sending out sample sign-in forms for you to use.</li>
       <li>Games should be reported as soon as possible after the game completes through the form provided
         by <%= @event.name %> %>.
       </li>
-      <li><b>Chronicles must be sent to players as soon as possible, preferable within one hour.</b>
+      <li><b>Chronicles must be sent to players as soon as possible, preferable within one hour.</b><br>
         This is so that players can play their characters in back-to-back slots.
       </li>
-      <li><b>If your game does not fire, do not leave your assigned table until HQ has released or reassigned you.</b>
-        HQ may assign you to additional tasks.</li>
+      <li><b>If your game does not fire, do not leave your assigned table until HQ has released or reassigned you.</b><br>
+        HQ may assign you to additional tasks.
+      </li>
     </ul>
   <% end %>
+
   <% if @event.in_person? %>
     <h3>For In-Person Tables</h3>
     <ul>
@@ -116,7 +148,8 @@
       </li>
       <li>No personal items may be left in the HQ area.</li>
       <%# Find a way to to see if we are running a special from the app? %>
-      <li>The convention room will be closed to all players 30 minutes prior to the the running of interactive specials
+      <li>The convention room will be closed to all players 30 minutes prior to the the running of interactive
+        specials
         for the GM pre-special meeting. All GM’s running the specials are expected to be at this meeting, and should
         report at least 30 minutes prior to the session start time. Please be on time, as we will be discussing
         signaling and the like.

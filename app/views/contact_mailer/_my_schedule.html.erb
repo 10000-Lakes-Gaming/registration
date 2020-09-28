@@ -23,7 +23,7 @@
   <% if event.online? %>
     <h3>My <%= event.name %> Schedule</h3>
     <!-- Add some padding on the elements below-->
-    <div class="bg-warning top-buffer">
+    <div class="bg-warning_email top-buffer">
       <div>
         <span style="font-size: 1.5em" class="glyphicon glyphicon-bullhorn"></span>
         <%= event.name %> Chat Server:
@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <div class="bg-warning top-buffer">
+    <div class="bg-warning_email top-buffer">
       <div><span style="font-size: 1.5em" class="glyphicon glyphicon-info-sign"></span>
         If your game location is 'online', please click on the 'View Table Details' link for that session. Your game
         master will have important information there, such as their <abbr title="Virtual Table Top">VTT</abbr> link, and
@@ -39,14 +39,65 @@
       </div>
     </div>
 
-    <% if user_event&.gamemaster? %>
-      <div class="bg-warning text-danger top-buffer">
+    <% problem_tables = @game_master.user_event.game_masters.select { |gm| gm.missing_online_setup? } %>
+    <% unless problem_tables.empty? %>
+      <div class="bg-warning_email text-danger top-buffer">
         <div style="display: inline-block; vertical-align: top; font-size: 1.5em;">
-          <span class="text-danger glyphicon glyphicon-warning-sign"></span>
+          <span class="text-danger glyphicon glyphicon-alert"></span>
         </div>
         <div style="display: inline-block">
-          Please make sure that you have added your <abbr title="Virtual Table Top">VTT</abbr> link, included the chat
-          room (if needed), and your sign-in instructions (typically a link to your sign-in sheet).
+          One or more of your tables are missing needed online setup:
+
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Table</th>
+              <th>Missing VTT Type</th>
+              <th>Missing VTT Name</th>
+              <th>Missing VTT URL</th>
+              <th>Missing Sign-up Sheet</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% problem_tables.each do |gm| %>
+              <tr>
+                <td><%= gm.long_name %></td>
+                <td>
+                  <% if gm.vtt_type.blank? %>
+                    <span class="text-danger glyphicon glyphicon-alert"></span>
+                    <span class="text-danger">Missing!</span>
+                  <% else %>
+                    ok
+                  <% end %>
+                </td>
+                <td>
+                  <% if gm.vtt_name.blank? %>
+                    <span class="text-danger glyphicon glyphicon-alert"></span>
+                    <span class="text-danger">Missing!</span>
+                  <% else %>
+                    ok
+                  <% end %>
+                </td>
+                <td>
+                  <% if gm.vtt_url.blank? %>
+                    <span class="text-danger glyphicon glyphicon-alert"></span>
+                    <span class="text-danger">Missing!</span>
+                  <% else %>
+                    ok
+                  <% end %>
+                </td>
+                <td>
+                  <% if gm.sign_in_url.blank? %>
+                    <span class="text-danger glyphicon glyphicon-alert"></span>
+                    <span class="text-danger">Missing!</span>
+                  <% else %>
+                    ok
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
         </div>
       </div>
     <% end %>

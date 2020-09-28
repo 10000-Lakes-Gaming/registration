@@ -5,6 +5,7 @@ class GameMaster < ActiveRecord::Base
   delegate :start, to: :table
   delegate :end, to: :table
   delegate :scenario, to: :table
+  delegate :long_name, to: :table
   validates :table_id, :presence => true, :uniqueness => { :scope => :user_event_id }
   validates :user_event_id, :presence => true, :uniqueness => { :scope => :table_id }
   validate :check_gm_count
@@ -46,6 +47,10 @@ class GameMaster < ActiveRecord::Base
       errors[:vtt_url] << 'is not allowed for in-person table' if vtt_url.present?
       errors[:sign_in_url] << 'is not allowed for in-person table' if sign_in_url.present?
     end
+  end
+
+  def missing_online_setup?
+    vtt_type.blank? || vtt_name.blank? || vtt_url.blank? || sign_in_url.blank?
   end
 
   def check_gm_count

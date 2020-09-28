@@ -8,6 +8,8 @@ $darkestGrey: dimgrey;
 $lightGrey: #eee;
 $money: #de9e36;
 $orange: #de9e36;
+$lighter-orange: #f3ddb8;
+
 $cost-going-up: $orange;
 $red: #dc3545;
 $white: #f4f4f9;
@@ -439,6 +441,12 @@ div.bottom {
 }
 
 .bg-warning {
+  background-color: $trueWhite;
+  border: thick solid $orange;
+  padding: 10px;
+}
+
+.bg-warning_email {
   background-color: $trueWhite;
   border: thick solid $orange;
   padding: 10px;
