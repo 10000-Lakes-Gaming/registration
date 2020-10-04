@@ -52,7 +52,7 @@ end
 
 # usage - `bundle exec rake send_all_gm_schedules EVENT_ID=[EVENT_ID]`
 # This now works for any event.
-task :send_all_gm_schedules  => :environment do
+task :send_all_gm_schedules => :environment do
   event_number = ENV['EVENT_ID']
   abort "Missing EVENT_ID!" unless event_number.present?
 
@@ -67,6 +67,28 @@ task :send_all_gm_schedules  => :environment do
     email = user.email
     unless user.opt_out?
       ContactMailer.game_master(message, email, event, gm, false, true).deliver
+    end
+  end
+end
+
+  # usage - `bundle exec rake send_all_partipants_schedules EVENT_ID=[EVENT_ID]`
+# This now works for any event.
+task :send_all_partipants_schedules => :environment do
+  event_number = ENV['EVENT_ID']
+  abort "Missing EVENT_ID!" unless event_number.present?
+
+  event = Event.find(event_number)
+  puts "Sending out GM schedules for #{event.name}"
+
+  message = Message.new
+  message.subject = "Game Master Schedule for #{event.name}"
+
+  event.user_events.each do |user_event|
+    user = user_event.user
+    email = user.email
+    unless user.opt_out?
+      puts "Emailing schedule to #{user.name} and email #{user.email}"
+      ContactMailer.participant(message, email, event, user_event).deliver
     end
   end
 end
