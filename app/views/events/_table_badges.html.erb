@@ -262,7 +262,7 @@
 <% if table.vtt_type.present? %>
 
   <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-vtt  btn-round-xs btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_vtt">VTT: <%= truncate( table.vtt_type, length: 10) %>
+  <button type="button" class="btn btn-vtt  btn-round-xs btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_vtt"><%= truncate( table.vtt_type, length: 10) %>
   </button>
 
   <!-- Modal -->

@@ -44,6 +44,14 @@ class ContactMailer < ApplicationMailer
     mail(subject: @message.subject, to: email, bcc: ENV["GMAIL_SMTP_USERNAME"])
   end
 
+  def participant(message, email, event, registration)
+    @message = message
+    @event = event
+    @registration = registration
+
+    mail(subject: @message.subject, to: email, bcc: ENV["GMAIL_SMTP_USERNAME"])
+  end
+
   def payment_reminder(message, email, event)
     @event = event
     @message = message

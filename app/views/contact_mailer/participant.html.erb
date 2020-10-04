@@ -1,0 +1,257 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+        integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+          integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+          crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+          integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+          crossorigin="anonymous"></script>
+
+  <%= stylesheet_link_tag 'application', media: 'screen, projection', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'print-application', media: 'print' %>
+</head>
+<body>
+
+<div class="container-fluid">
+  <div>Welcome to <%= @event.name %>!</div>
+  <p><%= @event.name %> starts at <%= @event.formatted_start %>, and your schedule is listed below.</p>
+  <p>Warning, this email is going to get long, but please take the time to read through all of the important
+    information below!</p>
+
+  <hr>
+
+  <h2 class="alert-primary">Your schedule at <%= @event.name %> as
+    of <%= DateTime.now.localtime.to_formatted_s(:long) %></h2>
+  <div>Please see <%= link_to "Your Registration", [@event, @registration] %> for your up to the minute
+    assignments.
+  </div>
+
+  <%= render partial: 'my_schedule', locals: { event: @event, user_event: @registration } %>
+
+  <div class="alert-warning">If you need to drop a table that you have volunteered to GM, please reply to this email
+    requesting to be removed. Convention organizers will attempt to find a replacement for you. We apologize for any
+    inconvenience this may cause.
+  </div>
+
+  <hr>
+  <% if @registration.player? %>
+    <% if @event.online? %>
+      <h2>Player Information for Online Games</h2>
+      <p>Below are some helpful suggestions for making your online gaming experience more enjoyable.</p>
+      <ul>
+        <li>You should see links to all of your games on your schedule, both in this email, and on the registration
+          site.
+          On each of these pages you should see the following:
+          <ul>
+            <li>The type of Virutal Table Top (VTT) the GM is using. (such as Roll20 or Foundry)</li>
+            <li>A link to their VTT, and the name of the game, if applicable. If you can, please sign in to the VTT
+              as soon as possible, so that you can get your character into the game.<br>
+              <strong>Note for Fantasy Grounds:</strong> You will need to download the demo or have a copy and then use
+              the server alias to log in when the gm has the game up.
+            </li>
+            <li>A link to the GM's sign-in sheet. This replaces the physical sign in sheet we use in a face-to-face
+              convention.
+            </li>
+            <li>The name of the discord voice and text channels that this game will be using on the
+              <a class="ul" target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a> chat
+              server. Voice and text chanels will have the same name, and please report in to both by the start of your
+              session.
+            </li>
+          </ul>
+        </li>
+        <li>If a GM does not have this information, please let headquarters know in the <code>#headquarters</code>
+          channel
+          of <a class="ul" target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a></li>
+        <li>GMs will have pregenerated iconic characters available for all games that are in tier for pregens.</li>
+        <li>GMs will be emailing you your chronicles. However, they may not always be able to get it to you before the
+          next session, but you will still be able to play your character.
+        </li>
+        <li>If you do not receive your chronicle by the end of the next (non-quest) session (example, you played FRI12,
+          so by the end of the FRI19 session), please let headquarters know in the <code>#headquasters</code> chat
+          channel
+        </li>
+        <li>Boons and gift vouchers.
+          <ul>
+            <li>Boons and vouchers will be randomly assigned by headquarters for each session.</li>
+            <li>For PFS1 and Starfinder, 1 out of 10 players for a campaign in the sessions will win a boon.</li>
+            <li>For PFS2, you will receive ACP, and we expect this to be at a "premier plus" level!</li>
+            <li>Vouchers will be distributed at random between all players and GMs of a particular session.<br>
+              In all cases, these will be emailed to the email that you have registered with on the application.
+            </li>
+            <li>If you need to have this updated, please reply to this email, asking for your email to be updated.</li>
+            <li>We are still determining how we will be handling Charity Boons.</li>
+          </ul>
+        </li>
+      </ul>
+      <hr>
+      <h2>Characters and Virtual Table Tops.</h2>
+      <h3>Roll20</h3>
+      <p>For Roll20, we are providing "character builder" games in Roll20.
+        You can access these by going to the <code>#character-creation-stations</code> at
+        <a class="ul" target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a>
+        and viewing the pinned messages. There should be plenty of blank character sheets for you to use, though you
+        can ask for help in the channel. These are available now. We are asking all GMs to allow exports from your
+        vault into their game. However, bear in mind, that not all GMs will have paid accounts, and if they do not, they
+        will not be able to accept your premade character sheet.
+
+      <h3>Fantasy Grounds</h3>
+      <p>If you are looking to create a character on Fantasy Grounds, please @ <code>Aerine
+        #8215</code> on any channel at
+        <a class="ul" target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a> and she will
+        work with you to set up your character.</p>
+
+      <h3>Foundry</h3>
+      <p>We are still working with the GMs running on Foundry to set up times for character sheet building. If you are
+        signed up for one of these tables, we will be sending you an additional email soon.</p>
+
+      <h3>Google Slides or Docs</h3>
+      <p>Typically GMs running on slides or docs will not be using any particular character sheet. However, please have
+        your character sheet available in a digital format. </p>
+      <hr>
+    <% end %>
+  <% end %>
+
+  <% if @registration.gamemaster? %>
+    <h2>Volunteer Information</h2>
+    <ul>
+      <li>Even if you have volunteered previously, please read through this section thoroughly as instructions may have
+        changed some from previous conventions. it anyway as some things have changed. If this is your first time
+        volunteering, these guidelines will help answer your questions and guide you through this important part of
+        Paizo Organized Play.
+      </li>
+      <li>As a volunteer, you are the eyes, ears, face, and voice of the Organized Play Foundation. We expect each of
+        you to maintain a positive attitude, professional behavior, and good hygiene.
+      </li>
+      <% if @event.in_person? %>
+        <li>The Player Boon token rolls remain the same. 10% chance per token turned in, 5 tokens max per roll. Winners
+          roll randomly on which boon received. GM boons can be claimed when turning in your first session reporting
+          sheet.
+        </li>
+      <% end %>
+      <% if @event.online? %>
+        <li><%= @event.name %> will handle all boon and gift voucher rolls, and will be contacting the winners directly.
+        </li>
+      <% end %>
+    </ul>
+    <hr>
+    <% if @event.online? %>
+      <h2><a name="signin">Example Player Sign-in sheet</a></h2>
+      <div>This example uses a google form. To protect player information, please do not use a spreadsheet that lists
+        all
+        players for all of your games. It is preferred that you use a form that only you can see the player information.
+      </div>
+      <div>SkålCon Online 2020's example
+        <a target="_blank" class="ul"
+           href="https://docs.google.com/forms/d/1ZCKJpBMGFfBTlEU7R3TemrcMCWfjfXuRrD61Co1Vwj4/edit?usp=sharing">Sign-in
+          Form</a>
+      </div>
+      <h3>How To Use</h3>
+      <ul>
+        <li>You will need to make a copy by selecting the <span class="glyphicon glyphicon-option-vertical"></span>
+          button
+          in
+          the upper right.
+        </li>
+        <li>Then select "Make a Copy" to copy into your google drive.</li>
+        <li>Create a new copy for each of your games, changing the title appropriately.</li>
+        <li>Click the purple "Send" button, and select the <span class="glyphicon glyphicon-link"></span> link button.
+        </li>
+        <li>Copy that URL into the "Sign In Form" for your table.</li>
+      </ul>
+
+      <h2>Reporting URL</h2>
+      <div>Please report all games to
+        <a href="<%= @event.reporting_url %>" target="_blank" class="ul"><%= @event.name %>'s session reporting form</a>
+        immediately after your game is completed, so that HQ can get the games promptly reported.
+
+        This URL will also be on each of your tables (either in the view or edit), as well as the event's main page.
+      </div>
+    <% end %>
+
+    <h2>Logistics:</h2>
+    <% if @event.online? %>
+      <h3>For Online Tables</h3>
+      <ul>
+        <li>Each GM will need to create their Virtual Table Top and link to it on their table (such as by clicking
+          the "Edit Table Details" in the schedule above).
+        </li>
+        <li>Please have your VTT ready for player sign-in as soon as possible.</li>
+        <li>Game Masters will be required to collect sign in information for their players so that they can report
+          the games and create their chronicle sheets.
+        </li>
+        <li>Please have your <a class="ul" href="#signin">sign-in sheet</a> ready for player sign-in as soon as
+          possible.
+        </li>
+        <li>For privacy issues, please have a separate sign-in sheet for each game.</li>
+        <li>Have appropriate tier pregens ready for your players, if there are any in tier.<br>
+          Pregens can be found at the
+          <a class="ul" href="https://docs.google.com/spreadsheets/d/1Nd52mCOniHmDwW1b7tcLUTYcI4uYoJ5idPHzcs2gCc0/edit?usp=sharing">GM
+            Sharing Library</a>.This is maintained by online GM volunteers, and there are instructions.<br>
+          If you have questions, please ask HQ in the <code>#support</code> channel at
+          <a class="ul" target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a>
+        </li>
+        <li>You will be assigned a room in our <%= link_to @event.chat_server, @event.chat_server_url %> chat server.
+          You will need to use this as your voice channel.
+        </li>
+        <li>Please be at your VTT room and chat room at least 15 minutes prior to your game's start.</li>
+        <li><b>Please use a separate sign-in form for each game.</b></li>
+        <li><%= @event.name %> will be sending out sample sign-in forms for you to use.</li>
+        <li>Games should be reported as soon as possible after the game completes through the form provided
+          by <%= @event.name %> %>.
+        </li>
+        <li><b>Chronicles must be sent to players as soon as possible, preferable within one hour.</b><br>
+          This is so that players can play their characters in back-to-back slots.
+        </li>
+        <li>
+          <b>If your game does not fire, do not leave your VTT and voice/text channel until HQ has released or
+            reassigned
+            you.</b><br>
+          HQ may assign you to additional tasks.
+        </li>
+      </ul>
+    <% end %>
+
+    <% if @event.in_person? %>
+      <h3>For In-Person Tables</h3>
+      <ul>
+        <li>Each GM is responsible to provide their own maps, miniatures, handouts, and scenario-specific pre-generated
+          characters.
+        </li>
+        <li>Each GM is responsible for having a reliable copy of the scenario they are running. Power outlets are scarce
+          in the room so GMs must have a backup option in case their computer or tablet runs out of power.
+          For safety reasons, we cannot allow extension cords to be run across the room.
+        </li>
+        <li>Chronicles and session reporting sheets will be provided.</li>
+        <li>The HQ has a supply of New Player Packets and pre-generated iconic characters.</li>
+        <li><b>If your game does not fire, do not leave your assigned table until HQ has released or reassigned you.</b>
+          HQ may assign you to additional tasks.
+        </li>
+        <li>No personal items may be left in the HQ area.</li>
+        <%# Find a way to to see if we are running a special from the app? %>
+        <li>The convention room will be closed to all players 30 minutes prior to the the running of interactive
+          specials
+          for the GM pre-special meeting. All GM’s running the specials are expected to be at this meeting, and should
+          report at least 30 minutes prior to the session start time. Please be on time, as we will be discussing
+          signaling and the like.
+        </li>
+      </ul>
+      <hr>
+    <% end %>
+  <% end %>
+
+  <p>Thank you for making <%= @event.name %> a success!</p>
+
+  <hr>
+  <p><%= @event.name %>, Minnesota Paizo Organized Play, and 10,000 Lakes Gaming</p>
+</div>
+</body>
+</html>

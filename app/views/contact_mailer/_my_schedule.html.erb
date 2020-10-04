@@ -17,6 +17,7 @@
     # byebug
     table_sessions = user_event.all_tickets_by_session
     sessions = user_event.sessions
+
 %>
 
 <div class="panel panel-padded border-thin">
@@ -27,7 +28,7 @@
       <div>
         <span style="font-size: 1.5em" class="glyphicon glyphicon-bullhorn"></span>
         <%= event.name %> Chat Server:
-        <a target="_blank" href="<%= @event.chat_server_url %>"><%= @event.chat_server %></a>
+        <a target="_blank" href="<%= event.chat_server_url %>"><%= event.chat_server %></a>
       </div>
     </div>
 
@@ -39,7 +40,7 @@
       </div>
     </div>
 
-    <% problem_tables = @game_master.user_event.game_masters.select { |gm| gm.missing_online_setup? } %>
+    <% problem_tables = user_event.game_masters.select { |gm| gm.missing_online_setup? } %>
     <% unless problem_tables.empty? %>
       <div class="bg-warning_email text-danger top-buffer">
         <div style="display: inline-block; vertical-align: top; font-size: 1.5em;">

@@ -54,6 +54,10 @@ class UserEvent < ActiveRecord::Base
     !game_masters.empty?
   end
 
+  def player?
+    !registration_tables.empty?
+  end
+
   def current_gming_count
     game_masters.length
   end
