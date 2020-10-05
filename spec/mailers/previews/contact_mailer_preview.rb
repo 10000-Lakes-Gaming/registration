@@ -1,5 +1,16 @@
 # Preview all emails at http://localhost:3000/rails/mailers/contact_mailer
 class ContactMailerPreview < ActionMailer::Preview
+  def table_player_preview
+    table = Table.find(3)
+    event = table.session.event
+    user = User.first
+    message = Message.new
+    message.subject = "Message from the GM of #{event.name} #{table.name }"
+    message.content = "this is a message from your GM"
+    message.name = message.subject
+
+    ContactMailer.email_players(message, table, user)
+  end
 
   def payment_reminder_preview
     setup_user_event
@@ -76,7 +87,7 @@ class ContactMailerPreview < ActionMailer::Preview
   end
 
   def registration_update_preview
-    @event  = Event.first
+    @event = Event.first
     @user = User.first
     @user_event = @user.user_events.first
 
@@ -92,22 +103,23 @@ class ContactMailerPreview < ActionMailer::Preview
     message = Message.new
     message.subject = "SkalCon Online Registration Is Officially Open!"
 
-    ContactMailer.skalcon_announcement(message, @user )
+    ContactMailer.skalcon_announcement(message, @user)
   end
 
   private
+
   def setup_user_event
-    @event              = Event.new
-    @event.name         = 'SkålCon 2018'
+    @event = Event.new
+    @event.name = 'SkålCon 2018'
     @event.prereg_price = 20
     @event.onsite_price = 25
-    @event.prereg_ends  = 5.days.from_now
-    @event.rsvp_close   = 10.days.from_now
+    @event.prereg_ends = 5.days.from_now
+    @event.rsvp_close = 10.days.from_now
     @user = User.first
   end
 
   def setup_payment_message
-    @message         = Message.new
+    @message = Message.new
     @message.subject = "#{@event.name} Reminder"
   end
 

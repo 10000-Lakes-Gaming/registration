@@ -96,8 +96,10 @@
                 <%= ((selection.is_a? GameMaster) || selection.table.online?) ? selection.table.location : 'See Musterer' %>
               </td>
               <td>
+                <%# Does this need to be online only? %>
                 <div style="display: inline-block"><%= link_to 'View Table Details', event_session_table_path(event, session, selection.table) %></div>
               </td>
+              <%# Does this need to be online only? %>
               <% if user_event.gamemaster? %>
                 <td>
                   <% if selection.is_a? GameMaster %>

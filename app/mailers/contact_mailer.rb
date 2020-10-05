@@ -11,6 +11,24 @@ class ContactMailer < ApplicationMailer
     end
   end
 
+  def email_players(message, table, user)
+    @message = message
+    @table = table
+    email = user.email
+
+    # we will put the players in the BCC list.
+    # Also, we will bcc the registration email, so we have a copy.
+    bcc = [ENV["GMAIL_SMTP_USERNAME"]]
+    table.registration_tables.each do |signup|
+      player = signup.user_event.user
+      unless (player.opt_out?)
+        bcc.append player.email
+      end
+    end
+    puts "BCC: #{bcc.to_s}"
+    mail(from: email, to: email, bcc: bcc, subject: message.subject)
+  end
+
   # this is the general contact form that folks can use.
   def contact_email(message)
     @message = message
@@ -34,7 +52,7 @@ class ContactMailer < ApplicationMailer
   end
 
   # Email sent to GMs when they are added/dropped from a table
-  def game_master(message, email, event, game_master, adding, reminder=false)
+  def game_master(message, email, event, game_master, adding, reminder = false)
     @adding = adding
     @reminder = reminder
     @message = message

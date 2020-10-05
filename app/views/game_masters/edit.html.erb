@@ -106,7 +106,9 @@
       <div class="col-md-2"><%= player.pfs_number %></div>
     </div>
   <% end %>
-  <a href="#">Email this table's players</a>
+  <% if @table.online? %>
+    <%= link_to 'Email these players', email_players_path(@table.id), method: :get %>
+  <% end %>
 </div>
 
 <%= render 'form' %>

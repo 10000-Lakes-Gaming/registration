@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
 
   resources :users
-  resources :scenarios  do
+  resources :scenarios do
     get 'clone'
   end
 
@@ -35,7 +35,7 @@ Rails.application.routes.draw do
         get 'show_since'
       end
       resources :additional_payments do
-      # resources :additional_payments, shallow: true do
+        # resources :additional_payments, shallow: true do
         resources :additional_payment_payment, only: [:new, :create]
       end
       resources :registration_payment, only: [:new, :create]
@@ -50,12 +50,16 @@ Rails.application.routes.draw do
     end
   end
 
+  # player emails for table
+  # resources :table_player_email do
+  get 'email_players/:table_id', to: 'table_player_email#new', as: 'email_players'
+  post 'email_players/:table_id', to: 'table_player_email#create'
+  # end
 
   # message stuffs
   get 'contact', to: 'contact#new', as: 'contact'
   post 'contact', to: 'contact#create'
   resources :contact
-
 
   get 'cotn_email', to: 'cotn_email#new', as: 'cotn_email'
   post 'cotn_email', to: 'cotn_email#create'
@@ -65,6 +69,6 @@ Rails.application.routes.draw do
   post 'contact', to: 'admin_email#create'
   resources :admin_email
 
-# The priority is based upon order of creation: first created -> highest priority.
-# See how all your routes lay out with "rake routes".
+  # The priority is based upon order of creation: first created -> highest priority.
+  # See how all your routes lay out with "rake routes".
 end

@@ -1,0 +1,40 @@
+<ol class="breadcrumb">
+  <li><%= link_to "#{@table.session.event.name}", event_path(@table.session.event) %></li>
+  <li><%= link_to "#{@table.long_name}", event_session_table_path(@table.session.event, @table.session, @table) %></li>
+  <li>Email Players</li>
+</ol>
+
+<h1>Emailing players from <%= @table.long_name %></h1>
+
+<div class="bg-warning"><span class="glyphicon glyphicon-warning-sign" style="color:red;"></span>
+  Note: If players have opted out of email, they will not receive your communication.</div>
+
+<%= form_for @message, url: email_players_path(@table.id) do |f| %>
+  <fieldset>
+    <div class="field">
+      <%= f.label :name, "My Name" %>: <%= current_user.name %>
+      <%= f.hidden_field :name, :value => current_user.name %>
+    </div>
+
+    <div class="field">
+      <%= f.label :email, "My Email" %>: <%= current_user.email %>
+      <%= f.hidden_field :email, :value => current_user.email %>
+    </div>
+
+    <% subject = "Message from the GM of #{@table.session.event.name} #{@table.long_name }" %>
+    <%= f.hidden_field :subject, :value => subject %>
+    <div><b>Subject:</b> <%= subject %></div>
+
+    <div class="field" style="padding-top: 1em;">
+      <%= f.label :content, "Your Message " %><br>
+      <%= f.text_area :content, placeholder: "Message ", size: "70x10 " %>
+    </div>
+  </fieldset>
+  <hr>
+  <fieldset>
+    <div class="field">
+      <%= f.submit "Send Message ", :class => 'btn btn-warning' %>
+      <%= link_to 'Cancel', welcome_index_path, :class => 'btn btn-success' %>
+    </div>
+  </fieldset>
+<% end %>

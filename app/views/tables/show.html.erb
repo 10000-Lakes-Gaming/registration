@@ -121,7 +121,7 @@
           <div class="col-md-2"><%= player.name %></div>
           <div class="col-md-2"><%= player.forum_username %></div>
           <% if host %>
-          <div class="col-md-2"><%= player.email %></div>
+            <div class="col-md-2"><%= player.email %></div>
           <% end %>
           <div class="col-md-2"><%= player.pfs_number %></div>
           <% if host %>
@@ -129,7 +129,9 @@
           <% end %>
         </div>
       <% end %>
-      <a href="#">Email this table's players</a>
+      <% if @table.online? %>
+        <%= link_to 'Email these players', email_players_path(@table.id), method: :get %>
+      <% end %>
     </div>
   <% end %>
 </div>
@@ -148,7 +150,7 @@
     <span class="badge"><%= @table.gms_needed %></span> game masters.
   </p>
 
-  <% if host || table_gm  %>
+  <% if host || table_gm %>
     <div>
       <% if host %>
         <% if @table.game_masters.size < @table.gms_needed %>
