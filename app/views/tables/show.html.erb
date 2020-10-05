@@ -93,8 +93,7 @@
   <p>This table currently has <span class="badge"><%= @table.registration_tables.size %></span> out of
     <span class="badge"><%= @table.max_players %></span> players.
   </p>
-  <%# host = event_host? %>
-  <% host = false %>
+  <% host = event_host? %>
 
   <% if host || table_gm %>
     <% if host %>
