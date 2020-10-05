@@ -37,6 +37,12 @@
     <% end %>
   <% end %>
   <hr>
+  <% if @event.event_number.present? %>
+    <div class="bg-warning_email top-buffer text-large alert-primary">
+      <p style="font-size: 150%"><%= @event.name %>'s event number is <b><%= @event.event_number %></b></p>
+    </div>
+    <hr>
+  <% end %>
 
   <h2 class="alert-primary">Your schedule at <%= @event.name %> as
     of <%= DateTime.now.localtime.to_formatted_s(:long) %></h2>
@@ -91,8 +97,7 @@
     <h3>How To Use</h3>
     <ul>
       <li>You will need to make a copy by selecting the <span class="glyphicon glyphicon-option-vertical"></span> button
-        in
-        the upper right.
+        in the upper right.
       </li>
       <li>Then select "Make a Copy" to copy into your google drive.</li>
       <li>Create a new copy for each of your games, changing the title appropriately.</li>

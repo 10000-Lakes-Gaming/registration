@@ -26,11 +26,16 @@
   <p><%= @event.name %> starts at <%= @event.formatted_start %>, and your schedule is listed below.</p>
   <p>Warning, this email is going to get long, but please take the time to read through all of the important
     information below!</p>
-
+  <% if @registration.gamemaster? && @event.event_number.present? %>
+    <div class="bg-warning_email top-buffer text-large alert-primary">
+      <p style="font-size: 150%"><%= @event.name %>'s event number is <b><%= @event.event_number %></b></p>
+    </div>
+    <hr>
+  <% end %>
   <hr>
 
-  <h2 class="alert-primary">Your schedule at <%= @event.name %> as
-    of <%= DateTime.now.localtime.to_formatted_s(:long) %></h2>
+  <h3 class="alert-primary">Your schedule at <%= @event.name %> as
+    of <%= DateTime.now.localtime.to_formatted_s(:long) %></h3>
   <div>Please see <%= link_to "Your Registration", [@event, @registration] %> for your up to the minute
     assignments.
   </div>
