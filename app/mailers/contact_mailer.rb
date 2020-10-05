@@ -26,7 +26,7 @@ class ContactMailer < ApplicationMailer
       end
     end
     puts "BCC: #{bcc.to_s}"
-    mail(from: email, to: email, bcc: bcc, subject: message.subject)
+    mail(from: email, to: email, bcc: bcc, reply_to: email, subject: message.subject)
   end
 
   # this is the general contact form that folks can use.
