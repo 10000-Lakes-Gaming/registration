@@ -90,6 +90,25 @@
   </dl>
 </div>
 
+<h3>Current Players</h3>
+<div>Note that this is subject to change</div>
+<div class="well">
+  <div class="row">
+    <div class="col-md-2 label label-default">Name</div>
+    <div class="col-md-2 label label-default">Paizo Forum Username</div>
+    <div class="col-md-2 label label-default">PFS Number</div>
+  </div>
+  <% @table.registration_tables.each do |reg_table| %>
+    <% player = reg_table.user_event.user %>
+    <div class="row">
+      <div class="col-md-2"><%= player.name %></div>
+      <div class="col-md-2"><%= player.forum_username %></div>
+      <div class="col-md-2"><%= player.pfs_number %></div>
+    </div>
+  <% end %>
+  <a href="#">Email this table's players</a>
+</div>
+
 <%= render 'form' %>
 
 <!--<%#= link_to 'Show', [@event, @session, @table, @game_master], :class => 'btn btn-info'%> |-->
