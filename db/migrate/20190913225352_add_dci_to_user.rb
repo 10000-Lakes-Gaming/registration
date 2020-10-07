@@ -3,3 +3,4 @@ class AddDciToUser < ActiveRecord::Migration[5.2]
     add_column :users, :dci_number, :integer
   end
 end
+
