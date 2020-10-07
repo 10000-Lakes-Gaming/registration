@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_07_012633) do
+ActiveRecord::Schema.define(version: 2020_10_07_014154) do
 
   create_table "additional_payments", force: :cascade do |t|
     t.string "category"
@@ -164,7 +164,7 @@ ActiveRecord::Schema.define(version: 2020_10_07_012633) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.integer "pfs_number"
+    t.bigint "pfs_number"
     t.boolean "admin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -182,7 +182,7 @@ ActiveRecord::Schema.define(version: 2020_10_07_012633) do
     t.integer "gm_stars"
     t.boolean "venture_officer"
     t.string "title"
-    t.bigint "dci_number"
+    t.integer "dci_number"
     t.boolean "opt_out", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
