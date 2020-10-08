@@ -9,9 +9,8 @@
   <small><%= @session.timeslot %></small>
 </h2>
 
+
 <h3>Scheduled Tables</h3>
-
-
 <table class="table table-striped">
   <thead>
   <tr>
@@ -120,6 +119,32 @@
   </tr>
   </tbody>
 </table>
+<hr>
+
+<h3>All Players and GMs</h3>
+
+<table class="table table-striped table-bordered">
+  <thead>
+  <tr>
+    <th>Player Name</th>
+    <th>Email</th>
+    <th>Org Play#</th>
+    <th>Paizo Forum Username</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @session.participants.each do |player| %>
+    <tr>
+      <td><%= player.name %></td>
+      <td><%= player.email %></td>
+      <td><%= player.pfs_number %></td>
+      <td><%= player.forum_username %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<hr>
+
 
 <% if event_host? %>
   <%= button_to 'Add New Table', new_event_session_table_path(@event, @session), method: :get, :class => 'btn btn-warning' %>

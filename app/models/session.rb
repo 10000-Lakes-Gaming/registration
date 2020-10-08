@@ -11,7 +11,6 @@ class Session < ActiveRecord::Base
     self.name + " - " + self.timeslot
   end
 
-
   def timeslot
     self.start.strftime(TIMESLOT_DATE_FORMAT) + " to " + self.end.strftime(TIMESLOT_DATE_FORMAT)
   end
@@ -37,6 +36,12 @@ class Session < ActiveRecord::Base
     #noinspection RubyArgCount
     nonpremium_tables = tables.reject(&:premium?)
     nonpremium_tables.sort_by { |table| [table.scenario] }
+  end
+
+  def participants
+    participants = players.dup
+    participants.concat gms.dup
+    participants.sort
   end
 
   def players
