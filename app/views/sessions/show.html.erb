@@ -118,10 +118,8 @@
       <span class="<%= klass %>"><%= @session.gm_count %> / <%= @session.total_gms_needed %></span>
     </td>
   </tr>
-
   </tbody>
 </table>
-
 
 <% if event_host? %>
   <%= button_to 'Add New Table', new_event_session_table_path(@event, @session), method: :get, :class => 'btn btn-warning' %>

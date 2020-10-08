@@ -12,6 +12,7 @@ class SessionsController < ApplicationController
   # GET /sessions.json
   def index
     return unless restrict_to_hosts
+
     @sessions = Session.where(event_id: @event.id)
   end
 

@@ -27,6 +27,8 @@ class TablesController < ApplicationController
   # GET /tables
   # GET /tables.json
   def index
+    return unless restrict_to_hosts
+
     @tables = @session.tables.sort { |a, b| a <=> b }
   end
 

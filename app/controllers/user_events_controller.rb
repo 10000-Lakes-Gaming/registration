@@ -25,6 +25,8 @@ class UserEventsController < ApplicationController
   # GET /user_events
   # GET /user_events.json
   def index
+    return unless restrict_to_hosts
+
     @user_events = @event.user_events
     # remove all user_events that don't have an event or user
     @user_events.each do |user_event|
