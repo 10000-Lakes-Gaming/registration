@@ -39,6 +39,7 @@
   <% end %>
   </tbody>
 </table>
+<div><strong>Total Paid:</strong> <%= number_to_currency (@total_paid / 100) %></div>
 
 
 <h3>Pending Payments (<%= @unpaid_payments.length %>)</h3>
@@ -64,4 +65,5 @@
   <% end %>
   </tbody>
 </table>
+<div><strong>Total Pending:</strong> <%= number_to_currency (@total_pending / 100) %></div>
 
