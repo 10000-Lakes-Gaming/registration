@@ -6,6 +6,7 @@ class Event < ActiveRecord::Base
   has_many :scenarios, through: :tables
   has_many :game_masters, through: :tables
   has_many :registration_tables, through: :tables
+  has_many :additional_payments, through: :user_events
 
   validate :event_type_validator
   validate :optional_fee_validator
