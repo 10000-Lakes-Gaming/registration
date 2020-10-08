@@ -1,0 +1,67 @@
+<p id="notice"><%= notice %></p>
+<!-- breadcrumbs -->
+<ol class="breadcrumb">
+  <li><%= link_to "#{@event.name}", event_path(@event) %></li>
+  <li>Additional Payment Report</li>
+</ol>
+
+<h2>Event Details</h2>
+<div class="panel ">
+  <dl class="dl-horizontal">
+    <dt class="head">Event:</dt>
+    <dd class="head text-info"><%= @event.name %></dd>
+  </dl>
+</div>
+
+<h2>Additional Payments</h2>
+<h3>Paid Payments (<%= @paid_payments.length %>)</h3>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Player</th>
+    <th>Category</th>
+    <th>Description</th>
+    <th>Invoiced Amount</th>
+    <th>Paid Amount</th>
+    <th>Payment Date</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @paid_payments.each do |payment| %>
+    <tr>
+      <td><%= payment.user_event.user.name %></td>
+      <td><%= payment.category %></td>
+      <td><%= payment.description %></td>
+      <td><%= number_to_currency(payment.payment_price / 100) %></td>
+      <td><%= number_to_currency(payment.payment_amount / 100) %></td>
+      <td><%= payment.formatted_payment_date %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+
+<h3>Pending Payments (<%= @unpaid_payments.length %>)</h3>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Player</th>
+    <th>Category</th>
+    <th>Description</th>
+    <th>Invoiced Amount</th>
+    <th>Invoiced Date</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @unpaid_payments.each do |payment| %>
+    <tr>
+      <td><%= payment.user_event.user.name %></td>
+      <td><%= payment.category %></td>
+      <td><%= payment.description %></td>
+      <td><%= number_to_currency(payment.payment_price.to_i / 100) %></td>
+      <td><%= payment.formatted_invoice_date %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+

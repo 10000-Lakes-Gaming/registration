@@ -43,8 +43,11 @@ class ApplicationController < ActionController::Base
     @user = current_user
   end
 
-  private
+  def set_event
+    @event = Event.find(params[:id])
+  end
 
+  private
 
   def authenticate_user!
     super unless $disable_authentication

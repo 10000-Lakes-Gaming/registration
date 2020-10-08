@@ -10,6 +10,10 @@ class AdditionalPayment < ApplicationRecord
     payment_date&.strftime(Session::DATETIME_FORMAT)
   end
 
+  def formatted_invoice_date
+    created_at&.strftime(Session::DATETIME_FORMAT)
+  end
+
   def price
     payment_price
   end

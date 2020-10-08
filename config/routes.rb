@@ -50,6 +50,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'events/:id/additional_payment_report', to: 'additional_payment_report#index', as: 'additional_payment_report'
+
   # player emails for table
   # resources :table_player_email do
   get 'email_players/:table_id', to: 'table_player_email#new', as: 'email_players'
