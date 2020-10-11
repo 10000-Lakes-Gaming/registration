@@ -22,6 +22,9 @@
       <td>
         <% if user_event.paid? %>
           <span class="glyphicon glyphicon-ok-circle"></span>
+          <% if admin? %>
+          <%= number_to_currency(user_event.payment_amount) %>
+          <% end %>
         <% end %>
       </td>
       <td>
