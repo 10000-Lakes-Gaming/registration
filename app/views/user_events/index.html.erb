@@ -43,6 +43,7 @@
 
 <div>Total Registrations: <%= @user_events.size %></div>
 <div>Total Paid: <%= @paid %></div>
+<div>Total Registration Paid: <%= number_to_currency(@user_events.sum { |reg| reg.payment_amount.to_i / 100 } ) %></div>
 <div>Total Amount Paid: <%= number_to_currency(@user_events.sum { |reg| reg.total_paid.to_i } ) %></div>
 
 <br>
