@@ -1,4 +1,5 @@
 class UserEventsController < ApplicationController
+  include ApplicationHelper
   before_action :get_user_event, only: [:show, :edit, :update, :destroy]
   before_action :get_event, :get_users, :get_all_events
 
