@@ -23,7 +23,7 @@
   <% total_players_signed_up = 0 %>
   <% @tables_by_scenario.sort.each do |scenario, tables| %>
     <tr>
-      <td><%= scenario.long_name %> (<%= scenario.tier %>) </td>
+      <td><%= scenario.long_name %> (<%= scenario.tier %>)</td>
       <% table_count = 0; %>
       <% gm_needed_count = 0; %>
       <% gm_assigned_count = 0; %>
@@ -42,7 +42,7 @@
       <% end %>
       <% total_number_tables += table_count %>
       <% total_gms_needed += gm_needed_count %>
-      <% total_gms_assigned +=  gm_assigned_count %>
+      <% total_gms_assigned += gm_assigned_count %>
       <% total_players_needed += player_needed_count %>
       <% total_players_signed_up += player_assigned_count %>
       <td><%= table_count %></td>
@@ -65,3 +65,32 @@
   Total scenarios: <%= @event.scenarios.length %>
   Total unique scenarios: <%= @event.unique_scenarios.length %>
 </div>
+
+<hr>
+<%
+    breakdown = {}
+    @event.game_masters.each do |gm|
+      %>
+  <%
+      game_system = gm.scenario.game_system
+      campaign = breakdown[game_system]
+      if campaign.nil?
+        campaign = {}
+        breakdown[game_system] = campaign
+      end
+
+      type_of = gm.scenario.type_of
+      count = campaign[type_of]
+      count = count.to_i + 1
+      campaign[type_of] = count
+    end
+%>
+
+<% breakdown.each_key do |system|
+  breakdown[system].each_key do |key|
+%>
+    <div><%= system %>  (<%= key %>) had <%= breakdown[system][key] %> table(s)</div>
+  <% end
+     end %>
+
+<hr>
