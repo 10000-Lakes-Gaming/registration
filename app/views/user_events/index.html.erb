@@ -43,8 +43,8 @@
 
 <div>Total Registrations: <%= @user_events.size %></div>
 <div>Total Paid: <%= @paid %></div>
-<!--<div>Total Registration Paid: <%#= number_to_currency(@user_events.sum { |reg| reg.payment_amount.to_i / 100 } ) %></div>-->
-<!--<div>Total Amount Paid: <%#= number_to_currency(@user_events.sum { |reg| reg.total_paid.to_i } ) %></div>-->
-
+<div>Total Registration Paid: <%= number_to_currency(@user_events.sum { |reg| reg.payment_amount.to_i / 100 } ) %></div>
+<div>Total Amount Paid: <%= number_to_currency(@user_events.sum { |reg| reg.total_paid.to_i } ) %></div>
+<div>Charity Tables Amount Paid: <%= number_to_currency(@event.registration_tables.sum { |ticket| ticket.payment_amount.to_i } )  %></div>
 <br>
 <%= link_to "Back to #{@event.name}", event_path(@event), :class => 'btn btn-success' %>
