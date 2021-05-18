@@ -25,7 +25,7 @@ gem 'jbuilder', '~> 2.9'
 gem 'sdoc', '1.1.0', group: :doc
 
 # security problem in version 1.7.1
-gem 'nokogiri', '~> 1.10'
+gem 'nokogiri', '~> 1.11'
 
 # This is the authen gem
 gem 'devise', '4.7.2'
