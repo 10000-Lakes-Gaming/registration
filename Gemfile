@@ -10,7 +10,7 @@ gem 'rails_12factor'
 gem 'rails', '5.2.4.3'
 
 # Use Puma as the app server
-gem 'puma', '4.3.5'
+gem 'puma', '4.3.8'
 
 # Security hole updates
 gem 'loofah', '2.6.0'
