@@ -10,7 +10,7 @@ gem 'rails_12factor'
 gem 'rails', '5.2.4.3'
 
 # Use Puma as the app server
-gem 'puma', '4.3.5'
+gem 'puma', '4.3.8'
 
 # Security hole updates
 gem 'loofah', '2.6.0'
@@ -25,7 +25,7 @@ gem 'jbuilder', '~> 2.9'
 gem 'sdoc', '1.1.0', group: :doc
 
 # security problem in version 1.7.1
-gem 'nokogiri', '~> 1.10'
+gem 'nokogiri', '~> 1.11'
 
 # This is the authen gem
 gem 'devise', '4.7.2'
