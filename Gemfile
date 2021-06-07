@@ -7,7 +7,7 @@ ruby '~> 2.7.1'
 
 gem 'rails_12factor'
 
-gem 'rails', '5.2.4.3'
+gem 'rails', '5.2.6'
 
 # Use Puma as the app server
 gem 'puma', '4.3.8'
@@ -29,7 +29,7 @@ gem 'nokogiri', '~> 1.11'
 
 # This is the authen gem
 gem 'devise', '4.7.2'
-gem 'omniauth', '1.9.1'
+gem 'omniauth', '2.0.4'
 # TODO: Consider bootstrap gem instead... currently 4.5.0
 gem 'bootstrap-sass', '3.4.1'
 gem 'autoprefixer-rails'
