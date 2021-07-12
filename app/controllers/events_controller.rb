@@ -63,7 +63,7 @@ class EventsController < ApplicationController
           unless list.any? { |other| registration_id == other.user_event.id }
             Rails.logger.info "Adding #{gm.to_json} to the list"
             list << gm
-           end
+          end
         end
         gm.scenario_requested = DateTime.now
         # Rails.logger.info "GMs request for #{gm.scenario_requested?} are #{list}"
@@ -165,14 +165,13 @@ class EventsController < ApplicationController
 
   private
 
-
   # Never trust parameters from the scary internet, only allow the white list through.
   def event_params
     params.require(:event).permit(:name, :start, :end, :location, :rsvp_close, :prereg_ends, :charity,
                                   :prereg_price, :onsite_price, :info, :gm_volunteer_link, :tables_reg_offsite,
                                   :external_url, :event_number, :online_sales_end, :online, :in_person,
                                   :chat_server, :chat_server_url, :optional_fee, :gm_self_select, :gm_select_only,
-                                  :gm_signup, :reporting_url)
+                                  :gm_signup, :reporting_url, :attendance_policy)
   end
 
 end

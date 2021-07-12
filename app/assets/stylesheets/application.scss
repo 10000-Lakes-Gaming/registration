@@ -456,9 +456,14 @@ div.bottom {
   color: $red;
 }
 
+.text-policy {
+  color: $black;
+  border-color: $red;
+  background-color: $trueWhite;
+}
+
 .bg-info {
   color: $blue;
-  background-color: $trueWhite;
   border: thin solid $blue;
 }
 
