@@ -5,26 +5,4 @@
 <%= link_to 'Show', @event %> |
 <%= link_to 'Back', events_path %>
 
-
-<script type="application/javascript">
-    $(document).ready(function () {
-        var inPersonField = $("#event_in_person")
-        // check value - if checked then
-        if (inPersonField.is(":checked")) {
-            $("#attendance_policy_div").show();
-        } else {
-            $("#attendance_policy_div").hide();
-        }
-
-        inPersonField.change(function () {
-            if ($(this).is(":checked")) {
-                $("#attendance_policy_div").show();
-            } else {
-                $("#attendance_policy_div").hide();
-                $("#event_attendance_policy").val("")
-            }
-        });
-
-
-    }); // document ready
-</script>
+<%= render 'form_field_scripts' %>
