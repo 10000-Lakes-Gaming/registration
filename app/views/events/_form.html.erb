@@ -112,12 +112,16 @@
   </div>
   <div class="field">
     <%= f.label :info %><br/>
-    <%= f.text_area :info %>
+    <%= f.text_area :info, cols: 100, rows: 5  %>
   </div>
   <div class="field" id="attendance_policy_div">
     <hr>
     <%= f.label :attendance_policy %><br/>
-    <%= f.text_area :attendance_policy %>
+    <div>
+      This field will accept HTML markup, and will <b>not</b> be displaying as <code>white-space: pre-wrap</code>.<br/>
+      You, as the editor, will need to supply all mark-up and assure that there are no vulnerabilities added.
+    </div>
+    <%= f.text_area :attendance_policy, cols: 100, rows: 10 %>
   </div>
   <hr>
   <div class="field">
