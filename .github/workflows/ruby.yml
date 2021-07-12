@@ -10,7 +10,7 @@ jobs:
         run: |
           sudo apt-get install libsqlite3-dev
       - name: Setup Ruby
-        uses: ruby/setup-ruby@477b21f02be01bcb8030d50f37cfec92bfa615b6
+        uses: ruby/setup-ruby@v1.76.0
         with:
           ruby-version: 2.7.1
       - name: Bundle
