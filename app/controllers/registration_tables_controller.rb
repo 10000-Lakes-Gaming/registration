@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 class RegistrationTablesController < ApplicationController
-  before_action :set_registration_table, only: [:show, :edit, :update, :destroy]
-  before_action :get_event, :get_session, :get_table, :get_registration_tables, :get_possible_players, :get_possible_tables
+  before_action :set_registration_table, only: %i[show edit update destroy]
+  before_action :get_event, :get_session, :get_table, :get_registration_tables, :get_possible_players,
+                :get_possible_tables
 
   def prevent_non_admin
-    unless current_user.admin?
-      redirect_to events_path
-    end
+    redirect_to events_path unless current_user.admin?
   end
 
   def get_table
@@ -43,23 +44,19 @@ class RegistrationTablesController < ApplicationController
         @possible_players.push user_event
       end
       # admin fix.
-      if current_user.admin?
-        unless @registration_table.nil?
-          @possible_players.push @registration_table.user_event
-          @not_available.delete @registration_table.user_event
-        end
+      if current_user.admin? && !@registration_table.nil?
+        @possible_players.push @registration_table.user_event
+        @not_available.delete @registration_table.user_event
       end
 
-      @possible_players = @possible_players.sort {|a, b| a <=> b}
+      @possible_players = @possible_players.sort { |a, b| a <=> b }
     end
   end
 
   def get_possible_tables
     @possible_tables = []
     @session.tables.each do |table|
-      unless table.full?
-        @possible_tables.push table
-      end
+      @possible_tables.push table unless table.full?
     end
   end
 
@@ -71,48 +68,47 @@ class RegistrationTablesController < ApplicationController
 
   # GET /registration_tables/1
   # GET /registration_tables/1.json
-  def show
-  end
+  def show; end
 
   # GET /registration_tables/new
   def new
     @registration_table = RegistrationTable.new
     @user_event
     current_user.user_events.each do |rsvp|
-      if rsvp.event == @event
-        @user_event = rsvp
-      end
+      @user_event = rsvp if rsvp.event == @event
     end
   end
 
   # GET /registration_tables/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /registration_tables
   # POST /registration_tables.json
   def create
     @registration_table = RegistrationTable.new(registration_table_params)
 
-    # TODO - is there a better way to do this?
+    # TODO: - is there a better way to do this?
     seat = RegistrationTable.where(table_id: @table.id).maximum('seat')
     if seat.nil?
       seat = 1
     else
-      seat = seat + 1
+      seat += 1
     end
     @registration_table.seat = seat
 
     respond_to do |format|
       if @registration_table.save
         if @registration_table.payment_ok?
-          format.html {redirect_to [@event], notice: 'Table was successfully added.'}
+          format.html { redirect_to [@event], notice: 'Table was successfully added.' }
         else
-          format.html {redirect_to new_event_session_table_registration_table_table_payment_path(@event, @session, @table, @registration_table)}
+          format.html do
+            redirect_to new_event_session_table_registration_table_table_payment_path(@event, @session, @table,
+                                                                                      @registration_table)
+          end
         end
       else
-        format.html {render :new}
-        format.json {render json: @registration_table.errors, status: :unprocessable_entity}
+        format.html { render :new }
+        format.json { render json: @registration_table.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -122,11 +118,14 @@ class RegistrationTablesController < ApplicationController
   def update
     respond_to do |format|
       if @registration_table.update(registration_table_params)
-        format.html {redirect_to [@event, @session, @table, @registration_table], notice: 'Registration table was successfully updated.'}
-        format.json {render :show, status: :ok, location: [@event, @session, @table, @registration_table]}
+        format.html do
+          redirect_to [@event, @session, @table, @registration_table],
+                      notice: 'Registration table was successfully updated.'
+        end
+        format.json { render :show, status: :ok, location: [@event, @session, @table, @registration_table] }
       else
-        format.html {render :edit}
-        format.json {render json: @registration_table.errors, status: :unprocessable_entity}
+        format.html { render :edit }
+        format.json { render json: @registration_table.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -136,8 +135,8 @@ class RegistrationTablesController < ApplicationController
   def destroy
     @registration_table.destroy
     respond_to do |format|
-      format.html {redirect_to [@event], notice: 'RSVP was removed from table.'}
-      format.json {head :no_content}
+      format.html { redirect_to [@event], notice: 'RSVP was removed from table.' }
+      format.json { head :no_content }
     end
   end
 
@@ -148,8 +147,9 @@ class RegistrationTablesController < ApplicationController
     @registration_table = RegistrationTable.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the allowlist through.
   def registration_table_params
-    params.require(:registration_table).permit(:table_id, :user_event_id, :paid, :payment_amount, :payment_id, :payment_date)
+    params.require(:registration_table).permit(:table_id, :user_event_id, :paid, :payment_amount, :payment_id,
+                                               :payment_date)
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AdminMailer < ApplicationMailer
   def cotn_gm_request_email(message)
     @message = message

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Message
   include ActiveModel::Model
   include ActiveModel::Conversion
@@ -17,4 +19,3 @@ class Message
   validates :subject,
             presence: true
 end
-

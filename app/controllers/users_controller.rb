@@ -1,19 +1,15 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: %i[show edit update destroy]
 
   # if not admin, just force them to the current user.
   def non_admin_to_current
-    unless current_user.admin?
-      if @user != current_user
-        @user = current_user
-      end
-    end
+    @user = current_user if !current_user.admin? && (@user != current_user)
   end
 
   def prevent_non_admin
-    unless current_user.admin?
-      redirect_to user_path (current_user)
-    end
+    redirect_to user_path(current_user) unless current_user.admin?
   end
 
   # GET /users
@@ -55,7 +51,7 @@ class UsersController < ApplicationController
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
-        format.html { render :new, notice: "User was not created:  #{@user.errors.full_messages}"}
+        format.html { render :new, notice: "User was not created:  #{@user.errors.full_messages}" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -95,8 +91,9 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the allowlist through.
   def user_params
-    params.require(:user).permit(:name, :email, :pfs_number, :dci_number, :admin, :forum_username, :gm_stars, :venture_officer, :title, :opt_out)
+    params.require(:user).permit(:name, :email, :pfs_number, :dci_number, :admin, :forum_username, :gm_stars,
+                                 :venture_officer, :title, :opt_out)
   end
 end

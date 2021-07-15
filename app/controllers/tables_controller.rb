@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class TablesController < ApplicationController
-  before_action :set_table, only: [:show, :edit, :update, :destroy]
+  before_action :set_table, only: %i[show edit update destroy]
   before_action :get_event, :get_session, :get_scenarios
 
   def get_scenarios
@@ -19,9 +21,7 @@ class TablesController < ApplicationController
   end
 
   def prevent_non_admin
-    unless current_user.admin?
-      redirect_to events_path
-    end
+    redirect_to events_path unless current_user.admin?
   end
 
   # GET /tables
@@ -106,11 +106,13 @@ class TablesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_table
-      @table = Table.find(params[:id])
+    @table = Table.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the allowlist through.
   def table_params
-    params.require(:table).permit(:session_id, :scenario_id, :max_players, :gms_needed, :gm_self_select, :raffle, :core, :disabled, :location, :premium, :prereg_price, :onsite_price, :non_pfs, :information, :online)
+    params.require(:table).permit(:session_id, :scenario_id, :max_players, :gms_needed, :gm_self_select, :raffle,
+                                  :core, :disabled, :location, :premium, :prereg_price, :onsite_price, :non_pfs,
+                                  :information, :online)
   end
 end

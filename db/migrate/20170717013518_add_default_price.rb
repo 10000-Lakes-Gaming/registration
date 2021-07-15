@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddDefaultPrice < ActiveRecord::Migration[5.0]
   def up
     change_column_default :events, :price, 0

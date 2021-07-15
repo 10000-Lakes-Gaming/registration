@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ContactMailer < ApplicationMailer
   # for admins to send emails to users.
   def admin_email(message, emails)
@@ -18,14 +20,12 @@ class ContactMailer < ApplicationMailer
 
     # we will put the players in the BCC list.
     # Also, we will bcc the registration email, so we have a copy.
-    bcc = [ENV["GMAIL_SMTP_USERNAME"]]
+    bcc = [ENV['GMAIL_SMTP_USERNAME']]
     table.registration_tables.each do |signup|
       player = signup.user_event.user
-      unless (player.opt_out?)
-        bcc.append player.email
-      end
+      bcc.append player.email unless player.opt_out?
     end
-    puts "BCC: #{bcc.to_s}"
+    puts "BCC: #{bcc}"
     mail(from: email, to: email, bcc: bcc, reply_to: email, subject: message.subject)
   end
 
@@ -59,7 +59,7 @@ class ContactMailer < ApplicationMailer
     @event = event
     @game_master = game_master
     # add cc for registration
-    mail(subject: @message.subject, to: email, bcc: ENV["GMAIL_SMTP_USERNAME"])
+    mail(subject: @message.subject, to: email, bcc: ENV['GMAIL_SMTP_USERNAME'])
   end
 
   def participant(message, email, event, registration)
@@ -67,7 +67,7 @@ class ContactMailer < ApplicationMailer
     @event = event
     @registration = registration
 
-    mail(subject: @message.subject, to: email, bcc: ENV["GMAIL_SMTP_USERNAME"])
+    mail(subject: @message.subject, to: email, bcc: ENV['GMAIL_SMTP_USERNAME'])
   end
 
   def payment_reminder(message, email, event)
@@ -112,10 +112,6 @@ class ContactMailer < ApplicationMailer
     @message = message
     @user = user
 
-    unless user.opt_out? || user.email.blank?
-      mail(subject: @message.subject, to: user.email)
-    end
+    mail(subject: @message.subject, to: user.email) unless user.opt_out? || user.email.blank?
   end
 end
-
-

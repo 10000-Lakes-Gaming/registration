@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 def next?
-  File.basename(__FILE__) == "Gemfile.next"
+  File.basename(__FILE__) == 'Gemfile.next'
 end
 
 source 'https://rubygems.org'
@@ -23,18 +25,17 @@ gem 'jbuilder'
 gem 'sdoc'
 
 # This is the authen gem
-gem 'autoprefixer-rails'
-gem 'bootstrap-sass'
 gem 'devise', '4.8.0'
 gem 'omniauth', '2.0.4'
+# TODO: Consider bootstrap gem instead... currently 4.5.0
+gem 'autoprefixer-rails'
+gem 'bootstrap-sass'
 
 gem 'stripe'
 
 group :development do
-  # This is the most current version we can use until we move to Rails 6
-  gem 'web-console', '3.7.0'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'web-console', '3.7.0'
 end
 
 group :test do

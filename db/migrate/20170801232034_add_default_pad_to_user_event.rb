@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddDefaultPadToUserEvent < ActiveRecord::Migration[5.0]
   def up
     change_column_default :user_events, :paid, false

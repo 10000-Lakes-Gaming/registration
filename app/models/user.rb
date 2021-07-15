@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -8,25 +10,25 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
   validates_uniqueness_of :pfs_number, unless: :pfs_number_blank?
   validates_uniqueness_of :dci_number, unless: :dci_number_blank?
-  validates :name, :email, :presence => true
-  validates :title, :presence => true, if: :venture_officer?
+  validates :name, :email, presence: true
+  validates :title, presence: true, if: :venture_officer?
   # TODO: remove title if not checked?
   # TODO: Add validation that name is 2 words, min
   validate :pfs_or_dci_number_exists
 
-  TITLES = ["Venture-Agent", "Venture-Lieutenant", "Venture-Captain",
-            "Regional Venture-Coordinator",
-            "Organized Play Manager", "Organized Play Associate",
-            "PFS Developer", "SFS Developer", "Paizo Developer",
-            "Author", "Publisher" ]
+  TITLES = ['Venture-Agent', 'Venture-Lieutenant', 'Venture-Captain',
+            'Regional Venture-Coordinator',
+            'Organized Play Manager', 'Organized Play Associate',
+            'PFS Developer', 'SFS Developer', 'Paizo Developer',
+            'Author', 'Publisher'].freeze
 
-  SHORT_TITLES = {}
+  SHORT_TITLES = {}.freeze
 
   # Note these aren't all necessarily truly VOs, but folks that don't need scenarios, which is the goal
-  VO_TITLES = ["Venture-Agent", "Venture-Lieutenant", "Venture-Captain",
-               "Regional Venture-Coordinator",
-               "Organized Play Manager", "Organized Play Associate",
-               "PFS Developer", "SFS Developer", "Paizo Developer"]
+  VO_TITLES = ['Venture-Agent', 'Venture-Lieutenant', 'Venture-Captain',
+               'Regional Venture-Coordinator',
+               'Organized Play Manager', 'Organized Play Associate',
+               'PFS Developer', 'SFS Developer', 'Paizo Developer'].freeze
 
   def pfs_or_dci_number_exists
     if pfs_number_blank? && dci_number_blank?
@@ -38,20 +40,20 @@ class User < ActiveRecord::Base
     if pfs_number.blank?
       "DCI# #{dci_number}"
     else
-      "#{pfs_number}"
+      pfs_number.to_s
     end
   end
 
   def long_name
-    "#{self.name} (#{self.email})"
+    "#{name} (#{email})"
   end
 
   def formal_name
-    "#{self.title} #{self.name}"
+    "#{title} #{name}"
   end
 
   def formal_name_with_stars
-    "#{self.title} #{self.name} #{self.show_stars}"
+    "#{title} #{name} #{show_stars}"
   end
 
   STAR = "\u272f"
@@ -59,8 +61,8 @@ class User < ActiveRecord::Base
   def show_stars
     star = STAR
     star = star.encode('utf-8')
-    stars = ""
-    (1..self.gm_stars.to_i).each do
+    stars = ''
+    (1..gm_stars.to_i).each do
       stars = "#{stars}#{star}"
     end
     stars
@@ -69,9 +71,7 @@ class User < ActiveRecord::Base
   def current_events
     current_events = []
     user_events.each do |reg|
-      if reg.event.end > Time.now
-        current_events << reg
-      end
+      current_events << reg if reg.event.end > Time.now
     end
     current_events
   end
@@ -85,14 +85,12 @@ class User < ActiveRecord::Base
     registration.present? && registration.gamemaster?
   end
 
-  def <=> (user)
-    sort = 0
-    if user.nil?
-      sort = -1
+  def <=>(other)
+    if other.nil?
+      -1
     else
-      sort = self.name <=> user.name
+      name <=> other.name
     end
-    sort
   end
 end
 

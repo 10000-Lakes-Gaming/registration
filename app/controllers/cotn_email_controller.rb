@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class CotnEmailController < ApplicationController
   before_action :set_users
 
   def new
     @message = Message.new
-    @message.subject = "Call for Vols for MN-POP at Con of the North 2020"
+    @message.subject = 'Call for Vols for MN-POP at Con of the North 2020'
   end
 
   def create
@@ -11,8 +13,8 @@ class CotnEmailController < ApplicationController
 
     @message = Message.new(message_params)
     # defense, for a single real test
-    puts "Email list: #{@message.email_list.to_s}"
-    @message.email_list.reject { |email| email.empty? }.each do |email|
+    puts "Email list: #{@message.email_list}"
+    @message.email_list.reject(&:empty?).each do |email|
       user = User.where(email: email).first
       if user.opt_out?
         puts "Not emailing #{user.formal_name} as they have opted out of emails."
@@ -25,7 +27,7 @@ class CotnEmailController < ApplicationController
       end
     end
 
-    redirect_to welcome_index_path, notice: "Your messages has been sent."
+    redirect_to welcome_index_path, notice: 'Your messages has been sent.'
   end
 
   private

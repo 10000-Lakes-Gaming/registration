@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GameMaster < ActiveRecord::Base
   belongs_to :table
   belongs_to :user_event
@@ -6,8 +8,8 @@ class GameMaster < ActiveRecord::Base
   delegate :end, to: :table
   delegate :scenario, to: :table
   delegate :long_name, to: :table
-  validates :table_id, :presence => true, :uniqueness => { :scope => :user_event_id }
-  validates :user_event_id, :presence => true, :uniqueness => { :scope => :table_id }
+  validates :table_id, presence: true, uniqueness: { scope: :user_event_id }
+  validates :user_event_id, presence: true, uniqueness: { scope: :table_id }
   validate :check_gm_count
   validate :validate_vtt_fields
 
@@ -18,7 +20,7 @@ class GameMaster < ActiveRecord::Base
   before_create :check_for_warnings
 
   def scenario_requested?
-    self.scenario_requested.present?
+    scenario_requested.present?
   end
 
   def requestable_scenario?
@@ -56,8 +58,8 @@ class GameMaster < ActiveRecord::Base
 
   def check_gm_count
     # first check to see if this GM is already in the table's game masters.
-    unless table.game_masters.include?(self)
-      errors.add :game_masters, "Max GMs Exceeded" if table.game_masters.count >= table.gms_needed
+    if !table.game_masters.include?(self) && (table.game_masters.count >= table.gms_needed)
+      errors.add :game_masters, 'Max GMs Exceeded'
     end
   end
 
@@ -68,7 +70,8 @@ class GameMaster < ActiveRecord::Base
   end
 
   def self.to_request_csv(game_masters)
-    attributes = ['GM Name', 'Email used on Paizo.com', 'Forum Username', 'Scenario PZO', 'Scenario Name', ' ', 'Convention Name']
+    attributes = ['GM Name', 'Email used on Paizo.com', 'Forum Username', 'Scenario PZO', 'Scenario Name', ' ',
+                  'Convention Name']
     CSV.generate(headers: true) do |csv|
       csv << attributes
       game_masters.each do |gm|
@@ -78,14 +81,14 @@ class GameMaster < ActiveRecord::Base
                 gm.scenario.catalog_number,
                 gm.scenario.long_name,
                 '',
-                gm.user_event.event.name
-        ]
+                gm.user_event.event.name]
       end
     end
   end
 
   def self.to_csv(game_masters)
-    attributes = %w{event_name, session_name, session_start, session_end, scenario, gm_name, gm_pfs_number, gm_email, gm_forum_username, gm_title, table_assignment}
+    attributes = %w[event_name session_name session_start session_end scenario gm_name gm_pfs_number gm_email
+                    gm_forum_username gm_title table_assignment]
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
@@ -100,18 +103,17 @@ class GameMaster < ActiveRecord::Base
                 game_master.user_event.user.email,
                 game_master.user_event.user.forum_username,
                 game_master.user_event.user.title,
-                game_master.table_number
-        ]
+                game_master.table_number]
       end
     end
   end
 
-  def <=> (other)
+  def <=>(other)
     # sort by user
-    sorted = self.user_event <=> other.user_event
-    if sorted == 0
+    sorted = user_event <=> other.user_event
+    if sorted.zero?
       # then scenario number
-      sorted = self.table.scenario <=> other.table.scenario
+      sorted = table.scenario <=> other.table.scenario
     end
     sorted
   end

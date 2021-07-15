@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class AdditionalPaymentsController < ApplicationController
-  before_action :set_additional_payment, :set_user_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_additional_payment, :set_user_event, only: %i[show edit update destroy]
   before_action :get_event, :get_user_event
 
   # GET /additional_payments
@@ -10,8 +12,7 @@ class AdditionalPaymentsController < ApplicationController
 
   # GET /additional_payments/1
   # GET /additional_payments/1.json
-  def show
-  end
+  def show; end
 
   # GET /additional_payments/new
   def new
@@ -19,8 +20,7 @@ class AdditionalPaymentsController < ApplicationController
   end
 
   # GET /additional_payments/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /additional_payments
   # POST /additional_payments.json
@@ -30,11 +30,13 @@ class AdditionalPaymentsController < ApplicationController
 
     respond_to do |format|
       if @additional_payment.save
-        format.html {redirect_to [@event, @user_event, @additional_payment], notice: 'Additional payment was successfully created.'}
-        format.json {render :show, status: :created, location: @additional_payment}
+        format.html do
+          redirect_to [@event, @user_event, @additional_payment], notice: 'Additional payment was successfully created.'
+        end
+        format.json { render :show, status: :created, location: @additional_payment }
       else
-        format.html {render :new}
-        format.json {render json: @additional_payment.errors, status: :unprocessable_entity}
+        format.html { render :new }
+        format.json { render json: @additional_payment.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -44,11 +46,13 @@ class AdditionalPaymentsController < ApplicationController
   def update
     respond_to do |format|
       if @additional_payment.update(additional_payment_params)
-        format.html {redirect_to  [@event, @user_event, @additional_payment], notice: 'Additional payment was successfully updated.'}
-        format.json {render :show, status: :ok, location: @additional_payment}
+        format.html do
+          redirect_to [@event, @user_event, @additional_payment], notice: 'Additional payment was successfully updated.'
+        end
+        format.json { render :show, status: :ok, location: @additional_payment }
       else
-        format.html {render :edit}
-        format.json {render json: @additional_payment.errors, status: :unprocessable_entity}
+        format.html { render :edit }
+        format.json { render json: @additional_payment.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -58,8 +62,8 @@ class AdditionalPaymentsController < ApplicationController
   def destroy
     @additional_payment.destroy
     respond_to do |format|
-      format.html {redirect_to [@event, @user_event], notice: 'Additional payment was successfully destroyed.'}
-      format.json {head :no_content}
+      format.html { redirect_to [@event, @user_event], notice: 'Additional payment was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 
@@ -82,8 +86,10 @@ class AdditionalPaymentsController < ApplicationController
     @additional_payment.user_event.event
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the allowlist through.
   def additional_payment_params
-    params.require(:additional_payment).permit(:category, :description, :charitable_donation, :market_price, :payment_price, :payment_amount, :payment_id, :payment_date, :user_event_id)
+    params.require(:additional_payment).permit(:category, :description, :charitable_donation, :market_price,
+                                               :payment_price, :payment_amount, :payment_id, :payment_date,
+                                               :user_event_id)
   end
 end

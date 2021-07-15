@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Preview all emails at http://localhost:3000/rails/mailers/contact_mailer
 class ContactMailerPreview < ActionMailer::Preview
   def table_player_preview
@@ -5,8 +7,8 @@ class ContactMailerPreview < ActionMailer::Preview
     event = table.session.event
     user = User.first
     message = Message.new
-    message.subject = "Message from the GM of #{event.name} #{table.name }"
-    message.content = "this is a message from your GM"
+    message.subject = "Message from the GM of #{event.name} #{table.name}"
+    message.content = 'this is a message from your GM'
     message.name = message.subject
 
     ContactMailer.email_players(message, table, user)
@@ -101,7 +103,7 @@ class ContactMailerPreview < ActionMailer::Preview
     @user = User.first
 
     message = Message.new
-    message.subject = "SkalCon Online Registration Is Officially Open!"
+    message.subject = 'SkalCon Online Registration Is Officially Open!'
 
     ContactMailer.skalcon_announcement(message, @user)
   end

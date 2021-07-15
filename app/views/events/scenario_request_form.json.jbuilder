@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.gamemasters do
   json.game_master do
     json.array!(@game_masters) do |gm|

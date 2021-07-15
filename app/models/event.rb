@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Event < ActiveRecord::Base
   has_many :sessions, dependent: :destroy
   has_many :user_events, dependent: :destroy, after_add: :set_donation
@@ -25,11 +27,11 @@ class Event < ActiveRecord::Base
   end
 
   def timeslot
-    self.start.strftime(Session::DATETIME_FORMAT) + " to " + self.end.strftime(Session::DATETIME_FORMAT)
+    "#{start.strftime(Session::DATETIME_FORMAT)} to #{self.end.strftime(Session::DATETIME_FORMAT)}"
   end
 
   def formatted_start
-    self.start.strftime(Session::DATETIME_FORMAT)
+    start.strftime(Session::DATETIME_FORMAT)
   end
 
   def formatted_end
@@ -37,65 +39,63 @@ class Event < ActiveRecord::Base
   end
 
   def formatted_rsvp_close
-    self.rsvp_close.strftime(Session::DATETIME_FORMAT)
+    rsvp_close.strftime(Session::DATETIME_FORMAT)
   end
 
   def formatted_prereg_ends
-    self.prereg_ends.strftime(Session::DATETIME_FORMAT)
+    prereg_ends.strftime(Session::DATETIME_FORMAT)
   end
 
   def formatted_online_sales_end
-    self.online_sales_end.strftime(Session::DATETIME_FORMAT)
+    online_sales_end.strftime(Session::DATETIME_FORMAT)
   end
 
   def chat_server_validator
-    errors[:chat_server].push 'must have both a name and a valid URL' unless self.valid_chat_server
+    errors[:chat_server].push 'must have both a name and a valid URL' unless valid_chat_server
   end
 
   def valid_chat_server
     # using Rails blank? instead of nil to catch all whitespace or empty string
-    if self.chat_server.blank?
-      return true if self.chat_server_url.blank?
-    end
+    return true if chat_server.blank? && chat_server_url.blank?
 
-    if self.chat_server.present?
-      return true if self.chat_server_url.present?
-    end
+    return true if chat_server.present? && chat_server_url.present?
 
     false
   end
 
   def chat_server?
-    self.chat_server.present? && self.chat_server_url.present?
+    chat_server.present? && chat_server_url.present?
   end
 
   def event_type_validator
-    errors[:online].push 'must have one of online or in person selected' unless self.event_type_selected
+    errors[:online].push 'must have one of online or in person selected' unless event_type_selected
   end
 
+  OPTIONAL_FEE_MESSAGE = 'must not be checked unless this event is a charity event'
+
   def optional_fee_validator
-    errors[:optional_fee].push 'must not be checked unless this event is a charity event' unless self.charity_optional_fee_ok
+    errors[:optional_fee].push OPTIONAL_FEE_MESSAGE unless charity_optional_fee_ok
   end
 
   def charity_optional_fee_ok
-    return true if self.charity
+    return true if charity
 
-    !self.optional_fee
+    !optional_fee
   end
 
   def event_type_selected
-    self.in_person || self.online
+    in_person || online
   end
 
-  def <=> (event)
-    self.name <=> event.name
+  def <=>(other)
+    name <=> other.name
   end
 
   def closed?
     closed = false
-    unless self.rsvp_close.nil?
+    unless rsvp_close.nil?
       now = DateTime.now
-      closed = self.rsvp_close <= now
+      closed = rsvp_close <= now
     end
     closed
   end
@@ -107,31 +107,31 @@ class Event < ActiveRecord::Base
   def premium_tables
     premium_tables = []
     sessions.each do |session|
-      premium_tables.concat(session.tables.select { |table| table.premium })
+      premium_tables.concat(session.tables.select(&:premium))
     end
     premium_tables
   end
 
   def prereg_closed?
     closed = false
-    unless self.prereg_ends.nil?
+    unless prereg_ends.nil?
       now = DateTime.now
-      closed = self.prereg_ends <= now
+      closed = prereg_ends <= now
     end
     closed
   end
 
   def online_sales_closed?
     closed = false
-    unless self.online_sales_end.nil?
+    unless online_sales_end.nil?
       now = DateTime.now
-      closed = self.online_sales_end <= now
+      closed = online_sales_end <= now
     end
     closed
   end
 
   def early_bird?
-    self.prereg_ends != self.rsvp_close
+    prereg_ends != rsvp_close
   end
 
   def price
@@ -139,6 +139,6 @@ class Event < ActiveRecord::Base
   end
 
   def early_bird_discount?
-    self.prereg_price < self.onsite_price
+    prereg_price < onsite_price
   end
 end

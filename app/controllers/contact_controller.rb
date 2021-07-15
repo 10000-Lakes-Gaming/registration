@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ContactController < ApplicationController
   def new
     @message = Message.new
@@ -8,9 +10,9 @@ class ContactController < ApplicationController
 
     if @message.valid?
       ContactMailer.contact_email(@message).deliver
-      redirect_to welcome_index_path, notice: "Your messages has been sent."
+      redirect_to welcome_index_path, notice: 'Your messages has been sent.'
     else
-      flash[:alert] = "An error occurred while delivering this message."
+      flash[:alert] = 'An error occurred while delivering this message.'
       render :new
     end
   end

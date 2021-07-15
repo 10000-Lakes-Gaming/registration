@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TablePaymentController < ApplicationController
   before_action :get_registration_table,
                 def new
@@ -20,10 +22,10 @@ class TablePaymentController < ApplicationController
     token  = params[:stripeToken]
 
     charge = Stripe::Charge.create(
-      :source      => token,
-      :amount      => amount,
-      :description => "#{@user_event.user.name} payment for #{@table.name}",
-      :currency    => 'usd'
+      source: token,
+      amount: amount,
+      description: "#{@user_event.user.name} payment for #{@table.name}",
+      currency: 'usd'
     )
 
     @registration_table.paid           = true

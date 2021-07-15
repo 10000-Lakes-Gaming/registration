@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # json.extract! @user, :id, :username, :name, :email_address, :pfs_number, :admin, :created_at, :updated_at
 json.user do
   json.id @user.id

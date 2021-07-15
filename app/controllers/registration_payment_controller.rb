@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RegistrationPaymentController < ApplicationController
   before_action :get_event, :get_registration
 
@@ -5,8 +7,7 @@ class RegistrationPaymentController < ApplicationController
     @user_event = UserEvent.find(params[:user_event_id])
   end
 
-  def new
-  end
+  def new; end
 
   def create
     # Amount in cents
@@ -14,15 +15,15 @@ class RegistrationPaymentController < ApplicationController
     @amount = @user_event.registration_cost * 100
 
     customer = Stripe::Customer.create(
-      :email  => params[:stripeEmail],
-      :source => params[:stripeToken]
+      email: params[:stripeEmail],
+      source: params[:stripeToken]
     )
 
     charge = Stripe::Charge.create(
-      :customer    => customer.id,
-      :amount      => @amount,
-      :description => "#{@user_event.user.name} payment for #{@event.name}",
-      :currency    => 'usd'
+      customer: customer.id,
+      amount: @amount,
+      description: "#{@user_event.user.name} payment for #{@event.name}",
+      currency: 'usd'
     )
 
     logger.info "I have a charge #{charge}"
