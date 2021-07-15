@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
@@ -6,7 +8,9 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
+  # rubocop:disable Layout/LineLength
   # config.secret_key = '79bede81664e7856ca336891560ab4b129c16bf1df2bad5de07d0af63fedd9a86e8b2130b4b0e8ffdc6fdfc5735700978fbd1636ade40e42249450edee37ba5c'
+  # rubocop:enable Layout/LineLength
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -100,10 +104,10 @@ Devise.setup do |config|
   # algorithm), the cost increases exponentially with the number of stretches (e.g.
   # a value of 20 is already extremely slow: approx. 60 seconds for 1 calculation).
   config.stretches = Rails.env.test? ? 1 : 11
-
+  # rubocop:disable Layout/LineLength
   # Set up a pepper to generate the hashed password.
   # config.pepper = 'c8fea05ad509d820bcb79d50ad0e1b34b2d782533167bfeeec17438ed1e01be5cbea13fb133803f3a49ad53bc52997ba5253dc71621f6ce26ac72db713cc9754'
-
+  # rubocop:enable Layout/LineLength
   # Send a notification email when the user's password is changed
   # config.send_password_change_notification = false
 

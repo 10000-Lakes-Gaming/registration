@@ -1,0 +1,10 @@
+inherit_from: .rubocop_todo.yml
+
+Layout/LineLength:
+  Max: 120
+
+Style/FormatString:
+  Enabled: false
+
+AllCops:
+  NewCops: enable

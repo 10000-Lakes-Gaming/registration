@@ -1,22 +1,24 @@
+# frozen_string_literal: true
+
 class Session < ActiveRecord::Base
   belongs_to :event
   has_many :tables
   delegate :prereg_ends, to: :event
   delegate :prereg_closed?, to: :event
 
-  TIMESLOT_DATE_FORMAT = "%a %H:%M %Z"
-  DATETIME_FORMAT = "%B %d, %Y %H:%M %Z"
+  TIMESLOT_DATE_FORMAT = '%a %H:%M %Z'
+  DATETIME_FORMAT = '%B %d, %Y %H:%M %Z'
 
   def long_name
-    self.name + " - " + self.timeslot
+    "#{name} - #{timeslot}"
   end
 
   def timeslot
-    self.start.strftime(TIMESLOT_DATE_FORMAT) + " to " + self.end.strftime(TIMESLOT_DATE_FORMAT)
+    "#{start.strftime(TIMESLOT_DATE_FORMAT)} to #{self.end.strftime(TIMESLOT_DATE_FORMAT)}"
   end
 
   def formatted_start
-    self.start.strftime(DATETIME_FORMAT)
+    start.strftime(DATETIME_FORMAT)
   end
 
   def formatted_end
@@ -28,12 +30,13 @@ class Session < ActiveRecord::Base
   end
 
   def premium_tables
-    #noinspection RubyArgCount
+    # noinspection RubyArgCount
     premium_tables = tables.select(&:premium?)
     premium_tables.sort_by { |table| [table.scenario] }
   end
+
   def nonpremium_tables
-    #noinspection RubyArgCount
+    # noinspection RubyArgCount
     nonpremium_tables = tables.reject(&:premium?)
     nonpremium_tables.sort_by { |table| [table.scenario] }
   end
@@ -46,7 +49,7 @@ class Session < ActiveRecord::Base
 
   def players
     players = []
-    self.tables.each do |table|
+    tables.each do |table|
       table.registration_tables.each do |reg|
         players.push reg.user_event.user
       end
@@ -60,7 +63,7 @@ class Session < ActiveRecord::Base
 
   def gms
     gms = []
-    self.tables.each do |table|
+    tables.each do |table|
       table.game_masters.each do |gm|
         gms.push gm.user_event.user
       end
@@ -74,10 +77,8 @@ class Session < ActiveRecord::Base
 
   def total_max_players
     total_max_players = 0
-    self.tables.each do |table|
-      unless table.raffle?
-        total_max_players = total_max_players + table.max_players
-      end
+    tables.each do |table|
+      total_max_players += table.max_players unless table.raffle?
     end
     total_max_players
   end
@@ -85,24 +86,20 @@ class Session < ActiveRecord::Base
   def total_gms_needed
     total_max_gms = 0
 
-    self.tables.each do |table|
-      if table.raffle?
-        total_max_gms = total_max_gms + table.game_masters.length
-      else
-        total_max_gms = total_max_gms + table.gms_needed
-      end
+    tables.each do |table|
+      total_max_gms += if table.raffle?
+                         table.game_masters.length
+                       else
+                         table.gms_needed
+                       end
     end
     total_max_gms
   end
 
-  def <=> (other)
-    sort = self.start <=> other.start
-    if sort == 0
-      sort = self.end <=> other.end
-    end
-    if sort == 0
-      sort = self.long_name <=> other.long_name
-    end
+  def <=>(other)
+    sort = start <=> other.start
+    sort = self.end <=> other.end if sort.zero?
+    sort = long_name <=> other.long_name if sort.zero?
     sort
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GmsByScenarioController < ApplicationController
   before_action :get_event, :get_unknown_user, :get_unknown_user_event
 
@@ -6,17 +8,17 @@ class GmsByScenarioController < ApplicationController
     @tables_by_scenario = {}
     @event.unique_scenarios.each { |scenario| @tables_by_scenario[scenario] = [] }
     @event.tables.each do |table|
-       @tables_by_scenario[table.scenario] << table
+      @tables_by_scenario[table.scenario] << table
     end
 
     respond_to do |format|
-      format.html {render :index}
-      format.json {render :index}
+      format.html { render :index }
+      format.json { render :index }
     end
   end
 
-
   private
+
   def pad_gms(table)
     (1..table.gms_short).each do
       add_unknown_gm table
@@ -40,5 +42,4 @@ class GmsByScenarioController < ApplicationController
     @unknown      = User.new
     @unknown.name = 'TBD'
   end
-
 end

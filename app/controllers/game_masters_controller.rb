@@ -1,12 +1,13 @@
+# frozen_string_literal: true
+
 class GameMastersController < ApplicationController
   include ApplicationHelper
 
-  before_action :set_game_master, only: [:show, :edit, :update, :destroy]
+  before_action :set_game_master, only: %i[show edit update destroy]
   before_action :get_event, :get_session, :get_table, :get_user_event, :get_possible_gms
   # GET /game_masters/1
   # GET /game_masters/1.json
-  def show
-  end
+  def show; end
 
   # GET /game_masters/new
   def new
@@ -70,7 +71,7 @@ class GameMastersController < ApplicationController
   # POST /game_masters.json
   # TODO - can only admins add GMs?
   def create
-    # TODO - do something if already registered for table/session
+    # TODO: - do something if already registered for table/session
     @game_master = GameMaster.new(game_master_params)
     if current_user.admin?
       @user_event = @game_master.user_event
@@ -108,7 +109,9 @@ class GameMastersController < ApplicationController
       all_ok = @game_master.update(game_master_params)
       all_ok &&= @game_master.warnings.empty?
       if all_ok
-        format.html { redirect_to [@event, @session, @table, @game_master], notice: 'Game master was successfully updated.' }
+        format.html do
+          redirect_to [@event, @session, @table, @game_master], notice: 'Game master was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: [@event, @session, @table, @game_master] }
       else
         format.html { render :edit }
@@ -123,7 +126,7 @@ class GameMastersController < ApplicationController
     restrict_to_admin
     @game_master.destroy
 
-    gm_name = "<UNKNOWN>"
+    gm_name = '<UNKNOWN>'
     unless @game_master.user_event.nil?
       user_event = @game_master.user_event
       email = user_event.user.email
@@ -149,10 +152,9 @@ class GameMastersController < ApplicationController
     message
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the allowlist through.
   def game_master_params
     params.require(:game_master).permit(:table_id, :user_event_id, :table_number, :vtt_type, :vtt_name, :vtt_url,
                                         :sign_in_url)
   end
-
 end

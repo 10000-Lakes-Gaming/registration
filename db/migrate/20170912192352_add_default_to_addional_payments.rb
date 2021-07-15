@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddDefaultToAddionalPayments < ActiveRecord::Migration[5.0]
   def change
     change_column_default :additional_payments, :market_price, 0

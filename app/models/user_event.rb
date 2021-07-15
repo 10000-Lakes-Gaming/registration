@@ -1,20 +1,22 @@
+# frozen_string_literal: true
+
 class UserEvent < ActiveRecord::Base
   belongs_to :user, inverse_of: :user_events
   belongs_to :event, inverse_of: :user_events
   has_many :registration_tables
   has_many :game_masters
   has_many :additional_payments
-  validates :event_id, :presence => true, :uniqueness => { :scope => :user_id }
-  validates :user_id, :presence => true, :uniqueness => { :scope => :event_id }
-  validates :payment_id, :presence => true, :if => :payment_amount
+  validates :event_id, presence: true, uniqueness: { scope: :user_id }
+  validates :user_id, presence: true, uniqueness: { scope: :event_id }
+  validates :payment_id, presence: true, if: :payment_amount
   delegate :name, to: :event
 
-  def <=> (other)
-    self.user <=> other.user
+  def <=>(other)
+    user <=> other.user
   end
 
   def formatted_payment_date
-    self.payment_date&.strftime(Session::DATETIME_FORMAT)
+    payment_date&.strftime(Session::DATETIME_FORMAT)
   end
 
   def sessions
@@ -47,7 +49,7 @@ class UserEvent < ActiveRecord::Base
 
   def payment_ok?
     # @registration.event.price&.nonzero?
-    self.paid? || self.registration_cost.nil? || self.registration_cost <= 0
+    paid? || registration_cost.nil? || registration_cost <= 0
   end
 
   def gamemaster?
@@ -64,7 +66,6 @@ class UserEvent < ActiveRecord::Base
 
   def unique_scenarios
     game_masters.map { |gm| gm.table.scenario }.uniq
-
   end
 
   def unpaid_additional_payments?
@@ -76,7 +77,7 @@ class UserEvent < ActiveRecord::Base
   end
 
   def total_paid
-    total = self.payment_amount.to_i
+    total = payment_amount.to_i
     registration_tables.each do |table|
       total += table.payment_amount.to_i
     end
@@ -88,7 +89,7 @@ class UserEvent < ActiveRecord::Base
   end
 
   def total_price
-    total = self.event.price.to_i
+    total = event.price.to_i
     registration_tables.each do |table|
       total += table.price.to_i
     end
@@ -99,24 +100,25 @@ class UserEvent < ActiveRecord::Base
   end
 
   def has_charitable_donation?
-    self.additional_payments.any? { |payment| payment.charitable_donation? }
+    additional_payments.any?(&:charitable_donation?)
   end
 
   def past
-    Time.now > self.event.end
+    Time.now > event.end
   end
 
   def no_signups?
-    self.registration_tables.empty?
+    registration_tables.empty?
   end
 
   def self.to_csv
-    attributes = %w{event event_id player_formal player_name pfs_number registration_number}
+    attributes = %w[event event_id player_formal player_name pfs_number registration_number]
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
       all.each do |ticket|
-        csv << [ticket.event.name, ticket.event.id, ticket.user.formal_name, ticket.user.name, ticket.user.pfs_number, ticket.id]
+        csv << [ticket.event.name, ticket.event.id, ticket.user.formal_name, ticket.user.name, ticket.user.pfs_number,
+                ticket.id]
       end
     end
   end

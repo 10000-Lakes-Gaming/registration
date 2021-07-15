@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ScenarioGroup
   attr_accessor :group
 
@@ -5,7 +7,7 @@ class ScenarioGroup
     @scenarios ||= []
   end
 
-  def <=> other
+  def <=>(other)
     group <=> other.group
   end
 end

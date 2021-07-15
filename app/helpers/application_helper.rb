@@ -1,19 +1,16 @@
-module ApplicationHelper
+# frozen_string_literal: true
 
+module ApplicationHelper
   def admin?
     user_signed_in? and current_user.admin?
   end
 
   def event_host?
     host = false
-    if user_signed_in?
-      unless @event.nil?
-        current_user.event_hosts.each do |hosted_event|
-          event = hosted_event.event
-          if hosted_event.active?
-            host = host || (event.id == @event.id)
-          end
-        end
+    if user_signed_in? && !@event.nil?
+      current_user.event_hosts.each do |hosted_event|
+        event = hosted_event.event
+        host ||= (event.id == @event.id) if hosted_event.active?
       end
     end
     host || admin?
@@ -23,25 +20,23 @@ module ApplicationHelper
     current_user.gamemaster_for_event @event
   end
 
-  def yes_no (value)
-    value ? "Yes" : "No"
+  def yes_no(value)
+    value ? 'Yes' : 'No'
   end
 
   def receipts_exist?
-    current_user.user_events.any? { |user_event| user_event.total_price > 0 }
+    current_user.user_events.any? { |user_event| user_event.total_price.positive? }
   end
 
   def unpaid_payments?
-    current_user.user_events.any? { |user_event| user_event.additional_payments.any? { |payment| payment.unpaid? } }
+    current_user.user_events.any? { |user_event| user_event.additional_payments.any?(&:unpaid?) }
   end
 
   def pending_payments
     unpaid_payments = []
     current_user.user_events.each do |user_event|
       user_event.additional_payments.each do |payment|
-        if payment.unpaid?
-          unpaid_payments << payment
-        end
+        unpaid_payments << payment if payment.unpaid?
       end
     end
     unpaid_payments
@@ -50,7 +45,7 @@ module ApplicationHelper
   def self_select_allowed?(event)
     return false unless event.present?
 
-    event.gm_self_select? && event.tables.any? { |table| table.gm_self_select? }
+    event.gm_self_select? && event.tables.any?(&:gm_self_select?)
   end
 
   def online_sales_closed?
@@ -58,7 +53,7 @@ module ApplicationHelper
   end
 
   def optional_fee_list(elements = 20, increment = 5, starting = 0)
-    fees = (starting..(starting + elements * increment)).step(increment).to_a
+    (starting..(starting + elements * increment)).step(increment).to_a
   end
 
   def donations_options(elements = 50, increment = 5, starting = 0)
@@ -83,4 +78,3 @@ module ApplicationHelper
     groups.values.sort
   end
 end
-

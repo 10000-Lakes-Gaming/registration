@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe GameMaster do
@@ -28,7 +30,6 @@ describe GameMaster do
       gm = table.game_masters.new(user_event: gm_reg, table: table)
       gm.save
       expect(gm.warnings[:vtt_name]).to_not be_empty
-
     end
 
     it 'If online table, then warn if no vtt_url' do
@@ -38,7 +39,6 @@ describe GameMaster do
       gm = table.game_masters.new(user_event: gm_reg, table: table)
       gm.save
       expect(gm.warnings[:vtt_url]).to_not be_empty
-
     end
 
     it 'If table is not online, then there can be no vtt_type' do

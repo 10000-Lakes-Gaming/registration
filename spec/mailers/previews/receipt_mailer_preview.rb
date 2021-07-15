@@ -1,7 +1,7 @@
+# frozen_string_literal: true
+
 # Preview all emails at http://localhost:3000/rails/mailers/receipt_mailer
 class ReceiptMailerPreview < ActionMailer::Preview
-
-
   def event_registration_payment_email
     setup_user_event
     ReceiptMailer.event_registration_payment_email @user_event
@@ -20,6 +20,7 @@ class ReceiptMailerPreview < ActionMailer::Preview
   end
 
   private
+
   def setup_user_event
     @event                     = Event.new
     @event.name                = 'Receipt Test Event'
@@ -36,12 +37,12 @@ class ReceiptMailerPreview < ActionMailer::Preview
 
   def add_payment_to_event
     @payment                = AdditionalPayment.new
-    @payment.category       = "Auction"
-    @payment.description    = "A napkin signed by Venture-Captain Jack Brown!"
+    @payment.category       = 'Auction'
+    @payment.description    = 'A napkin signed by Venture-Captain Jack Brown!'
     @payment.market_price   = 100
     @payment.charitable_donation = true
-    @payment.payment_price  = 10000
-    @payment.payment_amount = 10000
+    @payment.payment_price  = 10_000
+    @payment.payment_amount = 10_000
     @payment.payment_date   = Time.now
     @payment.payment_id     = 'An auction payment ID'
     @payment.user_event     = @user_event
@@ -70,6 +71,5 @@ class ReceiptMailerPreview < ActionMailer::Preview
     @registration_table.payment_id     = 'tab_pay_id_1234asd'
     @registration_table.payment_date   = Time.now
     @user_event.registration_tables << @registration_table
-
   end
 end

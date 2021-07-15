@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 def next?
-  File.basename(__FILE__) == "Gemfile.next"
+  File.basename(__FILE__) == 'Gemfile.next'
 end
 
 source 'https://rubygems.org'
-ruby '~> 2.7.1'
 
 ruby '~> 2.7.4'
 gem 'rails', '5.2.6'
@@ -12,7 +13,7 @@ gem 'rails', '5.2.6'
 gem 'puma'
 
 # Security hole updates
-gem 'loofah', '2.6.0'
+gem 'loofah', '2.10.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -23,22 +24,18 @@ gem 'jbuilder'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc'
 
-# security problem in version 1.7.1
-gem 'nokogiri', '~> 1.11'
-
 # This is the authen gem
-gem 'devise', '4.7.2'
+gem 'devise', '4.8.0'
 gem 'omniauth', '2.0.4'
 # TODO: Consider bootstrap gem instead... currently 4.5.0
-gem 'bootstrap-sass', '3.4.1'
 gem 'autoprefixer-rails'
+gem 'bootstrap-sass'
 
 gem 'stripe'
 
 group :development do
-  gem 'web-console', '3.7.0'
-# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'web-console', '3.7.0'
 end
 
 group :test do
@@ -60,15 +57,14 @@ group :development, :test do
   gem 'sqlite3'
 end
 
-
 group :production do
   gem 'pg'
 end
 
 group :assets do
-# Use Uglifier as compressor for JavaScript assets
+  # Use Uglifier as compressor for JavaScript assets
   gem 'uglifier', '4.2.0'
-# Use CoffeeScript for .coffee assets and views
+  # Use CoffeeScript for .coffee assets and views
   gem 'coffee-rails', '5.0.0'
   gem 'sass-rails', '6.0.0'
 end

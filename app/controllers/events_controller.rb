@@ -1,27 +1,26 @@
+# frozen_string_literal: true
+
 class EventsController < ApplicationController
   include ApplicationHelper
 
   skip_before_action :authenticate_user!, only: %i[index show]
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :scenario_request_form]
-  before_action :restrict_to_admin, except: [:show, :index, :scenario_request_form]
+  before_action :set_event, only: %i[show edit update destroy scenario_request_form]
+  before_action :restrict_to_admin, except: %i[show index scenario_request_form]
   before_action :restrict_to_hosts, only: [:scenario_request_form]
   before_action :get_events, :get_my_events
 
   # GET /events
   # GET /events.json
-  def index
-  end
+  def index; end
 
   def get_events
     all = params[:all]
-    if all.nil? || all != true
-      @events = Event.where("rsvp_close >= :current", { current: Date.today })
-    else
-      @events = Event.all
-    end
-    if @events.nil?
-      @events = []
-    end
+    @events = if all.nil? || all != true
+                Event.where('rsvp_close >= :current', { current: Date.today })
+              else
+                Event.all
+              end
+    @events = [] if @events.nil?
     @events
   end
 
@@ -51,32 +50,33 @@ class EventsController < ApplicationController
     mapping = {}
     @event.unique_scenarios.each { |scenario| mapping[scenario] = [] }
     @event.game_masters.each do |gm|
-      Rails.logger.info "Looking at GM #{gm.user_event.user.name} and scenario #{gm.scenario.long_name}"
+      user = gm.user_event.user
+      Rails.logger.info "Looking at GM #{user.name} and scenario #{gm.scenario.long_name}"
       list = mapping[gm.scenario]
       # Skip VO requests for now. If we do modules, we may need to update this.
-      Rails.logger.info "Checking GM #{gm.user_event.user.name} to see if they are a VO. #{gm.user_event.user.venture_officer?}"
-      unless gm.user_event.user.venture_officer?
-        Rails.logger.info "User is not a VO. Checking if they have already gotten it: #{gm.scenario_requested?}"
-        unless gm.scenario_requested?
-          Rails.logger.info "GM #{gm.user_event.user.name} registration ID: #{gm.user_event.id}"
-          registration_id = gm.user_event.id
-          unless list.any? { |other| registration_id == other.user_event.id }
-            Rails.logger.info "Adding #{gm.to_json} to the list"
-            list << gm
-          end
+      Rails.logger.info "Checking GM #{user.name} to see if they are a VO. #{user.venture_officer?}"
+      next if user.venture_officer?
+
+      Rails.logger.info "User is not a VO. Checking if they have already gotten it: #{gm.scenario_requested?}"
+      unless gm.scenario_requested?
+        Rails.logger.info "GM #{user.name} registration ID: #{gm.user_event.id}"
+        registration_id = gm.user_event.id
+        unless list.any? { |other| registration_id == other.user_event.id }
+          Rails.logger.info "Adding #{gm.to_json} to the list"
+          list << gm
         end
-        gm.scenario_requested = DateTime.now
-        # Rails.logger.info "GMs request for #{gm.scenario_requested?} are #{list}"
-        gm.save
       end
+      gm.scenario_requested = DateTime.now
+      # Rails.logger.info "GMs request for #{gm.scenario_requested?} are #{list}"
+      gm.save
     end
     @game_masters = mapping.values.flatten
     respond_to do |format|
       format.json { render :scenario_request_form, status: :ok }
       # check for CSV, and make the default format, perhaps
-      format.csv {
-        send_data GameMaster.to_request_csv(@game_masters), filename: "scenario_request.csv"
-      }
+      format.csv do
+        send_data GameMaster.to_request_csv(@game_masters), filename: 'scenario_request.csv'
+      end
     end
   end
 
@@ -124,6 +124,7 @@ class EventsController < ApplicationController
   # POST /events.json
   def create
     return unless restrict_to_admin
+
     @event = Event.new(event_params)
 
     respond_to do |format|
@@ -141,6 +142,7 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1.json
   def update
     return unless restrict_to_admin
+
     respond_to do |format|
       if @event.update(event_params)
         format.html { redirect_to @event, notice: 'Event was successfully updated.' }
@@ -156,6 +158,7 @@ class EventsController < ApplicationController
   # DELETE /events/1.json
   def destroy
     return unless restrict_to_admin
+
     @event.destroy
     respond_to do |format|
       format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
@@ -165,7 +168,7 @@ class EventsController < ApplicationController
 
   private
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the allowlist through.
   def event_params
     params.require(:event).permit(:name, :start, :end, :location, :rsvp_close, :prereg_ends, :charity,
                                   :prereg_price, :onsite_price, :info, :gm_volunteer_link, :tables_reg_offsite,
@@ -173,5 +176,4 @@ class EventsController < ApplicationController
                                   :chat_server, :chat_server_url, :optional_fee, :gm_self_select, :gm_select_only,
                                   :gm_signup, :reporting_url, :attendance_policy)
   end
-
 end

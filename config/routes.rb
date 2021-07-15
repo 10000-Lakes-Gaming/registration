@@ -1,9 +1,9 @@
-Rails.application.routes.draw do
+# frozen_string_literal: true
 
+Rails.application.routes.draw do
   devise_for :users
   # You can have the root of your site routed with "root"
   root 'welcome#index'
-
 
   resources :users
   resources :scenarios do
@@ -36,14 +36,14 @@ Rails.application.routes.draw do
       end
       resources :additional_payments do
         # resources :additional_payments, shallow: true do
-        resources :additional_payment_payment, only: [:new, :create]
+        resources :additional_payment_payment, only: %i[new create]
       end
-      resources :registration_payment, only: [:new, :create]
+      resources :registration_payment, only: %i[new create]
     end
     resources :sessions do
       resources :tables do
         resources :registration_tables do
-          resources :table_payment, only: [:new, :create]
+          resources :table_payment, only: %i[new create]
         end
         resources :game_masters
       end

@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 class Scenario < ActiveRecord::Base
   # TODO: Convert all of the naked strings into constants
-  validates :game_system, :type_of, :name, :presence => true
+  validates :game_system, :type_of, :name, presence: true
   validates :scenario_number, presence: true, if: :scenario_number_needed?
   validates :season, presence: true, if: :season_needed?
   validates :tier, presence: true, if: :tier_needed?
 
   # TODO: Use constants instead of these strings
-  TYPES = ['Scenario', 'Bounty', 'Quest', 'Module', 'Adventure Path', 'ACG', 'Other']
-  SYSTEMS = %w[PFS2 SFS ACG Other PFS Playtest]
+  TYPES = ['Scenario', 'Bounty', 'Quest', 'Module', 'Adventure Path', 'ACG', 'Other'].freeze
+  SYSTEMS = %w[PFS2 SFS ACG Other PFS Playtest].freeze
 
   def group
     "#{game_system} Season #{season} #{type_of}"
@@ -16,33 +18,29 @@ class Scenario < ActiveRecord::Base
   def long_name
     if game_system == 'Other'
       name
-    else
-      if scenario?
-        "#{game_system} #{"%02d" % season}-#{"%02d" % scenario_number}: #{name}"
-      elsif quest?
-        if 'PFS2'.eql? self.game_system
-          "#{game_system} Quest #{scenario_number}: #{name}"
-        else
-          "#{game_system} Season #{"%02d" % season} Quest: #{name}"
-        end
-      elsif bounty?
-        # May have to add season if they add this in the future
-        "#{game_system} Bounty #{scenario_number}: #{name}"
-      elsif AP?
-        "#{game_system} AP #{"%d" % scenario_number}: #{name}"
+    elsif scenario?
+      "#{game_system} #{'%02d' % season}-#{'%02d' % scenario_number}: #{name}"
+    elsif quest?
+      if 'PFS2'.eql? game_system
+        "#{game_system} Quest #{scenario_number}: #{name}"
       else
-        "#{game_system} #{name}"
+        "#{game_system} Season #{'%02d' % season} Quest: #{name}"
       end
+    elsif bounty?
+      # May have to add season if they add this in the future
+      "#{game_system} Bounty #{scenario_number}: #{name}"
+    elsif AP?
+      "#{game_system} AP #{'%d' % scenario_number}: #{name}"
+    else
+      "#{game_system} #{name}"
     end
   end
 
   def short_name
     if scenario?
-      "#{game_system} #{season}-#{"%02d" % scenario_number}"
-    elsif quest?
-      "#{game_system} #{name}"
+      "#{game_system} #{season}-#{'%02d' % scenario_number}"
     elsif AP?
-      "#{game_system} AP #{"%d" % scenario_number}"
+      "#{game_system} AP #{'%d' % scenario_number}"
     else
       "#{game_system} #{name}"
     end
@@ -65,7 +63,7 @@ class Scenario < ActiveRecord::Base
   end
 
   def opf_type?
-    ['PFS', 'PFS2', 'SFS'].include? game_system
+    %w[PFS PFS2 SFS].include? game_system
   end
 
   # noinspection RubyInstanceMethodNamingConvention
@@ -74,15 +72,15 @@ class Scenario < ActiveRecord::Base
   end
 
   def season_needed?
-    self.scenario? || self.quest?
+    scenario? || quest?
   end
 
   def scenario_number_needed?
-    self.scenario? || self.AP?
+    scenario? || self.AP?
   end
 
   def tier_needed?
-    !['ACG', 'Other'].include? self.game_system
+    !%w[ACG Other].include? game_system
   end
 
   def headquarters?
@@ -90,27 +88,30 @@ class Scenario < ActiveRecord::Base
   end
 
   def replayable_display
-    if self.evergreen?
-      if "PFS".eql? self.game_system
-        "Evergreen"
+    if evergreen?
+      if 'PFS'.eql? game_system
+        'Evergreen'
       else
-        "Replayable"
+        'Replayable'
       end
     end
   end
 
-  def self.to_csv (scenario_list)
-    attributes = %w{game_system season number name tier description author type hard_mode pregen_only retired replayable url}
+  def self.to_csv(scenario_list)
+    attributes = %w[game_system season number name tier description author type hard_mode pregen_only retired
+                    replayable url]
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
       scenario_list.each do |scenario|
-        csv << [scenario.game_system, scenario.season, scenario.scenario_number, scenario.name, scenario.tier, scenario.description, scenario.author, scenario.type_of, scenario.hard_mode, scenario.pregen_only, scenario.retired, scenario.evergreen, scenario.paizo_url]
+        csv << [scenario.game_system, scenario.season, scenario.scenario_number, scenario.name, scenario.tier,
+                scenario.description, scenario.author, scenario.type_of, scenario.hard_mode, scenario.pregen_only,
+                scenario.retired, scenario.evergreen, scenario.paizo_url]
       end
     end
   end
 
-  def copy ()
+  def copy
     copy = Scenario.new
     copy.type_of = type_of
     copy.season = season
@@ -126,40 +127,39 @@ class Scenario < ActiveRecord::Base
     copy.game_system = game_system
     copy.evergreen = evergreen
     copy.catalog_number = catalog_number
+    copy
   end
 
-  def <=>(scenario)
+  def <=>(other)
     # HQ precedence
-    unless self.headquarters? && scenario.headquarters?
-      if self.headquarters?
+    unless headquarters? && other.headquarters?
+      if headquarters?
         return 1
-      elsif scenario.headquarters?
+      elsif other.headquarters?
         return -1
       end
     end
     # sort out "other" to bottom
-    unless self.other_system? && scenario.other_system?
-      if self.other_system?
+    unless other_system? && other.other_system?
+      if other_system?
         return 1
-      elsif scenario.other_system?
+      elsif other.other_system?
         return -1
       end
     end
 
-    if self.game_system.eql? scenario.game_system
-      if self.type_of.nil?
-        return 1
-      elsif scenario.type_of.nil?
-        return -1
+    if game_system.eql? other.game_system
+      if type_of.nil?
+        1
+      elsif other.type_of.nil?
+        -1
+      elsif type_of.eql? other.type_of
+        long_name <=> other.long_name
       else
-        if type_of.eql? scenario.type_of
-          long_name <=> scenario.long_name
-        else
-          TYPES.find_index(self.type_of) <=> TYPES.find_index(scenario.type_of)
-        end
+        TYPES.find_index(type_of) <=> TYPES.find_index(other.type_of)
       end
     else
-      SYSTEMS.find_index(self.game_system) <=> SYSTEMS.find_index(scenario.game_system)
+      SYSTEMS.find_index(game_system) <=> SYSTEMS.find_index(other.game_system)
     end
   end
 end
