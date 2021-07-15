@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
-
 
   def get_event
     @event = Event.find(params[:event_id])
   end
 
   protected
+
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :pfs_number, :forum_username, :dci_number])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name pfs_number forum_username dci_number])
   end
 
   # Prevent CSRF attacks by raising an exception.
@@ -19,23 +21,17 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
   def restrict_to_admin
-    unless current_user.admin?
-      redirect_to root_path
-    end
+    redirect_to root_path unless current_user.admin?
     true
   end
 
   def restrict_to_hosts
-    unless event_host?
-      redirect_to events_path
-    end
+    redirect_to events_path unless event_host?
     true
   end
 
   def restrict_to_gamemaster
-    unless event_host? || @game_master&.assigned(current_user)
-      redirect_to events_path
-    end
+    redirect_to events_path unless event_host? || @game_master&.assigned(current_user)
     true
   end
 
@@ -52,5 +48,4 @@ class ApplicationController < ActionController::Base
   def authenticate_user!
     super unless $disable_authentication
   end
-
 end

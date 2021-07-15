@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.scenario_assignments @tables_by_scenario do |scenario, tables|
   json.set! :scenario, scenario.long_name
   table_count            = 0

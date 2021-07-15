@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.event do
   json.set! :event_name, @event.name
   json.set! :event_date, @event.date_range
@@ -8,7 +10,7 @@ json.ticket do
   json.set! :session_start_time, @session.start.localtime.to_formatted_s(:long)
   json.set! :table, @table.name
   json.set! :location, @table.location
-  json.set! :seat , @registration_table.seat
+  json.set! :seat, @registration_table.seat
   json.set! :max, @registration_table.table.max_players
 end
 json.player do

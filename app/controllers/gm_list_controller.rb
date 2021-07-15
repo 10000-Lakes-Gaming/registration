@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GmListController < ApplicationController
   before_action :get_event, :get_unknown_user, :get_unknown_user_event
 
@@ -13,14 +15,14 @@ class GmListController < ApplicationController
     end
 
     respond_to do |format|
-      format.html {
+      format.html do
         @game_masters = @game_masters.sort { |a, b| a <=> b }
         render :index
-      }
+      end
       format.json { render :index }
-      format.csv {
-        send_data GameMaster.to_csv(@game_masters), filename: "gm_list.csv"
-      }
+      format.csv do
+        send_data GameMaster.to_csv(@game_masters), filename: 'gm_list.csv'
+      end
     end
   end
 
@@ -49,5 +51,4 @@ class GmListController < ApplicationController
     @unknown = User.new
     @unknown.name = 'TBD'
   end
-
 end

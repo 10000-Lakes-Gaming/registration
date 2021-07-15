@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe UserEvent, type: :model do
@@ -34,11 +36,11 @@ describe UserEvent, type: :model do
 
   ## These were copied in from the old tests
   context 'tests copied from the minitest tests' do
-    it "@empty_reg_tables  has no table signups!" do
+    it '@empty_reg_tables  has no table signups!' do
       expect(empty_reg_tables.no_signups?).to be true
     end
 
-    it "paid_event has  table signups!" do
+    it 'paid_event has  table signups!' do
       expect(paid_event.no_signups?).to be false
     end
 
@@ -65,7 +67,7 @@ describe UserEvent, type: :model do
     end
 
     it 'sort normal is before nil' do
-      expect(normal_guy <=> nil).to eq -1
+      expect(normal_guy <=> nil).to eq(-1)
     end
 
     it 'no game master list is safe' do

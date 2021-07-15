@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddOnsightCostToEventAndTable < ActiveRecord::Migration[5.0]
   def change
     add_column :events, :onsite_price, :integer, default: 0
@@ -8,9 +10,9 @@ class AddOnsightCostToEventAndTable < ActiveRecord::Migration[5.0]
     rename_column :tables, :price, :prereg_price
 
     reversible do |dir|
-      dir.up {
+      dir.up do
         Event.update_all('prereg_ends = rsvp_close')
-      }
+      end
     end
   end
 end

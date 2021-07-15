@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddPaymentToRegistrationTables < ActiveRecord::Migration[5.0]
   def change
     add_column :registration_tables, :paid, :boolean, default: false

@@ -34,7 +34,7 @@
       <dt class="head">Reporting Form:</dt>
       <dd class="head text-info">
         <a class="ul" target="_blank" href="<%= @event.reporting_url %>"><%= @event.name %> Reporting Form</a></dd>
-    <% end  %>
+    <% end %>
   </dl>
 </div>
 
@@ -71,6 +71,14 @@
   <% if @event.info.present? %>
     <div class="well">
       <div class="bg-warning text-primary" style="margin-top: 0;white-space: pre-wrap"><%= @event.info %></div>
+    </div>
+  <% end %>
+
+  <% if @event.attendance_policy.present? %>
+    <%# TODO: Make more better %>
+    <h4>Attendence Policy for the In Person Event</h4>
+    <div class="well">
+      <div class="bg-warning text-policy" style="margin-top: 0;"><%= @event.attendance_policy&.html_safe %></div>
     </div>
   <% end %>
 
@@ -209,6 +217,7 @@
   </div>
 <% end %>
 
+
 <% unless @registration.nil? %>
   <%= render partial: 'my_schedule', locals: { event: @event, user_event: @registration } if user_signed_in? %>
 <% end %>
@@ -290,10 +299,11 @@
 
           <div class="row">
             <button class="btn btn-link accordion-toggle collapsed" type="button" data-toggle="collapse" data-target="#session-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
-              <span class="accordion-text">View <% if session.premium_tables? %>standard<% end %> tables for <%= session.name %></span>
+                <span class="accordion-text">View
+                  <% if session.premium_tables? %>standard<% end %> tables for <%= session.name %></span>
             </button>
           </div>
-          
+
           <div id="session-<%= session.id %>" class="collapse" aria-labelledby="session-header-<%= session.id %>" data-parent="#session-signup">
             <div class="card-body">
               <div class="row no-pad">

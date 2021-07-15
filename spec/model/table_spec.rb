@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe Table do
@@ -174,5 +176,4 @@ describe Table do
       expect(table.tickets_overlap?(registration)).to be true
     end
   end
-
 end

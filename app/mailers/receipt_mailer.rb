@@ -1,6 +1,7 @@
-class ReceiptMailer < ApplicationMailer
+# frozen_string_literal: true
 
-  default from: "#{ENV['GMAIL_SMTP_USERNAME']}"
+class ReceiptMailer < ApplicationMailer
+  default from: (ENV['GMAIL_SMTP_USERNAME']).to_s
 
   def event_registration_payment_email(user_event)
     @user_event = user_event
@@ -20,7 +21,6 @@ class ReceiptMailer < ApplicationMailer
     @event              = @user_event.event
     @user               = @user_event.user
     @table              = @registration_table.table
-
 
     @subject = "Payment Received for #{@table.long_name} at #{@event.name}"
     mail(to: @user.email, subject: @subject) do |format|

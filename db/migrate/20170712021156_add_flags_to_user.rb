@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddFlagsToUser < ActiveRecord::Migration[5.0]
   def change
     add_column :users, :gm_stars, :integer

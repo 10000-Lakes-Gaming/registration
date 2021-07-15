@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.array!(@tickets) do |ticket|
   # json.extract! ticket, :id, :table, :user_event
   json.set! :registration_number, ticket.registration_number

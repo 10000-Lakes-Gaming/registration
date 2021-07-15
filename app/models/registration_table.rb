@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RegistrationTable < ActiveRecord::Base
   belongs_to :user_event
   belongs_to :table
@@ -5,45 +7,49 @@ class RegistrationTable < ActiveRecord::Base
   delegate :start, to: :table
   delegate :end, to: :table
   delegate :price, to: :table
-  validates :table_id, :presence => true, :uniqueness => { :scope => :user_event_id }
-  validates :user_event_id, :presence => true, :uniqueness => { :scope => :table_id }
+  validates :table_id, presence: true, uniqueness: { scope: :user_event_id }
+  validates :user_event_id, presence: true, uniqueness: { scope: :table_id }
   validate :check_player_count
 
   def check_player_count
-    unless table.registration_tables.include? (self)
-      errors.add :registration_tables, "Max Players Exceeded" if table.registration_tables.count >= table.max_players
+    if !table.registration_tables.include?((self)) && (table.registration_tables.count >= table.max_players)
+      errors.add :registration_tables, 'Max Players Exceeded'
     end
   end
 
   def payment_ok?
-    self.paid? || self.table.price.nil? || self.table.price <= 0
+    paid? || table.price.nil? || table.price <= 0
   end
 
   def formatted_payment_date
     payment_date&.strftime(Session::DATETIME_FORMAT)
   end
 
-  def <=> (other)
+  def <=>(other)
     # sort by user
-    sorted = self.user_event <=> other.user_event
-    if sorted == 0
+    sorted = user_event <=> other.user_event
+    if sorted.zero?
       # then scenario number
-      sorted = self.table.scenario <=> other.table.scenario
+      sorted = table.scenario <=> other.table.scenario
     end
     sorted
   end
 
-  def self.to_csv (empty_tickets = nil)
-    attributes = %w{ticket_number total_seats event session start_time scenario name formal_name pfs_number event_ticket_id, price}
+  def self.to_csv(empty_tickets = nil)
+    attributes = %w[ticket_number total_seats event session start_time scenario name formal_name pfs_number
+                    event_ticket_id price]
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
       all.each do |ticket|
-        csv << [ticket.seat, ticket.table.max_players, ticket.event, ticket.session, ticket.session_start_time, ticket.scenario, ticket.player, ticket.formal_name, ticket.pfs_number, ticket.seat, ticket.ticket_price]
+        csv << [ticket.seat, ticket.table.max_players, ticket.event, ticket.session, ticket.session_start_time,
+                ticket.scenario, ticket.player, ticket.formal_name, ticket.pfs_number, ticket.seat, ticket.ticket_price]
       end
       unless empty_tickets.blank?
         empty_tickets.each do |ticket|
-          csv << [ticket.seat, ticket.table.max_players, ticket.event, ticket.session, ticket.session_start_time, ticket.scenario, ticket.player, ticket.formal_name, ticket.pfs_number, ticket.registration_number, ticket.ticket_price]
+          csv << [ticket.seat, ticket.table.max_players, ticket.event, ticket.session, ticket.session_start_time,
+                  ticket.scenario, ticket.player, ticket.formal_name, ticket.pfs_number, ticket.registration_number,
+                  ticket.ticket_price]
         end
       end
     end
@@ -75,10 +81,8 @@ class RegistrationTable < ActiveRecord::Base
 
   def pfs_number
     number = ''
-    number = "#{user_event.user.pfs_number}" unless user_event.user.pfs_number.blank?
-    if number.blank?
-      number = "DCI# #{user_event.user.dci_number}" unless user_event.user.dci_number.blank?
-    end
+    number = user_event.user.pfs_number.to_s unless user_event.user.pfs_number.blank?
+    number = "DCI# #{user_event.user.dci_number}" if number.blank? && !user_event.user.dci_number.blank?
     number
   end
 
@@ -87,12 +91,10 @@ class RegistrationTable < ActiveRecord::Base
   end
 
   def ticket_price
-    if price == 0
+    if price.zero?
       nil
     else
       ActionController::Base.helpers.number_to_currency price
     end
   end
 end
-
-

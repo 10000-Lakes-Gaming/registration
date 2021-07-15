@@ -1,11 +1,11 @@
+# frozen_string_literal: true
+
 class ScenariosController < ApplicationController
   helper ApplicationHelper
-  before_action :set_scenario, only: [:show, :edit, :update, :destroy, :clone]
+  before_action :set_scenario, only: %i[show edit update destroy clone]
 
   def prevent_non_admin
-    unless current_user.admin?
-      redirect_to scenarios_path
-    end
+    redirect_to scenarios_path unless current_user.admin?
   end
 
   # GET /scenarios
@@ -14,15 +14,15 @@ class ScenariosController < ApplicationController
     @scenarios = Scenario.all.to_a.sort
 
     respond_to do |format|
-      format.html {
+      format.html do
         render :index
-      }
-      format.json {
+      end
+      format.json do
         render :index
-      }
-      format.csv {
-        send_data Scenario.to_csv(@scenarios), filename: "all_scenarios.csv"
-      }
+      end
+      format.csv do
+        send_data Scenario.to_csv(@scenarios), filename: 'all_scenarios.csv'
+      end
     end
   end
 
@@ -34,8 +34,7 @@ class ScenariosController < ApplicationController
 
   # GET /scenarios/1
   # GET /scenarios/1.json
-  def show
-  end
+  def show; end
 
   # GET /scenarios/new
   def new
@@ -47,7 +46,6 @@ class ScenariosController < ApplicationController
   def edit
     prevent_non_admin
   end
-
 
   # POST /scenarios
   # POST /scenarios.json
@@ -93,14 +91,16 @@ class ScenariosController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_scenario
     scenario_id = params[:id] || params[:scenario_id]
     @scenario = Scenario.find(scenario_id)
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the allowlist through.
   def scenario_params
-    params.require(:scenario).permit(:game_system, :type_of, :season, :scenario_number, :name, :description, :author, :paizo_url, :hard_mode, :pregen_only, :tier, :retired, :evergreen, :catalog_number)
+    params.require(:scenario).permit(:game_system, :type_of, :season, :scenario_number, :name, :description, :author,
+                                     :paizo_url, :hard_mode, :pregen_only, :tier, :retired, :evergreen, :catalog_number)
   end
 end
