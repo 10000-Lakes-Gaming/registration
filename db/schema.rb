@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_12_015832) do
+ActiveRecord::Schema.define(version: 20_210_712_015_832) do
 
   create_table "additional_payments", force: :cascade do |t|
     t.string "category"

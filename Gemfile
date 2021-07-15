@@ -3,13 +3,12 @@ def next?
 end
 
 source 'https://rubygems.org'
-ruby '~> 2.7.1'
 
-gem 'rails_12factor'
+ruby '~> 2.7.4'
 gem 'rails', '5.2.6'
 
 # Use Puma as the app server
-gem 'puma', '4.3.8'
+gem 'puma'
 
 # Security hole updates
 gem 'loofah', '2.10.0'
@@ -19,9 +18,9 @@ gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.9'
+gem 'jbuilder'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '1.1.0', group: :doc
+gem 'sdoc'
 
 # This is the authen gem
 gem 'devise', '4.8.0'
@@ -30,11 +29,8 @@ gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 
 gem 'stripe'
-gem 'bundler-audit'
 
 group :development do
-  gem "capistrano", "~> 3.4"
-  # Access an IRB console on exception pages or by using <%= console %> in views
   # This is the most current version we can use until we move to Rails 6
   gem 'web-console', '3.7.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
@@ -43,17 +39,21 @@ end
 
 group :test do
   gem 'simplecov', require: false
+  # gem 'rails-controller-testing', '~> 1.0.5'
+  gem 'rspec-rails'
+  # gem 'shoulda-matchers'
+  # gem 'spring-commands-rspec'
+  # gem 'webmock'
 end
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'bullet'
+  gem 'bundler-audit'
   gem 'byebug'
-  gem 'rspec-rails', '5.0.1'
+  gem 'rubocop', '1.18.3', require: false
+  gem 'rubocop-performance', '1.11.4'
+  gem 'rubocop-rails', '2.11.3'
   gem 'sqlite3'
-  # Use SCSS for stylesheets
-  # TODO: remove when we have all brought over to rspec
-  gem 'minitest-reporters'
-  gem 'minitest'
 end
 
 group :production do
