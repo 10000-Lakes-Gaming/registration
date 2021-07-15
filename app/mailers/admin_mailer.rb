@@ -1,5 +1,4 @@
 class AdminMailer < ApplicationMailer
-
   def cotn_gm_request_email(message)
     @message = message
     message.subject = 'Call for Vols for MN-POP at Con of the North 2020' if message.subject.blank?

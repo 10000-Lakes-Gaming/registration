@@ -41,7 +41,6 @@ Table.create!([{ session_id: 1, scenario_id: 1, online: true, max_players: 6, pr
                { session_id: 2, scenario_id: 1, online: true, max_players: 6 , location: 'Room 1' },
                { session_id: 3, scenario_id: 2, online: true, max_players: 6 , location: 'Room 1' }])
 
-
 puts("Seeding users!")
 user = User.create!({ name: "Jack Brown", pfs_number: 788, admin: true, email: "silbeg@gmail.com",
                        password: 'password', password_confirmation: 'password' })

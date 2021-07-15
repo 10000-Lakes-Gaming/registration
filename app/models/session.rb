@@ -32,6 +32,7 @@ class Session < ActiveRecord::Base
     premium_tables = tables.select(&:premium?)
     premium_tables.sort_by { |table| [table.scenario] }
   end
+
   def nonpremium_tables
     #noinspection RubyArgCount
     nonpremium_tables = tables.reject(&:premium?)

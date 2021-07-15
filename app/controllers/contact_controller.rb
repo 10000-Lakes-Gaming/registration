@@ -1,5 +1,4 @@
 class ContactController < ApplicationController
-
   def new
     @message = Message.new
   end
@@ -21,5 +20,4 @@ class ContactController < ApplicationController
   def message_params
     params.require(:message).permit(:name, :email, :content, :subject)
   end
-
 end

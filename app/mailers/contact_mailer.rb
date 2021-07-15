@@ -116,7 +116,6 @@ class ContactMailer < ApplicationMailer
       mail(subject: @message.subject, to: user.email)
     end
   end
-
 end
 
 

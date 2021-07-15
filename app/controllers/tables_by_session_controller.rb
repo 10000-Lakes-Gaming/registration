@@ -50,7 +50,7 @@ class TablesBySessionController < ApplicationController
           unknown_gm.table = unknown_table
           unknown_gm.user_event = unknown_user_event
           @tableSessionMap[table_number][session] = unknown_gm
-         end
+        end
       end
     end
   end

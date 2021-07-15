@@ -19,8 +19,8 @@ class TicketsController < ApplicationController
     end
   end
 
-
   private
+
   def get_empty_tickets
     @empty_tickets = []
     @event.sessions.each do |session|
@@ -59,5 +59,4 @@ class TicketsController < ApplicationController
   def get_real_tickets
     @tickets = @event.registration_tables
   end
-
 end

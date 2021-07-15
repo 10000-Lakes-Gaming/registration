@@ -28,5 +28,4 @@ class TablePlayerEmailController < ApplicationController
   def message_params
     params.require(:message).permit(:name, :email, :content, :subject, :table_id)
   end
-
 end

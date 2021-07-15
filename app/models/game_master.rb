@@ -12,6 +12,7 @@ class GameMaster < ActiveRecord::Base
   validate :validate_vtt_fields
 
   attr_accessor :save_despite_warnings
+
   before_save :check_for_warnings
   before_update :check_for_warnings
   before_create :check_for_warnings

@@ -7,7 +7,6 @@ class SessionsController < ApplicationController
     @event = Event.find(params[:event_id])
   end
 
-
   # GET /sessions
   # GET /sessions.json
   def index
@@ -27,7 +26,6 @@ class SessionsController < ApplicationController
     @gm_sessions         = init_gm_sessions
     @player_sessions     = init_player_sessions
     @rsvps               = @event.user_events
-
 
     @rsvps.each do |rsvp|
       player_tables = rsvp.registration_tables
@@ -54,7 +52,6 @@ class SessionsController < ApplicationController
         end
       end
     end
-
   end
 
   def init_player_sessions
@@ -77,12 +74,12 @@ class SessionsController < ApplicationController
   # GET /sessions/new
   def new
     return unless restrict_to_hosts
+
     @session = Session.new
   end
 
   # GET /sessions/1/edit
   def edit
-
     return unless restrict_to_hosts
   end
 
@@ -90,6 +87,7 @@ class SessionsController < ApplicationController
   # POST /sessions.json
   def create
     return unless restrict_to_hosts
+
     @session = @event.sessions.new(session_params)
 
     respond_to do |format|
@@ -107,6 +105,7 @@ class SessionsController < ApplicationController
   # PATCH/PUT /sessions/1.json
   def update
     return unless restrict_to_hosts
+
     respond_to do |format|
       if @session.update(session_params)
         format.html {redirect_to [@event, @session], notice: 'Session was successfully updated.'}
@@ -122,6 +121,7 @@ class SessionsController < ApplicationController
   # DELETE /sessions/1.json
   def destroy
     return unless restrict_to_hosts
+
     @session.destroy
     respond_to do |format|
       format.html {redirect_to sessions_url, notice: 'Session was successfully destroyed.'}
@@ -130,6 +130,7 @@ class SessionsController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_session
     @session = Session.find(params[:id])

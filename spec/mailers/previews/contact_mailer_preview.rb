@@ -126,5 +126,4 @@ class ContactMailerPreview < ActionMailer::Preview
   def setup_admins
     @admins = User.where(admin: true)
   end
-
 end

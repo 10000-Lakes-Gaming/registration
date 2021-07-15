@@ -16,7 +16,6 @@ class UsersController < ApplicationController
     end
   end
 
-
   # GET /users
   # GET /users.json
   def index
@@ -62,7 +61,6 @@ class UsersController < ApplicationController
     end
   end
 
-
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
@@ -91,6 +89,7 @@ class UsersController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.find(params[:id])
@@ -100,5 +99,4 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :email, :pfs_number, :dci_number, :admin, :forum_username, :gm_stars, :venture_officer, :title, :opt_out)
   end
-
 end

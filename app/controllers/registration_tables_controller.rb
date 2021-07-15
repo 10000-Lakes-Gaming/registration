@@ -8,11 +8,9 @@ class RegistrationTablesController < ApplicationController
     end
   end
 
-
   def get_table
     @table = Table.find(params[:table_id])
   end
-
 
   def get_session
     @session = @event.sessions.find(params[:session_id])
@@ -85,7 +83,6 @@ class RegistrationTablesController < ApplicationController
         @user_event = rsvp
       end
     end
-
   end
 
   # GET /registration_tables/1/edit
@@ -95,7 +92,6 @@ class RegistrationTablesController < ApplicationController
   # POST /registration_tables
   # POST /registration_tables.json
   def create
-
     @registration_table = RegistrationTable.new(registration_table_params)
 
     # TODO - is there a better way to do this?
@@ -146,6 +142,7 @@ class RegistrationTablesController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_registration_table
     @registration_table = RegistrationTable.find(params[:id])

@@ -174,5 +174,4 @@ describe Table do
       expect(table.tickets_overlap?(registration)).to be true
     end
   end
-
 end

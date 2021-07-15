@@ -5,7 +5,6 @@ class AdminEmailController < ApplicationController
     @message = Message.new
   end
 
-
   def create
     @message = Message.new(message_params)
     if @message.valid?
@@ -27,10 +26,10 @@ class AdminEmailController < ApplicationController
   end
 
   private
-# Use callbacks to share common setup or constraints between actions.
+
+  # Use callbacks to share common setup or constraints between actions.
 
   def message_params
     params.require(:message).permit(:email_list, :subject, :name, :content, :email)
   end
-
 end

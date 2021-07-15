@@ -154,5 +154,4 @@ class GameMastersController < ApplicationController
     params.require(:game_master).permit(:table_id, :user_event_id, :table_number, :vtt_type, :vtt_name, :vtt_url,
                                         :sign_in_url)
   end
-
 end

@@ -26,9 +26,7 @@ task :clean_unpaid_premium_tables => :environment do
     end
   end
   puts "Deleted #{count} rows as being out of date."
-
 end
-
 
 task :send_session_reminder_message => :environment do
   puts "Sending session signup reminder message"

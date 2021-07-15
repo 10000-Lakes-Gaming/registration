@@ -14,11 +14,11 @@ class User < ActiveRecord::Base
   # TODO: Add validation that name is 2 words, min
   validate :pfs_or_dci_number_exists
 
-  TITLES =  ["Venture-Agent", "Venture-Lieutenant", "Venture-Captain",
-             "Regional Venture-Coordinator",
-             "Organized Play Manager", "Organized Play Associate",
-             "PFS Developer", "SFS Developer", "Paizo Developer",
-             "Author", "Publisher" ]
+  TITLES = ["Venture-Agent", "Venture-Lieutenant", "Venture-Captain",
+            "Regional Venture-Coordinator",
+            "Organized Play Manager", "Organized Play Associate",
+            "PFS Developer", "SFS Developer", "Paizo Developer",
+            "Author", "Publisher" ]
 
   SHORT_TITLES = {}
 
@@ -94,8 +94,6 @@ class User < ActiveRecord::Base
     end
     sort
   end
-
-
 end
 
 private

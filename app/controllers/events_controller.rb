@@ -124,6 +124,7 @@ class EventsController < ApplicationController
   # POST /events.json
   def create
     return unless restrict_to_admin
+
     @event = Event.new(event_params)
 
     respond_to do |format|
@@ -141,6 +142,7 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1.json
   def update
     return unless restrict_to_admin
+
     respond_to do |format|
       if @event.update(event_params)
         format.html { redirect_to @event, notice: 'Event was successfully updated.' }
@@ -156,6 +158,7 @@ class EventsController < ApplicationController
   # DELETE /events/1.json
   def destroy
     return unless restrict_to_admin
+
     @event.destroy
     respond_to do |format|
       format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
@@ -173,5 +176,4 @@ class EventsController < ApplicationController
                                   :chat_server, :chat_server_url, :optional_fee, :gm_self_select, :gm_select_only,
                                   :gm_signup, :reporting_url, :attendance_policy)
   end
-
 end

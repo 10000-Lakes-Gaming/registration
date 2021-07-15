@@ -130,7 +130,6 @@ class UserEventsController < ApplicationController
 
   # New route/method - search by date
   def search
-
   end
 
   def show_since

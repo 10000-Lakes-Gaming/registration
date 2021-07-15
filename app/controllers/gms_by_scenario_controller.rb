@@ -15,8 +15,8 @@ class GmsByScenarioController < ApplicationController
     end
   end
 
-
   private
+
   def pad_gms(table)
     (1..table.gms_short).each do
       add_unknown_gm table
@@ -40,5 +40,4 @@ class GmsByScenarioController < ApplicationController
     @unknown      = User.new
     @unknown.name = 'TBD'
   end
-
 end

@@ -37,6 +37,4 @@ class CotnEmailController < ApplicationController
   def message_params
     params.require(:message).permit!
   end
-
-
 end

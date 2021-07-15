@@ -23,10 +23,10 @@ gem 'jbuilder'
 gem 'sdoc'
 
 # This is the authen gem
+gem 'autoprefixer-rails'
+gem 'bootstrap-sass'
 gem 'devise', '4.8.0'
 gem 'omniauth', '2.0.4'
-gem 'bootstrap-sass'
-gem 'autoprefixer-rails'
 
 gem 'stripe'
 
@@ -66,5 +66,4 @@ group :assets do
   # Use CoffeeScript for .coffee assets and views
   gem 'coffee-rails', '5.0.0'
   gem 'sass-rails', '6.0.0'
-
 end

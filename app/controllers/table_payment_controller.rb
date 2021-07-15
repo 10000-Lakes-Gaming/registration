@@ -1,10 +1,8 @@
 class TablePaymentController < ApplicationController
-
   before_action :get_registration_table,
-
-      def new
-        set_variables
-      end
+                def new
+                  set_variables
+                end
 
   def set_variables
     @user_event = @registration_table.user_event
@@ -13,7 +11,7 @@ class TablePaymentController < ApplicationController
     @session    = @table.session
   end
 
-# localhost:3000/registration_tables/5/table_payment
+  # localhost:3000/registration_tables/5/table_payment
 
   def create
     set_variables
@@ -22,10 +20,10 @@ class TablePaymentController < ApplicationController
     token  = params[:stripeToken]
 
     charge = Stripe::Charge.create(
-        :source      => token,
-        :amount      => amount,
-        :description => "#{@user_event.user.name} payment for #{@table.name}",
-        :currency    => 'usd'
+      :source      => token,
+      :amount      => amount,
+      :description => "#{@user_event.user.name} payment for #{@table.name}",
+      :currency    => 'usd'
     )
 
     @registration_table.paid           = true
@@ -39,7 +37,6 @@ class TablePaymentController < ApplicationController
     ReceiptMailer.table_registration_payment_email(@registration_table).deliver
 
     redirect_to @event, notice: "Thank you! Payment has been received for #{@table.long_name}"
-
   rescue Stripe::CardError => e
     flash[:error] = e.message
     # where do I really want this to go?
@@ -47,13 +44,12 @@ class TablePaymentController < ApplicationController
   end
 
   private
+
   def get_registration_table
     @registration_table = RegistrationTable.find(params[:registration_table_id])
   end
 
-
   def get_registration_tables
     @registration_tables = @table.registration_tables
   end
-
 end

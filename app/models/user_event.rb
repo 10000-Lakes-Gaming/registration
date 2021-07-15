@@ -64,7 +64,6 @@ class UserEvent < ActiveRecord::Base
 
   def unique_scenarios
     game_masters.map { |gm| gm.table.scenario }.uniq
-
   end
 
   def unpaid_additional_payments?

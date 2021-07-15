@@ -49,5 +49,4 @@ class GmListController < ApplicationController
     @unknown = User.new
     @unknown.name = 'TBD'
   end
-
 end

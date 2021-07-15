@@ -48,7 +48,6 @@ class ScenariosController < ApplicationController
     prevent_non_admin
   end
 
-
   # POST /scenarios
   # POST /scenarios.json
   def create
@@ -93,6 +92,7 @@ class ScenariosController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_scenario
     scenario_id = params[:id] || params[:scenario_id]

@@ -200,7 +200,6 @@ describe Event, type: :model do
 
       expect(event.chat_server?).to be false
     end
-
   end
 
   context '#optional_fee' do
@@ -399,7 +398,6 @@ describe Event, type: :model do
     end
 
     it 'Doesn\'t overwrite donation value if already set' do
-
       event = events(:charity_event)
       user = users(:dude1)
 

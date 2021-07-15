@@ -82,7 +82,6 @@ Rails.application.configure do
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
-
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
@@ -91,15 +90,14 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default :charset => "utf-8"
 
-
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      :authentication => :plain,
-      :address => ENV['MAILGUN_SMTP_SERVER'],
-      :port => ENV['MAILGUN_SMTP_PORT'],
-      :domain => ENV['MAILGUN_DOMAIN'],
-      :user_name => ENV['MAILGUN_SMTP_LOGIN'],
-      :password => ENV['MAILGUN_PASSWORD']
+    :authentication => :plain,
+    :address => ENV['MAILGUN_SMTP_SERVER'],
+    :port => ENV['MAILGUN_SMTP_PORT'],
+    :domain => ENV['MAILGUN_DOMAIN'],
+    :user_name => ENV['MAILGUN_SMTP_LOGIN'],
+    :password => ENV['MAILGUN_PASSWORD']
   }
   config.action_mailer.asset_host = 'https://pfs-registration.herokuapp.com/'
 end

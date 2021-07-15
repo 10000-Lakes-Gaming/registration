@@ -15,6 +15,7 @@ class EventHost < ApplicationRecord
   def formatted_start_date
     self.start_date&.strftime(Session::DATETIME_FORMAT)
   end
+
   def formatted_end_date
     self.start_date&.strftime(Session::DATETIME_FORMAT)
   end

@@ -7,10 +7,7 @@ class ReceiptMailerTest < ActionMailer::TestCase
     user_event.payment_amount = "2000"
     user_event.payment_id     = true
 
-
     email = ReceiptMailer.event_registration_payment_email(user_event).deliver
     assert_not_empty ActionMailer::Base.deliveries
   end
-
-
 end

@@ -64,11 +64,11 @@ class AdditionalPaymentsController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_additional_payment
     @additional_payment = AdditionalPayment.find(params[:id])
   end
-
 
   def set_user_event
     @user_event = @additional_payment.user_event
@@ -77,7 +77,6 @@ class AdditionalPaymentsController < ApplicationController
   def get_user_event
     @user_event = UserEvent.find(params[:user_event_id])
   end
-
 
   def set_event
     @additional_payment.user_event.event
