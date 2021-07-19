@@ -121,7 +121,7 @@
       </div>
       <div class="col-md-2">
         <% if @registration %>
-          Yes
+          Yes <%# TODO: Change to online or in person or both. %>
         <% else %>
           No
         <% end %>
@@ -166,26 +166,35 @@
       </div>
     <% end %>
 
-    <% if @registration && @registration.event.price&.nonzero? %>
-      <div class="row">
-        <div class="col-md-2"><b>Paid?</b></div>
-        <% if @registration.payment_ok? %>
-          <div class="col-md-6">
-            Yes (<%= number_to_currency (@registration.payment_amount.to_f / 100) %>
-            <% if @registration.payment_date %>
-              on <%= @registration.payment_date&.strftime(Session::DATETIME_FORMAT) %>
-            <% end %>)
-          </div>
-        <% else %>
-          <div class="col-md-2">
-            <% # This has to be dynamic for future events. %>
-            No:
-          </div>
-          <div class="col-md-6">
-            <%= render partial: "registration_payment/registration_payment", locals: { event: @event, user_event: @registration } %>
-          </div>
-        <% end %>
-      </div>
+
+    <% if @registration %>
+      <% if @registration.tee_shirt_size.present? %>
+        <div class="row">
+          <div class="col-md-2"><b>T-shirt size ordered:</b></div>
+          <div class="col-md-6"><%= @registration.tee_shirt_size %></div>
+        </div>
+      <% end %>
+      <% if @registration.event.price&.nonzero? %>
+        <div class="row">
+          <div class="col-md-2"><b>Paid?</b></div>
+          <% if @registration.payment_ok? %>
+            <div class="col-md-6">
+              Yes (<%= number_to_currency (@registration.payment_amount.to_f / 100) %>
+              <% if @registration.payment_date %>
+                on <%= @registration.payment_date&.strftime(Session::DATETIME_FORMAT) %>
+              <% end %>)
+            </div>
+          <% else %>
+            <div class="col-md-2">
+              <%# TODO: Add amount owed %>
+              No:
+            </div>
+            <div class="col-md-6">
+              <%= render partial: "registration_payment/registration_payment", locals: { event: @event, user_event: @registration } %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
 
   </div>

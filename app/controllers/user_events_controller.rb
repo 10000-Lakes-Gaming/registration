@@ -71,6 +71,10 @@ class UserEventsController < ApplicationController
                   else
                     UserEvent.new({ user: current_user, event: @event })
                   end
+    unless @event.hybrid?
+      @user_event.in_person = @event.in_person?
+      @user_event.online = @event.online?
+    end
     @event.set_donation(@user_event)
   end
 
@@ -128,7 +132,7 @@ class UserEventsController < ApplicationController
   def search; end
 
   def show_since
-    start_date   = Time.zone.local(*params[:range_start].sort.map(&:last).map(&:to_i))
+    start_date = Time.zone.local(*params[:range_start].sort.map(&:last).map(&:to_i))
     @user_events = @event.user_events.where(['updated_at >= ?', start_date])
     # remove all user_events that don't have an event or user
     @user_events.each do |user_event|
@@ -155,7 +159,8 @@ class UserEventsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the allowlist through.def user_event_params
   def user_event_params
-    params.require(:user_event).permit(:user_id, :event_id, :vip, :paid, :payment_amount, :payment_id, :payment_date,
-                                       :since, :donation)
+    params.require(:user_event).permit(:user_id, :event_id, :vip, :paid, :payment_amount, :payment_id,
+                                       :payment_date, :since, :donation, :online, :in_person, :tee_shirt_size,
+                                       :accepted_attendance_policy)
   end
 end

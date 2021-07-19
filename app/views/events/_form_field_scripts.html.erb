@@ -1,22 +1,25 @@
 <script type="application/javascript">
     $(document).ready(function () {
-        var inPersonField = $("#event_in_person")
+        var inPersonField = $("#in_person")
         // check value - if checked then
         if (inPersonField.is(":checked")) {
             $("#attendance_policy_div").show();
+            $("#tee_shirt_online").hide();
         } else {
             $("#attendance_policy_div").hide();
+            $("#tee_shirt_online").show();
         }
 
         inPersonField.change(function () {
+            alert("CHANGE!");
             if ($(this).is(":checked")) {
                 $("#attendance_policy_div").show();
+                $("#tee_shirt_online").hide();
             } else {
                 $("#attendance_policy_div").hide();
                 $("#event_attendance_policy").val("")
+                $("#tee_shirt_online").show();
             }
         });
-
-
     }); // document ready
 </script>

@@ -2,13 +2,30 @@
 
 require 'rails_helper'
 
-describe Event, type: :model do
+describe Event, type: :model do # rubocop:disable Metrics/BlockLength
   fixtures :events
   fixtures :users
   fixtures :sessions
   fixtures :scenarios
   fixtures :tables
   fixtures :game_masters
+
+  context '#hybrid' do
+    it 'My Event is not hybrid' do
+      event = events(:my_event)
+      expect(event.hybrid?).to be false
+    end
+
+    it 'Other is not hybrid' do
+      event = events(:other)
+      expect(event.hybrid?).to be false
+    end
+
+    it 'charity_event is not hybrid' do
+      event = events(:charity_event)
+      expect(event.hybrid?).to be true
+    end
+  end
 
   context '#tables' do
     it 'my event has 11 tables' do
@@ -59,7 +76,7 @@ describe Event, type: :model do
     it 'If only in_person selected validation passes' do
       event = Event.new
 
-      expect(event.event_type_selected).to be true
+      expect(event.event_type_selected?).to be true
     end
 
     it 'If only online selected validation passes' do
@@ -67,7 +84,7 @@ describe Event, type: :model do
       event.online = true
       event.in_person = false
 
-      expect(event.event_type_selected).to be true
+      expect(event.event_type_selected?).to be true
     end
 
     it 'If both are selected validation passes' do
@@ -75,7 +92,7 @@ describe Event, type: :model do
       event.online = true
       event.in_person = true
 
-      expect(event.event_type_selected).to be true
+      expect(event.event_type_selected?).to be true
     end
 
     it 'If neither are selected validation passes' do
@@ -84,7 +101,7 @@ describe Event, type: :model do
       event.in_person = false
 
       event.save
-      expect(event.event_type_selected).to be false
+      expect(event.event_type_selected?).to be false
       expect(event.errors[:online]).to_not be_empty
     end
   end
