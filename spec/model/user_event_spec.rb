@@ -15,6 +15,108 @@ describe UserEvent, type: :model do
   let(:my_event) { events(:my_event) }
   let(:empty_reg_tables) { user_events(:empty_registration_tables) }
 
+  context '#attendence_type' do
+    it 'user is only registered for online so then online' do
+      normal_guy_my_event.online = true
+      normal_guy_my_event.in_person = false
+
+      expect(normal_guy_my_event.attendance_type).to eq 'Online'
+    end
+
+    it 'user is only registered for in person so then in person' do
+      normal_guy_my_event.online = false
+      normal_guy_my_event.in_person = true
+
+      expect(normal_guy_my_event.attendance_type).to eq 'In Person'
+    end
+
+    it 'user is  registered for both so then in person and online' do
+      normal_guy_my_event.online = true
+      normal_guy_my_event.in_person = true
+
+      expect(normal_guy_my_event.attendance_type).to eq 'In Person and Online'
+    end
+
+    it 'user is registered for neither so Neither In Person no Online' do
+      normal_guy_my_event.online = false
+      normal_guy_my_event.in_person = false
+
+      expect(normal_guy_my_event.attendance_type).to eq 'Neither In Person nor Online'
+    end
+  end
+
+  context '#attendence_type_selected?' do
+    it 'if neither are selected, then false' do
+      normal_guy_my_event.online = false
+      normal_guy_my_event.in_person = false
+
+      expect(normal_guy_my_event.attendance_type_selected?).to be false
+    end
+
+    it 'if online is selected, then true' do
+      normal_guy_my_event.online = true
+      normal_guy_my_event.in_person = false
+
+      expect(normal_guy_my_event.attendance_type_selected?).to be true
+    end
+
+    it 'if in person is selected, then true' do
+      normal_guy_my_event.online = false
+      normal_guy_my_event.in_person = true
+
+      expect(normal_guy_my_event.attendance_type_selected?).to be true
+    end
+
+    it 'if both are selected, then true' do
+      normal_guy_my_event.online = true
+      normal_guy_my_event.in_person = true
+
+      expect(normal_guy_my_event.attendance_type_selected?).to be true
+    end
+  end
+
+  context '#validate_in_person_or_online' do
+    it 'my event is online but not selected' do
+      normal_guy_my_event.validate
+      expect(normal_guy_my_event.errors[:in_person]).to include('must have one of online or in person selected')
+      expect(normal_guy_my_event.errors[:online]).to_not include('must have one of online or in person selected')
+
+      normal_guy_my_event.in_person = true
+      normal_guy_my_event.validate
+      expect(normal_guy_my_event.errors[:in_person]).to_not include('must have one of online or in person selected')
+    end
+
+    it 'my event is both but not selected' do
+      my_event.online = true
+      my_event.save!
+
+      normal_guy_my_event.validate
+      expect(normal_guy_my_event.errors[:in_person]).to include('must have one of online or in person selected')
+      expect(normal_guy_my_event.errors[:online]).to_not include('must have one of online or in person selected')
+
+      normal_guy_my_event.in_person = true
+      normal_guy_my_event.validate
+      expect(normal_guy_my_event.errors[:in_person]).to_not include('must have one of online or in person selected')
+    end
+
+    it 'my event is online but not selected' do
+      my_event.in_person = false
+      my_event.online = true
+      my_event.save!
+
+      normal_guy_my_event.validate
+      expect(my_event.online?).to be true
+      expect(my_event.in_person?).to be false
+      expect(normal_guy_my_event.attendance_type_selected?).to be false
+      expect(normal_guy_my_event.errors[:in_person]).to_not include('must have one of online or in person selected')
+      expect(normal_guy_my_event.errors[:online]).to include('must have one of online or in person selected')
+
+      normal_guy_my_event.online = true
+      normal_guy_my_event.validate
+      expect(normal_guy_my_event.errors[:online]).to_not include('must have one of online or in person selected')
+    end
+  end
+
   context '#unique_scenarios' do
     it 'admin_my_event has 2 unique scenarios' do
       table1 = tables(:one)

@@ -7,6 +7,27 @@ if ! [ -x "$(command -v node)" ]; then
    exit 1
 fi
 
-script/update
+cd "$(dirname "$0")/.."
+REBUILD=''
+
+while getopts r option
+do
+case "${option}"
+in
+r) REBUILD=true
+esac
+done
+
+if [ $REBUILD ]; then
+    echo 'Rebuilding database'
+    RAILS_ENV=development bundle exec rails db:environment:set
+    RAILS_ENV=development bundle exec rails db:drop
+    ./script/update
+    RAILS_ENV=development bundle exec rails db:seed
+else
+    echo 'Running server without a complete rebuild'
+    ./script/update
+fi
+
+
 bundle exec bin/rails server
-./

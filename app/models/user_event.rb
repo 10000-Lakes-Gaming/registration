@@ -9,14 +9,46 @@ class UserEvent < ActiveRecord::Base
   validates :event_id, presence: true, uniqueness: { scope: :user_id }
   validates :user_id, presence: true, uniqueness: { scope: :event_id }
   validates :payment_id, presence: true, if: :payment_amount
+  validate :validate_in_person_or_online
   delegate :name, to: :event
 
   def <=>(other)
     user <=> other.user
   end
 
+  def validate_in_person_or_online
+    error_list = if event.in_person?
+                   errors[:in_person]
+                 else
+                   errors[:online]
+                 end
+
+    error_list.push 'must have one of online or in person selected' unless attendance_type_selected?
+  end
+
+  def attendance_type_selected?
+    in_person? || online?
+  end
+
   def formatted_payment_date
     payment_date&.strftime(Session::DATETIME_FORMAT)
+  end
+
+  ATTENDENCE_BOTH = 'In Person and Online'
+  ATTENDENCE_IN_PERSON = 'In Person'
+  ATTENDENCE_ONLINE = 'Online'
+  ATTENDENCE_UNKNOWN = 'Neither In Person nor Online'
+
+  def attendance_type
+    if in_person? && online?
+      ATTENDENCE_BOTH
+    elsif in_person?
+      ATTENDENCE_IN_PERSON
+    elsif online?
+      ATTENDENCE_ONLINE
+    else
+      ATTENDENCE_UNKNOWN
+    end
   end
 
   def sessions
@@ -70,6 +102,11 @@ class UserEvent < ActiveRecord::Base
 
   def unpaid_additional_payments?
     additional_payments.any? { |payment| payment.payment_id.nil? }
+  end
+
+  def total_owed
+    shirt = tee_shirt_size.present? ? event.tee_shirt_price : 0
+    registration_cost + shirt
   end
 
   def registration_cost

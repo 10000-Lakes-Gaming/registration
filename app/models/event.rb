@@ -68,23 +68,27 @@ class Event < ActiveRecord::Base
   end
 
   def event_type_validator
-    errors[:online].push 'must have one of online or in person selected' unless event_type_selected
+    errors[:online].push 'must have one of online or in person selected' unless event_type_selected?
   end
 
   OPTIONAL_FEE_MESSAGE = 'must not be checked unless this event is a charity event'
 
   def optional_fee_validator
-    errors[:optional_fee].push OPTIONAL_FEE_MESSAGE unless charity_optional_fee_ok
+    errors[:optional_fee].push OPTIONAL_FEE_MESSAGE unless charity_optional_fee_ok?
   end
 
-  def charity_optional_fee_ok
+  def charity_optional_fee_ok?
     return true if charity
 
     !optional_fee
   end
 
-  def event_type_selected
+  def event_type_selected?
     in_person || online
+  end
+
+  def hybrid?
+    in_person && online
   end
 
   def <=>(other)

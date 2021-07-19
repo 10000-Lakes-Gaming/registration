@@ -106,13 +106,34 @@
     <%= f.label :prereg_price, 'Preregistration or Early Bird Price' %><br>
     <%= f.number_field :prereg_price %>
   </div>
+
   <div class="field">
     <%= f.label :onsite_price, 'Onsite (Regular) Price' %><br>
     <%= f.number_field :onsite_price %>
   </div>
+
+  <div class="field">
+    <%= f.label :charity, 'This event is selling t-shirts for: ' %><br>
+    <%= f.number_field :tee_shirt_price %>
+  </div>
+  <div class="field">
+    <%= f.label :tee_shirt_end, 'T-shirt pre-order sales end: ' %><br>
+    <%= f.date_select :tee_shirt_end %>
+  </div>
+  <hr>
+
   <div class="field">
     <%= f.label :info %><br/>
-    <%= f.text_area :info %>
+    <%= f.text_area :info, cols: 100, rows: 5  %>
+  </div>
+  <div class="field" id="attendance_policy_div">
+    <hr>
+    <%= f.label :attendance_policy %><br/>
+    <div>
+      This field will accept HTML markup, and will <b>not</b> be displaying as <code>white-space: pre-wrap</code>.<br/>
+      You, as the editor, will need to supply all mark-up and assure that there are no vulnerabilities added.
+    </div>
+    <%= f.text_area :attendance_policy, cols: 100, rows: 10 %>
   </div>
   <hr>
   <div class="field">
