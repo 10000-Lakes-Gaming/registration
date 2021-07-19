@@ -247,7 +247,7 @@ describe Event, type: :model do # rubocop:disable Metrics/BlockLength
       event.charity = true
 
       event.save
-      expect(event.charity_optional_fee_ok).to be true
+      expect(event.charity_optional_fee_ok?).to be true
       expect(event.errors[:optional_fee]).to be_empty
     end
 
@@ -257,7 +257,7 @@ describe Event, type: :model do # rubocop:disable Metrics/BlockLength
       event.optional_fee = true
 
       event.save
-      expect(event.charity_optional_fee_ok).to be true
+      expect(event.charity_optional_fee_ok?).to be true
       expect(event.errors[:optional_fee]).to be_empty
     end
 
@@ -267,7 +267,7 @@ describe Event, type: :model do # rubocop:disable Metrics/BlockLength
       event.optional_fee = true
 
       event.save
-      expect(event.charity_optional_fee_ok).to be false
+      expect(event.charity_optional_fee_ok?).to be false
       expect(event.errors[:optional_fee]).to_not be_empty
     end
 
@@ -277,7 +277,7 @@ describe Event, type: :model do # rubocop:disable Metrics/BlockLength
       event.optional_fee = false
 
       event.save
-      expect(event.charity_optional_fee_ok).to be true
+      expect(event.charity_optional_fee_ok?).to be true
       expect(event.errors[:optional_fee]).to be_empty
     end
   end
