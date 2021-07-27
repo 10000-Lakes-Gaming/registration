@@ -20,6 +20,10 @@
     <dd><%= player.email %></dd>
     <dt>GM/HQ Only</dt>
     <dd><%= yes_no @user_event.vip? %></dd>
+    <% if @user_event.tee_shirt_size.present? %>
+      <dt>T-shirt ordered:</dt>
+      <dd><%= number_to_currency(@event.tee_shirt_price) %>, Size <%= @user_event.tee_shirt_size %> </dd>
+    <% end %>
     <% if @event.price&.nonzero? %>
       <% if @user_event.donation %>
         <dt>
@@ -31,6 +35,13 @@
             <div><%= link_to 'Edit Pledged Donation', edit_event_user_event_path(@event, @user_event) %></div>
           <% end %>
         </dd>
+      <% else %>
+        <dt>Event Price</dt>
+        <dd><%= number_to_currency @user_event.registration_cost %></dd>
+      <% end %>
+      <% if @user_event.total_owed&.nonzero? %>
+        <dt>Total Cost</dt>
+        <dd><%= number_to_currency @user_event.total_owed %></dd>
       <% end %>
       <dt>Paid:</dt>
       <dd><%= yes_no @user_event.payment_ok? %>

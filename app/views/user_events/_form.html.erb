@@ -85,6 +85,72 @@
       <div class="col-md-2 col-sm-3"><strong>Email:</strong></div>
       <div class="col-md-6 col-sm-5"><%= player&.email %></div>
     </div>
+    <% if @event.online? %>
+      <div class="row">
+        <div class="col-md-2 col-sm-3"><strong>I will be attending online:</strong></div>
+        <div class="col-md-6 col-sm-5"><%= yes_no @user_event.online? %></div>
+      </div>
+    <% else %>
+      <div class="row">
+        <div class="col-md-2 col-sm-3"><strong>I will be attending in person:</strong></div>
+        <div class="col-md-6 col-sm-5"><%= yes_no @user_event.in_person? %></div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @event.hybrid? %>
+    <div class="well">
+      <h4>I would like to attend (select all that apply):</h4>
+      <div>
+        <%= f.check_box :in_person %>
+        <%= f.label :in_person, 'In Person' %>
+      </div>
+      <div>
+        <%= f.check_box :online %>
+        <%= f.label :online %>
+      </div>
+
+      <% if @event.attendance_policy.present? %>
+        <div id='attendance_policy_div'>
+          <div id="attendence_policy">
+            <h4>Attendence Policy for the In Person Event</h4>
+            <div class="well">
+              <div class="bg-warning text-policy" style="margin-top: 0;"><%= @event.attendance_policy&.html_safe %></div>
+            </div>
+          </div>
+          <div>
+            <%= f.check_box :accepted_attendance_policy %>
+            <%= f.label :accepted_attendance_policy,
+                        'I have read and understand the attendance policy. By checking this box I am agreeing to this policy.' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="well">
+    <% if @event.tee_shirt_price&.nonzero? %>
+      <%# TODO: make this a method @event %>
+      <%# TODO: add link to tee shirt picture? %>
+      <% if Date.today - 1 < @event.tee_shirt_end %>
+        <p class="text-info"><%= @event.name %> is offering T-shirts for a pre-order price
+          of <%= number_to_currency(@event.tee_shirt_price) %>. T-shirt pre-orders
+          end <%= @event.tee_shirt_end.to_formatted_s(:long) %>.
+        <div class='text-danger' id='tee_shirt_online'>If you not attending in person, you will need to arrange for
+          shipping or pickup of your shirt, which may incur an additional charge.
+        </div>
+        </p>
+
+        <p>
+          <%= f.label :tee_shirt_size, 'I would like to pre-order a T-shirt in size' %>
+          <%= f.select :tee_shirt_size, %w(Small Medium Large XL XXL 3X 4X 5X), :include_blank => true %>
+        </p>
+        <div class="text-warning"><i>Ordering a shirt will increase your registration price.</i></div>
+      <% else %>
+        <div class="text-info"><%= @event.name %> will have some T-shirts available for sale at the event.</div>
+      <% end %>
+    <% end %>
+
     <% if @event.price&.nonzero? %>
       <% if @user_event.donation %>
         <div class="row">
@@ -96,21 +162,78 @@
           <div class="col-md-2 col-sm-3"><%= f.label :donation, donation_label %>:</div>
           <div class="col-md-6 col-sm-5">
             <% if @user_event.paid? %>
-              <%= number_to_currency @user_event.donation %></div>
+              <%= number_to_currency @user_event.donation %>
             <% else %>
               <%= f.select :donation, options_for_select(donations_options, @event.price) %>
             <% end %>
-            </div>
+          </div>
         </div>
       <% end %>
     <% end %>
-    </div>
-    <%# we need styling on the buttons. %>
-    <div class="actions">
-      <% if @user_event.persisted? %>
-        <%= f.submit "Update", :class => 'btn btn-primary' %>
-      <% else %>
-        <%= f.submit "Register", :class => 'btn btn-primary' %>
-      <% end %>
-    </div>
+  </div>
+
+  <%# TODO: Add amount due here... which will be the event price || donation + shirt (if selected)" %>
+
+  <div class="actions">
+    <% if @user_event.persisted? %>
+      <%= f.submit "Update", :class => 'btn btn-primary', :id => 'submit_button' %>
+    <% else %>
+      <%= f.submit "Register", :class => 'btn btn-primary', :id => 'submit_button' %>
+    <% end %>
+  </div>
 <% end %>
+
+<script type="application/javascript">
+    $(document).ready(function () {
+        let inPersonField = $("#user_event_in_person")
+        let attendancePolicyDiv = $("#attendance_policy_div");
+        let policyAcceptedField = $("#user_event_accepted_attendance_policy");
+
+        if (inPersonField.is(":checked")) {
+            attendancePolicyDiv.show();
+            $("#tee_shirt_online").hide();
+            <% if @event.attendance_policy.present? %>
+            $("#submit_button").prop("disabled", true);
+            <% end %>
+        } else {
+            attendancePolicyDiv.hide();
+            $("#tee_shirt_online").show();
+            <% if @event.attendance_policy.present? %>
+            $("#submit_button").prop("disabled", false);
+            <% end %>
+        }
+
+        inPersonField.change(function () {
+            if ($(this).is(":checked")) {
+                attendancePolicyDiv.show();
+                $("#tee_shirt_online").hide();
+                <% if @event.attendance_policy.present? %>
+                $("#submit_button").prop("disabled", true);
+                <% end %>
+            } else {
+                attendancePolicyDiv.hide();
+                $("#event_attendance_policy").val("")
+                $("#tee_shirt_online").show();
+                <% if @event.attendance_policy.present? %>
+                $("#submit_button").prop("disabled", false);
+                policyAcceptedField.prop('checked', false);
+                <% end %>
+            }
+        });
+
+        <% if @event.attendance_policy.present? %>
+        if (inPersonField.is(":checked") && !policyAcceptedField.is(":checked")) {
+            $("#submit_button").prop("disabled", true);
+        }
+
+        policyAcceptedField.change(function () {
+            if ($(this).is(":checked")) {
+                $("#submit_button").prop("disabled", false);
+            } else {
+                $("#submit_button").prop("disabled", true);
+            }
+        });
+        <% end %>
+
+    }); // document ready
+</script>

@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_201_007_014_154) do
+ActiveRecord::Schema.define(version: 20_210_712_015_832) do
   create_table 'additional_payments', force: :cascade do |t|
     t.string 'category'
     t.string 'description'
@@ -66,6 +66,9 @@ ActiveRecord::Schema.define(version: 20_201_007_014_154) do
     t.boolean 'gm_select_only'
     t.boolean 'gm_signup'
     t.string 'reporting_url'
+    t.text 'attendance_policy'
+    t.integer 'tee_shirt_price'
+    t.date 'tee_shirt_end'
   end
 
   create_table 'game_masters', force: :cascade do |t|
@@ -159,6 +162,10 @@ ActiveRecord::Schema.define(version: 20_201_007_014_154) do
     t.datetime 'payment_date'
     t.boolean 'vip'
     t.integer 'donation'
+    t.boolean 'accepted_attendance_policy'
+    t.boolean 'online'
+    t.boolean 'in_person'
+    t.string 'tee_shirt_size'
     t.index ['event_id'], name: 'index_user_events_on_event_id'
     t.index ['user_id'], name: 'index_user_events_on_user_id'
   end

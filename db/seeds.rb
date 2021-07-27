@@ -56,7 +56,7 @@ User.create!([{ name: 'A. User', pfs_number: 1_234_687, admin: false, email: 'au
               { name: 'Ryan Blomquist', pfs_number: 8769, admin: true, email: 'blomquist.r@gmail.com',
                 password: 'password', password_confirmation: 'password' }])
 
-user_event = UserEvent.create!({ event: event, user: user })
+user_event = UserEvent.create!({ event: event, user: user, online: true })
 
 RegistrationTable.create!([{ user_event: user_event, table_id: 1, paid: true, payment_amount: 1000,
                              payment_id: 'PAYMENTID' }])
