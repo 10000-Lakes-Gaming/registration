@@ -8,6 +8,7 @@ class Session < ActiveRecord::Base
 
   TIMESLOT_DATE_FORMAT = '%a %H:%M %Z'
   DATETIME_FORMAT = '%B %d, %Y %H:%M %Z'
+  DATE_FORMAT = '%B %d, %Y'
 
   def long_name
     "#{name} - #{timeslot}"
