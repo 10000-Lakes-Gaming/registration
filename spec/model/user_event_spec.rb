@@ -15,6 +15,23 @@ describe UserEvent, type: :model do
   let(:my_event) { events(:my_event) }
   let(:empty_reg_tables) { user_events(:empty_registration_tables) }
 
+  context 'payments' do
+    it 'with t-shirt event price is payment amount - t-shirt price' do
+      shirt_user_event = user_events(:shirt_user_event)
+      total = (my_event.price + my_event.tee_shirt_price) * 100
+
+      expect(shirt_user_event.payment_amount).to eq total
+      expect(shirt_user_event.event_paid_amount).to eq my_event.price
+    end
+
+    it 'without  t-shirt event price is payment amount' do
+      total = my_event.price * 100
+
+      expect(paid_event.payment_amount).to eq total
+      expect(paid_event.event_paid_amount).to eq my_event.price
+    end
+  end
+
   context '#attendence_type' do
     it 'user is only registered for online so then online' do
       normal_guy_my_event.online = true

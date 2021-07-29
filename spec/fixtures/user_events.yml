@@ -26,6 +26,13 @@ paid_user_event:
   paid: true
   payment_amount: 2000
 
+shirt_user_event:
+  user: another_user
+  event: my_event
+  paid: true
+  payment_amount: 3500
+  tee_shirt_size: XL
+
 paid_event_unpaid_table:
   user: normal_guy
   event: my_event
