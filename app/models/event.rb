@@ -50,6 +50,10 @@ class Event < ActiveRecord::Base
     online_sales_end.strftime(Session::DATETIME_FORMAT)
   end
 
+  def formatted_tee_shirt_end
+    tee_shirt_end.strftime(Session::DATE_FORMAT)
+  end
+
   def chat_server_validator
     errors[:chat_server].push 'must have both a name and a valid URL' unless valid_chat_server
   end

@@ -6,7 +6,11 @@
   <strong>Email address:</strong>
   <%= @user.email %>
 </p>
-
+<% if @user == current_user %>
+  <p>
+    <%= button_to 'Reset/Change Password', send_password_reset_path, method: :get, :class => 'btn btn-danger' %>
+  </p>
+<% end %>
 
 <% unless @user.pfs_number.nil? %>
   <p>

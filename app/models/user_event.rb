@@ -109,6 +109,14 @@ class UserEvent < ActiveRecord::Base
     registration_cost + shirt
   end
 
+  def event_paid_amount
+    (payment_amount.to_i / 100) - tee_shirt_price
+  end
+
+  def tee_shirt_price
+    tee_shirt_size.present? ? event.tee_shirt_price : 0
+  end
+
   def registration_cost
     donation || event.price
   end

@@ -171,7 +171,9 @@
       <% if @registration.tee_shirt_size.present? %>
         <div class="row">
           <div class="col-md-2"><b>T-shirt size ordered:</b></div>
-          <div class="col-md-6"><%= @registration.tee_shirt_size %></div>
+          <div class="col-md-6"><%= number_to_currency(@event.tee_shirt_price) %>, Size <%= @registration.tee_shirt_size %>.
+            Pre-order payment due by <%= @event.formatted_tee_shirt_end %>.
+          </div>
         </div>
       <% end %>
       <% if @registration.event.price&.nonzero? %>
@@ -185,9 +187,8 @@
               <% end %>)
             </div>
           <% else %>
-            <div class="col-md-2">
-              <%# TODO: Add amount owed %>
-              No:
+            <div class="col-md-2 text-danger">
+              No (<%= number_to_currency(@registration.total_owed) %> due)
             </div>
             <div class="col-md-6">
               <%= render partial: "registration_payment/registration_payment", locals: { event: @event, user_event: @registration } %>

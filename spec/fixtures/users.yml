@@ -21,3 +21,9 @@ gamemaster:
   pfs_number: 777
   admin: false
   email: gamemaster@email.com
+
+another_user:
+  name: A Person
+  pfs_number: 5551212
+  admin: false
+  email: person@gmail.com
