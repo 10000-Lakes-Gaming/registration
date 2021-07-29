@@ -1,6 +1,6 @@
 <script type="application/javascript">
     $(document).ready(function () {
-        var inPersonField = $("#in_person")
+        var inPersonField = $("#event_in_person")
         // check value - if checked then
         if (inPersonField.is(":checked")) {
             $("#attendance_policy_div").show();
@@ -11,7 +11,6 @@
         }
 
         inPersonField.change(function () {
-            alert("CHANGE!");
             if ($(this).is(":checked")) {
                 $("#attendance_policy_div").show();
                 $("#tee_shirt_online").hide();
