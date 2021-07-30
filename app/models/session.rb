@@ -71,6 +71,11 @@ class Session < ActiveRecord::Base
     online_premium_tables.any? || in_person_premium_tables.any?
   end
 
+  def online_tables?
+    online_regular_tables.any? || online_premium_tables.any?
+  end
+
+  # @deprecated this will be split online vs in person
   def premium_tables
     premium_tables = tables.select(&:premium?)
     premium_tables.sort_by { |table| [table.scenario] }

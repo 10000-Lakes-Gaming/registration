@@ -96,4 +96,15 @@ describe Session do
       expect(other_session.premium_tables?).to be false
     end
   end
+  context 'online_tables?' do
+    it 'true if there are any online tables' do
+      morning = sessions(:morning)
+      expect(morning.online_tables?).to be true
+    end
+
+    it 'false if there are no online tables' do
+      quest_four = sessions(:quest_four)
+      expect(quest_four.online_tables?).to be false
+    end
+  end
 end
