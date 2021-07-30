@@ -1,22 +1,33 @@
 # frozen_string_literal: true
 
-class Scenario < ActiveRecord::Base
-  # TODO: Convert all of the naked strings into constants
+class Scenario < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
   validates :game_system, :type_of, :name, presence: true
   validates :scenario_number, presence: true, if: :scenario_number_needed?
   validates :season, presence: true, if: :season_needed?
   validates :tier, presence: true, if: :tier_needed?
 
-  # TODO: Use constants instead of these strings
-  TYPES = ['Scenario', 'Bounty', 'Quest', 'Module', 'Adventure Path', 'ACG', 'Other'].freeze
-  SYSTEMS = %w[PFS2 SFS ACG Other PFS Playtest].freeze
+  INTRO = 'Intro Scenario'
+  SCENARIO = 'Scenario'
+  BOUNTY = 'Bounty'
+  QUEST = 'Quest'
+  MODULE = 'Module'
+  AP = 'Adventure Path'
+  ACG = 'ACG'
+  OTHER = 'Other'
+  TYPES = [SCENARIO, INTRO, BOUNTY, QUEST, MODULE, AP, ACG, OTHER].freeze
+  PFS2 = 'PFS2'
+  PFS1 = 'PFS'
+  SFS = 'SFS'
+  PLAYTEST = 'Playtest'
+  AL = 'D&D Adventurers League'
+  SYSTEMS = [PFS2, SFS, ACG, OTHER, PFS1, PLAYTEST, AL].freeze
 
   def group
     "#{game_system} Season #{season} #{type_of}"
   end
 
   def long_name
-    if game_system == 'Other'
+    if game_system == OTHER || game_system == AL
       name
     elsif scenario?
       "#{game_system} #{'%02d' % season}-#{'%02d' % scenario_number}: #{name}"
@@ -26,6 +37,8 @@ class Scenario < ActiveRecord::Base
       else
         "#{game_system} Season #{'%02d' % season} Quest: #{name}"
       end
+    elsif intro?
+      "#{game_system} Intro #{scenario_number}: #{name}"
     elsif bounty?
       # May have to add season if they add this in the future
       "#{game_system} Bounty #{scenario_number}: #{name}"
@@ -47,28 +60,31 @@ class Scenario < ActiveRecord::Base
   end
 
   def scenario?
-    type_of == 'Scenario'
+    type_of == SCENARIO
+  end
+
+  def intro?
+    type_of == INTRO
   end
 
   def quest?
-    type_of == 'Quest'
+    type_of == QUEST
   end
 
   def bounty?
-    type_of == 'Bounty'
+    type_of == BOUNTY
   end
 
   def other_system?
-    game_system == 'Other'
+    game_system == OTHER
   end
 
   def opf_type?
     %w[PFS PFS2 SFS].include? game_system
   end
 
-  # noinspection RubyInstanceMethodNamingConvention
   def AP?
-    type_of == 'Adventure Path'
+    type_of == AP
   end
 
   def season_needed?
