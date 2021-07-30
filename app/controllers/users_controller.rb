@@ -84,6 +84,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def password_update
+    current_user.send_reset_password_instructions
+    sign_out current_user
+    render :password_update
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

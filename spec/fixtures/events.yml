@@ -8,6 +8,7 @@ my_event:
   rsvp_close: <%= 7.day.from_now.to_s(:db) %>
   prereg_price: 20
   onsite_price: 30
+  tee_shirt_price: 15
   prereg_ends: <%= 5.day.from_now.to_s(:db) %>
   in_person: true
   online: false

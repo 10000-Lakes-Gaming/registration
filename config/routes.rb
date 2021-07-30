@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   resources :users
+
+  get 'sendPasswordReset', to: 'users#password_update', as: 'send_password_reset'
+
   resources :scenarios do
     get 'clone'
   end
