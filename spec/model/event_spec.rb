@@ -36,8 +36,9 @@ describe Event, type: :model do # rubocop:disable Metrics/BlockLength
       raffle = tables(:raffle)
       premium = tables(:premium)
       premium2 = tables(:premium_2)
-      expect(event.tables.length).to be 11
-      expect(event.tables).to include(one, two, core, raffle, premium, premium2)
+      online = tables(:online)
+      expect(event.tables.length).to be 13
+      expect(event.tables).to include(one, two, core, raffle, premium, premium2, online)
     end
   end
 

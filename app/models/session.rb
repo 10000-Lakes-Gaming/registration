@@ -6,6 +6,15 @@ class Session < ActiveRecord::Base
   delegate :prereg_ends, to: :event
   delegate :prereg_closed?, to: :event
 
+  def reload
+    # Clear memoized values
+    @in_person_regular_tables = nil
+    @in_person_premium_tables = nil
+    @online_premium_tables = nil
+    @online_regular_tables = nil
+    super
+  end
+
   TIMESLOT_DATE_FORMAT = '%a %H:%M %Z'
   DATETIME_FORMAT = '%B %d, %Y %H:%M %Z'
   DATE_FORMAT = '%B %d, %Y'
@@ -26,18 +35,49 @@ class Session < ActiveRecord::Base
     self.end.strftime(DATETIME_FORMAT)
   end
 
+  def in_person_premium_tables
+    unless @in_person_premium_tables
+      @in_person_premium_tables = tables.select { |table| !table.online? && table.premium? }
+      @in_person_premium_tables.sort_by { |table| [table.scenario] }
+    end
+    @in_person_premium_tables
+  end
+
+  def in_person_regular_tables
+    unless @in_person_regular_tables
+      @in_person_regular_tables = tables.select { |table| !table.online? && !table.premium? }
+      @in_person_regular_tables.sort_by { |table| [table.scenario] }
+    end
+    @in_person_regular_tables
+  end
+
+  def online_premium_tables
+    unless @online_premium_tables
+      @online_premium_tables = tables.select { |table| table.online? && table.premium? }
+      @online_premium_tables.sort_by { |table| [table.scenario] }
+    end
+    @online_premium_tables
+  end
+
+  def online_regular_tables
+    unless @online_regular_tables
+      @online_regular_tables = tables.select { |table| table.online? && !table.premium? }
+      @online_regular_tables.sort_by { |table| [table.scenario] }
+    end
+    @online_regular_tables
+  end
+
   def premium_tables?
-    tables.any?(&:premium?)
+    online_premium_tables.any? || in_person_premium_tables.any?
   end
 
   def premium_tables
-    # noinspection RubyArgCount
     premium_tables = tables.select(&:premium?)
     premium_tables.sort_by { |table| [table.scenario] }
   end
 
+  # @deprecated this will be split online vs in person
   def nonpremium_tables
-    # noinspection RubyArgCount
     nonpremium_tables = tables.reject(&:premium?)
     nonpremium_tables.sort_by { |table| [table.scenario] }
   end
