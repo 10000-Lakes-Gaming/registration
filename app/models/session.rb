@@ -79,6 +79,22 @@ class Session < ActiveRecord::Base
     online_premium_tables.any? || in_person_premium_tables.any?
   end
 
+  def online_regular_tables?
+    online_regular_tables.any?
+  end
+
+  def in_person_regular_tables?
+    in_person_regular_tables.any?
+  end
+
+  def online_premium_tables?
+    online_premium_tables.any?
+  end
+
+  def in_person_premium_tables?
+    in_person_premium_tables.any?
+  end
+
   def online_tables?
     online_regular_tables.any? || online_premium_tables.any?
   end

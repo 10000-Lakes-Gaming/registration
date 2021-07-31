@@ -171,7 +171,8 @@
       <% if @registration.tee_shirt_size.present? %>
         <div class="row">
           <div class="col-md-2"><b>T-shirt size ordered:</b></div>
-          <div class="col-md-6"><%= number_to_currency(@event.tee_shirt_price) %>, Size <%= @registration.tee_shirt_size %>.
+          <div class="col-md-6"><%= number_to_currency(@event.tee_shirt_price) %>,
+            Size <%= @registration.tee_shirt_size %>.
             Pre-order payment due by <%= @event.formatted_tee_shirt_end %>.
           </div>
         </div>
@@ -287,17 +288,17 @@
             </div>
           </div>
 
-          <% if session.premium_tables? %>
+          <% if session.in_person_premium_tables? %>
             <div class="card-body">
               <div class="row no-pad">
-                <div class="col-md-5 header-premium no-pad">Charity Tables for <%= session.name %></div>
+                <div class="col-md-5 header-premium no-pad">In Person Charity Tables for <%= session.name %></div>
                 <div class="col-md-1 header-premium no-pad">Details</div>
                 <div class="col-md-2 header-premium no-pad">Seats Remaining</div>
                 <div class="col-md-2 header-premium no-pad" style="padding-left: 1em;">RSVP</div>
                 <div class="col-md-2 header-premium no-pad" style="padding-right: 2px;">GMs Needed</div>
               </div>
 
-              <% session.premium_tables.each do |table| %>
+              <% session.in_person_premium_tables.each do |table| %>
                 <%= render partial: "events/event_table", locals: { event: @event, table: table,
                                                                     registration: @registration,
                                                                     reg_tables: @reg_tables,
@@ -307,13 +308,43 @@
             </div>
           <% end %>
 
-          <div class="row">
-            <button class="btn btn-link accordion-toggle collapsed" type="button" data-toggle="collapse" data-target="#session-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
-                <span class="accordion-text">View
-                  <% if session.premium_tables? %>standard<% end %> tables for <%= session.name %></span>
-            </button>
-          </div>
+          <% if session.online_premium_tables? %>
+            <div class="card-body">
+              <div class="row no-pad">
+                <div class="col-md-5 header-premium no-pad">Online Charity Tables for <%= session.name %></div>
+                <div class="col-md-1 header-premium no-pad">Details</div>
+                <div class="col-md-2 header-premium no-pad">Seats Remaining</div>
+                <div class="col-md-2 header-premium no-pad" style="padding-left: 1em;">RSVP</div>
+                <div class="col-md-2 header-premium no-pad" style="padding-right: 2px;">GMs Needed</div>
+              </div>
 
+              <% session.online_premium_tables.each do |table| %>
+                <%= render partial: "events/event_table", locals: { event: @event, table: table,
+                                                                    registration: @registration,
+                                                                    reg_tables: @reg_tables,
+                                                                    gm_tables: @gm_tables,
+                                                                    tables: @tables, reg_tables_hash: @reg_tables_hash } %>
+              <% end %>
+            </div>
+          <% end %>
+
+          <% if session.in_person_regular_tables? %>
+            <div class="row">
+              <button class="btn btn-link accordion-toggle collapsed" type="button" data-toggle="collapse" data-target="#session-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
+                <span class="accordion-text">View In Person
+                  <% if session.premium_tables? %>standard<% end %> tables for <%= session.name %></span>
+              </button>
+            </div>
+          <% end %>
+
+          <% if session.online_regular_tables? %>
+            <div class="row">
+              <button class="btn btn-link accordion-toggle collapsed" type="button" data-toggle="collapse" data-target="#session-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
+                <span class="accordion-text">View Online
+                  <% if session.premium_tables? %>standard<% end %> tables for <%= session.name %></span>
+              </button>
+            </div>
+          <% end %>
           <div id="session-<%= session.id %>" class="collapse" aria-labelledby="session-header-<%= session.id %>" data-parent="#session-signup">
             <div class="card-body">
               <div class="row no-pad">
@@ -324,7 +355,7 @@
                 <div class="col-md-2 header no-pad" style="padding-right: 2px;">GMs Needed</div>
               </div>
 
-              <% tables = session.nonpremium_tables %>
+              <% tables = session.online_regular_tables %>
 
               <% tables = tables.sort_by { |table| [table.scenario] } %>
               <% if tables.empty? %>

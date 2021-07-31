@@ -11,6 +11,7 @@
   <thead>
   <tr>
     <th>Location</th>
+    <th>Online?</th>
     <th>Scenario</th>
     <th width="1%">Players</th>
     <th colspan="2">GMs</th>
@@ -26,6 +27,9 @@
         <% unless table.gm_table_assignments.blank? %>
           (<%= table.gm_table_assignments %>)
         <% end %>
+      </td>
+      <td>
+        <%= yes_no table.online? %>
       </td>
       <td>
         <%= table.scenario.long_name %>
@@ -82,4 +86,3 @@
 
 <%= link_to 'New Table', new_event_session_table_path(@event, @session), :class => 'btn btn-primary' %>
 <%= link_to "Back to #{@session.name}", event_session_path(@event, @session), :class => 'btn btn-success' %>
-

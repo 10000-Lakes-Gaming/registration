@@ -15,6 +15,7 @@
   <thead>
   <tr>
     <th>Location</th>
+    <th>Online?</th>
     <th>Scenario</th>
     <th></th>
     <th width="1%">Players</th>
@@ -33,6 +34,9 @@
         <% unless table.gm_table_assignments.blank? %>
           (<%= table.gm_table_assignments %>)
         <% end %>
+      </td>
+      <td>
+        <%= yes_no table.online? %>
       </td>
       <td>
         <%# make this show the scenario data as a collapsable %>
@@ -151,4 +155,3 @@
   <%= button_to 'Edit', edit_event_session_path(@event, @session), method: :get, :class => 'btn btn-primary' %>
 <% end %>
 <%= button_to "Back to #{@event.name}", event_path(@event), method: :get, :class => 'btn btn-success' %>
-
