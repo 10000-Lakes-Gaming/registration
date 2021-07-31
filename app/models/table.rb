@@ -11,6 +11,7 @@ class Table < ActiveRecord::Base
   delegate :prereg_ends, to: :session
   delegate :prereg_closed?, to: :session
   delegate :event, to: :session
+  delegate :headquarters?, to: :scenario
   validate :validate_max_players
   validates :scenario_id, :session_id, :gms_needed, presence: true
   # Online validations
@@ -18,7 +19,6 @@ class Table < ActiveRecord::Base
   validates_presence_of :location, if: :online, message: 'required when table is online'
   validates_numericality_of :gms_needed, greater_than: 0
   validates_numericality_of :gms_needed, if: :online, equal_to: 1
-  validates_numericality_of :max_players, if: :online, less_than_or_equal_to: 6
 
   def validate_online
     if online?
@@ -29,6 +29,8 @@ class Table < ActiveRecord::Base
   end
 
   def validate_max_players
+    return if headquarters?
+
     if session.event.tables_reg_offsite
       self.max_players = 0 if max_players.blank?
     elsif max_players.nil?
@@ -36,6 +38,7 @@ class Table < ActiveRecord::Base
     elsif max_players <= 0
       errors[:max_players] << 'must be greater than 0'
     end
+    errors[:max_players] << 'must be less than or equal to 6' if online? && max_players > 6
   end
 
   def vtt_type

@@ -64,3 +64,8 @@ starfinder_diff_name:
   name: Diff Name!
   tier: 1-2
 
+headquarters:
+  game_system: Headquarters
+  type_of: Headquarters
+  name: Headquarters Volunteer
+  tier: HQ

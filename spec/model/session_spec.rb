@@ -17,8 +17,8 @@ describe Session do
       online = tables(:online)
       premium_online = tables(:premium_online)
 
-      expect(morning.tables).to include(one, two, core, raffle, premium, full, online, premium_online)
-      expect(morning.tables.length).to be 8
+      expect(morning.player_tables).to include(one, two, core, raffle, premium, full, online, premium_online)
+      expect(morning.player_tables.length).to be 8
     end
 
     it 'premium_tables list only premium tables' do
@@ -74,6 +74,15 @@ describe Session do
       expect(morning.online_regular_tables.length).to be 1
     end
 
+    it 'Online regular tables does not list headquarters' do
+      other_session = sessions(:other_session)
+      other_one = tables(:other_one)
+      headquarters = tables(:other_hq)
+
+      expect(other_session.online_regular_tables).to include(other_one)
+      expect(other_session.online_regular_tables).to_not include(headquarters)
+    end
+
     it 'online_premium_tables list only only online_premium_tables tables' do
       morning = sessions(:morning)
       premium_online = tables(:premium_online)
@@ -96,6 +105,7 @@ describe Session do
       expect(other_session.premium_tables?).to be false
     end
   end
+
   context 'online_tables?' do
     it 'true if there are any online tables' do
       morning = sessions(:morning)
@@ -107,4 +117,6 @@ describe Session do
       expect(quest_four.online_tables?).to be false
     end
   end
+
+  # TODO: Add tests for max players validation
 end

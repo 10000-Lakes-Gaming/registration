@@ -21,9 +21,13 @@ class Event < ActiveRecord::Base
     user_event.donation = price
   end
 
+  # TODO: do this through association?
+  def player_tables
+    tables.reject(&:headquarters?)
+  end
+
   def unique_scenarios
-    scenarios.uniq
-    # scenarios
+    scenarios.uniq.reject(&:headquarters?)
   end
 
   def timeslot

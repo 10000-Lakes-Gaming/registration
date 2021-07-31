@@ -35,9 +35,14 @@ class Session < ActiveRecord::Base
     self.end.strftime(DATETIME_FORMAT)
   end
 
+  def player_tables
+    tables.reject(&:headquarters?)
+  end
+
   def in_person_premium_tables
     unless @in_person_premium_tables
       @in_person_premium_tables = tables.select { |table| !table.online? && table.premium? }
+      @in_person_premium_tables = @in_person_premium_tables.reject(&:headquarters?)
       @in_person_premium_tables.sort_by { |table| [table.scenario] }
     end
     @in_person_premium_tables
@@ -46,6 +51,7 @@ class Session < ActiveRecord::Base
   def in_person_regular_tables
     unless @in_person_regular_tables
       @in_person_regular_tables = tables.select { |table| !table.online? && !table.premium? }
+      @in_person_regular_tables = @in_person_regular_tables.reject(&:headquarters?)
       @in_person_regular_tables.sort_by { |table| [table.scenario] }
     end
     @in_person_regular_tables
@@ -54,6 +60,7 @@ class Session < ActiveRecord::Base
   def online_premium_tables
     unless @online_premium_tables
       @online_premium_tables = tables.select { |table| table.online? && table.premium? }
+      @online_premium_tables = @online_premium_tables.reject(&:headquarters?)
       @online_premium_tables.sort_by { |table| [table.scenario] }
     end
     @online_premium_tables
@@ -62,6 +69,7 @@ class Session < ActiveRecord::Base
   def online_regular_tables
     unless @online_regular_tables
       @online_regular_tables = tables.select { |table| table.online? && !table.premium? }
+      @online_regular_tables = @online_regular_tables.reject(&:headquarters?)
       @online_regular_tables.sort_by { |table| [table.scenario] }
     end
     @online_regular_tables

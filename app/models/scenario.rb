@@ -14,20 +14,22 @@ class Scenario < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
   AP = 'Adventure Path'
   ACG = 'ACG'
   OTHER = 'Other'
-  TYPES = [SCENARIO, INTRO, BOUNTY, QUEST, MODULE, AP, ACG, OTHER].freeze
+  HQ = 'Headquarters'
+
+  TYPES = [SCENARIO, INTRO, BOUNTY, QUEST, MODULE, AP, ACG, OTHER, HQ].freeze
   PFS2 = 'PFS2'
   PFS1 = 'PFS'
   SFS = 'SFS'
   PLAYTEST = 'Playtest'
   AL = 'D&D Adventurers League'
-  SYSTEMS = [PFS2, SFS, ACG, OTHER, PFS1, PLAYTEST, AL].freeze
+  SYSTEMS = [PFS2, SFS, ACG, OTHER, PFS1, PLAYTEST, AL, HQ].freeze
 
   def group
     "#{game_system} Season #{season} #{type_of}"
   end
 
   def long_name
-    if game_system == OTHER || game_system == AL
+    if game_system == OTHER || game_system == AL || game_system == HQ
       name
     elsif scenario?
       "#{game_system} #{'%02d' % season}-#{'%02d' % scenario_number}: #{name}"
@@ -50,8 +52,10 @@ class Scenario < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
   end
 
   def short_name
-    if scenario?
+    if scenario? || intro? || quest?
       "#{game_system} #{season}-#{'%02d' % scenario_number}"
+    elsif bounty?
+      "#{game_system} Bounty #{'%02d' % scenario_number}"
     elsif AP?
       "#{game_system} AP #{'%d' % scenario_number}"
     else
@@ -100,7 +104,7 @@ class Scenario < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
   end
 
   def headquarters?
-    tier.eql? 'HQ'
+    game_system == HQ || type_of == HQ || tier.eql?('HQ')
   end
 
   def replayable_display

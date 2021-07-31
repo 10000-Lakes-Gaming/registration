@@ -8,6 +8,14 @@ one:
   gm_self_select: false
   online: false
 
+morning_hq:
+  session: morning
+  scenario: headquarters
+  max_players: 1
+  gms_needed: 1
+  gm_self_select: true
+  online: false
+
 two:
   session: morning
   scenario: scenario_two_seven
@@ -120,6 +128,14 @@ other_one:
   session: other_session
   scenario: scenario_two_seven
   max_players: 6
+  gms_needed: 1
+  gm_self_select: true
+  online: true
+
+other_hq:
+  session: other_session
+  scenario: headquarters
+  max_players: 1
   gms_needed: 1
   gm_self_select: true
   online: true
