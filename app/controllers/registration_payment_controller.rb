@@ -12,7 +12,7 @@ class RegistrationPaymentController < ApplicationController
   def create
     # Amount in cents
     # This needs to be via the user_event
-    @amount = @user_event.registration_cost * 100
+    @amount = @user_event.total_owed * 100
 
     customer = Stripe::Customer.create(
       email: params[:stripeEmail],

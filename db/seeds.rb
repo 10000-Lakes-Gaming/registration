@@ -4,8 +4,9 @@ event_start = DateTime.now.change({ hour: 12, min: 0, sec: 0 }) + 1.month
 
 event = Event.create!({ name: 'Initial Con!', start: event_start, end: event_start + 29.hours,
                         rsvp_close: event_start - 1.day, prereg_ends: event_start - 1.week,
-                        location: 'Online Event', online: true, in_person: false,
-                        prereg_price: 10, onsite_price: 10, optional_fee: true, charity: true,
+                        online_sales_end: event_start - 5.days, tee_shirt_end: event_start - 10.days,
+                        tee_shirt_price: 15, location: 'Online Event', online: true, in_person: true,
+                        prereg_price: 10, onsite_price: 15, optional_fee: false, charity: false,
                         chat_server: 'My Discord', chat_server_url: 'http://www.somediscord.com' })
 
 Session.create!([{ event_id: event.id, name: 'Session 1', start: event_start,
@@ -58,6 +59,6 @@ User.create!([{ name: 'A. User', pfs_number: 1_234_687, admin: false, email: 'au
 
 user_event = UserEvent.create!({ event: event, user: user, online: true })
 
-RegistrationTable.create!([{ user_event: user_event, table_id: 1, paid: true, payment_amount: 1000,
-                             payment_id: 'PAYMENTID' }])
-GameMaster.create!({ user_event: user_event, table_id: 3 })
+# RegistrationTable.create!([{ user_event: user_event, table_id: 1, paid: true, payment_amount: 1000,
+#                              payment_id: 'PAYMENTID' }])
+# GameMaster.create!({ user_event: user_event, table_id: 3 })
