@@ -17,6 +17,10 @@ class AdditionalPaymentPaymentController < ApplicationController
     # Amount in cents
     token = params[:stripeToken]
 
+    payment_message = "Processing Stripe payment #{@payment.id} #{@payment.long_description} for "
+    payment_message += "#{@payment.user_event.user.name} for total value of #{@payment.price}"
+    Rails.logger.info payment_message
+
     charge = Stripe::Charge.create(
       source: token,
       amount: @payment.price,
