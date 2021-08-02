@@ -157,11 +157,15 @@ class Session < ActiveRecord::Base
     total_max_gms = 0
 
     tables.each do |table|
-      total_max_gms += if table.raffle?
-                         table.game_masters.length
-                       else
-                         table.gms_needed
-                       end
+      total_max_gms +=
+        if table.headquarters?
+          # Not counting HQ at this time, since we don't show them now.
+          0
+        elsif table.raffle?
+          table.game_masters.length
+        else
+          table.gms_needed
+        end
     end
     total_max_gms
   end
