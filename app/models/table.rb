@@ -29,14 +29,14 @@ class Table < ActiveRecord::Base
   end
 
   def validate_max_players
+    self.max_players = 0 if (session.event.tables_reg_offsite || scenario&.headquarters?) && max_players.blank?
+
     return if scenario&.headquarters?
 
-    if session.event.tables_reg_offsite
-      self.max_players = 0 if max_players.blank?
-    elsif max_players.nil?
+    if max_players.nil?
       errors[:max_players] << 'cannot be blank'
     elsif max_players <= 0
-      errors[:max_players] << 'must be greater than 0'
+      errors[:max_players] << 'must be greater than 0' unless session.event.tables_reg_offsite
     end
     errors[:max_players] << 'must be less than or equal to 6' if online? && max_players > 6
   end
