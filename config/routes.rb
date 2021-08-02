@@ -38,7 +38,6 @@ Rails.application.routes.draw do
         get 'show_since'
       end
       resources :additional_payments do
-        # resources :additional_payments, shallow: true do
         resources :additional_payment_payment, only: %i[new create]
       end
       resources :registration_payment, only: %i[new create]
@@ -52,6 +51,8 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  post 'sessions/:session_id/upload_tables', to: 'tables#load_from_csv', as: 'upload_tables_csv'
 
   get 'events/:id/additional_payment_report', to: 'additional_payment_report#index', as: 'additional_payment_report'
 

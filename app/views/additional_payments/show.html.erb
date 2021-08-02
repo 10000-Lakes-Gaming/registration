@@ -1,4 +1,9 @@
 <p id="notice"><%= notice %></p>
+<% flash.each do |type, msg| %>
+  <div class="well">
+    <div class="bg-ccd text-ccd-error h3"><%= msg %></div>
+  </div>
+<% end %>
 
 <h2><%= @additional_payment.user_event.event.name %> Additional Payment</h2>
 <h3>Player Information</h3>
@@ -32,9 +37,9 @@
     <div class="col-md-2 col-sm-3"><strong>Charitable Donation?:</strong></div>
     <div class="col-md-6 col-sm-5">
       <% if @additional_payment.charitable_donation? %>
-          Yes
+        Yes
       <% else %>
-          No
+        No
       <% end %></div>
   </div>
   <div class="row">
@@ -49,7 +54,7 @@
     <div class="col-md-2 col-sm-3"><strong>Paid:</strong></div>
     <div class="col-md-6 col-sm-5">
       <% if @additional_payment.unpaid? %>No
-          <%= render partial: 'additional_payment', locals: {payment: @additional_payment, button_label: "Pay for #{@additional_payment.category}"} %>
+        <%= render partial: 'additional_payment', locals: { payment: @additional_payment, button_label: "Pay for #{@additional_payment.category}" } %>
       <% else %>Yes
       <% end %>
     </div>
@@ -58,6 +63,6 @@
 
 
 <% if admin? %>
-    <%= link_to 'Edit', edit_event_user_event_additional_payment_path(@user_event.event, @user_event, @additional_payment), :class => 'btn btn-primary' %>
+  <%= link_to 'Edit', edit_event_user_event_additional_payment_path(@user_event.event, @user_event, @additional_payment), :class => 'btn btn-primary' %>
 <% end %>
 <%= link_to 'Back', event_user_event_additional_payments_path(@user_event.event, @user_event), :class => 'btn btn-warning' %>

@@ -2,7 +2,7 @@
 
 class TablesController < ApplicationController
   before_action :set_table, only: %i[show edit update destroy]
-  before_action :get_event, :get_session, :get_scenarios
+  before_action :get_event, :get_session, :get_scenarios, except: %i[load_from_csv]
 
   def get_scenarios
     @scenarios = Scenario.all
@@ -57,6 +57,18 @@ class TablesController < ApplicationController
   # GET /tables/1/edit
   def edit
     prevent_non_admin
+  end
+
+  # POST /sessions/:session_id/upload_tables
+  def load_from_csv
+    @session = Session.find(params[:session_id])
+    @event = @session.event
+
+    Table.import(@session, params[:file])
+
+    @session.reload
+    @tables = @session.tables
+    render :index
   end
 
   # POST /tables

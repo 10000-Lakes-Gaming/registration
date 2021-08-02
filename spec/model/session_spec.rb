@@ -5,6 +5,18 @@ require 'rails_helper'
 describe Session do
   fixtures :all
 
+  context '#id' do
+    it 'morning' do
+      morning = sessions(:morning)
+      expect(morning.id).to eq 971_652_664
+    end
+
+    it 'evening' do
+      evening = sessions(:evening)
+      expect(evening.id).to eq 1_008_494_737
+    end
+  end
+
   context 'tables (splitting)' do
     it 'tables list all tables, not split out' do
       morning = sessions(:morning)

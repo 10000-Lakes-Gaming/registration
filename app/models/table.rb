@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Table < ActiveRecord::Base
+  require 'csv'
+
   belongs_to :session
   belongs_to :scenario
   has_many :registration_tables
@@ -35,6 +37,22 @@ class Table < ActiveRecord::Base
 
     errors[:max_players] << 'must be greater than 0' if max_players <= 0 && !session.event.tables_reg_offsite
     errors[:max_players] << 'must be less than or equal to 6' if online? && max_players > 6
+  end
+
+  def self.import(session, file)
+    tables = []
+    CSV.foreach(file.path, headers: true) do |row|
+      fields = row.to_h
+      tables << Table.new({
+                            session: session,
+                            scenario: Scenario.find(fields['scenario'].to_i),
+                            online: ActiveModel::Type::Boolean.new.cast(fields['online']),
+                            location: fields['location'],
+                            gms_needed: fields['gms_needed'].to_i,
+                            max_players: fields['max_players'].to_i
+                          })
+    end
+    tables.each(&:save!)
   end
 
   def vtt_type

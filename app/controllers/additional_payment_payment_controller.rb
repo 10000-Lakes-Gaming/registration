@@ -21,6 +21,9 @@ class AdditionalPaymentPaymentController < ApplicationController
     payment_message += "#{@payment.user_event.user.name} for total value of #{@payment.price}"
     Rails.logger.info payment_message
 
+    @user_event = @payment.user_event
+    @event = @user_event.event
+
     charge = Stripe::Charge.create(
       source: token,
       amount: @payment.price,
@@ -29,24 +32,20 @@ class AdditionalPaymentPaymentController < ApplicationController
     )
 
     @payment.payment_amount = charge.amount # Will be in cents, not dollars!
-    @payment.payment_id     = charge.id
-    @payment.payment_date   = Time.now
+    @payment.payment_id = charge.id
+    @payment.payment_date = Time.now
     @payment.save!
 
-    # Need to create the email for this!
-    @user_event = @payment.user_event
     # send email
     ReceiptMailer.additional_payment_email(@payment).deliver
 
-    redirect_to @payment.user_event.event,
+    redirect_to @event,
                 notice: "Thank you! Payment has been received for #{@payment.long_description}"
   rescue Stripe::CardError => e
+    message = "'Additional Payment error for #{@user_event.user.email} for #{@payment.long_description}'"
+    Rails.logger.error "#{message}, error: #{e.message}"
     flash[:error] = e.message
-    # where do I really want this to go?
-    redirect_to new_registration_payment_path [@event, @user_event]
+    redirect_to event_user_event_additional_payment_path(@event, @user_event, @payment)
   end
-
-  # def get_registration_tables
-  #   @registration_tables = @table.registration_tables
-  # end
 end
+y

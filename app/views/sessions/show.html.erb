@@ -151,7 +151,12 @@
 
 
 <% if event_host? %>
-  <%= button_to 'Add New Table', new_event_session_table_path(@event, @session), method: :get, :class => 'btn btn-warning' %>
-  <%= button_to 'Edit', edit_event_session_path(@event, @session), method: :get, :class => 'btn btn-primary' %>
+  <div><%= button_to 'Add New Table', new_event_session_table_path(@event, @session), method: :get, :class => 'btn btn-warning' %>
+    <%= button_to 'Edit', edit_event_session_path(@event, @session), method: :get, :class => 'btn btn-primary' %>
+    <%= form_tag upload_tables_csv_path(@session), :method => "post", :multipart => true do %>
+      <%= file_field_tag :file %>
+      <%= submit_tag "Upload" %>
+    <% end %>
+  </div>
 <% end %>
 <%= button_to "Back to #{@event.name}", event_path(@event), method: :get, :class => 'btn btn-success' %>

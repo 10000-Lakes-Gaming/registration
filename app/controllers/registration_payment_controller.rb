@@ -29,10 +29,10 @@ class RegistrationPaymentController < ApplicationController
     logger.info "I have a charge #{charge}"
     logger.info "The charge ID is #{charge.id} and it was in the amount of #{charge.amount / 100}"
 
-    @user_event.paid           = true
+    @user_event.paid = true
     @user_event.payment_amount = charge.amount # Will be in cents, not dollars!
-    @user_event.payment_id     = charge.id
-    @user_event.payment_date   = Time.now
+    @user_event.payment_id = charge.id
+    @user_event.payment_date = Time.now
     @user_event.save!
 
     # send email!
@@ -40,8 +40,8 @@ class RegistrationPaymentController < ApplicationController
 
     redirect_to @event, notice: "Thank you! Payment has been received for #{@event.name}"
   rescue Stripe::CardError => e
+    Rails.logger.error "'Payment error for #{@user_event.user.email}'s payment for #{@event.name}' error: #{e.message}"
     flash[:error] = e.message
-    # where do I really want this to go?
-    redirect_to new_registration_payment_path [@event, @user_event]
+    redirect_to event_user_event_path(@event, @user_event)
   end
 end

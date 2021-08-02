@@ -1,5 +1,9 @@
 <p id="notice"><%= notice %></p>
-
+<% flash.each do |type, msg| %>
+  <div class="well">
+    <div class="bg-ccd text-ccd-error h3"><%= msg %></div>
+  </div>
+<% end %>
 <ol class="breadcrumb">
   <li><%= link_to "#{@event.name}", event_path(@event) %></li>
   <li>My Registration Details</li>

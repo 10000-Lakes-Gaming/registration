@@ -10,6 +10,14 @@ describe Event, type: :model do # rubocop:disable Metrics/BlockLength
   fixtures :tables
   fixtures :game_masters
 
+  context '#id' do
+    it 'my_event' do
+      event = events(:my_event)
+      # this is stable based on name!
+      expect(event.id).to eq 392_738_916
+    end
+  end
+
   context '#hybrid' do
     it 'My Event is not hybrid' do
       event = events(:my_event)

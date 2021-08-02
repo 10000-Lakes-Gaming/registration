@@ -184,7 +184,7 @@ div.bottom {
 
   a {
     color: $lightBlue;
-    text-decoration: none;    
+    text-decoration: none;
   }
 }
 
@@ -460,6 +460,18 @@ div.bottom {
   color: $black;
   border-color: $red;
   background-color: $trueWhite;
+}
+
+.text-ccd-error {
+  color: $red;
+  border-color: $red;
+  background-color: $trueWhite;
+}
+
+.bg-ccd {
+  background-color: $trueWhite;
+  border: thick solid $red;
+  padding: 10px;
 }
 
 .bg-info {
