@@ -85,53 +85,41 @@
       <div class="col-md-2 col-sm-3"><strong>Email:</strong></div>
       <div class="col-md-6 col-sm-5"><%= player&.email %></div>
     </div>
-    <% unless @event.hybrid? %>
-      <%# only check if not a hybrid, as that is handled below %>
-      <% if @event.online? %>
-        <div class="row">
-          <div class="col-md-2 col-sm-3"><strong>I will be attending online:</strong></div>
-          <div class="col-md-6 col-sm-5"><%= yes_no @user_event.online? %></div>
-          <%= hidden_field_tag 'user_event[online]', 'true' %>
-        </div>
-      <% else %>
-        <div class="row">
-          <div class="col-md-2 col-sm-3"><strong>I will be attending in person:</strong></div>
-          <div class="col-md-6 col-sm-5"><%= yes_no @user_event.in_person? %></div>
-          <%= hidden_field_tag 'user_event[in_person]', 'true' %>
-        </div>
-      <% end %>
-    <% end %>
+
   </div>
 
-  <% if @event.hybrid? %>
-    <div class="well">
-      <h4>I would like to attend (select all that apply):</h4>
+  <div class="well">
+    <h4>I would like to attend (select all that apply):</h4>
+    <% if @event.in_person? %>
       <div>
         <%= f.check_box :in_person %>
         <%= f.label :in_person, 'In Person' %>
       </div>
+    <% end %>
+    <% if @event.online? %>
       <div>
         <%= f.check_box :online %>
         <%= f.label :online %>
       </div>
+    <% end %>
 
-      <% if @event.attendance_policy.present? %>
-        <div id='attendance_policy_div'>
-          <div id="attendence_policy">
-            <h4>Attendence Policy for the In Person Event</h4>
-            <div class="well">
-              <div class="bg-warning text-policy" style="margin-top: 0;"><%= @event.attendance_policy&.html_safe %></div>
-            </div>
-          </div>
-          <div>
-            <%= f.check_box :accepted_attendance_policy %>
-            <%= f.label :accepted_attendance_policy,
-                        'I have read and understand the attendance policy. By checking this box I am agreeing to this policy.' %>
+    <% if @event.attendance_policy.present? %>
+      <div id='attendance_policy_div'>
+        <div id="attendence_policy">
+          <h4>Attendence Policy for the In Person Event</h4>
+          <div class="well">
+            <div class="bg-warning text-policy" style="margin-top: 0;"><%= @event.attendance_policy&.html_safe %></div>
           </div>
         </div>
-      <% end %>
-    </div>
-  <% end %>
+        <div>
+          <%= f.check_box :accepted_attendance_policy %>
+          <%= f.label :accepted_attendance_policy,
+                      'I have read and understand the attendance policy. By checking this box I am agreeing to this policy.' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
 
   <div class="well">
     <% if @event.tee_shirt_price&.nonzero? %>
