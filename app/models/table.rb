@@ -29,7 +29,7 @@ class Table < ActiveRecord::Base
   end
 
   def validate_max_players
-    return if headquarters?
+    return if scenario&.headquarters?
 
     if session.event.tables_reg_offsite
       self.max_players = 0 if max_players.blank?

@@ -104,7 +104,7 @@ class Scenario < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
   end
 
   def headquarters?
-    game_system == HQ || type_of == HQ || tier.eql?('HQ')
+    game_system.eql?(HQ) || type_of.eql?(HQ) || tier.eql?('HQ')
   end
 
   def replayable_display
