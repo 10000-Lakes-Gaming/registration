@@ -101,7 +101,7 @@ class UserEvent < ActiveRecord::Base
   end
 
   def unpaid_additional_payments?
-    additional_payments.any? { |payment| payment.payment_id.nil? }
+    additional_payments.any? { |payment| payment.payment_id.blank? }
   end
 
   def total_owed
