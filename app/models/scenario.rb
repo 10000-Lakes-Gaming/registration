@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Scenario < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
+class Scenario < ActiveRecord::Base
   validates :game_system, :type_of, :name, presence: true
   validates :scenario_number, presence: true, if: :scenario_number_needed?
   validates :season, presence: true, if: :season_needed?

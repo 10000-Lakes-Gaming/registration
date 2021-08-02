@@ -420,6 +420,49 @@
               <% end %>
             </div>
           </div> <%# online standard tables %>
+
+          <%# Start HQ tables %>
+          <% if session.headquarters_tables? %>
+            <div class="row">
+              <button class="btn btn-link accordion-toggle collapsed" type="button" data-toggle="collapse" data-target="#session-headquarters-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
+                <span class="accordion-text">View Headquarters tables for <%= session.name %></span>
+              </button>
+            </div>
+          <% end %>
+          <div id="session-headquarters-<%= session.id %>" class="collapse" aria-labelledby="session-header-<%= session.id %>" data-parent="#session-signup">
+            <div class="card-body">
+              <div class="row no-pad">
+                <div class="col-md-5 header no-pad">
+                  Headquarters Tables for <%= session.name %></div>
+                <div class="col-md-1 header no-pad">Details</div>
+                <div class="col-md-2 header no-pad">Seats Remaining</div>
+                <div class="col-md-2 header no-pad" style="padding-left: 1em;">RSVP</div>
+                <div class="col-md-2 header no-pad" style="padding-right: 2px;">GMs Needed</div>
+              </div>
+
+              <% tables = session.headquarters_tables %>
+
+              <% tables = tables.sort_by { |table| [table.scenario] } %>
+              <% if tables.empty? %>
+                <div class="row no-pad striped-inner">
+                  <div class="col-md-12">
+                    <% if session.premium_tables? %>
+                      There are no regular online tables this session!
+                    <% else %>
+                      There are no online tables during this session!
+                    <% end %>
+                  </div>
+                </div>
+              <% else %>
+                <% tables.each do |table| %>
+                  <%= render partial: "events/event_table", locals: { event: @event, session: @session, table: table,
+                                                                      registration: @registration, reg_tables: @reg_tables,
+                                                                      gm_tables: @gm_tables, tables: @tables,
+                                                                      reg_tables_hash: @reg_tables_hash } %>
+                <% end %>
+              <% end %>
+            </div>
+          </div> <%# HQ tables %>
         <% end # session list%>
       </div>
   <% end %>

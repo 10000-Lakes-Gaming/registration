@@ -75,6 +75,11 @@ class Session < ActiveRecord::Base
     @online_regular_tables
   end
 
+  def headquarters_tables
+    @headquarters_tables ||= tables.select(&:headquarters?)
+    @headquarters_tables
+  end
+
   def premium_tables?
     online_premium_tables.any? || in_person_premium_tables.any?
   end
@@ -99,13 +104,15 @@ class Session < ActiveRecord::Base
     online_regular_tables.any? || online_premium_tables.any?
   end
 
-  # @deprecated this will be split online vs in person
+  def headquarters_tables?
+    headquarters_tables.any?
+  end
+
   def premium_tables
     premium_tables = tables.select(&:premium?)
     premium_tables.sort_by { |table| [table.scenario] }
   end
 
-  # @deprecated this will be split online vs in person
   def nonpremium_tables
     nonpremium_tables = tables.reject(&:premium?)
     nonpremium_tables.sort_by { |table| [table.scenario] }
