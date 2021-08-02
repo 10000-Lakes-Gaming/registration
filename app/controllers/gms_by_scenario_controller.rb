@@ -7,7 +7,7 @@ class GmsByScenarioController < ApplicationController
     # have to put things in a hash, so that we can deal with it.
     @tables_by_scenario = {}
     @event.unique_scenarios.each { |scenario| @tables_by_scenario[scenario] = [] }
-    @event.tables.each do |table|
+    @event.player_tables.each do |table|
       @tables_by_scenario[table.scenario] << table
     end
 
