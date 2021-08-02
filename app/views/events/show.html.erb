@@ -332,23 +332,65 @@
             <div class="row">
               <button class="btn btn-link accordion-toggle collapsed" type="button" data-toggle="collapse" data-target="#session-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
                 <span class="accordion-text">View In Person
-                  <% if session.premium_tables? %>standard<% end %> tables for <%= session.name %></span>
-              </button>
-            </div>
-          <% end %>
-
-          <% if session.online_regular_tables? %>
-            <div class="row">
-              <button class="btn btn-link accordion-toggle collapsed" type="button" data-toggle="collapse" data-target="#session-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
-                <span class="accordion-text">View Online
-                  <% if session.premium_tables? %>standard<% end %> tables for <%= session.name %></span>
+                  <% if session.premium_tables? %>Standard<% end %> tables for <%= session.name %></span>
               </button>
             </div>
           <% end %>
           <div id="session-<%= session.id %>" class="collapse" aria-labelledby="session-header-<%= session.id %>" data-parent="#session-signup">
             <div class="card-body">
               <div class="row no-pad">
-                <div class="col-md-5 header no-pad">Standard Tables for <%= session.name %></div>
+                <div class="col-md-5 header no-pad">
+                  <% if session.premium_tables? %>
+                    Standard
+                  <% end %>
+                  In Person Tables for <%= session.name %></div>
+                <div class="col-md-1 header no-pad">Details</div>
+                <div class="col-md-2 header no-pad">Seats Remaining</div>
+                <div class="col-md-2 header no-pad" style="padding-left: 1em;">RSVP</div>
+                <div class="col-md-2 header no-pad" style="padding-right: 2px;">GMs Needed</div>
+              </div>
+
+              <% tables = session.in_person_regular_tables %>
+
+              <% tables = tables.sort_by { |table| [table.scenario] } %>
+              <% if tables.empty? %>
+                <div class="row no-pad striped-inner">
+                  <div class="col-md-12">
+                    <% if session.premium_tables? %>
+                      There are no regular in person tables this session!
+                    <% else %>
+                      There are no in person tables during this session!
+                    <% end %>
+                  </div>
+                </div>
+              <% else %>
+                <% tables.each do |table| %>
+                  <%= render partial: "events/event_table", locals: { event: @event, session: @session, table: table,
+                                                                      registration: @registration, reg_tables: @reg_tables,
+                                                                      gm_tables: @gm_tables, tables: @tables,
+                                                                      reg_tables_hash: @reg_tables_hash } %>
+                <% end %>
+              <% end %>
+            </div>
+          </div> <%# in person standard tables %>
+
+          <%# Start online regular tables %>
+          <% if session.online_regular_tables? %>
+            <div class="row">
+              <button class="btn btn-link accordion-toggle collapsed" type="button" data-toggle="collapse" data-target="#session-online-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
+                <span class="accordion-text">View Online
+                  <% if session.premium_tables? %>Standard<% end %> tables for <%= session.name %></span>
+              </button>
+            </div>
+          <% end %>
+          <div id="session-online-<%= session.id %>" class="collapse" aria-labelledby="session-header-<%= session.id %>" data-parent="#session-signup">
+            <div class="card-body">
+              <div class="row no-pad">
+                <div class="col-md-5 header no-pad">
+                  <% if session.premium_tables? %>
+                    Standard
+                  <% end %>
+                  Online Tables for <%= session.name %></div>
                 <div class="col-md-1 header no-pad">Details</div>
                 <div class="col-md-2 header no-pad">Seats Remaining</div>
                 <div class="col-md-2 header no-pad" style="padding-left: 1em;">RSVP</div>
@@ -362,9 +404,9 @@
                 <div class="row no-pad striped-inner">
                   <div class="col-md-12">
                     <% if session.premium_tables? %>
-                      There are no standard tables this session!
+                      There are no regular online tables this session!
                     <% else %>
-                      There are no tables during this session!
+                      There are no online tables during this session!
                     <% end %>
                   </div>
                 </div>
@@ -377,8 +419,8 @@
                 <% end %>
               <% end %>
             </div>
-          </div>
-        <% end %>
+          </div> <%# online standard tables %>
+        <% end # session list%>
       </div>
   <% end %>
 
