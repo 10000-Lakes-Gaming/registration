@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# TODO: Add check for ALLOW LIST
 class ApplicationMailer < ActionMailer::Base
   add_template_helper(EmailHelper)
 
