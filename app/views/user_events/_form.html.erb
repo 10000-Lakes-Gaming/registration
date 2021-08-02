@@ -85,16 +85,21 @@
       <div class="col-md-2 col-sm-3"><strong>Email:</strong></div>
       <div class="col-md-6 col-sm-5"><%= player&.email %></div>
     </div>
-    <% if @event.online? %>
-      <div class="row">
-        <div class="col-md-2 col-sm-3"><strong>I will be attending online:</strong></div>
-        <div class="col-md-6 col-sm-5"><%= yes_no @user_event.online? %></div>
-      </div>
-    <% else %>
-      <div class="row">
-        <div class="col-md-2 col-sm-3"><strong>I will be attending in person:</strong></div>
-        <div class="col-md-6 col-sm-5"><%= yes_no @user_event.in_person? %></div>
-      </div>
+    <% unless @event.hybrid? %>
+      <%# only check if not a hybrid, as that is handled below %>
+      <% if @event.online? %>
+        <div class="row">
+          <div class="col-md-2 col-sm-3"><strong>I will be attending online:</strong></div>
+          <div class="col-md-6 col-sm-5"><%= yes_no @user_event.online? %></div>
+          <%= hidden_field_tag 'user_event[online]', 'true' %>
+        </div>
+      <% else %>
+        <div class="row">
+          <div class="col-md-2 col-sm-3"><strong>I will be attending in person:</strong></div>
+          <div class="col-md-6 col-sm-5"><%= yes_no @user_event.in_person? %></div>
+          <%= hidden_field_tag 'user_event[in_person]', 'true' %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 
