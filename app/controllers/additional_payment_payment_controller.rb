@@ -48,4 +48,3 @@ class AdditionalPaymentPaymentController < ApplicationController
     redirect_to event_user_event_additional_payment_path(@event, @user_event, @payment)
   end
 end
-y
