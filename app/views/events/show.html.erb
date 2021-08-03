@@ -75,7 +75,6 @@
   <% end %>
 
   <% if @event.attendance_policy.present? %>
-    <%# TODO: Make more better %>
     <h4>Attendence Policy for the In Person Event</h4>
     <div class="well">
       <div class="bg-warning text-policy" style="margin-top: 0;"><%= @event.attendance_policy&.html_safe %></div>
@@ -121,7 +120,13 @@
       </div>
       <div class="col-md-2">
         <% if @registration %>
-          Yes <%# TODO: Change to online or in person or both. %>
+          <% if @registration.online? && @registration.in_person? %>
+            In Person and Online
+          <% elsif @registration.in_person? %>
+            In Person
+          <% else %>
+            Online
+          <% end %>
         <% else %>
           No
         <% end %>
@@ -463,7 +468,7 @@
               <% end %>
             </div>
           </div> <%# HQ tables %>
-        <% end # session list%>
+        <% end # session list %>
       </div>
   <% end %>
 
