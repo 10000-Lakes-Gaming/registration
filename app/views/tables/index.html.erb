@@ -65,7 +65,7 @@
       <td>
         <% table.game_masters.each do |gm| %>
           <% if event_host? %>
-            <%= button_to "Edit #{gm.user_event.user.long_name}",edit_event_session_table_game_master_path(@event, @session, table, gm), method: :get, :class => "btn btn-primary" %>
+            <%= button_to "Edit #{gm.user_event.user.long_name}", edit_event_session_table_game_master_path(@event, @session, table, gm), method: :get, :class => "btn btn-primary" %>
           <% else %>
             <div><%= gm.user_event.user.long_name %></div>
           <% end %>
@@ -82,7 +82,19 @@
   </tbody>
 </table>
 
-<br>
+<div class="well">
+  <h4>Add Tables to <%= @session.name %>.</h4>
+  <p>
+    The file should have columns of <code>scenario,online,location,gms_needed,max_players</code>, and expects those
+    headers.</p>
+  <%= form_tag upload_tables_csv_path(@session), :method => "post", :multipart => true do %>
+    <label for="file">CSV File to Upload:</label><%= file_field_tag :file, :accept => 'text/csv' %>
+    <br/>
+    <div>
+      <%= submit_tag "Upload CSV", :class => 'btn btn-danger' %>
+      <%= link_to 'Add New Table', new_event_session_table_path(@event, @session), :class => 'btn btn-warning' %>
+      <%= link_to "Back to #{@session.name}", event_session_path(@event, @session), :class => 'btn btn-success' %>
+    </div>
+  <% end %>
 
-<%= link_to 'New Table', new_event_session_table_path(@event, @session), :class => 'btn btn-primary' %>
-<%= link_to "Back to #{@session.name}", event_session_path(@event, @session), :class => 'btn btn-success' %>
+</div>

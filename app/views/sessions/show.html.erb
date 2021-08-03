@@ -151,11 +151,19 @@
 
 
 <% if event_host? %>
-  <div><%= button_to 'Add New Table', new_event_session_table_path(@event, @session), method: :get, :class => 'btn btn-warning' %>
-    <%= button_to 'Edit', edit_event_session_path(@event, @session), method: :get, :class => 'btn btn-primary' %>
+  <div class="well">
+    <h4>Add Tables to <%= @session.name %>.</h4>
+    <p>
+      The file should have columns of <code>scenario,online,location,gms_needed,max_players</code>, and expects those
+      headers.</p>
     <%= form_tag upload_tables_csv_path(@session), :method => "post", :multipart => true do %>
-      <%= file_field_tag :file %>
-      <%= submit_tag "Upload" %>
+      <label for="file">CSV File to Upload:</label><%= file_field_tag :file, :accept => 'text/csv' %>
+      <br/>
+      <div>
+        <%= submit_tag "Upload CSV", :class => 'btn btn-danger' %>
+        <%= link_to 'Add New Table', new_event_session_table_path(@event, @session), method: :get, :class => 'btn btn-warning' %>
+        <%= link_to 'Edit', edit_event_session_path(@event, @session), method: :get, :class => 'btn btn-primary' %>
+      </div>
     <% end %>
   </div>
 <% end %>
