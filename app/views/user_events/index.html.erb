@@ -8,22 +8,38 @@
   <tr>
     <th>Name</th>
     <th>Email</th>
+    <th>Registraion Type</th>
     <th>PFS#</th>
+    <% if @event.offers_tee_shirt? %>
+    <th>T-shirt</th>
+    <% end %>
     <th>Paid</th>
   </tr>
   </thead>
 
   <tbody>
+  <%# TODO: Sort --- Paid vs Unopaid, In Person vs Online  %>
   <% @user_events.each do |user_event| %>
     <tr>
       <td><%= user_event.user.name %></td>
       <td><%= user_event.user.email %></td>
+      <td>
+        <% if user_event.online? && user_event.in_person? %>
+          In Person and Online
+        <% elsif user_event.in_person? %>
+          In Person
+        <% else %>
+          Online
+        <% end %></td>
       <td><%= user_event.user.pfs_number %></td>
+      <% if @event.offers_tee_shirt? %>
+        <td><%= user_event.tee_shirt_size %></td>
+      <% end %>
       <td>
         <% if user_event.paid? %>
           <span class="glyphicon glyphicon-ok-circle"></span>
           <% if admin? %>
-          <%= number_to_currency(user_event.payment_amount.to_i / 100) %>
+            <%= number_to_currency(user_event.payment_amount.to_i / 100) %>
           <% end %>
         <% end %>
       </td>
@@ -43,8 +59,9 @@
 
 <div>Total Registrations: <%= @user_events.size %></div>
 <div>Total Paid: <%= @paid %></div>
-<div>Total Registration Paid: <%= number_to_currency(@user_events.sum { |reg| reg.payment_amount.to_i / 100 } ) %></div>
-<div>Total Amount Paid: <%= number_to_currency(@user_events.sum { |reg| reg.total_paid.to_i } ) %></div>
-<div>Charity Tables Amount Paid: <%= number_to_currency(@event.registration_tables.sum { |ticket| ticket.payment_amount.to_i } )  %></div>
+<div>Total Registration Paid: <%= number_to_currency(@user_events.sum { |reg| reg.payment_amount.to_i / 100 }) %></div>
+<div>Total Amount Paid: <%= number_to_currency(@user_events.sum { |reg| reg.total_paid.to_i }) %></div>
+<div>Charity Tables Amount
+  Paid: <%= number_to_currency(@event.registration_tables.sum { |ticket| ticket.payment_amount.to_i }) %></div>
 <br>
 <%= link_to "Back to #{@event.name}", event_path(@event), :class => 'btn btn-success' %>

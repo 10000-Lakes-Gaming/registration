@@ -54,6 +54,10 @@ class Event < ActiveRecord::Base
     online_sales_end.strftime(Session::DATETIME_FORMAT)
   end
 
+  def offers_tee_shirt?
+    tee_shirt_price&.nonzero?
+  end
+
   def formatted_tee_shirt_end
     tee_shirt_end.strftime(Session::DATE_FORMAT)
   end
