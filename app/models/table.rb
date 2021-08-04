@@ -158,11 +158,10 @@ class Table < ActiveRecord::Base
 
   def can_sign_up?(registration)
     return false if registration.nil?
-    type = online? ? UserEvent::ATTENDANCE_ONLINE : UserEvent::ATTENDANCE_IN_PERSON
-    # first check it type matches registration
-    ok = registration.can_select?(type)
+
+    ok = registration.can_select?(table_type)
     ok &&= seats_available?
-    ok &&= !session.event.gm_select_only? || gm_can_signup?(registration, type)
+    ok &&= !session.event.gm_select_only? || gm_can_signup?(registration)
     ok &&= !raffle?
     ok &&= !session.event.closed?
     ok &&= !session.event.online_sales_closed?
@@ -172,17 +171,17 @@ class Table < ActiveRecord::Base
     ok && !tickets_overlap?(registration)
   end
 
-  def gm_can_signup?(registration, type)
-    can_signup = session.event.gm_signup? && registration.can_select?(type)
+  def gm_can_signup?(registration)
+    can_signup = session.event.gm_signup? && registration.can_select?(table_type)
     can_signup &&= registration.gamemaster?
     # must have at least as many GM as player
     can_signup && registration.game_masters.length > registration.registration_tables.length
   end
 
-  def can_gm_select?(registration, type)
+  def can_gm_select?(registration)
     return false if registration.nil?
 
-    ok = !session.event.closed? && registration.can_select?(type)
+    ok = !session.event.closed? && registration.can_select?(table_type)
     ok &&= !session.event.online_sales_closed?
     ok &&= gm_self_select?
     ok &&= need_gms?
@@ -192,5 +191,11 @@ class Table < ActiveRecord::Base
 
   def table_gm?(user)
     game_masters.any? { |gm| gm&.user_event&.user_id == user.id }
+  end
+
+  private
+
+  def table_type
+    online? ? UserEvent::ATTENDANCE_ONLINE : UserEvent::ATTENDANCE_IN_PERSON
   end
 end
