@@ -39,6 +39,10 @@ class UserEvent < ActiveRecord::Base
   ATTENDENCE_ONLINE = 'Online'
   ATTENDENCE_UNKNOWN = 'Neither In Person nor Online'
 
+  def can_select?(type)
+    (ATTENDENCE_ONLINE.eql?(type) && online?) || (ATTENDENCE_IN_PERSON.eql?(type) && in_person?)
+  end
+
   def attendance_type
     if in_person? && online?
       ATTENDENCE_BOTH

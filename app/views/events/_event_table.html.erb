@@ -103,7 +103,7 @@
         <% end %>
       <% end %>
 
-      <% if table.can_sign_up?(registration) %>
+      <% if table.can_sign_up?(registration, type) %>
         <% if table.premium? %>
           <%= button_to "Buy Ticket for #{number_to_currency table.price}", new_event_session_table_registration_table_path(event, table.session, table),
                         :class => "btn btn-xs btn-success", :method => :get, :disabled => table.closed?,
@@ -115,7 +115,7 @@
         <% end %>
       <% end %>
 
-      <% if table.can_gm_select?(registration) %>
+      <% if table.can_gm_select?(registration, type) %>
         <%= button_to 'I will GM!', new_event_session_table_game_master_path(event, table.session, table),
                       :class => "btn btn-xs btn-primary", :method => :get, :disabled => table.closed? if self_select_allowed?(event) %>
       <% end %>

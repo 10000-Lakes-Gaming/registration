@@ -308,7 +308,8 @@
                                                                     registration: @registration,
                                                                     reg_tables: @reg_tables,
                                                                     gm_tables: @gm_tables,
-                                                                    tables: @tables, reg_tables_hash: @reg_tables_hash } %>
+                                                                    tables: @tables, reg_tables_hash: @reg_tables_hash,
+                                                                    type: UserEvent::ATTENDENCE_IN_PERSON } %>
               <% end %>
             </div>
           <% end %>
@@ -328,7 +329,8 @@
                                                                     registration: @registration,
                                                                     reg_tables: @reg_tables,
                                                                     gm_tables: @gm_tables,
-                                                                    tables: @tables, reg_tables_hash: @reg_tables_hash } %>
+                                                                    tables: @tables, reg_tables_hash: @reg_tables_hash,
+                                                                    type: UserEvent::ATTENDENCE_ONLINE } %>
               <% end %>
             </div>
           <% end %>
@@ -373,7 +375,8 @@
                   <%= render partial: "events/event_table", locals: { event: @event, session: @session, table: table,
                                                                       registration: @registration, reg_tables: @reg_tables,
                                                                       gm_tables: @gm_tables, tables: @tables,
-                                                                      reg_tables_hash: @reg_tables_hash } %>
+                                                                      reg_tables_hash: @reg_tables_hash,
+                                                                      type: UserEvent::ATTENDENCE_IN_PERSON } %>
                 <% end %>
               <% end %>
             </div>
@@ -420,7 +423,8 @@
                   <%= render partial: "events/event_table", locals: { event: @event, session: @session, table: table,
                                                                       registration: @registration, reg_tables: @reg_tables,
                                                                       gm_tables: @gm_tables, tables: @tables,
-                                                                      reg_tables_hash: @reg_tables_hash } %>
+                                                                      reg_tables_hash: @reg_tables_hash,
+                                                                      type: UserEvent::ATTENDENCE_ONLINE } %>
                 <% end %>
               <% end %>
             </div>

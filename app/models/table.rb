@@ -156,10 +156,12 @@ class Table < ActiveRecord::Base
     overlap || registration.game_masters.any? { |gm| overlaps?(gm.table) }
   end
 
-  def can_sign_up?(registration)
+  def can_sign_up?(registration, type)
     return false if registration.nil?
 
-    ok = seats_available?
+    # first check it type matches registration
+    ok = registration.can_select?(type)
+    ok &&= seats_available?
     ok &&= !session.event.gm_select_only? || gm_can_signup?(registration)
     ok &&= !raffle?
     ok &&= !session.event.closed?
@@ -170,17 +172,17 @@ class Table < ActiveRecord::Base
     ok && !tickets_overlap?(registration)
   end
 
-  def gm_can_signup?(registration)
-    can_signup = session.event.gm_signup?
+  def gm_can_signup?(registration, type)
+    can_signup = session.event.gm_signup? && registration.can_select?(type)
     can_signup &&= registration.gamemaster?
     # must have at least as many GM as player
     can_signup && registration.game_masters.length > registration.registration_tables.length
   end
 
-  def can_gm_select?(registration)
+  def can_gm_select?(registration, type)
     return false if registration.nil?
 
-    ok = !session.event.closed?
+    ok = !session.event.closed? && registration.can_select?(type)
     ok &&= !session.event.online_sales_closed?
     ok &&= gm_self_select?
     ok &&= need_gms?
