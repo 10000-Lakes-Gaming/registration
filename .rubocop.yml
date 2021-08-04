@@ -8,3 +8,5 @@ Style/FormatString:
 
 AllCops:
   NewCops: enable
+  Exclude:
+    - 'out/**/*'
