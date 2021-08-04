@@ -35,21 +35,21 @@ class UserEvent < ActiveRecord::Base
   end
 
   ATTENDENCE_BOTH = 'In Person and Online'
-  ATTENDENCE_IN_PERSON = 'In Person'
-  ATTENDENCE_ONLINE = 'Online'
+  ATTENDANCE_IN_PERSON = 'In Person'
+  ATTENDANCE_ONLINE = 'Online'
   ATTENDENCE_UNKNOWN = 'Neither In Person nor Online'
 
   def can_select?(type)
-    (ATTENDENCE_ONLINE.eql?(type) && online?) || (ATTENDENCE_IN_PERSON.eql?(type) && in_person?)
+    (ATTENDANCE_ONLINE.eql?(type) && online?) || (ATTENDANCE_IN_PERSON.eql?(type) && in_person?)
   end
 
   def attendance_type
     if in_person? && online?
       ATTENDENCE_BOTH
     elsif in_person?
-      ATTENDENCE_IN_PERSON
+      ATTENDANCE_IN_PERSON
     elsif online?
-      ATTENDENCE_ONLINE
+      ATTENDANCE_ONLINE
     else
       ATTENDENCE_UNKNOWN
     end

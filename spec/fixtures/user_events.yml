@@ -50,3 +50,27 @@ paid_user_event_unpaid_additional:
   event: my_event
   paid: true
   payment_amount: 2000
+
+charity_event_normal_online:
+  user: normal_guy
+  event: charity_event
+  paid: true
+  payment_amount: 1000
+  online: true
+  in_person: false
+
+charity_event_in_person:
+  user: dude1
+  event: charity_event
+  paid: true
+  payment_amount: 1000
+  online: false
+  in_person: true
+
+gm_charity_event:
+  user: another_user
+  event: charity_event
+  paid: true
+  payment_amount: 1000
+  online: true
+  in_person: true

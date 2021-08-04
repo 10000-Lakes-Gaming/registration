@@ -139,3 +139,19 @@ other_hq:
   gms_needed: 1
   gm_self_select: true
   online: true
+
+charity_table_online:
+  session: charity_session
+  scenario: scenario_two_seven
+  max_players: 6
+  gms_needed: 1
+  gm_self_select: true
+  online: true
+
+charity_table:
+  session: charity_session
+  scenario: scenario_two_seven
+  max_players: 6
+  gms_needed: 1
+  gm_self_select: true
+  online: false

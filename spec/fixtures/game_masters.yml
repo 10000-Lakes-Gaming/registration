@@ -13,3 +13,11 @@ gm_game_master:
 gm_game_master2:
   user_event: gamemaster_event
   table: core
+
+charity_gm:
+  user_event: gm_charity_event
+  table: charity_table_online
+
+ip_charity_gm:
+  user_event: gm_charity_event
+  table: charity_table

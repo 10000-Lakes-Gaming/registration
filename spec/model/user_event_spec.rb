@@ -15,6 +15,32 @@ describe UserEvent, type: :model do
   let(:my_event) { events(:my_event) }
   let(:empty_reg_tables) { user_events(:empty_registration_tables) }
 
+  context 'validate player selection' do
+    it 'user sighted up as online only can only select online' do
+      registration = user_events(:charity_event_normal_online)
+
+      expect(registration.can_select?(UserEvent::ATTENDANCE_ONLINE)).to be true
+      expect(registration.can_select?(UserEvent::ATTENDANCE_IN_PERSON)).to be false
+
+      online_table = tables(:charity_table_online)
+      inperson_table = tables(:charity_table)
+      expect(online_table.can_sign_up?(registration)).to be true
+      expect(inperson_table.can_sign_up?(registration)).to be false
+    end
+
+    it 'user sighted up as in person only can only select in person' do
+      registration = user_events(:charity_event_in_person)
+
+      expect(registration.can_select?(UserEvent::ATTENDANCE_ONLINE)).to be false
+      expect(registration.can_select?(UserEvent::ATTENDANCE_IN_PERSON)).to be true
+
+      online_table = tables(:charity_table_online)
+      inperson_table = tables(:charity_table)
+      expect(online_table.can_sign_up?(registration)).to be false
+      expect(inperson_table.can_sign_up?(registration)).to be true
+    end
+  end
+
   context 'payments' do
     it 'with t-shirt event price is payment amount - t-shirt price' do
       shirt_user_event = user_events(:shirt_user_event)

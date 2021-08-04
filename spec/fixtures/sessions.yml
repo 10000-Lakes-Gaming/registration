@@ -53,3 +53,9 @@ other_session:
   name: Evening Slot
   start: 2017-08-02 14:00:00
   end: 2017-08-02 20:00:00
+
+charity_session:
+  event: charity_event
+  name: Charity
+  start: <%= DateTime.now + 15.days %>
+  end: <%= DateTime.now + 15.days + 4.hours %>

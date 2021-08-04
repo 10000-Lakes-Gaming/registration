@@ -156,13 +156,13 @@ class Table < ActiveRecord::Base
     overlap || registration.game_masters.any? { |gm| overlaps?(gm.table) }
   end
 
-  def can_sign_up?(registration, type)
+  def can_sign_up?(registration)
     return false if registration.nil?
-
+    type = online? ? UserEvent::ATTENDANCE_ONLINE : UserEvent::ATTENDANCE_IN_PERSON
     # first check it type matches registration
     ok = registration.can_select?(type)
     ok &&= seats_available?
-    ok &&= !session.event.gm_select_only? || gm_can_signup?(registration)
+    ok &&= !session.event.gm_select_only? || gm_can_signup?(registration, type)
     ok &&= !raffle?
     ok &&= !session.event.closed?
     ok &&= !session.event.online_sales_closed?
