@@ -53,6 +53,8 @@ class EventsController < ApplicationController
       user = gm.user_event.user
       Rails.logger.info "Looking at GM #{user.name} and scenario #{gm.scenario.long_name}"
       list = mapping[gm.scenario]
+      next if list.nil?
+
       # Skip VO requests for now. If we do modules, we may need to update this.
       Rails.logger.info "Checking GM #{user.name} to see if they are a VO. #{user.venture_officer?}"
       next if user.venture_officer?
