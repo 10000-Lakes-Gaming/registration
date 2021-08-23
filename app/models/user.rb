@@ -17,8 +17,8 @@ class User < ActiveRecord::Base
   validate :pfs_or_dci_number_exists
 
   TITLES = ['Venture-Agent', 'Venture-Lieutenant', 'Venture-Captain',
-            'Regional Venture-Coordinator',
-            'Organized Play Manager', 'Organized Play Associate',
+            'Regional Venture-Coordinator', 'Director of Community',
+            'Organized Play Coordinator', 'Organized Play Associate',
             'PFS Developer', 'SFS Developer', 'Paizo Developer',
             'Author', 'Publisher'].freeze
 
