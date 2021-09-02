@@ -86,7 +86,11 @@ class Table < ActiveRecord::Base
   end
 
   def long_name
-    "#{scenario.long_name} [#{session.name}]"
+    if premium?
+      "#{scenario.long_name} [#{session.name}] Premium(#{location})"
+    else
+      "#{scenario.long_name} [#{session.name}]"
+    end
   end
 
   def check_player_count
