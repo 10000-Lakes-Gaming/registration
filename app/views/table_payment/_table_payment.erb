@@ -1,7 +1,7 @@
 <div>
   <form action="/events/<%= registration_table.user_event.event.id %>/sessions/<%= registration_table.table.session.id %>/tables/<%= registration_table.table.id %>/registration_tables/<%= registration_table.id %>/table_payment" method="post">
     <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-    <!-- this should pull the data-key fromenvironment -->
+    <!-- this should pull the data-key from environment -->
     <script
     src="https://checkout.stripe.com/checkout.js"
     class="stripe-button"

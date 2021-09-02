@@ -27,7 +27,7 @@ class RegistrationTablesController < ApplicationController
 
   def get_possible_players
     @possible_players = []
-    @not_available    = []
+    @not_available = []
 
     @event.user_events.each do |user_event|
       in_session = false
@@ -55,7 +55,9 @@ class RegistrationTablesController < ApplicationController
 
   def get_possible_tables
     @possible_tables = []
-    @session.tables.each do |table|
+    # First, determine if this is an online or in person table -- we won't let them switch between modes
+    tables = @table.online? ? @session.online_all_tables : @session.in_person_all_tables
+    tables.each do |table|
       @possible_tables.push table unless table.full?
     end
   end

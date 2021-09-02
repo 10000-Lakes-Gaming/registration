@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Session < ActiveRecord::Base
+class Session < ActiveRecord::Base # rubocop:disable Metrics/ClassLength
   belongs_to :event
   has_many :tables
   delegate :prereg_ends, to: :event
@@ -39,6 +39,20 @@ class Session < ActiveRecord::Base
     tables.reject(&:headquarters?)
   end
 
+  def in_person_all_tables
+    premium = in_person_premium_tables
+    regular = in_person_regular_tables
+    if premium.nil? && regular.nil?
+      []
+    elsif premium.nil?
+      regular
+    elsif regular.nil?
+      premium
+    else
+      premium.concat(regular)
+    end
+  end
+
   def in_person_premium_tables
     unless @in_person_premium_tables
       @in_person_premium_tables = tables.select { |table| !table.online? && table.premium? }
@@ -55,6 +69,20 @@ class Session < ActiveRecord::Base
       @in_person_regular_tables.sort_by { |table| [table.scenario] }
     end
     @in_person_regular_tables
+  end
+
+  def online_all_tables
+    premium = online_premium_tables
+    regular = online_regular_tables
+    if premium.nil? && regular.nil?
+      []
+    elsif premium.nil?
+      regular
+    elsif regular.nil?
+      premium
+    else
+      premium.concat(regular)
+    end
   end
 
   def online_premium_tables
