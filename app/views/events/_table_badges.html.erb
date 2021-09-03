@@ -235,7 +235,7 @@
 
 
 <% if table.premium? %>
-  <% if table.price > 0 %>
+  <% if table.price <= 0 %>
     <button type="button" class="btn btn-round-xs btn-premium btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_premium">Author</button>
   <% else %>
     <button type="button" class="btn btn-round-xs btn-premium btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_premium">Charity</button>
