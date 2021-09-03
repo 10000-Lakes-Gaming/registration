@@ -38,14 +38,16 @@ task send_skalcon_announcement: :environment do
   puts 'Sending out registration reminder'
 
   message = Message.new
-  message.subject = 'SkalCon Online Registration Is Officially Open!'
   count = 0
   users = User.all
+  # Specific to SkålCon 2021
+  event = Event.find(17)
+  message.subject = "#{event.name} Registration Is Officially Open!"
   users.each do |user|
     if user.opt_out?
       puts "User #{user} opted out of emails"
     else
-      ContactMailer.skalcon_announcement(message, user).deliver
+      ContactMailer.skalcon_announcement(message, user, event).deliver
       count += 1
     end
   end

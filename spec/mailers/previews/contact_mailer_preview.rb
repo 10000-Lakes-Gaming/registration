@@ -101,11 +101,12 @@ class ContactMailerPreview < ActionMailer::Preview
 
   def skalcon_announcement_preview
     @user = User.first
+    event = Event.first
 
     message = Message.new
     message.subject = 'SkalCon Online Registration Is Officially Open!'
 
-    ContactMailer.skalcon_announcement(message, @user)
+    ContactMailer.skalcon_announcement(message, @user, event)
   end
 
   private

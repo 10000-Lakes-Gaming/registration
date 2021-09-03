@@ -23,31 +23,80 @@
 <div class="container-fluid">
   <p><%= image_tag("skalbanner.png", size: "250x100", alt: "SkålCon") %></p>
 
-  <h1>SkalCon Online Registration Is Officially Open!</h1>
+  <h1><%= @event.name %> Registration Is Officially Open!</h1>
 
-  <p>It’s happening - SkalCon Online Registration is open!</p>
+  <p>It’s happening - <%= @event.name %> Registration is open!</p>
 
-  <p>Just log onto the <%= link_to 'registration.skalcon.org', 'registration.skalcon.org' %>
-    site to register for the event, taking place October 9th - 11th 2020! SkalCon Online has a suggested donation of
-    $10.00, but you can choose your donation amount to be what you are comfortable with. As always, proceeds from
-    SkalCon will go directly to Tubman.</p>
+  <p>Just log onto the <a href="<%= event_url(@event) %>"><%= @event.name %> Registration</a>
+    site to register for the event, taking place <%= @event.timeslot %>! <%= @event.name %> has an early bird ticket
+    price
+    of <%= number_to_currency(@event.prereg_price) %> (after <%= @event.formatted_prereg_ends %> it will
+    be <%= number_to_currency @event.onsite_price %>). As always, proceeds from SkalCon will go directly to
+    Tubman.</p>
 
-  <p>At this time, only people volunteering to GM can sign up for events on the schedule. Remember, GMs choose the
-    Virtual Table Top system they would prefer to use - so don’t be afraid to GM! SkalCon organizers will offer support
-    for setting up your games, as well.</p>
+  <p>Additionally, <%= @event.name %> is offering T-shirts for a
+    pre-order price of <%= number_to_currency(@event.tee_shirt_price) %>. T-shirt pre-orders
+    end <%= @event.tee_shirt_end.to_formatted_s(:long) %>. If you not attending in person, you will need to arrange for
+    shipping or pickup of your shirt. See <a href="https://www.usps.com/ship/priority-mail.htm">USPS.gov</a> for
+    prices on flat-rate boxes. A small number of shirts will be available onsite.</p>
 
-  <p>After GMs have some time to get signed up for their tables, we announce when player sign-ups will be turned on.
-    However, you don’t have to wait until then to get registered for the convention and plan your schedule.</p>
+  <p>Keep an eye out for our special guest tables! Our special guests this year include Paizo Director of Community
+    Tonya Wondridge, Organized Play Coordinator Alex Speidel, and authors include Kate Baker, Dennis Muldoon,
+    Nate Wright, Scott D Young, Jessica Redekop, Hilary Moon Murphey, Jacob W. Michaels, and Vanessa Hoskins.</p>
 
-  <p>Keep an eye out for our special guest tables! Our special guests this year include Organized Play Manager Tonya
-    Wondridge, Starfinder Society Developer Thurston Hillman, Organized Play Associate Alex Speidel, and authors Kate
-    Baker, Dennis Muldoon, Jenny Jarzabski, and Vanessa Hoskins.</p>
+  <p><b>GM signups are now open, and GMs are able to sign up for one player table for every table that they are running!</b>
+  </p>
+  <p>
+    General table sign ups will open on Wednesday, September 15 at noon.
+  </p>
+  <hr>
+  <div class="h3">COVID-19 Policy</div>
 
-  <p>SkalCon Online will be coordinating using Discord, so be sure to join the
+  <p>Our COVID-19 policy applies to all who are in our hotel conference rooms at SkålCon ‘21. “Attendees” in this policy
+    refers to those who will be in the hotel conference rooms.</p>
+
+  <ol>
+    <li>Attendees must be fully vaccinated against COVID-19.
+      <ol style="list-style-type: lower-alpha">
+        <li><b>This policy is not subject to change.</b></li>
+        <li>“Fully vaccinated” means you are at least 2 weeks past the final dose of the vaccine you received.</li>
+        <li>Proof of vaccination must be presented at HQ when registering or picking up your badge at the
+          convention.
+          <ol style="list-style-type: lower-roman">
+            <li>Allowable formats include: A photocopy of your CDC vaccination card; a high-quality photo/scan
+              of your CDC vaccination card; an international equivalent; printed record of your vaccination from a
+              Doctor’s office, etc.
+            </li>
+            <li>If you forget your vaccination record, we will be forced to assume you are not vaccinated and
+              cannot participate at in-person convention activities.
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li>Masks will be required at the convention. This policy may be relaxed closer to the date depending on CDC, state,
+      and local government guidelines.
+    </li>
+    <li>Attendees are asked not to eat food while in the convention space, due to masking. Drinks are allowed.</li>
+    <li>Attendees are asked not to attend if they are ill.</li>
+    <li>Attendees are asked to respect social distancing when not at their tables.</li>
+    <li>Attendees can wear provided wristbands to represent their comfort level when it comes to physical contact.
+      <ol style="list-style-type: lower-alpha">
+        <li>Red &#8211; do not touch, maintain distance</li>
+        <li>Yellow &#8211; some contact allowed, such as elbow bumps instead of handshakes</li>
+        <li>Green &#8211; hugs and handshakes are allowed, with consent</li>
+      </ol>
+    </li>
+  </ol>
+
+  <p>View this policy on the <a target="_blank" href="http://www.skalcon.org/covid-19-statement/">SkålCon website</a>.</p>
+  <hr>
+
+  <p>The online portion of SkålCon will be coordinating using Discord, so be sure to join the
     <%= link_to '10,000 Lakes Gaming Discord', 'https://discord.gg/7m5PbZP' %> before the
-    convention (and watch us build out our channel functionality in real time!)</p>
+    convention.</p>
 
-  <p>We look forward to virtual games with all of you!</p>
+  <p>We look forward to in person <b>and</b> virtual games with all of you!</p>
 
 </div>
 <hr>

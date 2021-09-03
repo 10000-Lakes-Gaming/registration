@@ -108,9 +108,10 @@ class ContactMailer < ApplicationMailer
     mail(subject: @message.subject, to: email) unless email.blank? || user.opt_out?
   end
 
-  def skalcon_announcement(message, user)
+  def skalcon_announcement(message, user, event)
     @message = message
     @user = user
+    @event = event
 
     mail(subject: @message.subject, to: user.email) unless user.opt_out? || user.email.blank?
   end
