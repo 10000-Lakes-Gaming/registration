@@ -1,35 +1,35 @@
-<% if @table.premium? %>
-    <h2>Buy ticket for <%= @table.long_name %></h2>
+<% if @table.premium? && @table.price > 0 %>
+  <h2>Buy ticket for <%= @table.long_name %></h2>
 <% else %>
-    <h2>Sign Up for <%= @table.long_name %></h2>
+  <h2>Sign Up for <%= @table.long_name %></h2>
 <% end %>
 
 
 <div class="well">
   <% if @table.premium? %>
-      <div class="text-warning bg-warning">
-        <p><%= @table.long_name %> is a Premium table, GM'd by our convention VIPs. As such, there is a
-          ticket price of <%= number_to_currency @table.price %>, with proceeds going to charity.</p>
+    <div class="text-warning bg-warning">
+      <p><%= @table.long_name %> is a Premium table, GM'd by our convention VIPs. </p>
+      <% if @table.price > 0 %>
+        <p>As such, there is a ticket price of <%= number_to_currency @table.price %>, with proceeds going to charity.
         <p>Your sign up to this Premium table will be held for one hour while awaiting payment. If the payment is not
-          received
-          within this timeframe, this table sign up will be canceled. </p>
+          received within this timeframe, this table sign up will be canceled. </p>
         <p class="text-danger lead">Payments made for Premium Tables are <strong>non-refundable.</strong> Please take
           this into consideration before you make your payment.</p>
-      </div>
+      <% end %>
+    </div>
   <% end %>
   <% if @table.non_pfs? %>
-      <div class="text-warning bg-warning">
-        <p><span class="lead text-danger ">This table is <em>not</em> being run for organized play credit.</span>
-          You will not receive a chronicle for playing at this table.
-        </p>
-      </div>
+    <div class="text-warning bg-warning">
+      <p><span class="lead text-danger ">This table is <em>not</em> being run for organized play credit.</span>
+        You will not receive a chronicle for playing at this table.
+      </p>
+    </div>
   <% end %>
 
   <p>If you would prefer not to
-    <% if @table.premium? %> pay for
+    <% if @table.premium? && @table.price > 0 %> pay for
     <% else %> play at
     <% end %>this table, please click
     'Back' below.</p>
 </div>
 <%= render 'form' %>
-

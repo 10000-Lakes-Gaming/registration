@@ -65,7 +65,7 @@
 
   <hr>
   <div class="actions">
-    <% unless @table.premium? %>
+    <% unless @table.premium? && @table.price > 0 %>
       <%= f.submit "Sign Up for #{@table.long_name}", :class => 'btn btn-warning' %>
     <% else %>
       <%= f.submit "Continue to payment for #{@table.long_name}", :class => 'btn btn-warning' %>

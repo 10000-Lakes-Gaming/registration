@@ -104,7 +104,7 @@
       <% end %>
 
       <% if table.can_sign_up?(registration) %>
-        <% if table.premium? %>
+        <% if table.premium? && table.price > 0 %>
           <%= button_to "Buy Ticket for #{number_to_currency table.price}", new_event_session_table_registration_table_path(event, table.session, table),
                         :class => "btn btn-xs btn-success", :method => :get, :disabled => table.closed?,
                         data: { confirm: "This is a premium event with a price of #{number_to_currency table.price}. You will have 1 hour to pay for this ticket." }
