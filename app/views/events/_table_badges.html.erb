@@ -235,47 +235,50 @@
 
 
 <% if table.premium? %>
-  <button type="button" class="btn btn-round-xs btn-premium btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_premium">Charity</button>
-  <!-- Modal -->
-  <div id="table_<%= table.id %>_premium" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Charity Table</h4>
-        </div>
-        <div class="modal-body">
-          <p>This is a charity table,
-            <% if table.game_masters.blank? %>
-              with a VIP Game Master!
-            <% else %>
-              with <%= table.game_masters.map { |gm| gm.user_event.user.formal_name }.join(" & ") %>
-            <% end %>
-            This table will cost an additional <%= number_to_currency table.price %> to play
-            at, with the proceeds going <%= table.session.event.name %>'s charity.
-            <% if table.early_bird_discount? %>
-              After <%= table.prereg_ends.localtime.to_formatted_s(:short) %> the price will rise
-              to  <%= number_to_currency table.onsite_price %>.
-            <% end %>
-          </p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  <% if table.price > 0 %>
+    <button type="button" class="btn btn-round-xs btn-premium btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_premium">Author</button>
+  <% else %>
+    <button type="button" class="btn btn-round-xs btn-premium btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_premium">Charity</button>
+    <!-- Modal -->
+    <div id="table_<%= table.id %>_premium" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Charity Table</h4>
+          </div>
+          <div class="modal-body">
+            <p>This is a charity table,
+              <% if table.game_masters.blank? %>
+                with a VIP Game Master!
+              <% else %>
+                with <%= table.game_masters.map { |gm| gm.user_event.user.formal_name }.join(" & ") %>
+              <% end %>
+              This table will cost an additional <%= number_to_currency table.price %> to play
+              at, with the proceeds going <%= table.session.event.name %>'s charity.
+              <% if table.early_bird_discount? %>
+                After <%= table.prereg_ends.localtime.to_formatted_s(:short) %> the price will rise
+                to  <%= number_to_currency table.onsite_price %>.
+              <% end %>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <button type="button" class="btn btn-round-xs btn-cost btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_premium"><%= number_to_currency table.price %></button>
+    <button type="button" class="btn btn-round-xs btn-cost btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_premium"><%= number_to_currency table.price %></button>
 
-  <% if table.early_bird_discount? %>
-    <button type="button" class="btn btn-round-xs btn-cost-increasing btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_premium">
-      <span class='glyphicon glyphicon-warning-sign'></span> <%= number_to_currency table.onsite_price %>
-      after <%= table.prereg_ends.localtime.to_formatted_s(:short) %></button>
+    <% if table.early_bird_discount? %>
+      <button type="button" class="btn btn-round-xs btn-cost-increasing btn-xs" data-toggle="modal" data-target="#table_<%= table.id %>_premium">
+        <span class='glyphicon glyphicon-warning-sign'></span> <%= number_to_currency table.onsite_price %>
+        after <%= table.prereg_ends.localtime.to_formatted_s(:short) %></button>
 
+    <% end %>
   <% end %>
-
 <% end %>
 
 <% unless table.information.blank? %>
