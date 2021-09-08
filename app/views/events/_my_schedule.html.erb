@@ -59,6 +59,7 @@
         <th scope="col">Session</th>
         <th scope="col">Scenario</th>
         <th scope="col">Ticket Type</th>
+        <th scope="col">Table Type</th>
         <th scope="col">Location</th>
         <th scope="col">Table Details</th>
         <% if user_event&.gamemaster? %>
@@ -92,6 +93,9 @@
                 <% end %>
               </td>
               <td>
+                <%= selection.table.online? ? 'Online' : 'In Person' %>
+              </td>
+              <td>
                 <%# handle online differently %>
                 <%= ((selection.is_a? GameMaster) || selection.table.online?) ? selection.table.location : 'See Musterer' %>
               </td>
@@ -118,10 +122,10 @@
               <% elsif selection.is_a? GameMaster %>
                 <td></td>
               <% end %>
-            <% end %>
-            </tr>
           <% end %>
+          </tr>
         <% end %>
+      <% end %>
       </tbody>
     </table>
   </div>
