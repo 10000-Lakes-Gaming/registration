@@ -62,12 +62,9 @@
   <% total_gms_assigned = 0 %>
   <% total_ol_players_needed = 0 %>
   <% total_ip_players_needed = 0 %>
-  <% total_ol_players_signed_up = 0 %>
-  <% total_ip_players_signed_up = 0 %>
   <% total_players_needed = 0 %>
   <% total_ol_players_signed_up = 0 %>
   <% total_ip_players_signed_up = 0 %>
-  <% total_players_signed_up = 0 %>
   <% @tables_by_scenario.sort.each do |scenario, tables| %>
     <tr>
       <td><%= scenario.long_name %> (<%= scenario.tier %>)</td>
@@ -109,20 +106,17 @@
       <% total_number_tables += table_count %>
       <% total_ol_number_tables += ol_table_count %>
       <% total_ip_number_tables += ip_table_count %>
+
       <% total_ol_gms_assigned += ol_gm_assigned_count %>
       <% total_ip_gms_assigned += ip_gm_assigned_count %>
       <% total_ol_gms_needed += ol_gm_needed_count %>
       <% total_ip_gms_needed += ip_gm_needed_count %>
-      <% total_gms_needed += (ol_gm_needed_count + ip_gm_needed_count) %>
-      <% total_ol_gms_assigned += ol_gm_assigned_count %>
-      <% total_ip_gms_assigned += ip_gm_assigned_count %>
-      <% total_gms_assigned += (total_ol_gms_assigned + total_ip_gms_assigned) %>
+
       <% total_ol_players_needed += ol_player_needed_count %>
       <% total_ip_players_needed += ip_player_needed_count %>
-      <% total_players_needed += (ol_player_needed_count + ip_player_needed_count) %>
       <% total_ol_players_signed_up += ol_player_assigned_count %>
       <% total_ip_players_signed_up += ip_player_assigned_count %>
-      <% total_players_signed_up += ol_player_assigned_count + ol_player_assigned_count %>
+
       <td><%= ol_table_count %></td>
       <td><%= ip_table_count %></td>
       <td><%= ol_gm_remaining_count %> / <%= ol_gm_needed_count %></td>
