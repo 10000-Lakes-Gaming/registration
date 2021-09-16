@@ -86,10 +86,16 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
   end
 
   def long_name
-    if premium?
-      "#{scenario.long_name} [#{session.name}] Premium(#{location})"
+    if online?
+      if premium?
+        "#{scenario.long_name} [#{session.name}] #{location} Online Premium"
+      else
+        "#{scenario.long_name} [#{session.name}] #{location} Online"
+      end
+    elsif premium?
+      "#{scenario.long_name} [#{session.name}] #{location} Premium"
     else
-      "#{scenario.long_name} [#{session.name}]"
+      "#{scenario.long_name} [#{session.name}] #{location}"
     end
   end
 
