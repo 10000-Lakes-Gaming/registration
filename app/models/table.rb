@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Table < ActiveRecord::Base
+class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
   require 'csv'
 
   belongs_to :session
@@ -102,7 +102,13 @@ class Table < ActiveRecord::Base
   end
 
   def remaining_seats
-    max_players - current_registrations
+    total_seats = max_players
+    available_seats = max_players
+    if need_gms?
+      seats_per_gm = (total_seats / gms_needed).to_i
+      available_seats = seats_per_gm * current_gms
+    end
+    available_seats - current_registrations
   end
 
   def current_registrations
