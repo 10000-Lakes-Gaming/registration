@@ -2,7 +2,7 @@
   <!-- scenario name and badges -->
   <div class="col-md-5 no-pad">
     <% scenario = table.scenario %>
-    <%= scenario.long_name %>
+    <%= table.long_name %>
     <% if table.premium? && !table.game_masters[0].nil? %>
       with
       <%= table.game_masters.map { |gm| gm.user_event.user.formal_name }.join(" & ") %>
