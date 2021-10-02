@@ -23,32 +23,25 @@
 <div class="container-fluid">
   <p><%= image_tag("skalbanner.png", size: "250x100", alt: "SkålCon") %></p>
 
-  <h1><%= @event.name %> Registration Is Officially Open!</h1>
+  <h1><%= @event.name %> !</h1>
 
-  <p>It’s happening - <%= @event.name %> Registration is open!</p>
+  <p><%= @event.name %> is fast approaching, and there are some important dates you do not want to miss!!</p>
 
-  <p>Just log onto the <a href="<%= event_url(@event) %>"><%= @event.name %> Registration</a>
-    site to register for the event, taking place <%= @event.timeslot %>! <%= @event.name %> has an early bird ticket
-    price
-    of <%= number_to_currency(@event.prereg_price) %> (after <%= @event.formatted_prereg_ends %> it will
-    be <%= number_to_currency @event.onsite_price %>). As always, proceeds from SkalCon will go directly to
-    Tubman.</p>
+  <p>First - the hotel block ends on October 8th! Please use this link to make your reservation:
+    <a href="https://www.ihg.com/crowneplaza/hotels/us/en/find-hotels/hotel/rooms?qDest=3131%20Campus%20Drive,%20Plymouth,%20MN,%20US&qCiMy=92021&qCiD=29&qCoMy=92021&qCoD=31&qAdlt=1&qChld=0&qRms=1&qRtP=6CBARC&qIta=99801505&qGrpCd=Z6G&qSlH=MSPPM&qAkamaiCC=US&qSrt=sBR&qBrs=re.ic.in.vn.cp.vx.hi.ex.rs.cv.sb.cw.ma.ul.ki.va.ii.sp.nd.ct.sx.we&qAAR=6CBARC&qWch=0&qSmP=1&setPMCookies=true&qRad=30&qRdU=mi&srb_u=1&qSHBrC=CP&icdv=99801505"><%= @event.name %>
+      Room Block at Crown Plaza</a>.
+    If you already have a room, and it is not in the room block, we would appreciate it if you changed to one in the
+    block. You'll get a great price for the room if you do!</p>
 
-  <p>Additionally, <%= @event.name %> is offering T-shirts for a
-    pre-order price of <%= number_to_currency(@event.tee_shirt_price) %>. T-shirt pre-orders
-    end <%= @event.tee_shirt_end.to_formatted_s(:long) %>. If you not attending in person, you will need to arrange for
-    shipping or pickup of your shirt. See <a href="https://www.usps.com/ship/priority-mail.htm">USPS.gov</a> for
-    prices on flat-rate boxes. A small number of shirts will be available onsite.</p>
+  <p>Second - pre-registration for <%= @event.name %> ends <%= @event.formatted_prereg_ends %>. If you would like to
+    attend SkalCon and haven’t registered yet, please do so at
+    <a href="<%= event_url(@event) %>"><%= @event.name %> Registration</a>.
+    The price is currently <%= number_to_currency(@event.prereg_price) %>, but will go up
+    to <%= number_to_currency @event.onsite_price %>
+    if you wait to register at the convention. Remember that your registration counts for both in-person and online
+    games. As always, proceeds from <%= @event.name %> will go directly to
+    <a href="http://www.tubman.org" target="_blank">Tubman</a>.</p>
 
-  <p>Keep an eye out for our special guest tables! Our special guests this year include Paizo Director of Community
-    Tonya Wondridge, Organized Play Coordinator Alex Speidel, and authors include Kate Baker, Dennis Muldoon,
-    Nate Wright, Scott D Young, Jessica Redekop, Hilary Moon Murphey, Jacob W. Michaels, and Vanessa Hoskins.</p>
-
-  <p><b>GM signups are now open, and GMs are able to sign up for one player table for every table that they are running!</b>
-  </p>
-  <p>
-    General table sign ups will open on Wednesday, September 15 at noon.
-  </p>
   <hr>
   <div class="h3">COVID-19 Policy</div>
 
@@ -74,8 +67,7 @@
         </li>
       </ol>
     </li>
-    <li>Masks will be required at the convention. This policy may be relaxed closer to the date depending on CDC, state,
-      and local government guidelines.
+    <li>Masks will be required at the convention.
     </li>
     <li>Attendees are asked not to eat food while in the convention space, due to masking. Drinks are allowed.</li>
     <li>Attendees are asked not to attend if they are ill.</li>
@@ -89,15 +81,15 @@
     </li>
   </ol>
 
-  <p>View this policy on the <a target="_blank" href="http://www.skalcon.org/covid-19-statement/">SkålCon website</a>.</p>
+  <p>View this policy on the <a target="_blank" href="http://www.skalcon.org/covid-19-statement/">SkålCon website</a>.
+  </p>
   <hr>
 
   <p>The online portion of SkålCon will be coordinating using Discord, so be sure to join the
     <%= link_to '10,000 Lakes Gaming Discord', 'https://discord.gg/7m5PbZP' %> before the
     convention.</p>
 
-  <p>We look forward to in person <b>and</b> virtual games with all of you!</p>
-
+  <p>Let’s have some fun raising money for charity!</p>
 </div>
 <hr>
 <div><%= image_tag("MN-POP.png", width: 250, alt: "Minnesota Paizo Organized Play") %>

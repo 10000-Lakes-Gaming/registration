@@ -42,7 +42,7 @@ task send_skalcon_announcement: :environment do
   users = User.all
   # Specific to SkålCon 2021
   event = Event.find(17)
-  message.subject = "#{event.name} Registration Is Officially Open!"
+  message.subject = "#{event.name} is fast approaching, and there are some important dates you do not want to miss!!"
   users.each do |user|
     if user.opt_out?
       puts "User #{user} opted out of emails"
