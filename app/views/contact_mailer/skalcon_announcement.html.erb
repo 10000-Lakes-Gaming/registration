@@ -19,28 +19,19 @@
           crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body>`
 <div class="container-fluid">
   <p><%= image_tag("skalbanner.png", size: "250x100", alt: "SkålCon") %></p>
 
   <h1><%= @event.name %> !</h1>
 
-  <p><%= @event.name %> is fast approaching, and there are some important dates you do not want to miss!!</p>
+  <p>It’s almost time for the main event - <%= @event.name %> is happening October 29th-31st! (Spooky!) With the convention less than two weeks away, our pre-registration will close on <%= @event.formatted_prereg_ends %>. Head on over to the registration website if you haven’t registered yet for either in-person or online games. <a href="<%= event_url(@event) %>"><%= @event.name %> Registration</a>. The at-con pricing will be <%= number_to_currency @event.onsite_price %> instead of the <%= number_to_currency(@event.prereg_price) %> pricing pre-registration is. Remember, as always, your registration fee helps to support our charity, Tubman!</p>
 
-  <p>First - the hotel block ends on October 8th! Please use this link to make your reservation:
-    <a href="https://www.ihg.com/crowneplaza/hotels/us/en/find-hotels/hotel/rooms?qDest=3131%20Campus%20Drive,%20Plymouth,%20MN,%20US&qCiMy=92021&qCiD=29&qCoMy=92021&qCoD=31&qAdlt=1&qChld=0&qRms=1&qRtP=6CBARC&qIta=99801505&qGrpCd=Z6G&qSlH=MSPPM&qAkamaiCC=US&qSrt=sBR&qBrs=re.ic.in.vn.cp.vx.hi.ex.rs.cv.sb.cw.ma.ul.ki.va.ii.sp.nd.ct.sx.we&qAAR=6CBARC&qWch=0&qSmP=1&setPMCookies=true&qRad=30&qRdU=mi&srb_u=1&qSHBrC=CP&icdv=99801505"><%= @event.name %>
-      Room Block at Crown Plaza</a>.
-    If you already have a room, and it is not in the room block, we would appreciate it if you changed to one in the
-    block. You'll get a great price for the room if you do!</p>
+  <p>Once you’re registered, don’t forget to sign up for games! There are plenty of tables with GMs waiting to run a game for you (and your friends? :) )  If you’re procrastinating on setting up your schedule, just take a minute right now and pick out a few tables. We are running the PFS2 3-99 multi-table special on Friday night and the SFS 3-99 multi-table special on Friday night. Both are offered in person and online!</p>
 
-  <p>Second - pre-registration for <%= @event.name %> ends <%= @event.formatted_prereg_ends %>. If you would like to
-    attend SkalCon and haven’t registered yet, please do so at
-    <a href="<%= event_url(@event) %>"><%= @event.name %> Registration</a>.
-    The price is currently <%= number_to_currency(@event.prereg_price) %>, but will go up
-    to <%= number_to_currency @event.onsite_price %>
-    if you wait to register at the convention. Remember that your registration counts for both in-person and online
-    games. As always, proceeds from <%= @event.name %> will go directly to
-    <a href="http://www.tubman.org" target="_blank">Tubman</a>.</p>
+  <p>We’ll have a full guide on what to expect when you arrive at SkalCon posted on our website (skalcon.org) next week - but don’t forget to bring some physical items to donate to Tubman and/or a local food bank. Information on what Tubman is accepting for donations is here: https://www.tubman.org/give-help/ways-to-give/donate-goods.html We’ll also accept items for our silent auction at the convention if you have something to donate on that front.</p>
+
+  <p>And one last reminder for our in-person attendees that the COVID-19 policy is in effect. You can read the full policy on the  <a target="_blank" href="http://www.skalcon.org/covid-19-statement/">SkålCon website</a>.  So don’t forget to bring a copy of your vaccination card or similar vaccine record if you are playing in-person.</p>
 
   <hr>
   <div class="h3">COVID-19 Policy</div>
