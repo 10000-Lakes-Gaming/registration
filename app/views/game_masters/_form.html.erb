@@ -50,6 +50,19 @@
     </div>
   <% end %>
 
+  <% if !@table.online? %>
+    <%# Edit the location/table number %>
+    <% if event_host? %>
+      <!-- field -->
+      <%= f.text_field :table_number %>
+    <% else %>
+      <!-- display -->
+      <p>
+        <b>Table Number:</b> <%= @game_master.table_number %>
+      </p>
+    <% end %>
+  <% end %>
+
   <% if @table.online? %>
     <h3>Additional Information for Online Games</h3>
     <div class="panel panel-padded thin-border">
