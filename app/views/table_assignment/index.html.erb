@@ -14,8 +14,7 @@
 <% @event.sessions.sort { |a, b| a <=> b }.each do |session| %>
   <h4 class="bg-primary">Session: <%= session.long_name %></h4>
 
-  <% tables = session.tables
-     tables.reject! { |table| table.online? }
+  <% tables = session.tables.reject { |table| table.online? }
      tables.sort { |a, b| a <=> b }.each_slice(4) do |slice| %>
     <div class="row pageinate">
       <% slice.each do |table| %>

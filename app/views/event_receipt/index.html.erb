@@ -4,8 +4,7 @@
 
 <h2 class="hidden-print">All registrations, by user:</h2>
 
-<% user_events = @event.user_events
-   user_events.select! { |reg| reg.in_person? }
+<% user_events = @event.user_events.select { |reg| reg.in_person? }
    user_events.sort.each do |user_event| %>
   <%= render partial: 'registration_receipt', locals: { event: @event, user_event: user_event } %>
   <hr>
