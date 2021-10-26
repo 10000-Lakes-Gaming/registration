@@ -54,6 +54,7 @@
     <%# Edit the location/table number %>
     <% if event_host? %>
       <!-- field -->
+      <%= f.label :table_number %>
       <%= f.text_field :table_number %>
     <% else %>
       <!-- display -->

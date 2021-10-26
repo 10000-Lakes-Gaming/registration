@@ -20,7 +20,7 @@
     <dd class="head text-info"><%= @table.long_name %></dd>
     <% if @table.location.present? && !@table.online? %>
       <dt class="head">Location:</dt>
-      <dd class="head text-info"><%= @table.location %></dd>
+      <dd class="head text-info"><%= @table.location || @game_master.table_number %></dd>
     <% end %>
   </dl>
 </div>
