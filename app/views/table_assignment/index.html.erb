@@ -11,10 +11,12 @@
 <!-- for now, first pass, list all the GMs -->
 <h3 class="hidden-print">All Table Assignments, By Session:</h3>
 
-<% @event.sessions.sort {|a, b| a <=> b}.each do |session| %>
+<% @event.sessions.sort { |a, b| a <=> b }.each do |session| %>
   <h4 class="bg-primary">Session: <%= session.long_name %></h4>
 
-  <% session.tables.sort {|a, b| a <=> b}.each_slice(4) do |slice| %>
+  <% tables = session.tables
+     tables.reject! { |table| table.online? }
+     tables.sort { |a, b| a <=> b }.each_slice(4) do |slice| %>
     <div class="row pageinate">
       <% slice.each do |table| %>
         <div class="col-lg-3 col-md-3 col-sm-3">
@@ -24,14 +26,14 @@
               <% unless table.location.nil? %>
                 <div>Table(s):
                   <%= table.location %>
-                    <% unless table.gm_table_assignments.blank? %>
+                  <% unless table.gm_table_assignments.blank? %>
                     (<%= table.gm_table_assignments %>)
                   <% end %>
                 </div>
               <% end %>
             </li>
             <li class="list-group-item list-group-item-info">Players</li>
-            <% table.registration_tables.sort {|a, b| a <=> b}.each do |rsvp| %>
+            <% table.registration_tables.sort { |a, b| a <=> b }.each do |rsvp| %>
               <li class="list-group-item"><%= rsvp.user_event.user.name %></li>
             <% end %>
             <% (1..table.remaining_seats).each do |i| %>
@@ -40,7 +42,7 @@
           </ul>
           <ul class="list-group">
             <li class="list-group-item  list-group-item-warning">GMs</li>
-            <% table.game_masters.sort {|a, b| a <=> b}.each do |gm| %>
+            <% table.game_masters.sort { |a, b| a <=> b }.each do |gm| %>
               <li class="list-group-item"><%= gm.user_event.user.name %>
                 <% unless gm.table_number.blank? %>
                   (<%= gm.table_number.strip %>)
@@ -56,4 +58,3 @@
     </div>
   <% end %>
 <% end %>
-

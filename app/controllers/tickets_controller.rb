@@ -27,19 +27,19 @@ class TicketsController < ApplicationController
     @empty_tickets = []
     @event.sessions.each do |session|
       session.tables.each do |table|
-        next if %w[HQ Overseer].include? table.location
+        next if table.online? || (%w[HQ Overseer].include? table.location)
 
         # use number of remaining seats.
         remaining_seats = table.remaining_seats
         next unless remaining_seats.positive?
 
-        start          = table.current_registrations + 1
+        start = table.current_registrations + 1
         needed_tickets = (start..table.max_players)
         needed_tickets.to_a.each do |seat|
-          ticket            = RegistrationTable.new
+          ticket = RegistrationTable.new
           ticket.user_event = @user_event
-          ticket.table      = table
-          ticket.seat       = seat
+          ticket.table = table
+          ticket.seat = seat
           @empty_tickets << ticket
         end
       end
@@ -48,17 +48,18 @@ class TicketsController < ApplicationController
   end
 
   def get_unknown_user_event
-    @user_event       = UserEvent.new
+    @user_event = UserEvent.new
     @user_event.event = @event
-    @user_event.user  = @unknown
+    @user_event.user = @unknown
   end
 
   def get_unknown_user
-    @unknown      = User.new
+    @unknown = User.new
     @unknown.name = ''
   end
 
   def get_real_tickets
-    @tickets = @event.registration_tables
+    # we want only in person tables.
+    @tickets = @event.registration_tables.reject { |ticket| ticket.table.online? }
   end
 end
