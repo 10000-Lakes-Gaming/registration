@@ -110,6 +110,7 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
   def remaining_seats
     total_seats = max_players
     available_seats = max_players
+
     if need_gms?
       seats_per_gm = (total_seats / gms_needed).to_i
       available_seats = seats_per_gm * current_gms

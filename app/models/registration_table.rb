@@ -35,13 +35,13 @@ class RegistrationTable < ActiveRecord::Base
     sorted
   end
 
-  def self.to_csv(empty_tickets = nil)
+  def self.to_csv(tickets, empty_tickets = nil)
     attributes = %w[ticket_number total_seats event session start_time scenario name formal_name pfs_number
                     event_ticket_id price]
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
-      all.each do |ticket|
+      tickets.each do |ticket|
         csv << [ticket.seat, ticket.table.max_players, ticket.event, ticket.session, ticket.session_start_time,
                 ticket.scenario, ticket.player, ticket.formal_name, ticket.pfs_number, ticket.seat, ticket.ticket_price]
       end

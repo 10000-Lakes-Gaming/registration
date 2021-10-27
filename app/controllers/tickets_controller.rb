@@ -16,36 +16,43 @@ class TicketsController < ApplicationController
         render :index
       end
       format.csv do
-        @tickets.concat @empty_tickets
-        cvs_data = @tickets.to_csv
-        send_data(cvs_data, filename: "#{@event.name}_tickets.csv")
+        csv_data = RegistrationTable.to_csv @tickets, @empty_tickets
+        send_data(csv_data, filename: "#{@event.name}_tickets.csv")
       end
     end
   end
 
   private
 
+  def get_table_with_seats
+    tables = []
+    @event.sessions.each do |session|
+      my_tables = session.tables
+      my_tables = my_tables.reject { |table| table.online? }.select { |table| table.seats_available? }
+      tables.concat my_tables
+    end
+    tables
+  end
+
   def get_empty_tickets
     @empty_tickets = []
-    @event.sessions.each do |session|
-      session.tables.each do |table|
-        next if table.online? || (%w[HQ Overseer].include? table.location)
+    get_table_with_seats
+    get_table_with_seats.each do |table|
+      Rails.logger.info "Checking table #{table.long_name}: is it full? #{table.full?} : #{table.remaining_seats}"
+      next if (%w[HQ Overseer].include? table.location)
+      next if table.full?
 
-        # use number of remaining seats.
-        remaining_seats = table.remaining_seats
-        next unless remaining_seats.positive?
-
-        start = table.current_registrations + 1
-        needed_tickets = (start..table.max_players)
-        needed_tickets.to_a.each do |seat|
-          ticket = RegistrationTable.new
-          ticket.user_event = @user_event
-          ticket.table = table
-          ticket.seat = seat
-          @empty_tickets << ticket
-        end
+      start = table.current_registrations + 1
+      needed_tickets = (start..table.max_players)
+      needed_tickets.to_a.each do |seat|
+        ticket = RegistrationTable.new
+        ticket.user_event = @user_event
+        ticket.table = table
+        ticket.seat = seat
+        @empty_tickets << ticket
       end
     end
+    # end
     @empty_tickets
   end
 
