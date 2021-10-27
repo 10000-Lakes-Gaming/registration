@@ -16,9 +16,8 @@ class TicketsController < ApplicationController
         render :index
       end
       format.csv do
-        # tickets_to_csv = @tickets.to_csv@empty_tickets)
-        tickets = @tickets.concat @empty_tickets
-        cvs_data = tickets.to_csv
+        @tickets.concat @empty_tickets
+        cvs_data = @tickets.to_csv
         send_data(cvs_data, filename: "#{@event.name}_tickets.csv")
       end
     end
