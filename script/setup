@@ -12,7 +12,7 @@ if ! [ -x "$(command -v sqlite3)" ]; then
     exit 1
 fi
 
-RUBY_VERSION=2.7.4
+RUBY_VERSION=2.7.5
 
 echo $(command -v rbenv )
 if [ ! -f .ruby-version ] ; then
