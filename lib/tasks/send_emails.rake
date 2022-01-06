@@ -42,7 +42,7 @@ task send_skalcon_announcement: :environment do
   users = User.all
   # Specific to CotN 2022
   event = Event.find(18)
-  message.subject = "#{ event.name }! A Call for Volunteers!"
+  message.subject = "Pathfinders and Starfinders! MN-POP needs your help for #{event.name}!"
   users.each do |user|
     if user.opt_out?
       puts "User #{user} opted out of emails"
