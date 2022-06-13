@@ -21,54 +21,61 @@
 
 <body>
 <div class="container-fluid">
-  <!--  <p><%#= image_tag("skalbanner.png", size: "250x100", alt: "SkålCon") %></p>-->
+  <p><%= image_tag("skalbanner.png", size: "250x100", alt: "SkålCon") %></p>
 
-  <p>Dear Pathfinders and Starfinders,</p>
+  <p class="h3">Hello SkålCon Attendees!</p>
 
-  <p>Con of the North is February 18-20 2022, and we need your help GMing Pathfinder and Starfinder.
-    We are planning over 90 tables over the weekend, so we appreciate you taking the time to GM for us.
-    Unfortunately, we have only about a third of our tables covered with GMs, and neither special currently
-    has enough GMs to make them happen.
+  <p>We have 3 important announcements for you all!</p>
+
+  <ol>
+    <li>There will be TWO conventions this year - <%= @event.name %> (in-person) and SkålCOnline 2022 (online)!
+      <hr/>
+      <div>
+        <div><b><a href="<%= event_url(@event) %>"><%= @event.name %></a></b> - our standard in-person convention</div>
+        <div><b>Dates:</b> <%= @event.timeslot %></div>
+        <div><b>Location:</b> <%= @event.location %></div>
+        <div><b>Registration:</b> <%= number_to_currency(@event.prereg_price) %>
+          (after <%= @event.formatted_prereg_ends %> it will be <%= number_to_currency @event.onsite_price %>)
+        </div>
+      </div>
+
+      <hr/>
+
+      <div>
+        <div><b>SkålCOnline 2022:</b> a new, online only convention similar to our 2020 event</div>
+        <div><b>Dates:</b> November 11th-13th 2022</div>
+        <div><b>Location:</b> Online in our discord/various virtual tabletop</div>
+        <div><b>Registration:</b> Suggested $10 registration</div>
+      </div>
+      <hr/>
+      <div>Registration isn’t available (yet), but be sure to save these dates to your calendar!</div>
+      <hr/>
+    </li>
+    <li><b>The hotel block is available for <%= @event.name %>!</b> Reserve your hotel room at the
+      <a href="https://bit.ly/3zAOSCk">Crowne Plaza Minneapolis West</a>. Be sure to ‘Change Search’ to modify
+      the dates/number of people for your stay at the hotel.
+      <hr/>
+    </li>
+
+    <li><b>For any Pathfinder First Edition GMs & players</b> - we need your input! Please fill out
+      <a href="https://forms.gle/B5NUxPmY9YtTLZPY7">this survey</a> to provide input on what games you’d like to have
+      scheduled at <%= @event.name %>, and how we run PF1 for our community!
+      <hr/>
+    </li>
+  </ol>
+
+
+  <p>That’s all the announcements for now! We’ll inform you all when registration is open via email, but you can keep
+    up-to-date via http://www.skalcon.org/ or https://www.facebook.com/pfsskalcon.
   </p>
-
-  <p>Without your help, we will have to cancel a large number of our planned tables, and will also have to cancel both
-    the Pathfinder and Starfinder specials! Please volunteer to run a table or three so that we can avoid doing this. GMs
-    get their scenarios for free and increased ACP on tables that they run!
-  </p>
-
-  <ul>
-  <li>Con of the North requires proof of COVID-19 vaccination and wearing of masks in all convention spaces.</li>
-
-  <li>Drinking is not allowed in any Con of the North convention areas, including the MN-POP room.</li>
-
-  <li>"Goblin grenades" and "skitterbombs" will not be allowed at Con of the North. All games will be run as written.</li>
-  </ul>
-  <p>To register for Con of the North  itself, please go to the
-    <a href="https://tabletop.events/conventions/con-of-the-north-2022">Con of the North registration site</a>:
-    There is a "referee only" badge for $2, but please remember this will not allow you to play should your table fold.</p>
-
-  <p>To sign-up as to GM, please register at <a href="<%= event_url(@event) %>"><%= @event.name %> registration application</a>
-    and select the games that you want to run!</p>
-
-
-  <p>If we get enough GMs to run six(6) tables each,  we will be running the PFS2 special 3-99 <i>Fate in the Future</i> Saturday afternoon, and the linked SFS special 3-99
-    <i>Perils of the Past</i> on Saturday evening! Remember these are replayable, but only in a different tier. So if you played
-    <i>Fate in the Future</i> at SkålCon at level 5, you can play it again with a level 1-4 character! The same is true for
-    <i>Perils of the Past</i>! Play them both for the full story!</p>
-
-  <p>Also see:
-    <a href="https://docs.google.com/spreadsheets/d/1BTOW4aNy0gK6mStIknWOdgCsY0QrwljUIh5_d65-rCo/edit?usp=sharing">the
-      full MN-POP Con of the North schedule in spreadsheet format</a>.</p>
-
-  <p>Let us know if you have any questions, and thanks for making our local conventions great!</p>
-
-  <p>Thank you for helping out!</p>
 
   <p>Minnesota Paizo Organized Play (MN-POP) and 10,000 Lakes Gaming</p>
+
+  <hr>
+  <div><%= image_tag("MN-POP.png", width: 250, alt: "Minnesota Paizo Organized Play") %>
+    <%= image_tag("10klogo.png", height: 250, alt: "10kLakesGaming", border: 1) %></div>
+
+  <%= render partial: "layouts/opt_out_email_footer" %>
 </div>
-<hr>
-<div><%= image_tag("MN-POP.png", width: 250, alt: "Minnesota Paizo Organized Play") %>
-  <%= image_tag("10klogo.png", height: 250, alt: "10kLakesGaming", border: 1) %></div>
-<%= render partial: "layouts/opt_out_email_footer" %>
 </body>
 </html>
