@@ -4,8 +4,8 @@ desc 'This is used to generate various on demand emails.'
 
 task send_donation_drive_message: :environment do
   puts 'Sending donation drive message'
-  # this is currently hardcoded for SkålCon 2019
-  event = Event.find(10)
+  # this is currently hardcoded for SkålCon 2022
+  event = Event.find(19)
   message = Message.new
   message.subject = "#{event.name} Physical Goods Donation Drive!"
   count = 0
@@ -20,10 +20,10 @@ end
 
 task send_registration_update_message: :environment do
   puts 'Sending Registration Update message'
-  # this is currently hardcoded for SkålCon 2019
-  event = Event.find(10)
+  # this is currently hardcoded for SkålCon 2022
+  event = Event.find(19)
   message = Message.new
-  message.subject = "Are you ready for #{event.name}?"
+  message.subject = "#{event.name} is coming soon!"
   count = 0
   event.user_events.each do |registration|
     unless registration.user.opt_out?
@@ -40,8 +40,10 @@ task send_skalcon_announcement: :environment do
   message = Message.new
   count = 0
   users = User.all
-  # Specific to CotN 2022
-  event = Event.find(18)
+  # Specific to SkålCon 2022
+  #
+  event_number = ENV['EVENT_ID'] || 19
+  event = Event.find(event_number)
   message.subject = "Pathfinders and Starfinders! MN-POP needs your help for #{event.name}!"
   users.each do |user|
     if user.opt_out?
