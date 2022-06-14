@@ -6,7 +6,7 @@ end
 
 source 'https://rubygems.org'
 
-ruby '~> 2.7.5'
+ruby '~> 3.1.2'
 gem 'rails', '5.2.6'
 
 # Use Puma as the app server
