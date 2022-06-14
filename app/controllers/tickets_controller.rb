@@ -28,7 +28,7 @@ class TicketsController < ApplicationController
     tables = []
     @event.sessions.each do |session|
       my_tables = session.tables
-      my_tables = my_tables.reject { |table| table.online? }.select { |table| table.seats_available? }
+      my_tables = my_tables.reject(&:online?).select(&:seats_available?)
       tables.concat my_tables
     end
     tables
@@ -39,7 +39,7 @@ class TicketsController < ApplicationController
     get_table_with_seats
     get_table_with_seats.each do |table|
       Rails.logger.info "Checking table #{table.long_name}: is it full? #{table.full?} : #{table.remaining_seats}"
-      next if (%w[HQ Overseer].include? table.location)
+      next if %w[HQ Overseer].include? table.location
       next if table.full?
 
       start = table.current_registrations + 1
