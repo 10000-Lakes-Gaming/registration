@@ -104,7 +104,7 @@ class ContactMailerPreview < ActionMailer::Preview
     event = Event.first
 
     message = Message.new
-    message.subject =  "#{event.name} is almost here! Please register and sign up for tables!"
+    message.subject = "#{event.name} is almost here! Please register and sign up for tables!"
 
     ContactMailer.skalcon_announcement(message, @user, event)
   end

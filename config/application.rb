@@ -11,13 +11,13 @@ Bundler.require(*Rails.groups)
 
 module PfsRegistration
   class Application < Rails::Application
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
-    # config.active_record.raise_in_transactional_callbacks = true
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 5.0
     config.time_zone = 'Central Time (US & Canada)'
     config.active_record.default_timezone = :local
-
-    Rails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
+    # Settings in config/environments/* take precedence over those specified here.
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+    # the framework and any gems in your application.
   end
 end

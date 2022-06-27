@@ -53,6 +53,7 @@ Rails.application.routes.draw do
   end
 
   post 'sessions/:session_id/upload_tables', to: 'tables#load_from_csv', as: 'upload_tables_csv'
+  post 'scenarios/upload_scenarios', to: 'scenarios#load_from_csv', as: 'upload_scenarios_csv'
 
   get 'events/:id/additional_payment_report', to: 'additional_payment_report#index', as: 'additional_payment_report'
 

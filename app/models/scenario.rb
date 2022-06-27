@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
-class Scenario < ActiveRecord::Base
+class Scenario < ActiveRecord::Base # rubocop:disable Metrics/ClassLength
   validates :game_system, :type_of, :name, presence: true
   validates :scenario_number, presence: true, if: :scenario_number_needed?
   validates :season, presence: true, if: :season_needed?
   validates :tier, presence: true, if: :tier_needed?
+  validates_uniqueness_of :scenario_number, scope: %i[type_of game_system season tier],
+                                            if: :scenario_number_needed?
+  validate :validate_type
 
   INTRO = 'Intro Scenario'
   SCENARIO = 'Scenario'
@@ -23,6 +26,12 @@ class Scenario < ActiveRecord::Base
   PLAYTEST = 'Playtest'
   AL = 'D&D Adventurers League'
   SYSTEMS = [PFS2, SFS, ACG, OTHER, PFS1, PLAYTEST, AL, HQ].freeze
+
+  def validate_type
+    unless TYPES.include? type_of
+      errors[:type_of].push 'Type of must be one of the known types, such as Scenario or Module.'
+    end
+  end
 
   def group
     "#{game_system} Season #{season} #{type_of}"
@@ -115,6 +124,30 @@ class Scenario < ActiveRecord::Base
         'Replayable'
       end
     end
+  end
+
+  def self.import(file)
+    csv_errors = {}
+    CSV.foreach(file.path, headers: true) do |row|
+      fields = row.to_h
+
+      scenario = Scenario.create({
+                                   type_of: fields['type_of'],
+                                   season: fields['season'],
+                                   scenario_number: fields['scenario_number'],
+                                   name: fields['name'],
+                                   description: fields['description'],
+                                   author: fields['author'],
+                                   paizo_url: fields['paizo_url'],
+                                   pregen_only: YAML.safe_load(fields['pregen_only']),
+                                   tier: fields['tier'],
+                                   game_system: fields['game_system'],
+                                   evergreen: YAML.safe_load(fields['evergreen']),
+                                   catalog_number: fields['catalog_number']
+                                 })
+      csv_errors[scenario.short_name] = scenario.errors.messages if scenario.invalid?
+    end
+    csv_errors
   end
 
   def self.to_csv(scenario_list)

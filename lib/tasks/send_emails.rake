@@ -23,7 +23,7 @@ task send_registration_update_message: :environment do
   # this is currently hardcoded for SkålCon 2022
   event = Event.find(19)
   message = Message.new
-  message.subject = "#{event.name} is coming soon!"
+  message.subject = "Are you ready for #{event.name}?"
   count = 0
   event.user_events.each do |registration|
     unless registration.user.opt_out?
@@ -44,7 +44,7 @@ task send_skalcon_announcement: :environment do
   #
   event_number = ENV['EVENT_ID'] || 19
   event = Event.find(event_number)
-  message.subject = "Pathfinders and Starfinders! MN-POP needs your help for #{event.name}!"
+  message.subject = "GMs Can Now Volunteer to run games for #{event.name}!"
   users.each do |user|
     if user.opt_out?
       puts "User #{user} opted out of emails"

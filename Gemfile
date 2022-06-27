@@ -6,14 +6,14 @@ end
 
 source 'https://rubygems.org'
 
-ruby '~> 2.7.5'
-gem 'rails', '5.2.6'
+ruby '3.0.3'
+gem 'rails', '6.0.5'
 
 # Use Puma as the app server
 gem 'puma'
 
 # Security hole updates
-gem 'loofah', '2.10.0'
+# gem 'loofah', '2.10.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -22,7 +22,10 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc'
+# gem 'sdoc'
+
+# Temporary
+gem 'psych', '< 4'
 
 # This is the authen gem
 gem 'devise', '4.8.0'
@@ -34,6 +37,7 @@ gem 'bootstrap-sass'
 gem 'stripe'
 
 group :development do
+  gem 'listen'
   gem 'spring'
   gem 'web-console', '3.7.0'
 end
