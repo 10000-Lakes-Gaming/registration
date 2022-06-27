@@ -26,6 +26,16 @@ class ScenariosController < ApplicationController
     end
   end
 
+  # POST /scenarios/upload_scenarios
+  def load_from_csv
+    prevent_non_admin
+
+    @csv_errors = Scenario.import(params[:file])
+    @scenarios = Scenario.all.to_a.sort
+
+    render :index
+  end
+
   def clone
     prevent_non_admin
     @scenario = @scenario.copy

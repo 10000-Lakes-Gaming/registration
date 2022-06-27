@@ -2,14 +2,46 @@
 
 <h1>Listing Scenarios</h1>
 
+<% if @csv_errors %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@csv_errors.count, "scenario") %> did not save for the following reasons:</h2>
+
+    <ul>
+      <% @csv_errors.keys.each do |scenario| %>
+        <%
+          errors = @csv_errors[scenario]
+          errors.values.each do |message|
+        %>
+          <li><%= scenario %>: <%= message %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 
 <% if admin? %>
-    <div class="well">
-      <div class="bg-success">Jolene's fancy new button!
-        <div>Use this <%= link_to 'New Scenario Button', new_scenario_path, :class => 'btn btn-warning' %> to add new scenarios to the list.
-        </div>
+  <div class="well">
+    <div class="bg-success">
+      <div>Use this <%= link_to 'New Scenario Button', new_scenario_path, :class => 'btn btn-warning' %> to add
+        new scenarios to the list.
       </div>
     </div>
+    <div>
+      <p>Upload CSV of scenarios.</p>
+      <p>The file should have columns of
+        <code>type_of, season, scenario_number, name, description, author, paizo_url,
+          pregen_only, tier, game_system., evergreen, catalog_number</code>,
+        and expects those headers.</p>
+
+      <%= form_tag upload_scenarios_csv_path(@session), :method => "post", :multipart => true do %>
+        <label for="file">CSV File to Upload:</label><%= file_field_tag :file, :accept => 'text/csv' %>
+        <div>
+          <%= submit_tag "Upload CSV", :class => 'btn btn-danger' %>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
 <% end %>
 
 <table class="table table-striped">
@@ -32,42 +64,42 @@
   <tbody>
 
   <% @scenarios.sort.each do |scenario| %>
-      <tr>
-        <td><%= scenario.type_of %></td>
-        <td><%= scenario.long_name %></td>
-        <td><%= scenario.catalog_number %></td>
-        <td><%= scenario.author %></td>
-        <td>
-          <% if scenario.evergreen? %>
-              <span class="badge badge-evergreen"><%= scenario.replayable_display %></span>
-          <% end %>
-        </td>
-        <td>
-          <% if scenario.pregen_only? %>
-              <span class="badge badge-pregen">Pregen</span>
-          <% end %>
-        </td>
-        <td>
-          <% if scenario.hard_mode? %>
-              <span class="badge badge-hardmode"><small>Hard Mode</small></span>
-          <% end %>
-        </td>
-        <td><span class="badge"><%= scenario.tier %></span></td>
-        <td>
-          <% if scenario.retired? %>
-              <span class="badge badge-retired">Retired</span>
-          <% end %>
-        </td>
-        <td><%= scenario.id %></td>
-        <td nowrap="nowrap">
-          <%= link_to 'Show', scenario, :class => 'btn btn-info' %>
-          <% if admin? %>
-              <%= link_to 'Edit', edit_scenario_path(scenario), :class => 'btn btn-primary' %>
-              <%= link_to 'Clone', scenario_clone_path(scenario), :class => 'btn btn-warning' %>
-              <%= link_to 'Destroy', scenario, method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %>
-          <% end %>
-        </td>
-      </tr>
+    <tr>
+      <td><%= scenario.type_of %></td>
+      <td><%= scenario.long_name %></td>
+      <td><%= scenario.catalog_number %></td>
+      <td><%= scenario.author %></td>
+      <td>
+        <% if scenario.evergreen? %>
+          <span class="badge badge-evergreen"><%= scenario.replayable_display %></span>
+        <% end %>
+      </td>
+      <td>
+        <% if scenario.pregen_only? %>
+          <span class="badge badge-pregen">Pregen</span>
+        <% end %>
+      </td>
+      <td>
+        <% if scenario.hard_mode? %>
+          <span class="badge badge-hardmode"><small>Hard Mode</small></span>
+        <% end %>
+      </td>
+      <td><span class="badge"><%= scenario.tier %></span></td>
+      <td>
+        <% if scenario.retired? %>
+          <span class="badge badge-retired">Retired</span>
+        <% end %>
+      </td>
+      <td><%= scenario.id %></td>
+      <td nowrap="nowrap">
+        <%= link_to 'Show', scenario, :class => 'btn btn-info' %>
+        <% if admin? %>
+          <%= link_to 'Edit', edit_scenario_path(scenario), :class => 'btn btn-primary' %>
+          <%= link_to 'Clone', scenario_clone_path(scenario), :class => 'btn btn-warning' %>
+          <%= link_to 'Destroy', scenario, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %>
+        <% end %>
+      </td>
+    </tr>
   <% end %>
   </tbody>
 </table>
@@ -75,7 +107,7 @@
 <br>
 
 <% if admin? %>
-    <%= link_to 'New Scenario', new_scenario_path, :class => 'btn btn-warning' %>
+  <%= link_to 'New Scenario', new_scenario_path, :class => 'btn btn-warning' %>
 <% end %>
 <%= link_to 'Events', events_path, :class => 'btn btn-info' %>
 <%= link_to 'Home', welcome_index_path, :class => 'btn btn-success' %>
