@@ -22,11 +22,13 @@ class NonProdEmailInterceptor
   end
 
   def self.intercept?
-    ENV.fetch('EMAIL_ALLOW_LIST').nil?
+    ENV.fetch('EMAIL_ALLOW_LIST', nil).present?
   end
 
   def self.allow_list
     allow_list = ENV.fetch('EMAIL_ALLOW_LIST', nil)
+    Rails.logger.info "Email allow list: #{allow_list}"
+
     return if allow_list.blank?
 
     # to string is added for nil safety

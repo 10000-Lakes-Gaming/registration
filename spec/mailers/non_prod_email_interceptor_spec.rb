@@ -7,12 +7,13 @@ describe NonProdEmailInterceptor do
   let(:gamer) { 'gamer@paizo.com' }
   let(:allow_list) { "#{good} #{gamer}" }
   let(:registration) { 'registration@10klakesgaming.org' }
-  before do
-    allow(ENV).to receive(:fetch).with('DEFAULT_SENDER', nil).and_return(registration)
-    allow(ENV).to receive(:fetch).with('EMAIL_ALLOW_LIST', nil).and_return(allow_list)
-  end
 
   context '#email_ok_to_send' do
+    before do
+      allow(ENV).to receive(:fetch).with('DEFAULT_SENDER', nil).and_return(registration)
+      allow(ENV).to receive(:fetch).with('EMAIL_ALLOW_LIST', nil).and_return(allow_list)
+    end
+
     it 'email not on allow list cannot be sent' do
       bad_email = 'bad@email.com'
 
@@ -27,9 +28,25 @@ describe NonProdEmailInterceptor do
       expect(NonProdEmailInterceptor.email_ok_to_send(registration)).to be(true)
     end
   end
-  context 'system preferences' do
+
+  context 'ENV' do
     it 'mocked whitelist is returned and includes help and error emails' do
+      allow(ENV).to receive(:fetch).with('DEFAULT_SENDER', nil).and_return(registration)
+      allow(ENV).to receive(:fetch).with('EMAIL_ALLOW_LIST', nil).and_return(allow_list)
+
       expect(NonProdEmailInterceptor.allow_list).to eq [good, gamer, registration]
+    end
+
+    it 'intercept is true if there is an email allow list' do
+      allow(ENV).to receive(:fetch).with('EMAIL_ALLOW_LIST', nil).and_return(allow_list)
+
+      expect(NonProdEmailInterceptor.intercept?).to be true
+    end
+
+    it 'without a list intercept if false' do
+      allow(ENV).to receive(:fetch).with('EMAIL_ALLOW_LIST', nil).and_return(nil)
+
+      expect(NonProdEmailInterceptor.intercept?).to be false
     end
   end
 end
