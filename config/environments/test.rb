@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.configure do
+  config.example_status_persistence_file_path = 'test_status.txt'
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
