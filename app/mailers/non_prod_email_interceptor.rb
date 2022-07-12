@@ -46,7 +46,7 @@ class NonProdEmailInterceptor
     @sender_email ||= ENV.fetch('DEFAULT_SENDER', nil)
   end
 
-  def self.prefix
+  def self.add_prefix
     message.subject.prepend('TEST: ')
   end
 end
