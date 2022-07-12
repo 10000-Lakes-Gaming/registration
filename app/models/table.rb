@@ -44,7 +44,7 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
     CSV.foreach(file.path, headers: true) do |row|
       fields = row.to_h
       tables << Table.new({
-                            session: session,
+                            session:,
                             scenario: Scenario.find(fields['scenario'].to_i),
                             online: ActiveModel::Type::Boolean.new.cast(fields['online']),
                             location: fields['location'],

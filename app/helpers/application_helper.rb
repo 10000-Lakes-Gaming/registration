@@ -53,7 +53,7 @@ module ApplicationHelper
   end
 
   def optional_fee_list(elements = 20, increment = 5, starting = 0)
-    (starting..(starting + elements * increment)).step(increment).to_a
+    (starting..(starting + (elements * increment))).step(increment).to_a
   end
 
   def donations_options(elements = 50, increment = 5, starting = 0)

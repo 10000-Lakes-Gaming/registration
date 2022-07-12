@@ -6,7 +6,8 @@ end
 
 source 'https://rubygems.org'
 
-ruby '3.0.3'
+ruby '3.1.0'
+# need to update this ASAP
 gem 'rails', '6.0.5'
 
 # Use Puma as the app server
@@ -25,6 +26,9 @@ gem 'jbuilder'
 # gem 'sdoc'
 
 # Temporary
+gem 'net-imap', require: false
+gem 'net-pop', require: false
+gem 'net-smtp', require: false
 gem 'psych', '< 4'
 
 # This is the authen gem
@@ -55,9 +59,9 @@ group :development, :test do
   gem 'bullet'
   gem 'bundler-audit'
   gem 'byebug'
-  gem 'rubocop', '1.18.3', require: false
-  gem 'rubocop-performance', '1.11.4'
-  gem 'rubocop-rails', '2.11.3'
+  gem 'rubocop', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rails', require: false
   gem 'sqlite3'
 end
 

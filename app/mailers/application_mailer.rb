@@ -4,7 +4,7 @@
 class ApplicationMailer < ActionMailer::Base
   add_template_helper(EmailHelper)
 
-  default from: (ENV['GMAIL_SMTP_USERNAME']).to_s, 'Precedence' => 'bulk'
-  default to: (ENV['GMAIL_SMTP_USERNAME']).to_s
+  default from: ENV.fetch('GMAIL_SMTP_USERNAME', nil).to_s, 'Precedence' => 'bulk'
+  default to: ENV.fetch('GMAIL_SMTP_USERNAME', nil).to_s
   # layout 'mailer'
 end

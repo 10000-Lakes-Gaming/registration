@@ -91,7 +91,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = { host: ENV['EMAIL_ASSET_HOST'] }
+  config.action_mailer.default_url_options = { host: ENV.fetch('EMAIL_ASSET_HOST', nil) }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default charset: ' utf - 8 '
@@ -99,11 +99,11 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     authentication: :plain,
-    address: ENV[' MAILGUN_SMTP_SERVER '],
-    port: ENV[' MAILGUN_SMTP_PORT '],
-    domain: ENV[' MAILGUN_DOMAIN '],
-    user_name: ENV[' MAILGUN_SMTP_LOGIN '],
-    password: ENV[' MAILGUN_PASSWORD ']
+    address: ENV.fetch(' MAILGUN_SMTP_SERVER ', nil),
+    port: ENV.fetch(' MAILGUN_SMTP_PORT ', nil),
+    domain: ENV.fetch(' MAILGUN_DOMAIN ', nil),
+    user_name: ENV.fetch(' MAILGUN_SMTP_LOGIN ', nil),
+    password: ENV.fetch(' MAILGUN_PASSWORD ', nil)
   }
-  config.action_mailer.asset_host = ENV[' EMAIL_ASSET_HOST ']
+  config.action_mailer.asset_host = ENV.fetch(' EMAIL_ASSET_HOST ', nil)
 end

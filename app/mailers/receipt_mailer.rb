@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ReceiptMailer < ApplicationMailer
-  default from: (ENV['GMAIL_SMTP_USERNAME']).to_s
+  default from: ENV.fetch('GMAIL_SMTP_USERNAME', nil).to_s
 
   def event_registration_payment_email(user_event)
     @user_event = user_event

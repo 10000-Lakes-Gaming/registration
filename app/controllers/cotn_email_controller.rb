@@ -15,7 +15,7 @@ class CotnEmailController < ApplicationController
     # defense, for a single real test
     puts "Email list: #{@message.email_list}"
     @message.email_list.reject(&:empty?).each do |email|
-      user = User.where(email: email).first
+      user = User.where(email:).first
       if user.opt_out?
         puts "Not emailing #{user.formal_name} as they have opted out of emails."
       else

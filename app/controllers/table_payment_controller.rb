@@ -23,7 +23,7 @@ class TablePaymentController < ApplicationController
 
     charge = Stripe::Charge.create(
       source: token,
-      amount: amount,
+      amount:,
       description: "#{@user_event.user.name} payment for #{@table.name}",
       currency: 'usd'
     )

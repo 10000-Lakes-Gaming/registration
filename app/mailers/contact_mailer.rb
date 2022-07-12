@@ -7,7 +7,7 @@ class ContactMailer < ApplicationMailer
     # mail(subject: message.subject, bcc: @emails)
     # let's try iteration
     emails.each do |email|
-      user = User.where(email: email).first
+      user = User.where(email:).first
       @message.user = user
       mail(subject: message.subject, to: email) unless email.blank? || user.opt_out?
     end
@@ -20,13 +20,13 @@ class ContactMailer < ApplicationMailer
 
     # we will put the players in the BCC list.
     # Also, we will bcc the registration email, so we have a copy.
-    bcc = [ENV['GMAIL_SMTP_USERNAME']]
+    bcc = [ENV.fetch('GMAIL_SMTP_USERNAME', nil)]
     table.registration_tables.each do |signup|
       player = signup.user_event.user
       bcc.append player.email unless player.opt_out?
     end
     puts "BCC: #{bcc}"
-    mail(from: email, to: email, bcc: bcc, reply_to: email, subject: message.subject)
+    mail(from: email, to: email, bcc:, reply_to: email, subject: message.subject)
   end
 
   # this is the general contact form that folks can use.
@@ -41,7 +41,7 @@ class ContactMailer < ApplicationMailer
     @message = message
     @event = event
 
-    user = User.where(email: email).first
+    user = User.where(email:).first
     @message.user = user
     unless email.blank? || user.opt_out?
       mail(to: email, subject: @message.subject) do |format|
@@ -59,7 +59,7 @@ class ContactMailer < ApplicationMailer
     @event = event
     @game_master = game_master
     # add cc for registration
-    mail(subject: @message.subject, to: email, bcc: ENV['GMAIL_SMTP_USERNAME'])
+    mail(subject: @message.subject, to: email, bcc: ENV.fetch('GMAIL_SMTP_USERNAME', nil))
   end
 
   def participant(message, email, event, registration)
@@ -67,14 +67,14 @@ class ContactMailer < ApplicationMailer
     @event = event
     @registration = registration
 
-    mail(subject: @message.subject, to: email, bcc: ENV['GMAIL_SMTP_USERNAME'])
+    mail(subject: @message.subject, to: email, bcc: ENV.fetch('GMAIL_SMTP_USERNAME', nil))
   end
 
   def payment_reminder(message, email, event)
     @event = event
     @message = message
 
-    user = User.where(email: email).first
+    user = User.where(email:).first
     @message.user = user
     mail(subject: @message.subject, to: email) unless email.blank? || user.opt_out?
   end
@@ -84,7 +84,7 @@ class ContactMailer < ApplicationMailer
     @user_event = user_event
     @message = message
 
-    user = User.where(email: email).first
+    user = User.where(email:).first
     @message.user = user
 
     mail(subject: @message.subject, to: email) unless email.blank? || user.opt_out?
@@ -93,7 +93,7 @@ class ContactMailer < ApplicationMailer
   def registration_reminder(message, email)
     @message = message
 
-    user = User.where(email: email).first
+    user = User.where(email:).first
     @message.user = user
 
     mail(subject: @message.subject, to: email) unless email.blank? || user.opt_out?
@@ -103,7 +103,7 @@ class ContactMailer < ApplicationMailer
     @event = event
     @message = message
 
-    user = User.where(email: email).first
+    user = User.where(email:).first
     @message.user = user
     mail(subject: @message.subject, to: email) unless email.blank? || user.opt_out?
   end

@@ -15,7 +15,7 @@ class AdminEmailController < ApplicationController
       logger.info "Found email list => #{email_list}"
       emails = []
       email_list.split.each do |email|
-        user = User.where(email: email).first
+        user = User.where(email:).first
         emails.push email unless email.blank? || user.opt_out?
       end
 

@@ -42,7 +42,7 @@ task send_skalcon_announcement: :environment do
   users = User.all
   # Specific to SkålCon 2022
   #
-  event_number = ENV['EVENT_ID'] || 19
+  event_number = ENV.fetch('EVENT_ID', 19)
   event = Event.find(event_number)
   message.subject = "GMs Can Now Volunteer to run games for #{event.name}!"
   users.each do |user|
@@ -59,7 +59,7 @@ end
 # usage - `bundle exec rake send_all_gm_schedules EVENT_ID=[EVENT_ID]`
 # This now works for any event.
 task send_all_gm_schedules: :environment do
-  event_number = ENV['EVENT_ID']
+  event_number = ENV.fetch('EVENT_ID', nil)
   abort 'Missing EVENT_ID!' unless event_number.present?
 
   event = Event.find(event_number)
@@ -78,7 +78,7 @@ end
 # usage - `bundle exec rake send_all_partipants_schedules EVENT_ID=[EVENT_ID]`
 # This now works for any event.
 task send_all_partipants_schedules: :environment do
-  event_number = ENV['EVENT_ID']
+  event_number = ENV.fetch('EVENT_ID', nil)
   abort 'Missing EVENT_ID!' unless event_number.present?
 
   event = Event.find(event_number)
