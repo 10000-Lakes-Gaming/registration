@@ -1,32 +1,62 @@
-Hello SkålCon Attendees!
+Hello <%= @event.name %> Attendees!
 
-Sorry about the old email yesterday, but we have 3 important announcements for you all!
+Registration is open for <%= @event.name %>!
 
-1. There will be TWO conventions this year - <%= @event.name %> (in-person) and SkålCOnline 2022 (online)!
-
-
-
-To summarize:
-<%= @event.name %> - our standard in-person convention
+<%= @event.name %>
 <%= @event.timeslot %>
 Location: <%= @event.location %>
-Registration: <%= number_to_currency(@event.prereg_price) %> (after <%= @event.formatted_prereg_ends %> it will be <%= number_to_currency @event.onsite_price %>)
+Price: <%= number_to_currency(@event.prereg_price) %> (after <%= @event.formatted_prereg_ends %> it will be <%= number_to_currency @event.onsite_price %>)
+Just log onto the <a href="<%= event_url(@event) %>"><%= @event.name %> Registration</a> site to register for the event,
+taking place <%= @event.timeslot %>!
+As always, proceeds from SkalCon will go directly to our charities, including www.tubman.org.
 
+------------------------------------------------------------------------------------
+GMs are encouraged to register so that they can pick the sessions they would like to run. We will be opening table selection
+for GMs August 1, where they can select as many player tables as they are signed up to run. Open registration for player
+tables opens August 15.
+
+Keep an eye out for our special guest tables! Our special guests this year include Paizo Director of Community
+Tonya Wondridge! We also have local Author Hilary Moon Murphy (HMM) running tables of her scenarios!
+
+------------------------------------------------------------------------------------
+The hotel block is available for <%= @event.name %>! Click on the following link to reserve your hotel room at the
+Crowne Plaza Minneapolis West. Be sure to ‘Change Search’ to modify the dates/number of people for your stay at the hotel:
+https://bit.ly/3zAOSCk
+------------------------------------------------------------------------------------
+
+<%= @event.name %> is offering T-shirts again for a pre-order price of <%= number_to_currency(@event.tee_shirt_price) %>.
+T-shirt pre-orders end <%= @event.tee_shirt_end.to_formatted_s(:long) %>. A small number of shirts may be available onsite.
+
+------------------------------------------------------------------------------------
+1. Attendees must be fully vaccinated against COVID-19.
+  a. This policy is not subject to change.
+  b. “Fully vaccinated” means you are at least 2 weeks past the final dose of the vaccine you received.
+  c. Proof of vaccination must be presented at HQ when registering or picking up your badge at the convention.
+    i. Allowable formats include:
+       - A photocopy of your CDC vaccination card;
+       - a high-quality photo/scan of your CDC vaccination card;
+       - an international equivalent;
+       - printed record of your vaccination from a Doctor’s office, etc.
+    ii. If you forget your vaccination record, we will be forced to assume you are not vaccinated and cannot participate at in-person convention activities.
+2. Masks will be required at the convention. This policy may be relaxed closer to the date depending on CDC, state, and local government guidelines.
+3. Attendees are asked not to eat food while in the convention space, due to masking. Drinks are allowed.
+4. Attendees are asked not to attend if they are ill.
+5. Attendees are asked to respect social distancing when not at their tables.
+6. Attendees can wear provided wristbands to represent their comfort level when it comes to physical contact.
+  - Red – do not touch, maintain distance
+  - Yellow – some contact allowed, such as elbow bumps instead of handshakes
+  - Green – hugs and handshakes are allowed, with consent
+
+View this policy at http://www.skalcon.org/covid-19-statement.
+
+------------------------------------------------------------------------------------
+Finally, keep your calendar ready for SkålCOnline 2022!
 SkålCOnline 2022 - a new, online only convention ala our 2020 event
 November 11th-13th 2022
 Location: Online in our discord/various virtual tabletop
 Registration: Suggested $10 registration
 
-
-Registration isn’t available (yet), but be sure to save these dates to your calendar!
-
-2. The hotel block is available for <%= @event.name %>! Click on the following link to reserve your hotel room at the
-Crowne Plaza Minneapolis West. Be sure to ‘Change Search’ to modify the dates/number of people for your stay at the hotel:
-https://bit.ly/3zAOSCk
-
-3. For any Pathfinder First Edition GMs & players - we need your input! Please fill out this survey to provide input on
-what games you’d like to have scheduled, and how we run PF1 for our community!  https://forms.gle/B5NUxPmY9YtTLZPY7
-
+------------------------------------------------------------------------------------
 That’s all the announcements for now! We’ll inform you all when registration is open via email, but you can keep
 up-to-date via http://www.skalcon.org/ or https://www.facebook.com/pfsskalcon.
 

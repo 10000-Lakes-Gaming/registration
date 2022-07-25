@@ -23,59 +23,70 @@
 <div class="container-fluid">
   <p><%= image_tag("skalbanner.png", size: "250x100", alt: "SkålCon") %></p>
 
-  <p class="h3">Hello SkålCon Attendees!</p>
+  <p class="h3">Hello <%= @event.name %> Attendees!</p>
 
-  <p>Sorry about the old email yesterday, but we have 3 important announcements for you all!</p>
+  <p class="h1">Registration is open for <%= @event.name %>!</p>
 
-  <ol>
-    <li>There will be TWO conventions this year - <%= @event.name %> (in-person) and SkålCOnline 2022 (online)!
-      <hr/>
-      <div>
-        <div><b><a href="<%= event_url(@event) %>"><%= @event.name %></a></b> - our standard in-person convention</div>
-        <div><b>Dates:</b> <%= @event.timeslot %></div>
-        <div><b>Location:</b> <%= @event.location %></div>
-        <div><b>Registration:</b> <%= number_to_currency(@event.prereg_price) %>
-          (after <%= @event.formatted_prereg_ends %> it will be <%= number_to_currency @event.onsite_price %>)
-        </div>
-      </div>
-
-      <hr/>
-
-      <div>
-        <div><b>SkålCOnline 2022:</b> a new, online only convention similar to our 2020 event</div>
-        <div><b>Dates:</b> November 11th-13th 2022</div>
-        <div><b>Location:</b> Online in our discord/various virtual tabletop</div>
-        <div><b>Registration:</b> Suggested $10 registration</div>
-      </div>
-      <hr/>
-      <div>Registration isn’t available (yet), but be sure to save these dates to your calendar!</div>
-      <hr/>
-    </li>
-    <li><b>The hotel block is available for <%= @event.name %>!</b> Reserve your hotel room at the
-      <a href="https://bit.ly/3zAOSCk">Crowne Plaza Minneapolis West</a>. Be sure to ‘Change Search’ to modify
-      the dates/number of people for your stay at the hotel.
-      <hr/>
-    </li>
-
-    <li><b>For any Pathfinder First Edition GMs & players</b> - we need your input! Please fill out
-      <a href="https://forms.gle/B5NUxPmY9YtTLZPY7">this survey</a> to provide input on what games you’d like to have
-      scheduled at <%= @event.name %>, and how we run PF1 for our community!
-      <hr/>
-    </li>
-  </ol>
-
-
-  <p>That’s all the announcements for now! We’ll inform you all when registration is open via email, but you can keep
-    up-to-date via http://www.skalcon.org/ or https://www.facebook.com/pfsskalcon.
-  </p>
-
-  <p>Minnesota Paizo Organized Play (MN-POP) and 10,000 Lakes Gaming</p>
+  <div><%= @event.name %></div>
+  <div><%= @event.timeslot %></div>
+  <div><b>Location: </b><%= @event.location %></div>
+  <div><b>Price:</b> <%= number_to_currency(@event.prereg_price) %> (after <%= @event.formatted_prereg_ends %> it will
+    be <%= number_to_currency @event.onsite_price %>)
+  </div>
+  <div>Just log onto the <a href="<%= event_url(@event) %>"><%= @event.name %> Registration</a> site to register for the
+    event, taking place <%= @event.timeslot %>!
+  </div>
+  <div>As always, proceeds from SkalCon will go directly to our charities, including
+    <a href="https://www.tubman.org">Tubman</a>.
+  </div>
 
   <hr>
-  <div><%= image_tag("MN-POP.png", width: 250, alt: "Minnesota Paizo Organized Play") %>
-    <%= image_tag("10klogo.png", height: 250, alt: "10kLakesGaming", border: 1) %></div>
+  <p>GMs are encouraged to register so that they can pick the sessions they would like to run. We will be opening table
+    selection for GMs August 1, where they can select as many player tables as they are signed up to run. Open
+    registration for player tables opens August 15.</p>
 
-  <%= render partial: "layouts/opt_out_email_footer" %>
+  <p>Keep an eye out for our special guest tables! Our special guests this year include Paizo Director of Community
+    Tonya Wondridge! We also have local Author Hilary Moon Murphy (HMM) running tables of her scenarios!</p>
+
+  <hr>
+  <p><%= @event.name %> is offering T-shirts again for a pre-order price
+    of <%= number_to_currency(@event.tee_shirt_price) %>.
+    T-shirt pre-orders end <%= @event.tee_shirt_end.to_formatted_s(:long) %>. A small number of shirts may be available
+    onsite.</p>
+
+  <hr>
+  <p>The hotel block is available for <%= @event.name %>! Click on the following link to reserve your hotel room at the
+    Crowne Plaza Minneapolis West. Be sure to ‘Change Search’ to modify the dates/number of people for your stay at the
+    hotel: <a href="https://bit.ly/3zAOSCk" target="_blank">Hotel Block</a></p>
+
+  <hr>
+  <% if @event.attendance_policy.present? %>
+    <h4>Attendence Policy for <%= @event.name %></h4>
+    <div style="border:1px solid red;">
+      <div style="margin: 2px"><%= @event.attendance_policy&.html_safe %></div>
+    </div>
+
+  <% end %>
+  <hr>
+  <div>Finally, keep your calendar ready for SkålCOnline 2022!</div>
+  <div>SkålCOnline 2022 - a new, online only convention ala our 2020 event</div>
+  <div>November 11th-13th 2022</div>
+  <div>Location: Online in our discord/various virtual tabletop</div>
+  <div>Registration: Suggested $10 registration</div>
+</div>
+
+<hr>
+<p>That’s all the announcements for now! We’ll inform you all when registration is open via email, but you can keep
+  up-to-date via http://www.skalcon.org/ or https://www.facebook.com/pfsskalcon.
+</p>
+
+<p>Minnesota Paizo Organized Play (MN-POP) and 10,000 Lakes Gaming</p>
+
+<hr>
+<div><%= image_tag("MN-POP.png", width: 250, alt: "Minnesota Paizo Organized Play") %>
+  <%= image_tag("10klogo.png", height: 250, alt: "10kLakesGaming", border: 1) %></div>
+
+<%= render partial: "layouts/opt_out_email_footer" %>
 </div>
 </body>
 </html>
