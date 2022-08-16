@@ -44,7 +44,7 @@ task send_skalcon_announcement: :environment do
   #
   event_number = ENV.fetch('EVENT_ID', 19)
   event = Event.find(event_number)
-  message.subject = "GMs Can Now Volunteer to run games for #{event.name}!"
+  message.subject = "Important Registration Dates for #{event.name}!"
   users.each do |user|
     if user.opt_out?
       puts "User #{user} opted out of emails"
