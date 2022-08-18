@@ -37,50 +37,53 @@ describe Table do
     end
   end
 
-  it 'table MUST have a location if online' do
-    session = sessions(:other_session)
-    scenario = scenarios(:scenario_one_five)
+  context 'Online vs In Person' do
+    it 'table MUST have a location if online' do
+      session = sessions(:other_session)
+      scenario = scenarios(:scenario_one_five)
 
-    table = Table.new
-    table.scenario = scenario
-    table.session = session
-    table.gms_needed = 1
-    table.max_players = 6
+      table = Table.new
+      table.scenario = scenario
+      table.session = session
+      table.gms_needed = 1
+      table.max_players = 6
 
-    table.online = true
-    table.save
-    expect(table.errors[:location]).to_not be_empty
+      table.online = true
+      table.save
+      expect(table.errors[:location]).to_not be_empty
+    end
+
+    it 'If table is online, it can have no more than 1 GM' do
+      session = sessions(:other_session)
+      scenario = scenarios(:scenario_one_five)
+
+      table = Table.new
+      table.scenario = scenario
+      table.session = session
+      table.gms_needed = 2
+      table.max_players = 12
+
+      table.online = true
+      table.save
+      expect(table.errors[:gms_needed]).to_not be_empty
+    end
+
+    it 'If table is online, it can have no more than 6 Players' do
+      session = sessions(:other_session)
+      scenario = scenarios(:scenario_one_five)
+
+      table = Table.new
+      table.scenario = scenario
+      table.session = session
+      table.gms_needed = 1
+      table.max_players = 12
+
+      table.online = true
+      table.save
+      expect(table.errors[:max_players]).to_not be_empty
+    end
   end
 
-  it 'If table is online, it can have no more than 1 GM' do
-    session = sessions(:other_session)
-    scenario = scenarios(:scenario_one_five)
-
-    table = Table.new
-    table.scenario = scenario
-    table.session = session
-    table.gms_needed = 2
-    table.max_players = 12
-
-    table.online = true
-    table.save
-    expect(table.errors[:gms_needed]).to_not be_empty
-  end
-
-  it 'If table is online, it can have no more than 6 Players' do
-    session = sessions(:other_session)
-    scenario = scenarios(:scenario_one_five)
-
-    table = Table.new
-    table.scenario = scenario
-    table.session = session
-    table.gms_needed = 1
-    table.max_players = 12
-
-    table.online = true
-    table.save
-    expect(table.errors[:max_players]).to_not be_empty
-  end
   context 'seats_available?' do
     it 'full table will return false' do
       table = tables(:full)
@@ -174,6 +177,26 @@ describe Table do
       table = tables(:two)
 
       expect(table.tickets_overlap?(registration)).to be true
+    end
+  end
+
+  context '#long_name' do
+    it 'table one shows tier 1-5' do
+      table = tables(:one)
+      scenario = scenarios(:scenario_one_five)
+      session = sessions(:morning)
+
+      expected_name = "#{scenario.long_name} (#{scenario.tier}) [#{session.name}] #{table.location}"
+      expect(table.long_name).to eq expected_name
+    end
+
+    it 'table two shows tier 7-11' do
+      table = tables(:two)
+      scenario = scenarios(:scenario_two_seven)
+      session = sessions(:morning)
+
+      expected_name = "#{scenario.long_name} (#{scenario.tier}) [#{session.name}] #{table.location}"
+      expect(table.long_name).to eq expected_name
     end
   end
 end

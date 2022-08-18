@@ -4,6 +4,7 @@ one:
   max_players: 6
   gms_needed: 1
   raffle: false
+  premium: false
   core: false
   gm_self_select: false
   online: false
@@ -49,7 +50,7 @@ premium:
   max_players: 6
   gms_needed: 1
   premium: true
-  prereg_price:  20
+  prereg_price: 20
   onsite_price: 30
   gm_self_select: false
 
@@ -57,7 +58,7 @@ premium_2:
   session: evening
   scenario: scenario_two_seven
   premium: true
-  prereg_price:  20
+  prereg_price: 20
   onsite_price: 30
   gm_self_select: false
 
@@ -67,7 +68,7 @@ premium_pre:
   max_players: 6
   gms_needed: 1
   premium: true
-  prereg_price:  20
+  prereg_price: 20
   onsite_price: 30
   gm_self_select: false
 
@@ -95,7 +96,7 @@ premium_online:
   max_players: 6
   gms_needed: 1
   gm_self_select: false
-  prereg_price:  20
+  prereg_price: 20
   onsite_price: 30
   online: true
   premium: true

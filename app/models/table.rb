@@ -43,14 +43,12 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
     tables = []
     CSV.foreach(file.path, headers: true) do |row|
       fields = row.to_h
-      tables << Table.new({
-                            session:,
+      tables << Table.new({ session:,
                             scenario: Scenario.find(fields['scenario'].to_i),
                             online: ActiveModel::Type::Boolean.new.cast(fields['online']),
                             location: fields['location'],
                             gms_needed: fields['gms_needed'].to_i,
-                            max_players: fields['max_players'].to_i
-                          })
+                            max_players: fields['max_players'].to_i })
     end
     tables.each(&:save!)
   end
@@ -88,14 +86,14 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
   def long_name
     if online?
       if premium?
-        "#{scenario.long_name} [#{session.name}] #{location} Online Premium"
+        "#{scenario.long_name} (#{scenario.tier}) [#{session.name}] #{location} Online Premium"
       else
-        "#{scenario.long_name} [#{session.name}] #{location} Online"
+        "#{scenario.long_name} (#{scenario.tier}) [#{session.name}] #{location} Online"
       end
     elsif premium?
-      "#{scenario.long_name} [#{session.name}] #{location} Premium"
+      "#{scenario.long_name} (#{scenario.tier}) [#{session.name}] #{location} Premium"
     else
-      "#{scenario.long_name} [#{session.name}] #{location}"
+      "#{scenario.long_name} (#{scenario.tier}) [#{session.name}] #{location}"
     end
   end
 
