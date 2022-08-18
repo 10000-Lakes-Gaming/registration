@@ -180,6 +180,23 @@ describe Table do
     end
   end
 
+  context '#schedule_name' do
+    it 'table one shows the scenario and tier 1-5' do
+      table = tables(:one)
+      scenario = scenarios(:scenario_one_five)
+
+      expected_name = "#{scenario.long_name} (#{scenario.tier})"
+      expect(table.schedule_name).to eq expected_name
+    end
+    it 'table two shows the scenario and tier 7-11' do
+      table = tables(:two)
+      scenario = scenarios(:scenario_two_seven)
+
+      expected_name = "#{scenario.long_name} (#{scenario.tier})"
+      expect(table.schedule_name).to eq expected_name
+    end
+  end
+
   context '#long_name' do
     it 'table one shows tier 1-5' do
       table = tables(:one)

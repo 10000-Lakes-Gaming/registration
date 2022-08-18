@@ -83,6 +83,10 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
     sort
   end
 
+  def schedule_name
+    "#{scenario.long_name} (#{scenario.tier})"
+  end
+
   def long_name
     if online?
       if premium?
