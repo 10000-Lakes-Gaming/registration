@@ -134,7 +134,7 @@
           <% unless selection.blank? %>
             <tr>
               <td><%= session.timeslot %></td>
-              <td><%= selection.table.scenario.long_name %></td>
+              <td><%= selection.table.schedule_name %></td>
               <td>
                 <% if selection.is_a? RegistrationTable %>
                   Player
