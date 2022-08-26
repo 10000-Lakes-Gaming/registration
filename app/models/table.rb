@@ -178,24 +178,25 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
   def can_sign_up?(registration)
     return false if registration.nil?
 
-    Rails.logger.info "--------------------------------------------------"
-    Rails.logger.info "Registration user: #{registration.user.formal_name}"
-    Rails.logger.info "Table: #{self.long_name}"
-    Rails.logger.info "Can Select (#{table_type}? #{registration.can_select?(table_type)}"
-    Rails.logger.info "Seats available? #{seats_available?}"
-    Rails.logger.info "GM Select only? #{session.event.gm_select_only?}"
-    Rails.logger.info "GM can sign up? #{gm_can_signup?(registration)}"
-    Rails.logger.info "Raffle? #{raffle?}"
-    Rails.logger.info "Event closed? #{session.event.closed?}"
-    Rails.logger.info "Event closed? #{session.event.closed?}"
-    Rails.logger.info "Event closed? #{session.event.closed?}"
-    Rails.logger.info "Online sales closed? #{session.event.online_sales_closed?}"
-    Rails.logger.info "Offsite registration?  #{session.event.tables_reg_offsite?}"
-    Rails.logger.info "GM exist?  #{game_masters.present?}"
-    Rails.logger.info "Payment ok? #{ registration.payment_ok?}"
-    Rails.logger.info "Tickets overlap? #{tickets_overlap?(registration)}"
-    Rails.logger.info "--------------------------------------------------"
-
+    if game_masters.present? && registration.payment_ok? && session.id == 173
+      Rails.logger.info "--------------------------------------------------"
+      Rails.logger.info "Registration user: #{registration.user.formal_name}"
+      Rails.logger.info "Table: #{self.long_name}"
+      Rails.logger.info "Can Select (#{table_type}? #{registration.can_select?(table_type)}"
+      Rails.logger.info "Seats available? #{seats_available?}"
+      Rails.logger.info "GM Select only? #{session.event.gm_select_only?}"
+      Rails.logger.info "GM can sign up? #{gm_can_signup?(registration)}"
+      Rails.logger.info "Raffle? #{raffle?}"
+      Rails.logger.info "Event closed? #{session.event.closed?}"
+      Rails.logger.info "Event closed? #{session.event.closed?}"
+      Rails.logger.info "Event closed? #{session.event.closed?}"
+      Rails.logger.info "Online sales closed? #{session.event.online_sales_closed?}"
+      Rails.logger.info "Offsite registration?  #{session.event.tables_reg_offsite?}"
+      Rails.logger.info "GM exist?  #{game_masters.present?}"
+      Rails.logger.info "Payment ok? #{ registration.payment_ok?}"
+      Rails.logger.info "Tickets overlap? #{tickets_overlap?(registration)}"
+      Rails.logger.info "--------------------------------------------------"
+    end
     ok = registration.can_select?(table_type)
     ok &&= seats_available?
     ok &&= !session.event.gm_select_only? || gm_can_signup?(registration)
