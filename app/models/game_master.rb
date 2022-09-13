@@ -88,7 +88,7 @@ class GameMaster < ActiveRecord::Base
 
   def self.to_csv(game_masters)
     attributes = %w[event_name session_name session_start session_end scenario gm_name gm_pfs_number gm_email
-                    gm_forum_username gm_title table_assignment]
+                    gm_forum_username gm_title table_assignment sign_in_url]
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
@@ -103,7 +103,8 @@ class GameMaster < ActiveRecord::Base
                 game_master.user_event.user.email,
                 game_master.user_event.user.forum_username,
                 game_master.user_event.user.title,
-                game_master.table_number]
+                game_master.table_number,
+                game_master.sign_in_url]
       end
     end
   end
