@@ -88,17 +88,25 @@
       <div><%= f.text_field :vtt_url, size: 100 %></div>
       </p>
       <p class="field">
-      <div><%= f.label :sign_in_url, 'What is the URL for players to sign in to your game?' %><br>
-        <span class="panel-padded">
+  <% else %>
+    <h3>Additional Information for In Person Games</h3>
+    <div class="panel panel-padded thin-border">
+  <% end %>
+  <div><%= f.label :sign_in_url, 'What is the URL for players to sign in to your game?' %><br>
+    <span class="panel-padded">
           <div style="display: inline-block; vertical-align: top;">
                 <span class="text-danger glyphicon glyphicon-warning-sign"></span>
           </div>
             <i>Please use shortened URLs whenever possible.</i></span>
-      </div>
-      <div><%= f.text_field :sign_in_url, size: 100 %></div>
-      </p>
-    </div>
+  </div>
+  <% if event_host? %>
+    <div><%= f.text_field :sign_in_url, size: 100 %></div>
+  <% else %>
+    <div><%= @game_master.sign_in_url %> </div>
   <% end %>
+
+  </p>
+  </div>
 
   <hr>
   <% if event_host? %>
