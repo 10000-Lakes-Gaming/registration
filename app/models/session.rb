@@ -140,6 +140,10 @@ class Session < ActiveRecord::Base # rubocop:disable Metrics/ClassLength
     headquarters_tables.any? { |table| table.gm_self_select? && !table.disabled? }
   end
 
+  def only_hq?
+    headquarters_tables? && player_tables.empty?
+  end
+
   def premium_tables
     premium_tables = tables.select(&:premium?)
     premium_tables.sort_by { |table| [table.scenario] }

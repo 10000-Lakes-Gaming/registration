@@ -271,241 +271,244 @@
     <div class="accordian" id="session-signup">
       <div class="card">
         <% sessionList.each do |session| %>
-          <div class="card-header striped-outer session-header" id="session-header-<%= session.id %>">
-            <div class="row mb-0">
-              <div class="col-md-5 h4">
-                <%= session.long_name %>
-              </div>
-              <div class="col-md-1 no-pad"></div>
-              <div class="col-md-2 no-pad ">
+          <% unless session.only_hq? && !session.allow_hq_reg? %>
+            <div class="card-header striped-outer session-header" id="session-header-<%= session.id %>">
+              <div class="row mb-0">
+                <div class="col-md-5 h4">
+                  <%= session.long_name %>
+                </div>
+                <div class="col-md-1 no-pad"></div>
+                <div class="col-md-2 no-pad ">
               <span class="text-primary"><%= session.total_max_players - session.players_count %>
                 of <%= session.total_max_players %> player seats left</span></div>
 
-              <% if session.gm_count == session.total_gms_needed %>
-                <% klass = 'text-primary' %>
-              <% else %>
-                <% klass = 'text-danger' %>
-              <% end %>
-              <div class="col-md-2 no-pad"></div>
-              <div class="col-md-2 no-pad"><span class="<%= klass %>"><%= session.total_gms_needed - session.gm_count %>
-                of <%= session.total_gms_needed %> GMs needed</span>
-              </div>
-            </div>
-          </div>
-
-          <% if session.in_person_premium_tables? %>
-            <div class="card-body">
-              <div class="row no-pad">
-                <div class="col-md-5 header-premium no-pad">In Person Charity and Author Tables for <%= session.name %></div>
-                <div class="col-md-1 header-premium no-pad">Details</div>
-                <div class="col-md-2 header-premium no-pad">Seats Remaining</div>
-                <div class="col-md-2 header-premium no-pad" style="padding-left: 1em;">RSVP</div>
-                <div class="col-md-2 header-premium no-pad" style="padding-right: 2px;">GMs Needed</div>
-              </div>
-
-              <% session.in_person_premium_tables.each do |table| %>
-                <%= render partial: "events/event_table", locals: { event: @event, table: table,
-                                                                    registration: @registration,
-                                                                    reg_tables: @reg_tables,
-                                                                    gm_tables: @gm_tables,
-                                                                    tables: @tables, reg_tables_hash: @reg_tables_hash,
-                                                                    type: UserEvent::ATTENDANCE_IN_PERSON } %>
-              <% end %>
-            </div>
-          <% end %>
-
-          <% if session.online_premium_tables? %>
-            <div class="card-body">
-              <div class="row no-pad">
-                <div class="col-md-5 header-premium no-pad">Online Charity and Author Tables for <%= session.name %></div>
-                <div class="col-md-1 header-premium no-pad">Details</div>
-                <div class="col-md-2 header-premium no-pad">Seats Remaining</div>
-                <div class="col-md-2 header-premium no-pad" style="padding-left: 1em;">RSVP</div>
-                <div class="col-md-2 header-premium no-pad" style="padding-right: 2px;">GMs Needed</div>
-              </div>
-
-              <% session.online_premium_tables.each do |table| %>
-                <%= render partial: "events/event_table", locals: { event: @event, table: table,
-                                                                    registration: @registration,
-                                                                    reg_tables: @reg_tables,
-                                                                    gm_tables: @gm_tables,
-                                                                    tables: @tables, reg_tables_hash: @reg_tables_hash,
-                                                                    type: UserEvent::ATTENDANCE_ONLINE } %>
-              <% end %>
-            </div>
-          <% end %>
-
-          <% if session.in_person_regular_tables? %>
-            <div class="row">
-              <button class="btn btn-link accordion-toggle collapsed" type="button" data-toggle="collapse" data-target="#session-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
-                <span class="accordion-text">View In Person
-                  <% if session.premium_tables? %>Standard<% end %> tables for <%= session.name %></span>
-              </button>
-            </div>
-          <% end %>
-          <div id="session-<%= session.id %>" class="collapse" aria-labelledby="session-header-<%= session.id %>" data-parent="#session-signup">
-            <div class="card-body">
-              <div class="row no-pad">
-                <div class="col-md-5 header no-pad">
-                  <% if session.premium_tables? %>
-                    Standard
-                  <% end %>
-                  In Person Tables for <%= session.name %></div>
-                <div class="col-md-1 header no-pad">Details</div>
-                <div class="col-md-2 header no-pad">Seats Remaining</div>
-                <div class="col-md-2 header no-pad" style="padding-left: 1em;">RSVP</div>
-                <div class="col-md-2 header no-pad" style="padding-right: 2px;">GMs Needed</div>
-              </div>
-
-              <% tables = session.in_person_regular_tables %>
-
-              <% tables = tables.sort_by { |table| [table.scenario] } %>
-              <% if tables.empty? %>
-                <div class="row no-pad striped-inner">
-                  <div class="col-md-12">
-                    <% if session.premium_tables? %>
-                      There are no regular in person tables this session!
-                    <% else %>
-                      There are no in person tables during this session!
-                    <% end %>
-                  </div>
+                <% if session.gm_count == session.total_gms_needed %>
+                  <% klass = 'text-primary' %>
+                <% else %>
+                  <% klass = 'text-danger' %>
+                <% end %>
+                <div class="col-md-2 no-pad"></div>
+                <div class="col-md-2 no-pad"><span class="<%= klass %>"><%= session.total_gms_needed - session.gm_count %>
+                  of <%= session.total_gms_needed %> GMs needed</span>
                 </div>
-              <% else %>
-                <% tables.each do |table| %>
-                  <%= render partial: "events/event_table", locals: { event: @event, session: @session, table: table,
-                                                                      registration: @registration, reg_tables: @reg_tables,
-                                                                      gm_tables: @gm_tables, tables: @tables,
-                                                                      reg_tables_hash: @reg_tables_hash,
+              </div>
+            </div>
+
+            <% if session.in_person_premium_tables? %>
+              <div class="card-body">
+                <div class="row no-pad">
+                  <div class="col-md-5 header-premium no-pad">In Person Charity and Author Tables
+                    for <%= session.name %></div>
+                  <div class="col-md-1 header-premium no-pad">Details</div>
+                  <div class="col-md-2 header-premium no-pad">Seats Remaining</div>
+                  <div class="col-md-2 header-premium no-pad" style="padding-left: 1em;">RSVP</div>
+                  <div class="col-md-2 header-premium no-pad" style="padding-right: 2px;">GMs Needed</div>
+                </div>
+
+                <% session.in_person_premium_tables.each do |table| %>
+                  <%= render partial: "events/event_table", locals: { event: @event, table: table,
+                                                                      registration: @registration,
+                                                                      reg_tables: @reg_tables,
+                                                                      gm_tables: @gm_tables,
+                                                                      tables: @tables, reg_tables_hash: @reg_tables_hash,
                                                                       type: UserEvent::ATTENDANCE_IN_PERSON } %>
                 <% end %>
-              <% end %>
-            </div>
-          </div> <%# in person standard tables %>
-
-          <%# Start online regular tables %>
-          <% if session.online_regular_tables? %>
-            <div class="row">
-              <button class="btn btn-link accordion-toggle collapsed" type="button" data-toggle="collapse" data-target="#session-online-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
-                <span class="accordion-text">View Online
-                  <% if session.premium_tables? %>Standard<% end %> tables for <%= session.name %></span>
-              </button>
-            </div>
-          <% end %>
-          <div id="session-online-<%= session.id %>" class="collapse" aria-labelledby="session-header-<%= session.id %>" data-parent="#session-signup">
-            <div class="card-body">
-              <div class="row no-pad">
-                <div class="col-md-5 header no-pad">
-                  <% if session.premium_tables? %>
-                    Standard
-                  <% end %>
-                  Online Tables for <%= session.name %></div>
-                <div class="col-md-1 header no-pad">Details</div>
-                <div class="col-md-2 header no-pad">Seats Remaining</div>
-                <div class="col-md-2 header no-pad" style="padding-left: 1em;">RSVP</div>
-                <div class="col-md-2 header no-pad" style="padding-right: 2px;">GMs Needed</div>
               </div>
+            <% end %>
 
-              <% tables = session.online_regular_tables %>
-
-              <% tables = tables.sort_by { |table| [table.scenario] } %>
-              <% if tables.empty? %>
-                <div class="row no-pad striped-inner">
-                  <div class="col-md-12">
-                    <% if session.premium_tables? %>
-                      There are no regular online tables this session!
-                    <% else %>
-                      There are no online tables during this session!
-                    <% end %>
-                  </div>
+            <% if session.online_premium_tables? %>
+              <div class="card-body">
+                <div class="row no-pad">
+                  <div class="col-md-5 header-premium no-pad">Online Charity and Author Tables
+                    for <%= session.name %></div>
+                  <div class="col-md-1 header-premium no-pad">Details</div>
+                  <div class="col-md-2 header-premium no-pad">Seats Remaining</div>
+                  <div class="col-md-2 header-premium no-pad" style="padding-left: 1em;">RSVP</div>
+                  <div class="col-md-2 header-premium no-pad" style="padding-right: 2px;">GMs Needed</div>
                 </div>
-              <% else %>
-                <% tables.each do |table| %>
-                  <%= render partial: "events/event_table", locals: { event: @event, session: @session, table: table,
-                                                                      registration: @registration, reg_tables: @reg_tables,
-                                                                      gm_tables: @gm_tables, tables: @tables,
-                                                                      reg_tables_hash: @reg_tables_hash,
+
+                <% session.online_premium_tables.each do |table| %>
+                  <%= render partial: "events/event_table", locals: { event: @event, table: table,
+                                                                      registration: @registration,
+                                                                      reg_tables: @reg_tables,
+                                                                      gm_tables: @gm_tables,
+                                                                      tables: @tables, reg_tables_hash: @reg_tables_hash,
                                                                       type: UserEvent::ATTENDANCE_ONLINE } %>
                 <% end %>
-              <% end %>
-            </div>
-          </div> <%# online standard tables %>
-
-          <%# Start HQ tables %>
-          <% if session.allow_hq_reg? %>
-            <div class="row">
-              <button class="btn btn-link accordion-toggle collapsed" type="button" data-toggle="collapse" data-target="#session-headquarters-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
-                <span class="accordion-text">View Headquarters tables for <%= session.name %></span>
-              </button>
-            </div>
-          <% end %>
-          <div id="session-headquarters-<%= session.id %>" class="collapse" aria-labelledby="session-header-<%= session.id %>" data-parent="#session-signup">
-            <div class="card-body">
-              <div class="row no-pad">
-                <div class="col-md-5 header no-pad">
-                  Headquarters Tables for <%= session.name %></div>
-                <div class="col-md-1 header no-pad">Details</div>
-                <div class="col-md-2 header no-pad">Seats Remaining</div>
-                <div class="col-md-2 header no-pad" style="padding-left: 1em;">RSVP</div>
-                <div class="col-md-2 header no-pad" style="padding-right: 2px;">GMs Needed</div>
               </div>
+            <% end %>
 
-              <% tables = session.headquarters_tables %>
-
-              <% tables = tables.sort_by { |table| [table.scenario] } %>
-              <% if tables.empty? %>
-                <div class="row no-pad striped-inner">
-                  <div class="col-md-12">
+            <% if session.in_person_regular_tables? %>
+              <div class="row">
+                <button class="btn btn-link accordion-toggle collapsed" type="button" data-toggle="collapse" data-target="#session-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
+                <span class="accordion-text">View In Person
+                  <% if session.premium_tables? %>Standard<% end %> tables for <%= session.name %></span>
+                </button>
+              </div>
+            <% end %>
+            <div id="session-<%= session.id %>" class="collapse" aria-labelledby="session-header-<%= session.id %>" data-parent="#session-signup">
+              <div class="card-body">
+                <div class="row no-pad">
+                  <div class="col-md-5 header no-pad">
                     <% if session.premium_tables? %>
-                      There are no regular online tables this session!
-                    <% else %>
-                      There are no online tables during this session!
+                      Standard
                     <% end %>
-                  </div>
+                    In Person Tables for <%= session.name %></div>
+                  <div class="col-md-1 header no-pad">Details</div>
+                  <div class="col-md-2 header no-pad">Seats Remaining</div>
+                  <div class="col-md-2 header no-pad" style="padding-left: 1em;">RSVP</div>
+                  <div class="col-md-2 header no-pad" style="padding-right: 2px;">GMs Needed</div>
                 </div>
-              <% else %>
-                <% tables.each do |table| %>
-                  <%= render partial: "events/event_table", locals: { event: @event, session: @session, table: table,
-                                                                      registration: @registration, reg_tables: @reg_tables,
-                                                                      gm_tables: @gm_tables, tables: @tables,
-                                                                      reg_tables_hash: @reg_tables_hash } %>
+
+                <% tables = session.in_person_regular_tables %>
+
+                <% tables = tables.sort_by { |table| [table.scenario] } %>
+                <% if tables.empty? %>
+                  <div class="row no-pad striped-inner">
+                    <div class="col-md-12">
+                      <% if session.premium_tables? %>
+                        There are no regular in person tables this session!
+                      <% else %>
+                        There are no in person tables during this session!
+                      <% end %>
+                    </div>
+                  </div>
+                <% else %>
+                  <% tables.each do |table| %>
+                    <%= render partial: "events/event_table", locals: { event: @event, session: @session, table: table,
+                                                                        registration: @registration, reg_tables: @reg_tables,
+                                                                        gm_tables: @gm_tables, tables: @tables,
+                                                                        reg_tables_hash: @reg_tables_hash,
+                                                                        type: UserEvent::ATTENDANCE_IN_PERSON } %>
+                  <% end %>
                 <% end %>
-              <% end %>
-            </div>
-          </div> <%# HQ tables %>
-        <% end # session list %>
-      </div>
-  <% end %>
+              </div>
+            </div> <%# in person standard tables %>
 
-  <hr>
+            <%# Start online regular tables %>
+            <% if session.online_regular_tables? %>
+              <div class="row">
+                <button class="btn btn-link accordion-toggle collapsed" type="button" data-toggle="collapse" data-target="#session-online-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
+                <span class="accordion-text">View Online
+                  <% if session.premium_tables? %>Standard<% end %> tables for <%= session.name %></span>
+                </button>
+              </div>
+            <% end %>
+            <div id="session-online-<%= session.id %>" class="collapse" aria-labelledby="session-header-<%= session.id %>" data-parent="#session-signup">
+              <div class="card-body">
+                <div class="row no-pad">
+                  <div class="col-md-5 header no-pad">
+                    <% if session.premium_tables? %>
+                      Standard
+                    <% end %>
+                    Online Tables for <%= session.name %></div>
+                  <div class="col-md-1 header no-pad">Details</div>
+                  <div class="col-md-2 header no-pad">Seats Remaining</div>
+                  <div class="col-md-2 header no-pad" style="padding-left: 1em;">RSVP</div>
+                  <div class="col-md-2 header no-pad" style="padding-right: 2px;">GMs Needed</div>
+                </div>
 
-  <% if @registration %>
-    <div>
-      <%= link_to raw("<span class='glyphicon glyphicon-warning-sign' aria-hidden='true'></span> Unregister for #{@registration.event.name}"),
-                  [@event, @registration],
-                  method: :delete,
-                  data: { confirm: 'Are you sure? Unregistering for the event will remove you from all tables, and will not refund your payment.' },
-                  :class => 'btn btn-danger' %>
+                <% tables = session.online_regular_tables %>
 
-      <% if @registration && @registration.paid? %>
-        <em>Note: unregistering will not refund your payment(s).</em>
-      <% end %>
+                <% tables = tables.sort_by { |table| [table.scenario] } %>
+                <% if tables.empty? %>
+                  <div class="row no-pad striped-inner">
+                    <div class="col-md-12">
+                      <% if session.premium_tables? %>
+                        There are no regular online tables this session!
+                      <% else %>
+                        There are no online tables during this session!
+                      <% end %>
+                    </div>
+                  </div>
+                <% else %>
+                  <% tables.each do |table| %>
+                    <%= render partial: "events/event_table", locals: { event: @event, session: @session, table: table,
+                                                                        registration: @registration, reg_tables: @reg_tables,
+                                                                        gm_tables: @gm_tables, tables: @tables,
+                                                                        reg_tables_hash: @reg_tables_hash,
+                                                                        type: UserEvent::ATTENDANCE_ONLINE } %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div> <%# online standard tables %>
+
+            <%# Start HQ tables %>
+            <% if session.headquarters_tables? %>
+              <div class="row">
+                <button class="btn btn-link accordion-toggle collapsed" type="button" data-toggle="collapse" data-target="#session-headquarters-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
+                  <span class="accordion-text">View Headquarters tables for <%= session.name %></span>
+                </button>
+              </div>
+            <% end %>
+            <div id="session-headquarters-<%= session.id %>" class="collapse" aria-labelledby="session-header-<%= session.id %>" data-parent="#session-signup">
+              <div class="card-body">
+                <div class="row no-pad">
+                  <div class="col-md-5 header no-pad">
+                    Headquarters Tables for <%= session.name %></div>
+                  <div class="col-md-1 header no-pad">Details</div>
+                  <div class="col-md-2 header no-pad">Seats Remaining</div>
+                  <div class="col-md-2 header no-pad" style="padding-left: 1em;">RSVP</div>
+                  <div class="col-md-2 header no-pad" style="padding-right: 2px;">GMs Needed</div>
+                </div>
+
+                <% tables = session.headquarters_tables %>
+
+                <% tables = tables.sort_by { |table| [table.scenario] } %>
+                <% if tables.empty? %>
+                  <div class="row no-pad striped-inner">
+                    <div class="col-md-12">
+                      <% if session.premium_tables? %>
+                        There are no regular online tables this session!
+                      <% else %>
+                        There are no online tables during this session!
+                      <% end %>
+                    </div>
+                  </div>
+                <% else %>
+                  <% tables.each do |table| %>
+                    <%= render partial: "events/event_table", locals: { event: @event, session: @session, table: table,
+                                                                        registration: @registration, reg_tables: @reg_tables,
+                                                                        gm_tables: @gm_tables, tables: @tables,
+                                                                        reg_tables_hash: @reg_tables_hash } %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div> <%# HQ tables %>
+
+          <% end # HQ CHECK %>
+          </div>
+        <% end # SESSION LIST %>
+        <hr>
+
+        <% if @registration %>
+          <div>
+            <%= link_to raw("<span class='glyphicon glyphicon-warning-sign' aria-hidden='true'></span> Unregister for #{@registration.event.name}"),
+                        [@event, @registration],
+                        method: :delete,
+                        data: { confirm: 'Are you sure? Unregistering for the event will remove you from all tables, and will not refund your payment.' },
+                        :class => 'btn btn-danger' %>
+
+            <% if @registration && @registration.paid? %>
+              <em>Note: unregistering will not refund your payment(s).</em>
+            <% end %>
+          </div>
+        <% else %>
+          <% if user_signed_in? %>
+            <% unless @event.closed? %>
+              <%= button_to "Register for #{@event.name}", new_event_user_event_path(@event), :class => 'btn btn-warning', method: :get %>
+            <% end %>
+          <% else %>
+            <%= link_to 'Login to register!', new_user_session_path, :class => 'btn btn-info' %>
+          <% end %>
+        <% end %>
+        <hr>
+        <% if event_host? %>
+          <%= button_to 'Add Session', new_event_session_path(@event), :class => 'btn btn-warning', :method => :get %>
+        <% end %>
+        <% if admin? %>
+          <%= button_to 'Edit', edit_event_path(@event), :class => 'btn btn-primary', :method => :get %>
+        <% end %>
+        <%= button_to 'Back', events_path, :class => 'btn btn-success', :method => :get %>
+        </div>
     </div>
-  <% else %>
-    <% if user_signed_in? %>
-      <% unless @event.closed? %>
-        <%= button_to "Register for #{@event.name}", new_event_user_event_path(@event), :class => 'btn btn-warning', method: :get %>
-      <% end %>
-    <% else %>
-      <%= link_to 'Login to register!', new_user_session_path, :class => 'btn btn-info' %>
-    <% end %>
-  <% end %>
-  <hr>
-  <% if event_host? %>
-    <%= button_to 'Add Session', new_event_session_path(@event), :class => 'btn btn-warning', :method => :get %>
-  <% end %>
-  <% if admin? %>
-    <%= button_to 'Edit', edit_event_path(@event), :class => 'btn btn-primary', :method => :get %>
-  <% end %>
-  <%= button_to 'Back', events_path, :class => 'btn btn-success', :method => :get %>
-  </div>
-</div>
