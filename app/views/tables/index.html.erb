@@ -67,7 +67,12 @@
           <% if event_host? %>
             <%= button_to "Edit #{gm.user_event.user.long_name}", edit_event_session_table_game_master_path(@event, @session, table, gm), method: :get, :class => "btn btn-primary" %>
           <% else %>
-            <div><%= gm.user_event.user.long_name %></div>
+            <%= gm.user_event.user.long_name %>
+          <% end %>
+          <% if gm.sign_in_url.present? %>
+            <a class="ul" target="_blank" href="<%= gm&.sign_in_url %>">Sign-In Sheet</a>
+          <% else %>
+            No Sign-in Sheet
           <% end %>
         <% end %>
       </td>
