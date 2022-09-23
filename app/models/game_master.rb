@@ -48,7 +48,6 @@ class GameMaster < ActiveRecord::Base
       errors[:vtt_type] << 'is not allowed for in-person table' if vtt_type.present?
       errors[:vtt_name] << 'is not allowed for in-person table' if vtt_name.present?
       errors[:vtt_url] << 'is not allowed for in-person table' if vtt_url.present?
-      errors[:sign_in_url] << 'is not allowed for in-person table' if sign_in_url.present?
     end
   end
 
