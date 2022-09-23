@@ -271,7 +271,6 @@
     <div class="accordian" id="session-signup">
       <div class="card">
         <% sessionList.each do |session| %>
-          <% unless session.only_hq? && !session.allow_hq_reg? %>
             <div class="card-header striped-outer session-header" id="session-header-<%= session.id %>">
               <div class="row mb-0">
                 <div class="col-md-5 h4">
@@ -297,8 +296,7 @@
             <% if session.in_person_premium_tables? %>
               <div class="card-body">
                 <div class="row no-pad">
-                  <div class="col-md-5 header-premium no-pad">In Person Charity and Author Tables
-                    for <%= session.name %></div>
+                <div class="col-md-5 header-premium no-pad">In Person Charity and Author Tables for <%= session.name %></div>
                   <div class="col-md-1 header-premium no-pad">Details</div>
                   <div class="col-md-2 header-premium no-pad">Seats Remaining</div>
                   <div class="col-md-2 header-premium no-pad" style="padding-left: 1em;">RSVP</div>
@@ -319,8 +317,7 @@
             <% if session.online_premium_tables? %>
               <div class="card-body">
                 <div class="row no-pad">
-                  <div class="col-md-5 header-premium no-pad">Online Charity and Author Tables
-                    for <%= session.name %></div>
+                <div class="col-md-5 header-premium no-pad">Online Charity and Author Tables for <%= session.name %></div>
                   <div class="col-md-1 header-premium no-pad">Details</div>
                   <div class="col-md-2 header-premium no-pad">Seats Remaining</div>
                   <div class="col-md-2 header-premium no-pad" style="padding-left: 1em;">RSVP</div>
@@ -434,7 +431,7 @@
             </div> <%# online standard tables %>
 
             <%# Start HQ tables %>
-            <% if session.headquarters_tables? %>
+          <% if session.allow_hq_reg? %>
               <div class="row">
                 <button class="btn btn-link accordion-toggle collapsed" type="button" data-toggle="collapse" data-target="#session-headquarters-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
                   <span class="accordion-text">View Headquarters tables for <%= session.name %></span>
@@ -475,10 +472,10 @@
                 <% end %>
               </div>
             </div> <%# HQ tables %>
-
-          <% end # HQ CHECK %>
+        <% end # session list %>
           </div>
-        <% end # SESSION LIST %>
+  <% end %>
+
         <hr>
 
         <% if @registration %>
