@@ -431,7 +431,7 @@
           </div> <%# online standard tables %>
 
           <%# Start HQ tables %>
-          <% if session.headquarters_tables? %>
+          <% if session.allow_hq_reg? %>
             <div class="row">
               <button class="btn btn-link accordion-toggle collapsed" type="button" data-toggle="collapse" data-target="#session-headquarters-<%= session.id %>" aria-expanded="false" aria-controls="session-<%= session.id %>">
                 <span class="accordion-text">View Headquarters tables for <%= session.name %></span>
