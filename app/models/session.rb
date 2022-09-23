@@ -39,6 +39,10 @@ class Session < ActiveRecord::Base # rubocop:disable Metrics/ClassLength
     tables.reject(&:headquarters?)
   end
 
+  def player_tables?
+    player_tables.any?
+  end
+
   def in_person_all_tables
     premium = in_person_premium_tables
     regular = in_person_regular_tables
@@ -105,7 +109,6 @@ class Session < ActiveRecord::Base # rubocop:disable Metrics/ClassLength
 
   def headquarters_tables
     @headquarters_tables ||= tables.select(&:headquarters?)
-    @headquarters_tables
   end
 
   def premium_tables?
