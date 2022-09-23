@@ -41,10 +41,7 @@
       <td>
         <%# make this show the scenario data as a collapsable %>
         <%= table.scenario.long_name %>
-
-
-        <%= render 'events/table_badges', table: table %></div>
-
+        <%= render 'events/table_badges', table: table %>
       </td>
       <td>
         <% scenario = table.scenario %>
@@ -78,6 +75,11 @@
             </div>
           </div>
         </div>
+        <% if table.sign_in_url.present? %>
+          <% if table.gms_needed.size == 1 %>
+            <a class="ul" target="_blank" href="<%= gm&.sign_in_url %>">Sign-In Sheet</a>
+          <% end %>
+        <% end %>
       </td>
       <% if event_host? %>
         <td>
@@ -143,6 +145,7 @@
       <td><%= player.email %></td>
       <td><%= player.pfs_number %></td>
       <td><%= player.forum_username %></td>
+      <%# TODO: Add in the table %>
     </tr>
   <% end %>
   </tbody>
@@ -154,7 +157,8 @@
   <div class="well">
     <h4>Add Tables to <%= @session.name %>.</h4>
     <p>
-      The file should have columns of <code>scenario,online,location,gms_needed,max_players</code>, and expects those
+      The file should have columns of <code>scenario,online,location,gms_needed,max_players</code>, and expects
+      those
       headers.</p>
     <%= form_tag upload_tables_csv_path(@session), :method => "post", :multipart => true do %>
       <label for="file">CSV File to Upload:</label><%= file_field_tag :file, :accept => 'text/csv' %>
