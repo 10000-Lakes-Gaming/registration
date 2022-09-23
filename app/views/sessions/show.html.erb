@@ -94,6 +94,9 @@
         </td>
         <td>
           <%= @gm_sessions.size[table] %>/ <%= table.gms_needed %>
+          <% @gm_sessions.size[table].each do |gm| %>
+            <div><%= gm.user_event.user.long_name %> %></div>
+          <% end %>
         </td>
       <% end %>
       <td>
