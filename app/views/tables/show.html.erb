@@ -23,7 +23,7 @@
         <dt class="head">Location:</dt>
         <dd class="head text-info"><%= @table.location %></dd>
       <% end %>
-      <% if @table.in_person? && @game_master.sign_in_url.present? %>
+      <% if !@table.online && @game_master.sign_in_url.present? %>
         <dt class="head">Sign-In Sheet:</dt>
         <dd class="head text-info"><a class="ul" target="_blank" href="<%= @game_master&.sign_in_url %>">Sign-In Sheet</a></dd>
       <% end %>
