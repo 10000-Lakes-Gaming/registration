@@ -19,7 +19,7 @@
     <th>Scenario</th>
     <th></th>
     <th width="1%">Players</th>
-    <th width="1%">GMs</th>
+    <th colspan="2">GMs</th>
   </tr>
   </thead>
 
@@ -88,15 +88,17 @@
         <td>
           <%= link_to "#{@gm_sessions[table].size} / #{table.gms_needed}", event_session_table_game_masters_path(@event, @session, table) %>
         </td>
+        <td>
+          <% @gm_sessions[table].each do |gm| %>
+            <div><%= gm.name %> (<%= gm.pfs_number %>)</div>
+          <% end %>
+        </td>
       <% else %>
         <td>
           <%= @player_sessions[table].size %>/ <%= table.max_players %>
         </td>
         <td>
           <%= @gm_sessions.size[table] %>/ <%= table.gms_needed %>
-          <% @gm_sessions.size[table].each do |gm| %>
-            <div><%= gm.user_event.user.long_name %> %></div>
-          <% end %>
         </td>
       <% end %>
       <td>
