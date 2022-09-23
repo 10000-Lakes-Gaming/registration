@@ -21,9 +21,9 @@
     <% if @table.location.present? && !@table.online? %>
       <dt class="head">Location:</dt>
       <dd class="head text-info"><%= @table.location || @game_master.table_number %></dd>
-      <% if @game_master.sign_in_url.present? %>
+      <% if @table.in_person? && @game_master.sign_in_url.present? %>
         <dt class="head">Sign-In Sheet:</dt>
-        <dd class="head text-info"><a class="ul" target="_blank" href="<%= @table&.sign_in_url %>">Sign-In Sheet</a></dd>
+        <dd class="head text-info"><a class="ul" target="_blank" href="<%= @game_master&.sign_in_url %>">Sign-In Sheet</a></dd>
       <% end %>
     <% end %>
   </dl>
