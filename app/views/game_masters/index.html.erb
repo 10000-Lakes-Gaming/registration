@@ -17,7 +17,7 @@
     <tr>
       <td>
         <% unless game_master.user_event.nil? %>
-          <%= game_master.user_event.user.name %>
+          <%= game_master.user_event.user.name %> (<%= game_master.user_event.user.pfs_number %>)
         <% end %>
       </td>
       <td><%= game_master.table_number %></td>
