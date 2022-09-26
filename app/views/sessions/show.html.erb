@@ -90,11 +90,7 @@
         </td>
         <td>
           <% @gm_sessions[table].each do |gm| %>
-            <% if gm.sign_in_url.present? %>
-              <div><a href="<%= gm.sign_in_url %>" target="_blank"><%= gm.name %> (<%= gm.pfs_number %>)</a></div>
-            <% else %>
-              <div><%= gm.name %> (<%= gm.pfs_number %>)</div>
-            <% end %>
+            <div><%= gm.name %> (<%= gm.pfs_number %>)</div>
           <% end %>
         </td>
       <% else %>
