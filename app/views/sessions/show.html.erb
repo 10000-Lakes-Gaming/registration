@@ -10,7 +10,7 @@
 </h2>
 
 
-<h3><%= link_to 'Scheduled Tables', event_session_tables_path(@event,@session), :class => 'h3' %></h3>
+<h3><%= link_to 'Scheduled Tables', event_session_tables_path(@event, @session), :class => 'h3' %></h3>
 <table class="table table-striped">
   <thead>
   <tr>
@@ -90,7 +90,11 @@
         </td>
         <td>
           <% @gm_sessions[table].each do |gm| %>
-            <div><%= gm.name %> (<%= gm.pfs_number %>)</div>
+            <% if @gm.sign_in_url.present? %>
+              <div><a href="<%= gm.sign_in_url %>" target="_blank"><%= gm.name %> (<%= gm.pfs_number %>)</a></div>
+            <% else %>
+              <div><%= gm.name %> (<%= gm.pfs_number %>)</div>
+            <% end %>
           <% end %>
         </td>
       <% else %>
