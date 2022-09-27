@@ -12,24 +12,29 @@ class TablesBySessionController < ApplicationController
 
   private
 
+  def non_hq_sessions
+    @event.sessions.reject { |session| session.name.include? 'HQ' }
+  end
+
   def tableSessionMap
     # table_number -> session -> GM
     @tableSessionMap = {}
-    @sessions        = @event.sessions.sort { |a, b| a.start <=> b.start }
+    @sessions = non_hq_sessions.sort { |a, b| a.start <=> b.start }
     @sessions.sort.each do |session|
       session.tables.each do |table|
         next if %w[HQ Overseer].include? table.location
 
         table.game_masters.each do |gm|
-          table_number = gm.table_number.presence || 'Unknown'
-          table_number = table_number.strip
-          table_hash   = @tableSessionMap[table_number]
+          table_number = gm.table_number.presence || table.location.presence || 'Unknown'
+          table_number = table_number.strip ``
+          table_hash = @tableSessionMap[table_number]
           table_hash = {} if table_hash.nil?
-          table_hash[session]            = gm
+          table_hash[session] = gm
           @tableSessionMap[table_number] = table_hash
         end
       end
     end
+
     @tables = @tableSessionMap.keys.sort_by { |x| x[/\d+/].to_i }
     # Pass 2 -- go through again and fill out unused sessions
     unknown_user = User.new
