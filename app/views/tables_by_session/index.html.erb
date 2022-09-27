@@ -28,8 +28,8 @@
       <% @tableSessionMap[table_number].keys.sort { |a, b| a.start <=> b.start }.each do |session| %>
         <tr>
           <td><%= session.name %></td>
-          <td><%= @tableSessionMap[table_number][session].table.scenario.long_name %></td>
-          <td><%= @tableSessionMap[table_number][session].user_event.user.formal_name %></td>
+          <td><%= @tableSessionMap[table_number][session].table.schedule_name %></td>
+          <td><%= @tableSessionMap[table_number][session].user_event.user.name %></td>
         </tr>
       <% end %>
       </tbody>
