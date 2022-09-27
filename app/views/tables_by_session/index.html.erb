@@ -13,28 +13,26 @@
 
 <% @tables.each do |table_number| %>
   <div class="row pageinate">
-    <div class="col-sm-4" style="padding:2px">
-      <div>
-        <b><%= table_number %></b>
-      </div>
-      <table class="table table-striped table-bordered">
-        <thead>
-        <tr>
-          <th>Session</th>
-          <th>Scenario</th>
-          <th>Game Master</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% @tableSessionMap[table_number].keys.sort { |a, b| a.start <=> b.start }.each do |session| %>
-          <tr>
-            <td><%= session.name %></td>
-            <td><%= @tableSessionMap[table_number][session].table.scenario.long_name %></td>
-            <td><%= @tableSessionMap[table_number][session].user_event.user.formal_name %></td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
+    <div>
+      <b><%= table_number %></b>
     </div>
+    <table class="table table-striped table-bordered">
+      <thead>
+      <tr>
+        <th>Session</th>
+        <th>Scenario</th>
+        <th>Game Master</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @tableSessionMap[table_number].keys.sort { |a, b| a.start <=> b.start }.each do |session| %>
+        <tr>
+          <td><%= session.name %></td>
+          <td><%= @tableSessionMap[table_number][session].table.scenario.long_name %></td>
+          <td><%= @tableSessionMap[table_number][session].user_event.user.formal_name %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
   </div>
 <% end %>
