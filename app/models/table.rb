@@ -84,7 +84,7 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
   end
 
   def schedule_name
-    "#{scenario.long_name} (#{scenario.tier})"
+    scenario.exists? ? "#{scenario.long_name} (#{scenario.tier})" : ''
   end
 
   def long_name
