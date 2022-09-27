@@ -26,7 +26,7 @@ class TablesBySessionController < ApplicationController
 
         table.game_masters.each do |gm|
           table_number = gm.table_number.presence || table.location.presence || 'Unknown'
-          table_number = table_number.strip ``
+          table_number = table_number.strip
           table_hash = @tableSessionMap[table_number]
           table_hash = {} if table_hash.nil?
           table_hash[session] = gm
