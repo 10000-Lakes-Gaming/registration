@@ -28,8 +28,8 @@
     information below!</p>
   <hr>
   <hr>
-  <h3 class="alert-primary">Your schedule at <%= @event.name %> as
-    of <%= DateTime.now.localtime.to_formatted_s(:long) %></h3>
+  <h3 class="alert-primary">Your schedule for <%= @event.name %> as
+    of <%= DateTime.now.localtime.strftime(Session::DATETIME_FORMAT) %></h3>
   <div>Please see <%= link_to "Your Registration", [@event, @registration] %> for your up to the minute
     assignments.
   </div>
