@@ -85,7 +85,7 @@ task send_all_partipants_schedules: :environment do
   puts "Sending out ALL Participants schedules for #{event.name}"
 
   message = Message.new
-  message.subject = "Schedule for #{event.name}"
+  message.subject = "Your #{event.name} schedule and information"
 
   event.user_events.each do |user_event|
     user = user_event.user

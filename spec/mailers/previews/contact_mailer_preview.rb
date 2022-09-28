@@ -72,7 +72,7 @@ class ContactMailerPreview < ActionMailer::Preview
     @user = User.find(1)
     user_event = @user.user_events.first
     message = Message.new
-    message.subject = "GM assignment Reminder for #{@event.name}"
+    message.subject = "Your #{@event.name} schedule and information"
 
     email = @user.email
 
