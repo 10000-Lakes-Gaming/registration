@@ -82,7 +82,7 @@ task send_all_partipants_schedules: :environment do
   abort 'Missing EVENT_ID!' unless event_number.present?
 
   event = Event.find(event_number)
-  puts "Sending out GM schedules for #{event.name}"
+  puts "Sending out ALL Participants schedules for #{event.name}"
 
   message = Message.new
   message.subject = "Schedule for #{event.name}"
