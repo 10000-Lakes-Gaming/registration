@@ -37,11 +37,11 @@ class ContactMailer < ApplicationMailer
   end
 
   # This is the message that lets folks know about the donation drive
-  def donation_drive(message, email, event)
+  def donation_drive(message, user, event)
     @message = message
     @event = event
 
-    user = User.where(email:).first
+    email = user.email
     @message.user = user
     mail(to: email, subject: @message.subject, &:html) unless email.blank? || user.opt_out?
   end

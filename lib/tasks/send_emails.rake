@@ -11,7 +11,7 @@ task send_donation_drive_message: :environment do
   count = 0
   event.user_events.each do |registration|
     unless registration.user.opt_out?
-      ContactMailer.donation_drive(message, registration.user.email, event).deliver
+      ContactMailer.donation_drive(message, registration.user, event).deliver
       count += 1
     end
   end

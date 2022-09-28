@@ -85,7 +85,7 @@ class ContactMailerPreview < ActionMailer::Preview
     message = Message.new
     message.subject = "#{@event.name} Donation Drive!"
 
-    ContactMailer.donation_drive(message, @user.email, @event)
+    ContactMailer.donation_drive(message, @user, @event)
   end
 
   def registration_update_preview
