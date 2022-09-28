@@ -43,12 +43,7 @@ class ContactMailer < ApplicationMailer
 
     user = User.where(email:).first
     @message.user = user
-    unless email.blank? || user.opt_out?
-      mail(to: email, subject: @message.subject) do |format|
-        format.html
-        format.text
-      end
-    end
+    mail(to: email, subject: @message.subject, &:html) unless email.blank? || user.opt_out?
   end
 
   # Email sent to GMs when they are added/dropped from a table
