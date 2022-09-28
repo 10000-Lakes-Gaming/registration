@@ -66,7 +66,7 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
   end
 
   def sign_in_url
-    game_masters.first&.sign_in_url
+    game_masters.first&.sign_in_url if game_masters.length == 1
   end
 
   def <=>(other)
