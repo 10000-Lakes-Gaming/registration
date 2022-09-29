@@ -102,7 +102,7 @@ class GameMaster < ActiveRecord::Base
                 game_master.user_event.user.email,
                 game_master.user_event.user.forum_username,
                 game_master.user_event.user.title,
-                game_master.table_number.presence || table.table.location.presence || '',
+                game_master.table_number.presence || game_master.table.location.presence || '',
                 game_master.sign_in_url]
       end
     end
