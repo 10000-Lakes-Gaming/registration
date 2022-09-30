@@ -14,7 +14,7 @@ class UserEventsController < ApplicationController
     if event_host?
       @user_event = UserEvent.find(user_event_id)
     else
-      @user_event = registration_for_event(event)
+      @user_event = current_user.registration_for_event(event)
     end
   end
 
