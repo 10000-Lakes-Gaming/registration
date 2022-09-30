@@ -2,8 +2,8 @@
 
 class UserEventsController < ApplicationController
   include ApplicationHelper
-  before_action :get_user_event, only: %i[show edit update destroy]
   before_action :get_event, :get_users, :get_all_events
+  before_action :get_user_event, only: %i[show edit update destroy]
 
   def get_user
     @user = current_user
@@ -13,7 +13,7 @@ class UserEventsController < ApplicationController
     @user_event = if event_host?
                     UserEvent.find(params[:id])
                   else
-                    get_user.registration_for_event(event)
+                    get_user.registration_for_event(@event)
                   end
   end
 
