@@ -89,6 +89,10 @@ class RegistrationTablesController < ApplicationController
   def create
     @registration_table = RegistrationTable.new(registration_table_params)
 
+    unless event_host?
+      @registration_table.user_event_id = user_event_id == current_user.registration_for_event(event).id
+    end
+
     # TODO: - is there a better way to do this?
     seat = RegistrationTable.where(table_id: @table.id).maximum('seat')
     if seat.nil?

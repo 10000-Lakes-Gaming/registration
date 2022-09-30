@@ -11,11 +11,11 @@ class UserEventsController < ApplicationController
 
   def get_user_event
     user_event_id = params[:id]
-    if event_host?
-      @user_event = UserEvent.find(user_event_id)
-    else
-      @user_event = current_user.registration_for_event(event)
-    end
+    @user_event = if event_host?
+                    UserEvent.find(user_event_id)
+                  else
+                    current_user.registration_for_event(event)
+                  end
   end
 
   def get_users
