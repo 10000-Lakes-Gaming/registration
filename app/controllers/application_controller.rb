@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   end
 
   def restrict_to_gamemaster
-    redirect_to events_path unless event_host? || @game_master&.assigned(current_user)
+    redirect_to root_path unless event_host? || @game_master&.assigned(current_user)
     true
   end
 
