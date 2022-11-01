@@ -69,7 +69,7 @@ class GameMaster < ActiveRecord::Base
   end
 
   def self.to_request_csv(game_masters)
-    attributes = ['GM Name', 'Email used on Paizo.com', 'Forum Username', 'Scenario PZO', 'Scenario Name', ' ',
+    attributes = ['GM Name', 'Email used on Paizo.com', 'Forum Username', 'Scenario PZO', 'Scenario Name',
                   'Convention Name']
     CSV.generate(headers: true) do |csv|
       csv << attributes
@@ -79,7 +79,6 @@ class GameMaster < ActiveRecord::Base
                 gm.user_event.user.forum_username,
                 gm.scenario.catalog_number,
                 gm.scenario.long_name,
-                '',
                 gm.user_event.event.name]
       end
     end
