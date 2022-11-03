@@ -69,3 +69,11 @@ headquarters:
   type_of: Headquarters
   name: Headquarters Volunteer
   tier: HQ
+
+long_name:
+  game_system: PFS2
+  type_of: Scenario
+  name: The near-death experience brought new ideas to light
+  season: 4
+  scenario_number: 1
+  tier: 1-4

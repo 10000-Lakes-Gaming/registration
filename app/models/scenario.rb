@@ -41,7 +41,7 @@ class Scenario < ActiveRecord::Base # rubocop:disable Metrics/ClassLength
     if game_system == OTHER || game_system == AL || game_system == HQ
       name
     elsif scenario?
-      "#{game_system} #{'%02d' % season}-#{'%02d' % scenario_number}: #{name}"
+      "#{game_system} #{season}-#{'%02d' % scenario_number}: #{name}"
     elsif quest?
       if 'PFS2'.eql? game_system
         "#{game_system} Quest #{scenario_number}: #{name}"
@@ -70,6 +70,13 @@ class Scenario < ActiveRecord::Base # rubocop:disable Metrics/ClassLength
     else
       "#{game_system} #{name}"
     end
+  end
+
+  def tte_name
+    name = long_name
+    tier_str = "(#{tier})"
+    tier_length = tier_str.length
+    "#{name.truncate(60 - tier_length - 4, separator: /\s/)} #{tier_str}"
   end
 
   def scenario?
