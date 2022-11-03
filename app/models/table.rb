@@ -262,14 +262,14 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
                 table.schedule_name, "#{table_description}",
                 scenario.paizo_url, table.session.name, table.session.name,
                 table.max_players, table.gms_needed, 0, table.session.session_time_minutes,
-                'teen', converted_game_system(table), '10,000 Lakes Gaming and MN-POP', 'Part of Paizo Organized Play Room in Scandinavia Ballroom']
+                'teen', table.converted_game_system, '10,000 Lakes Gaming and MN-POP', 'Part of Paizo Organized Play Room in Scandinavia Ballroom']
       end
     end
   end
 
 
-  def converted_game_system(table)
-    case table.scenario.game_system
+  def converted_game_system
+    case scenario.game_system
     when PFS2
       'Pathfinder 2'
     when PFS1
@@ -277,7 +277,7 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
     when SFS
       'Starfinder'
     else
-      self.scenario.game_system
+      scenario.game_system
     end
   end
 
