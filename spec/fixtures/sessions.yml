@@ -59,3 +59,9 @@ charity_session:
   name: Charity
   start: <%= DateTime.now + 15.days %>
   end: <%= DateTime.now + 15.days + 4.hours %>
+
+partial_hour_session:
+  event: other
+  name: partial
+  start: 2017-08-02 14:00:00
+  end: 2017-08-02 16:30:00

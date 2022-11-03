@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :events do
     member do
       get 'scenario_request_form', defaults: { format: :json }
+      get 'tabletop_event_upload', defaults: { format: :json }
     end
     resources :event_hosts
     resources :gm_list

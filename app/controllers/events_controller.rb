@@ -4,9 +4,9 @@ class EventsController < ApplicationController
   include ApplicationHelper
 
   skip_before_action :authenticate_user!, only: %i[index show]
-  before_action :set_event, only: %i[show edit update destroy scenario_request_form]
-  before_action :restrict_to_admin, except: %i[show index scenario_request_form]
-  before_action :restrict_to_hosts, only: [:scenario_request_form]
+  before_action :set_event, only: %i[show edit update destroy scenario_request_form tabletop_event_upload]
+  before_action :restrict_to_admin, except: %i[show index scenario_request_form, tabletop_event_upload]
+  before_action :restrict_to_hosts, only: [:scenario_request_form, :tabletop_event_upload]
   before_action :get_events, :get_my_events
 
   # GET /events
@@ -40,6 +40,21 @@ class EventsController < ApplicationController
       user_events.each do |user_event|
         @my_registrations.push user_event
         @my_events.push user_event.event
+      end
+    end
+  end
+
+  # this will pull the list of tables for CotN
+  def tabletop_event_upload
+    # needs to be an array, not an active record object.
+    tables = @event.tables.to_a.select { |table| (table.tabletop_events && !table.sent_to_tabletop_events) }
+    tables.each { |table| (table.sent_to_tabletop_events = true) && table.save }
+    # We'll want only those tables flagged as cotn and not extracted
+    respond_to do |format|
+      format.json { render :tabletop_event_tables, status: :ok }
+      # check for CSV, and make the default format, perhaps
+      format.csv do
+        send_data Table.to_tte_csv(@event, tables), filename: 'tabletop_event_tables.csv'
       end
     end
   end
@@ -176,6 +191,7 @@ class EventsController < ApplicationController
                                   :prereg_price, :onsite_price, :info, :gm_volunteer_link, :tables_reg_offsite,
                                   :external_url, :event_number, :online_sales_end, :online, :in_person,
                                   :chat_server, :chat_server_url, :optional_fee, :gm_self_select, :gm_select_only,
-                                  :gm_signup, :reporting_url, :attendance_policy, :tee_shirt_price, :tee_shirt_end)
+                                  :gm_signup, :reporting_url, :attendance_policy, :tee_shirt_price, :tee_shirt_end,
+                                  :tabletop_event_type_code)
   end
 end

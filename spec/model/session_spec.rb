@@ -130,5 +130,20 @@ describe Session do
     end
   end
 
+  context '#hours' do
+    it 'morning should be 5 hours' do
+      morning = sessions(:morning)
+      expect(morning.session_time_minutes).to eq 300
+    end
+
+    it 'quest_four session should be 1 hour' do
+      quest_four = sessions(:quest_four)
+      expect(quest_four.session_time_minutes).to eq 60
+    end
+    it 'partial hour session should be 2 hours' do
+      partial = sessions(:partial_hour_session)
+      expect(partial.session_time_minutes).to eq 120
+    end
+  end
   # TODO: Add tests for max players validation
 end

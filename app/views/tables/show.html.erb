@@ -23,6 +23,12 @@
         <dt class="head">Location:</dt>
         <dd class="head text-info"><%= @table.location %></dd>
       <% end %>
+      <% if @event.tabletop_event_type_code.present? %>
+        <dt class="head">Extract for TTE?</dt>
+        <dd class="head text-info"><%= yes_no @table.tabletop_events %></dd>
+        <dt class="head">Sent to TTE??</dt>
+        <dd class="head text-info"><%= yes_no @table.sent_to_tabletop_events %></dd>
+      <% end %>
       <% if !@table.online && @table.sign_in_url.present? %>
         <dt class="head">Sign-In Sheet:</dt>
         <dd class="head text-info"><a class="ul" target="_blank" href="<%= @table.sign_in_url %>">Sign-In Sheet</a></dd>

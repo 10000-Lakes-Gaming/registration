@@ -125,6 +125,6 @@ class TablesController < ApplicationController
   def table_params
     params.require(:table).permit(:session_id, :scenario_id, :max_players, :gms_needed, :gm_self_select, :raffle,
                                   :core, :disabled, :location, :premium, :prereg_price, :onsite_price, :non_pfs,
-                                  :information, :online)
+                                  :information, :online, :tabletop_events, :sent_to_tabletop_events)
   end
 end

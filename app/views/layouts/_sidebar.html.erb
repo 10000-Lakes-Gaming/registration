@@ -74,6 +74,8 @@
         <li><%= link_to "Tickets (CSV)", event_tickets_path(@event, :format => :csv) %></li>
         <li><%= link_to "Scenario Request Form (CSV)", scenario_request_form_event_path(@event, :format => :csv),
                         data: {confirm: 'Please make sure you save this file as all GMs will be marked as having received their scenarios.'} %></li>
+        <li><%= link_to "Tabletop Events Form (CSV)", tabletop_event_upload_event_path(@event, :format => :csv),
+                        data: {confirm: 'This will select only those marked for upload that haven\'t been already'} %></li>
       <% end %>
     <% end %>
     <li style="padding-top: 1em;"><u>Other</u></li>

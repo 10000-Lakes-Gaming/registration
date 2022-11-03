@@ -6,7 +6,7 @@ end
 
 source 'https://rubygems.org'
 
-ruby '3.1.0'
+ruby '3.1.2'
 # need to update this ASAP
 gem 'rails', '6.0.5'
 

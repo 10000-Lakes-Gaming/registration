@@ -6,7 +6,7 @@ class Scenario < ActiveRecord::Base # rubocop:disable Metrics/ClassLength
   validates :season, presence: true, if: :season_needed?
   validates :tier, presence: true, if: :tier_needed?
   validates_uniqueness_of :scenario_number, scope: %i[type_of game_system season tier],
-                                            if: :scenario_number_needed?
+                          if: :scenario_number_needed?
   validate :validate_type
 
   INTRO = 'Intro Scenario'
@@ -127,10 +127,12 @@ class Scenario < ActiveRecord::Base # rubocop:disable Metrics/ClassLength
   end
 
   def self.import(file)
+    Rails.logger.info "Valid types are #{TYPES}"
     csv_errors = {}
     CSV.foreach(file.path, headers: true) do |row|
       fields = row.to_h
 
+      Rails.logger.info "Adding scenario from #{fields}"
       scenario = Scenario.create({
                                    type_of: fields['type_of'],
                                    season: fields['season'],

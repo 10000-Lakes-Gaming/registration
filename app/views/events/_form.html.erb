@@ -124,7 +124,7 @@
 
   <div class="field">
     <%= f.label :info %><br/>
-    <%= f.text_area :info, cols: 100, rows: 5  %>
+    <%= f.text_area :info, cols: 100, rows: 5 %>
   </div>
   <div class="field" id="attendance_policy_div">
     <hr>
@@ -150,9 +150,15 @@
     <%= f.check_box :tables_reg_offsite %>
     <%= f.label :tables_reg_offsite, 'Table registration is being handled by external convention?' %>
   </div>
+
   <p class="field">
     <%= f.label :external_url, 'URL for external Convention\'s registration site.' %><br>
     <%= f.url_field :external_url %>
+  </p>
+
+  <p class="field">
+    <%= f.label :tabletop_event_type_code, 'If this is table top events, what is the event type ID?' %><br/>
+    <%= f.text_field :tabletop_event_type_code %>
   </p>
   <div class="actions">
     <%= f.submit :class => 'btn btn-success' %>

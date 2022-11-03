@@ -8,10 +8,18 @@
       <dd class="head text-info"><%= @session.name %></dd>
       <dt class="head">Game:</dt>
       <dd class="head text-info"><%= @table.long_name %></dd>
+
+      <% if @event.tabletop_event_type_code.present? %>
+        <dt class="head">Extract for TTE?</dt>
+        <dd class="head text-info"><%= yes_no @table.tabletop_events %></dd>
+        <dt class="head">Sent to TTE??</dt>
+        <dd class="head text-info"><%= yes_no @table.sent_to_tabletop_events %></dd>
+      <% end %>
       <% if @table.location.present? && !@table.online? %>
         <dt class="head">Location:</dt>
         <dd class="head text-info"><%= @table.location %></dd>
       <% end %>
+
     </dl>
   </div>
 

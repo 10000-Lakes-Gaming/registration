@@ -14,7 +14,7 @@ class UserEventsController < ApplicationController
     if event_host?
       @user_event = UserEvent.find(params[:id])
     else
-      redirect_to root_path unless @user_event
+      redirect_to root_path unless user_event
     end
   end
 

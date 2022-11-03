@@ -56,6 +56,16 @@
     </tr>
 
     <tr>
+      <td><%= f.label :disabled, 'Extract for Tabletop Events' %></td>
+      <td><%= f.check_box :tabletop_events %></td>
+    </tr>
+
+    <tr>
+      <td><%= f.label :disabled, 'Sent to Tabletop Events' %></td>
+      <td><%= f.check_box :sent_to_tabletop_events %></td>
+    </tr>
+
+    <tr>
       <td><%= f.label :non_pfs, 'This table is not for Society credit' %></td>
       <td><%= f.check_box :non_pfs %></td>
     </tr>
