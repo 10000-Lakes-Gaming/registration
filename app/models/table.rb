@@ -270,11 +270,11 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
 
   def converted_game_system
     case scenario.game_system
-    when PFS2
+    when Scenario::PFS2
       'Pathfinder 2'
-    when PFS1
+    when Scenario::PFS1
       'Pathfinder 1'
-    when SFS
+    when Scenario::SFS
       'Starfinder'
     else
       scenario.game_system
