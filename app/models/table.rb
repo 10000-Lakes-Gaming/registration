@@ -253,10 +253,6 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
         table_description = scenario.description
         table_description = "#{table_description}\n#{table.information}"
 
-        if scenario.evergreen?
-          table_description = "#{table_description}\nThis scenario can be played more than once."
-        end
-
         # TODO: Add things for repeatable, pregens only, assuming information has no pregens
         csv << ['Roleplaying Game', tabletop_events_code,
                 table.schedule_name, "#{table_description}",
