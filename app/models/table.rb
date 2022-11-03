@@ -267,7 +267,6 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
     end
   end
 
-  private
 
   def converted_game_system(table)
     case table.scenario.game_system
@@ -282,6 +281,7 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
     end
   end
 
+  private
   def table_type
     online? ? UserEvent::ATTENDANCE_ONLINE : UserEvent::ATTENDANCE_IN_PERSON
   end
