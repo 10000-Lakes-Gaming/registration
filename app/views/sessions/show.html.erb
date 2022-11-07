@@ -15,7 +15,13 @@
   <thead>
   <tr>
     <th>Location</th>
-    <th>Online?</th>
+    <% if @event.online? %>
+      <th>Online?</th>
+    <% end %>
+    <% if @event.tabletop_event_type_code.present? %>
+      <th>TTE ok?</th>
+      <th>Uploaded?</th>
+    <% end %>
     <th>Scenario</th>
     <th></th>
     <th width="1%">Players</th>
@@ -35,9 +41,19 @@
           (<%= table.gm_table_assignments %>)
         <% end %>
       </td>
-      <td>
-        <%= yes_no table.online? %>
-      </td>
+      <% if @event.online? %>
+        <td>
+          <%= yes_no table.online? %>
+        </td>
+      <% end %>
+      <% if @event.tabletop_event_type_code.present? %>
+        <td>
+          <%= yes_no table.sent_to_tabletop_events? %>
+        </td>
+        <td>
+          <%= yes_no table.online? %>
+        </td>
+      <% end %>
       <td>
         <%# make this show the scenario data as a collapsable %>
         <%= table.scenario.long_name %>
