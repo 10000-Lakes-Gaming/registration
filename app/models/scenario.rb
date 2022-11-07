@@ -6,7 +6,7 @@ class Scenario < ActiveRecord::Base # rubocop:disable Metrics/ClassLength
   validates :season, presence: true, if: :season_needed?
   validates :tier, presence: true, if: :tier_needed?
   validates_uniqueness_of :scenario_number, scope: %i[type_of game_system season tier],
-                          if: :scenario_number_needed?
+                                            if: :scenario_number_needed?
   validate :validate_type
 
   INTRO = 'Intro Scenario'

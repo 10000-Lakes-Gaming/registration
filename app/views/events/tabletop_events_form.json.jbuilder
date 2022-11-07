@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.tables do
   json.table do
     json.array!(@event.tables) do |table|

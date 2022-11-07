@@ -20,15 +20,15 @@ class Session < ActiveRecord::Base # rubocop:disable Metrics/ClassLength
   DATE_FORMAT = '%B %d, %Y'
 
   def long_name
-    "#{self.name} - #{self.timeslot}"
+    "#{name} - #{timeslot}"
   end
 
   def timeslot
-    "#{self.start.strftime(TIMESLOT_DATE_FORMAT)} to #{self.end.strftime(TIMESLOT_DATE_FORMAT)}"
+    "#{start.strftime(TIMESLOT_DATE_FORMAT)} to #{self.end.strftime(TIMESLOT_DATE_FORMAT)}"
   end
 
   def session_time_minutes
-    seconds_diff = (self.start - self.end).to_i.abs
+    seconds_diff = (start - self.end).to_i.abs
     (seconds_diff / 3600).to_i * 60
   end
 

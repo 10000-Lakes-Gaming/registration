@@ -237,15 +237,22 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
 
   def self.to_tte_csv(event, tables)
     tabletop_events_code = event.tabletop_event_type_code
-    # Event Type,Event Type ID,Name,Description,More Info URL,Preferred Start Time,Alternate Start Time,Max Tickets,Spaces Needed,Hosts Also Play,Duration,Age Range,Game System,Sponsor,Special Request Notes (include email addresses if multiple GMs)
+    # Event Type,Event Type ID,Name,Description,More Info URL,Preferred Start Time,Alternate Start Time,Max Tickets,
+    # Spaces Needed,Hosts Also Play,Duration,Age Range,Game System,Sponsor,
+    # Special Request Notes (include email addresses if multiple GMs)
+    #
+    # -----
     # Roleplaying Game,2E904A2A-DD56-11EC-A6C0-A28553C64EAE
     # Notes:  duration is in minutes
     # Times are `Friday at 12:00` or `Saturday at 08:00` -- suggestion is to name sessions thusly
     # Spaces is number of tables
     # Ages for us will be 'all'
-    attributes = ['Event Type', 'Event Type ID', 'Name', 'Description', 'More Info URL', 'Preferred Start Time',
-                  'Alternate Start Time', 'Max Tickets', 'Spaces Needed', 'Hosts Also Play', 'Duration',
-                  'Age Range', 'Game System', 'Sponsor', 'Special Request Notes (include email addresses if multiple GMs)']
+    attributes = ['Event Type', 'Event Type ID',
+                  'Name', 'Description',
+                  'More Info URL', 'Preferred Start Time', 'Alternate Start Time',
+                  'Max Tickets', 'Spaces Needed', 'Hosts Also Play', 'Duration',
+                  'Age Range', 'Game System', 'Sponsor',
+                  'Special Request Notes (include email addresses if multiple GMs)']
     CSV.generate(headers: true) do |csv|
       csv << attributes
       tables.each do |table|
@@ -255,14 +262,14 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
 
         # TODO: Add things for repeatable, pregens only, assuming information has no pregens
         csv << ['Roleplaying Game', tabletop_events_code,
-                table.schedule_name, "#{table_description}",
+                table.tte_name, table_description.to_s,
                 scenario.paizo_url, table.session.name, table.session.name,
                 table.max_players, table.gms_needed, 0, table.session.session_time_minutes,
-                'teen', table.converted_game_system, '10,000 Lakes Gaming and MN-POP', 'Part of Paizo Organized Play Room in Scandinavia Ballroom']
+                'teen', table.converted_game_system, '10,000 Lakes Gaming and MN-POP',
+                'Part of Paizo Organized Play Room in Scandinavia Ballroom']
       end
     end
   end
-
 
   def converted_game_system
     case scenario.game_system
@@ -278,6 +285,7 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
   end
 
   private
+
   def table_type
     online? ? UserEvent::ATTENDANCE_ONLINE : UserEvent::ATTENDANCE_IN_PERSON
   end

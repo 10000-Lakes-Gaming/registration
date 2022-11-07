@@ -5,8 +5,8 @@ class EventsController < ApplicationController
 
   skip_before_action :authenticate_user!, only: %i[index show]
   before_action :set_event, only: %i[show edit update destroy scenario_request_form tabletop_event_upload]
-  before_action :restrict_to_admin, except: %i[show index scenario_request_form, tabletop_event_upload]
-  before_action :restrict_to_hosts, only: [:scenario_request_form, :tabletop_event_upload]
+  before_action :restrict_to_admin, except: %i[show index scenario_request_form tabletop_event_upload]
+  before_action :restrict_to_hosts, only: %i[scenario_request_form tabletop_event_upload]
   before_action :get_events, :get_my_events
 
   # GET /events
