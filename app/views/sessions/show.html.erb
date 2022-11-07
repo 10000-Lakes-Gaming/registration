@@ -48,10 +48,10 @@
       <% end %>
       <% if @event.tabletop_event_type_code.present? %>
         <td>
-          <%= yes_no table.sent_to_tabletop_events? %>
+          <%= yes_no table.tabletop_events? %>
         </td>
         <td>
-          <%= yes_no table.online? %>
+          <%= yes_no table.sent_to_tabletop_events? %>
         </td>
       <% end %>
       <td>
