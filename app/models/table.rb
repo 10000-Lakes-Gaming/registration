@@ -262,7 +262,7 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
 
         # TODO: Add things for repeatable, pregens only, assuming information has no pregens
         csv << ['Roleplaying Game', tabletop_events_code,
-                table.tte_name, table_description.to_s,
+                table.scenario.tte_name, table_description.to_s,
                 scenario.paizo_url, table.session.name, table.session.name,
                 table.max_players, table.gms_needed, 0, table.session.session_time_minutes,
                 'teen', table.converted_game_system, '10,000 Lakes Gaming and MN-POP',
