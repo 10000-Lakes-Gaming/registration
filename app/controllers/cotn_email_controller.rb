@@ -6,13 +6,15 @@ class CotnEmailController < ApplicationController
 
   def new
     @message = Message.new
-    @message.subject = 'Call for Vols for MN-POP at Con of the North 2023'
+    @message.event = @event
+    @message.subject = "Call for Volunteers for #{@event.name}"
   end
 
   def create
     return unless restrict_to_admin
 
     @message = Message.new(message_params)
+    @message.event = @event
 
     # defense, for a single real test
     puts "Email list: #{@message.email_list}"
@@ -41,7 +43,7 @@ class CotnEmailController < ApplicationController
   def set_event
     # This is specific to CotN 2023
     # TODO: Make this a param, so that we can just reuse.
-    @message.event = Event.find(20)
+    @event = Event.find(20)
   end
 
   def message_params
