@@ -2,19 +2,17 @@
 
 class CotnEmailController < ApplicationController
   before_action :set_users
+  before_action :set_event
 
   def new
     @message = Message.new
-    @message.subject = 'Call for Vols for MN-POP at Con of the North 2020'
+    @message.subject = 'Call for Vols for MN-POP at Con of the North 2023'
   end
 
   def create
     return unless restrict_to_admin
 
     @message = Message.new(message_params)
-    # This is specific to CotN 2023
-    # TODO: Make this a param, so that we can just reuse.
-    @message.event = Event.find(20)
 
     # defense, for a single real test
     puts "Email list: #{@message.email_list}"
@@ -38,6 +36,12 @@ class CotnEmailController < ApplicationController
 
   def set_users
     @users = User.where(opt_out: false).sort
+  end
+
+  def set_event
+    # This is specific to CotN 2023
+    # TODO: Make this a param, so that we can just reuse.
+    @message.event = Event.find(20)
   end
 
   def message_params
