@@ -22,36 +22,37 @@
   <p><b>Hello <%= @message.user&.name %>,</b></p>
 
   <p>There comes a time in a Minnesotan gamer's year when the distant sounds of dice rattling in the Scandinavian
-    Ballroom
-    at the Crown Plaza in Plymouth Minnesota reaches their ears! It is the time that they realize that Con of the North,
-    the longest running games convention in Minnesota is coming soon!</p>
+    Ballroom at the Crown Plaza in Plymouth Minnesota reaches their ears! It is the time that they realize that Con of
+    the North, the longest running games convention in Minnesota, is coming soon! This event will be a "Premier Plus"
+    event, allowing GMs and players to accrue additional ACP.</p>
 
-  <p>As you may know, we cannot put on these events without the help of our volunteers. We are still looking to fill
-    over 100 GM tables.</p>
+  <p>All the excitement will be for naught without the help of our volunteers; we will need [b]your[/b] help to make
+    this year a success.</p>
 
-  <p>If you would like to volunteer as a GM, please take the time to log in to
-    <a href="<%= event_url(@message.event) %>"><%= @message.event.name %> GM Registration</a>,
-    volunteer for the event (which
-    will not register you for the Con of the North convention itself), and select any games that you wish to GM. Note
-    that there are some games that are not currently open to GM, as we've already uploaded a schedule to the Con of the
-    North's registration site, and we'd like to fill these first. If you would like to GM a specific game not currently open to
-    be selected as a GM, please contact us at <a href="mailto:contact@10klakesgaming.org">10,000 Lames Gaming</a>, and
-    let us know what you'd like to run. We'll do our best to make this happen.</p>
+  <p>Volunteering for Con of the North requires a two-step process; first, register for Con of the North at
+    <a href="https://tabletop.events/conventions/con-of-the-north-2023">their
+      registration website</a>. When registering, make sure you register as a Judge, if you're both playing and
+    volunteering, or as a Referee if you're only running games. The cost of a Judge badge for the convention is
+    currently $30, rising to $40 after December 31 2022. While a Referee badge is only $2, be advised that if you
+    register as a Referee but later register to play games at the convention, you will have to buy a full Judge badge at
+    the convention site.</p>
 
-  <p>Volunteer for as many slots as you would like, but please remember to register for
-    <a href="https://tabletop.events/conventions/con-of-the-north-2023">Con of the North 2023</a> as a Game Master,
-    which will  allow you to both play and GM. If you are doing nothing but volunteering, you can also sign up as a
-    Referee, which gets you into the Con for only $2. However, if you decide to play a game with a referee badge
-    (ex. if your table doesn't make and you're offered a game to play), you will have to purchase a judge badge at the convention.</p>
+  <p>Once you've registered for the convention, head to
+    <a href="<%= event_url(@message.event) %>">the MNPOP registration
+      app</a> and sign up for Con of the North 2023 tables there. All of our
+    scheduled tables are listed at the registration site for Pathfinder Society, and we track our table GMs there
+    throughout the convention. Tables listed on the registration app are looking for GMs; these have already been
+    submitted as events to Con of the North and uploaded to their registration site. If you would like to request a
+    scenario not currently on the schedule, please contact 10,000 Lakes Gaming with the name of the scenario and the
+    time slot you would like to run the scenario in; we will work with you and the Con of the North staff to update
+    their registration site as well as ours.</p>
 
-  <p>As a reminder, the cost of a 3-day badge is $30, but the price goes up to $40 after December 31. Game Masters can
-    get a either a discount of $5 on their registration, or a CotN tee shirt, but only if you register before December 31.</p>
 
-  <p>This event will be a "Premier Plus" event, allowing GMs and players to accrue additional ACP.
-    MN-POP will also be providing all chronicles (likely through RPG Chronicles), and will be supplying water and
-    throat lozenges to all table GMs.</p>
+  <p>As in years past, MN-POP will provide copies of chronicles and will be supplying water and throat lozenges during
+    each convnetion slot to our table GMs.</p>
 
   <p>Thank you for volunteering! We cannot do this without you!</p>
+  <p>Minnesota Paizo Organized Play</p>
 
   <hr>
   <div><%= image_tag("MN-POP.png", width: 250, alt: "Minnesota Paizo Organized Play") %>
