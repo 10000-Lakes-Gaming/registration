@@ -12,6 +12,10 @@ class CotnEmailController < ApplicationController
     return unless restrict_to_admin
 
     @message = Message.new(message_params)
+    # This is specific to CotN 2023
+    # TODO: Make this a param, so that we can just reuse.
+    @message.event = Event.find(20)
+
     # defense, for a single real test
     puts "Email list: #{@message.email_list}"
     @message.email_list.reject(&:empty?).each do |email|

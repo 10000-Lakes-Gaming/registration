@@ -8,13 +8,10 @@
     # sessions.each do |session|
     #   table_sessions[session] = nil
     # end
-    # byebug
     # user_event&.all_tickets&.each do |ticket|
     #   session = ticket.session
-    #   byebug
     #   table_sessions[session] = ticket
     # end
-    # byebug
     table_sessions = user_event.all_tickets_by_session
     sessions = user_event.sessions
 
