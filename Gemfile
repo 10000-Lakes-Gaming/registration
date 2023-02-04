@@ -34,8 +34,8 @@ gem 'psych', '< 4'
 # This is the authen gem
 gem 'devise', '4.8.0'
 gem 'omniauth', '2.0.4'
-# TODO: Consider bootstrap gem instead... currently 4.5.0
 gem 'autoprefixer-rails'
+# TODO: Consider bootstrap gem instead... currently 4.5.0
 gem 'bootstrap-sass'
 
 gem 'stripe'

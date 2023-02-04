@@ -8,6 +8,7 @@ class GameMaster < ActiveRecord::Base
   delegate :end, to: :table
   delegate :scenario, to: :table
   delegate :long_name, to: :table
+  delegate :short_name, to: :table
   validates :table_id, presence: true, uniqueness: { scope: :user_event_id }
   validates :user_event_id, presence: true, uniqueness: { scope: :table_id }
   validate :check_gm_count
@@ -18,6 +19,10 @@ class GameMaster < ActiveRecord::Base
   before_save :check_for_warnings
   before_update :check_for_warnings
   before_create :check_for_warnings
+
+  def gamemaster?
+    true
+  end
 
   def scenario_requested?
     scenario_requested.present?

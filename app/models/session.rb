@@ -192,6 +192,25 @@ class Session < ActiveRecord::Base # rubocop:disable Metrics/ClassLength
     gms
   end
 
+  def player_tables
+    return @player_tables if @player_tables.present?
+
+    @player_tables = {}
+    tables.each do |table|
+      table.game_masters.each do |gm|
+        user = gm.user_event.user
+        puts "Adding GM #{user.name} with #{gm.short_name}"
+        @player_tables[user] = gm
+      end
+      table.registration_tables.each do |player|
+        user = player.user_event.user
+        puts "Adding Player #{user.name} with #{player.short_name}"
+        @player_tables[player.user_event.user] = player
+      end
+    end
+    @player_tables
+  end
+
   def gm_count
     gms.length
   end

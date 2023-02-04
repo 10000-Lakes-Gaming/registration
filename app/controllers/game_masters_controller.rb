@@ -105,16 +105,27 @@ class GameMastersController < ApplicationController
   # PATCH/PUT /game_masters/1.json
   def update
     restrict_to_gamemaster
+    back_to_session = ActiveModel::Type::Boolean.new.cast(params['session-page'])
     respond_to do |format|
       all_ok = @game_master.update(game_master_params)
       all_ok &&= @game_master.warnings.empty?
       if all_ok
         format.html do
-          redirect_to [@event, @session, @table, @game_master], notice: 'Game master was successfully updated.'
+          if back_to_session
+            redirect_to [@event, @session], notice: 'Added Game Master Sign Up sheet.'
+          else
+            redirect_to [@event, @session, @table, @game_master], notice: 'Game master was successfully updated.'
+          end
         end
         format.json { render :show, status: :ok, location: [@event, @session, @table, @game_master] }
       else
-        format.html { render :edit }
+        format.html {
+          if back_to_session
+            redirect_to [@event, @session], notice: 'Added Game Master Sign Up sheet.'
+          else
+            render :edit
+          end
+        }
         format.json { render json: @game_master.errors, status: :unprocessable_entity }
       end
     end

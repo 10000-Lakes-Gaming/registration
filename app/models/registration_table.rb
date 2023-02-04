@@ -4,12 +4,17 @@ class RegistrationTable < ActiveRecord::Base
   belongs_to :user_event
   belongs_to :table
   delegate :name, to: :table
+  delegate :short_name, to: :table
   delegate :start, to: :table
   delegate :end, to: :table
   delegate :price, to: :table
   validates :table_id, presence: true, uniqueness: { scope: :user_event_id }
   validates :user_event_id, presence: true, uniqueness: { scope: :table_id }
   validate :check_player_count
+
+  def gamemaster?
+    false
+  end
 
   def check_player_count
     if !table.registration_tables.include?((self)) && (table.registration_tables.count >= table.max_players)
