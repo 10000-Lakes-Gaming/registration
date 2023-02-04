@@ -162,7 +162,8 @@
   </tr>
   </thead>
   <tbody>
-  <% @session.player_tables.each do |player, player_table| %>
+  <% @session.participants.each do |player| %>
+  <% player_table = @session.player_tables[player] %>
     <tr>
       <td><%= player_table.tte_name %></td>
       <td><%= player.name %></td>
