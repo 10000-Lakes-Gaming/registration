@@ -9,6 +9,7 @@ class GameMaster < ActiveRecord::Base
   delegate :scenario, to: :table
   delegate :long_name, to: :table
   delegate :short_name, to: :table
+  delegate :tte_name, to: :table
   validates :table_id, presence: true, uniqueness: { scope: :user_event_id }
   validates :user_event_id, presence: true, uniqueness: { scope: :table_id }
   validate :check_gm_count

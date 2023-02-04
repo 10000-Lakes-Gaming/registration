@@ -5,6 +5,7 @@ class RegistrationTable < ActiveRecord::Base
   belongs_to :table
   delegate :name, to: :table
   delegate :short_name, to: :table
+  delegate :tte_name, to: :table
   delegate :start, to: :table
   delegate :end, to: :table
   delegate :price, to: :table

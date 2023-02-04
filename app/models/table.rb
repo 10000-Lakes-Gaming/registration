@@ -9,6 +9,7 @@ class Table < ActiveRecord::Base # rubocop:disable  Metrics/ClassLength
   has_many :game_masters
   delegate :name, to: :scenario
   delegate :short_name, to: :scenario
+  delegate :tte_name, to: :scenario
   delegate :start, to: :session
   delegate :end, to: :session
   delegate :prereg_ends, to: :session
