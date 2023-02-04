@@ -20,6 +20,8 @@ class SessionsController < ApplicationController
   # GET /sessions/1
   # GET /sessions/1.json
   def show
+    return unless restrict_to_hosts
+    
     get_session_data(@session)
   end
 
