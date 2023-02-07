@@ -91,7 +91,7 @@ class GameMaster < ActiveRecord::Base
   end
 
   def self.to_csv(game_masters)
-    attributes = %w[event_name session_name session_start session_end scenario gm_name gm_pfs_number gm_email
+    attributes = %w[event_name session_name session_start session_end scenario tier gm_name gm_pfs_number gm_email
                     gm_forum_username gm_title table_assignment sign_in_url]
 
     CSV.generate(headers: true) do |csv|
@@ -102,6 +102,7 @@ class GameMaster < ActiveRecord::Base
                 game_master.table.session.start.localtime.to_formatted_s(:long),
                 game_master.table.session.end.localtime.to_formatted_s(:long),
                 game_master.table.scenario.long_name,
+                game_master.table.scenario.tier,
                 game_master.user_event.user.name,
                 game_master.user_event.user.pfs_number,
                 game_master.user_event.user.email,
