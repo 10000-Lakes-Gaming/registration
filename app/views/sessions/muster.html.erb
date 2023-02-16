@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+
+<div class="page-header">
+  <h1>Muster List for <%= @event.name %></h1>
+</div>
+
+<% @event.sessions.sort { |a, b| a.start <=> b.start }.each do |session| %>
+  <table class="table table-striped">
+    <caption>Session <%= session.long_name %></caption>
+    <thead>
+    <tr>
+      <th>Table #</th>
+      <th>Scenario</th>
+      <th>Tier</th>
+      <th>GM</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% session.tables.sort.each do |table| %>
+      <% if table.game_masters.size > 1 %>
+        <% table.game_masters.sort { |a, b| a.table_number <=> b.table_number }.each do |gm| %>
+          <tr>
+            <td><%= gm.table_number %></td>
+            <td><%= table.short_name %></td>
+            <td><%= table.scenario.tier %></td>
+            <td><%= gm.user_event.user.name %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td><%= table.location %></td>
+          <td><%= table.short_name %></td>
+          <td><%= table.scenario.tier %></td>
+          <td><%= table.game_masters.first&.user_event&.user&.name %></td>
+        </tr>
+      <% end %>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<%= link_to "Back to #{@event.name}", event_path(@event), :class => 'btn btn-success' %>

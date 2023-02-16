@@ -25,11 +25,15 @@ class SessionsController < ApplicationController
     get_session_data(@session)
   end
 
+  # events/1/sessions/muster``
+  def muster
+  end
+
   def get_session_data(session)
     @registration_tables = {}
-    @gm_sessions         = init_gm_sessions
-    @player_sessions     = init_player_sessions
-    @rsvps               = @event.user_events
+    @gm_sessions = init_gm_sessions
+    @player_sessions = init_player_sessions
+    @rsvps = @event.user_events
 
     @rsvps.each do |rsvp|
       player_tables = rsvp.registration_tables
@@ -38,7 +42,7 @@ class SessionsController < ApplicationController
 
         players = @player_sessions[reg_table.table]
         if players.nil?
-          players                           = []
+          players = []
           @player_sessions[reg_table.table] = players
         end
         players.push reg_table.user_event.user
@@ -50,7 +54,7 @@ class SessionsController < ApplicationController
 
         gms = @gm_sessions[gm_table.table]
         if gms.nil?
-          gms                          = []
+          gms = []
           @gm_sessions[gm_table.table] = gms
         end
         gms.push gm_table.user_event.user

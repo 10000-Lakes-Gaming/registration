@@ -25,7 +25,6 @@ Rails.application.routes.draw do
     resources :event_hosts
     resources :gm_list
     resources :gms_by_scenario
-    resources :table_assignment
     resources :event_receipt
     resources :gm_list, only: :index
     resources :gms_by_scenario, only: :index
@@ -44,6 +43,9 @@ Rails.application.routes.draw do
       resources :registration_payment, only: %i[new create]
     end
     resources :sessions do
+      collection do
+        get 'muster'
+      end
       resources :tables do
         resources :registration_tables do
           resources :table_payment, only: %i[new create]
