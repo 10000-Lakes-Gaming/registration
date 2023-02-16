@@ -157,4 +157,34 @@ class Event < ActiveRecord::Base
   def early_bird_discount?
     prereg_price < onsite_price
   end
+
+  # this will be a hash of tables
+  def muster_sheet
+    muster = {}
+    sessions.sort { |a, b| a.start <=> b.start }.each do |session|
+      next if session.tables.size == session.headquarters_tables.size
+      tables = {}
+      session.tables.each do |table|
+        if table.game_masters.size > 1
+          table.game_masters.each do |gm|
+            table_m = {}
+            table_m['table_number'] = gm.table_number
+            table_m['scenario'] = table.long_name
+            table_m['tier'] = table.scenario.tier
+            table_m['gm'] = gm.user_event&.user.name
+            tables[gm.table_number] = table_m
+          end
+        else
+          table_m = {}
+          table_m['table_number'] = table.location
+          table_m['scenario'] = table.long_name
+          table_m['tier'] = table.scenario.tier
+          table_m['gm'] = table.game_masters.first&.user_event&.user&.name
+          tables[table.location] = table_m
+        end
+      end
+      muster[session] = tables
+    end
+    muster
+  end
 end
