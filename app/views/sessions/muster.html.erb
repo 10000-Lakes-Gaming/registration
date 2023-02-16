@@ -21,7 +21,7 @@
         <% table.game_masters.sort { |a, b| a.table_number <=> b.table_number }.each do |gm| %>
           <tr>
             <td><%= gm.table_number %></td>
-            <td><%= table.short_name %></td>
+            <td><%= table.long_name %></td>
             <td><%= table.scenario.tier %></td>
             <td><%= gm.user_event.user.name %></td>
           </tr>
@@ -29,7 +29,7 @@
       <% else %>
         <tr>
           <td><%= table.location %></td>
-          <td><%= table.short_name %></td>
+          <td><%= table.long_name %></td>
           <td><%= table.scenario.tier %></td>
           <td><%= table.game_masters.first&.user_event&.user&.name %></td>
         </tr>
