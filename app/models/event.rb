@@ -169,7 +169,7 @@ class Event < ActiveRecord::Base
           table.game_masters.each do |gm|
             table_m = {}
             table_m['table_number'] = gm.table_number
-            table_m['scenario'] = table.long_name
+            table_m['scenario'] = table.scenario.long_name
             table_m['tier'] = table.scenario.tier
             table_m['gm'] = gm.user_event&.user.name
             tables[gm.table_number] = table_m
@@ -177,7 +177,7 @@ class Event < ActiveRecord::Base
         else
           table_m = {}
           table_m['table_number'] = table.location
-          table_m['scenario'] = table.long_name
+          table_m['scenario'] = table.scenario.long_name
           table_m['tier'] = table.scenario.tier
           table_m['gm'] = table.game_masters.first&.user_event&.user&.name
           tables[table.location] = table_m
